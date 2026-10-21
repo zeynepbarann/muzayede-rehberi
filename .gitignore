@@ -1,0 +1,9 @@
+raw_*.html
+a.html
+sm.html
+*.log
+__pycache__/
+*.pyc
+*.png
+artvela.js
+_site/

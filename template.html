@@ -1,0 +1,138 @@
+<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Müzayede Rehberi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1c1a17;--muted:#7a7268;--line:#e6e0d6;--paper:#faf8f4;--gold:#a8823c;--red:#9b2c2c}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 Inter,system-ui,sans-serif}
+.serif,h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600}
+header{padding:28px 28px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:end;flex-wrap:wrap;gap:10px}
+header h1{margin:0;font-size:38px;letter-spacing:.5px}header .sub{color:var(--muted);font-size:13px}
+.tabs button{background:none;border:1px solid var(--line);padding:7px 14px;border-radius:999px;cursor:pointer;font:inherit;color:var(--ink)}
+.tabs button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.bar{display:flex;flex-wrap:wrap;gap:8px;padding:12px 28px;background:#fffdf9ee;backdrop-filter:blur(6px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.bar input,.bar select{padding:9px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fff}#q{flex:1 1 260px}
+.bar .num{width:110px}
+#stats{padding:12px 28px 4px;color:var(--muted);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+details{padding:0 28px 6px;color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:26px;padding:14px 28px 120px}
+.card{background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s;position:relative}
+.card:hover{box-shadow:0 10px 30px #0000001a;transform:translateY(-2px)}
+.frame{background:#f1ede6;height:280px;display:flex;align-items:center;justify-content:center;padding:18px;cursor:pointer}
+.frame img{max-width:100%;max-height:244px;object-fit:contain;box-shadow:0 4px 14px #0003}
+.body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:3px;flex:1}
+.artist{font-size:22px;line-height:1.15;cursor:pointer}.desc{color:#4a453e;font-size:13px}
+.meta{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.price{margin-top:8px;font-family:"Cormorant Garamond",serif;font-size:21px;color:var(--gold);font-weight:600}
+.price small{font-family:Inter;font-size:11px;color:var(--muted);font-weight:400;letter-spacing:.06em;text-transform:uppercase;margin-right:4px}
+.end{font-size:12px;color:var(--red)}.end.soon{font-weight:600}
+.acts{display:flex;gap:6px;margin-top:10px;align-items:center}
+.ic{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 10px;cursor:pointer;font:inherit;font-size:12px;color:var(--ink)}
+.ic.on{background:var(--ink);color:#fff;border-color:var(--ink)}.ic.fav.on{background:#b33a3a;border-color:#b33a3a}
+.acts a{margin-left:auto;font-size:12px;color:var(--ink)}
+.badge{position:absolute;top:10px;left:10px;background:#fff;border:1px solid var(--line);font-size:11px;padding:2px 8px;border-radius:999px}
+.modal{position:fixed;inset:0;background:#1c1a17cc;display:none;align-items:flex-start;justify-content:center;z-index:20;overflow:auto;padding:30px 12px}
+.modal.open{display:flex}.sheet{background:var(--paper);max-width:1100px;width:100%;position:relative;padding:28px}
+.x{position:absolute;top:10px;right:14px;font-size:28px;background:none;border:0;cursor:pointer;color:var(--ink)}
+.det{display:grid;grid-template-columns:1.2fr 1fr;gap:30px}.det .big{background:#f1ede6;padding:22px;display:flex;align-items:center;justify-content:center;min-height:380px}
+.det .big img{max-width:100%;max-height:70vh;box-shadow:0 6px 20px #0004}.thumbs{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.thumbs img{width:58px;height:58px;object-fit:cover;cursor:pointer;border:1px solid var(--line)}
+table.f{border-collapse:collapse;width:100%;font-size:13px}table.f td{padding:6px 4px;border-bottom:1px solid var(--line);vertical-align:top}table.f td:first-child{color:var(--muted);width:40%}
+.panel{margin-top:22px;border-top:1px solid var(--line);padding-top:14px}.kpis{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+.kpi{background:#fff;border:1px solid var(--line);padding:8px 14px;min-width:110px}.kpi b{display:block;font-family:"Cormorant Garamond",serif;font-size:20px}.kpi span{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.verdict{font-family:"Cormorant Garamond",serif;font-size:22px}.lo{color:#2e6b3a}.hi{color:var(--red)}
+.mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}.mini div{background:#fff;border:1px solid var(--line);padding:6px;font-size:12px;cursor:pointer}.mini img{width:100%;height:110px;object-fit:contain;background:#f1ede6}
+.dock{position:fixed;bottom:0;left:0;right:0;background:var(--ink);color:#fff;padding:12px 28px;display:none;gap:12px;align-items:center;z-index:10;flex-wrap:wrap}.dock.show{display:flex}
+.dock img{width:42px;height:42px;object-fit:cover}.dock button{background:var(--gold);color:#fff;border:0;padding:8px 16px;cursor:pointer;font:inherit;border-radius:6px}.dock .clr{background:none;border:1px solid #fff6}
+.cmp{overflow-x:auto}.cmp table{border-collapse:collapse;min-width:600px;width:100%}.cmp td,.cmp th{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top;font-size:13px}
+.cmp th{font-weight:400;color:var(--muted);width:150px}.cmp img{width:160px;height:160px;object-fit:contain;background:#f1ede6}.best{color:#2e6b3a;font-weight:600}
+.empty{padding:60px;text-align:center;color:var(--muted);grid-column:1/-1}
+@media(max-width:760px){.frame{height:190px;padding:10px}.frame img{max-height:170px}header{padding:18px 16px 12px}header h1{font-size:30px}.bar{padding:10px 16px;position:static}.bar .num{width:calc(50% - 4px)}.bar select{flex:1 1 45%}
+.grid{padding:10px 16px 120px;gap:16px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}.artist{font-size:18px}.body{padding:10px}.det{grid-template-columns:1fr}.sheet{padding:18px}#stats,details{padding-left:16px;padding-right:16px}}
+</style></head><body>
+<header><div><h1>Müzayede Rehberi</h1><div class="sub" id="upd"></div></div>
+<div class="tabs"><button id="tAll" class="on">Tüm Eserler</button> <button id="tFav">♥ Favorilerim (<span id="favN">0</span>)</button></div></header>
+<div class="bar"><input id="q" placeholder="Sanatçı, eser, teknik, müzayede ara… (ör. Doğançay, yağlı boya)">
+<select id="site"><option value="">Tüm siteler</option></select><select id="artist"><option value="">Tüm sanatçılar</option></select>
+<input id="pmin" class="num" type="number" placeholder="En az TL"><input id="pmax" class="num" type="number" placeholder="En çok TL">
+<select id="ending"><option value="">Tüm bitiş tarihleri</option><option value="1">24 saat içinde bitenler</option><option value="3">3 gün içinde bitenler</option><option value="7">7 gün içinde bitenler</option></select>
+<select id="sort"><option value="end">Bitişi en yakın</option><option value="pa">Fiyat (artan)</option><option value="pd">Fiyat (azalan)</option><option value="bids">En çok pey alan</option><option value="artist">Sanatçı (A–Z)</option><option value="ppc">cm² fiyatı (artan)</option></select></div>
+<div id="stats"></div><details><summary>Kaynak durumu (son tarama)</summary><ul id="runs"></ul></details>
+<div class="grid" id="g"></div>
+<div class="dock" id="dock"><span>Karşılaştır:</span><span id="dockItems" style="display:flex;gap:6px"></span><button id="doCmp">Yan yana karşılaştır</button><button class="clr" id="clrCmp">Temizle</button><span id="dockMsg" style="opacity:.7;font-size:12px"></span></div>
+<div class="modal" id="m"><div class="sheet"><button class="x" onclick="closeM()">×</button><div id="mc"></div></div></div>
+<script>
+const D=/*DATA*/null;const $=id=>document.getElementById(id);
+const norm=s=>(s||'').toLocaleLowerCase('tr').replace(/ı/g,'i').normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
+const esc=s=>(s??'').toString().replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const TL=n=>n?Math.round(n).toLocaleString('tr-TR')+' TL':'—';
+const dt=s=>s?new Date(s.replace(' ','T')):null;
+const fdate=d=>d?d.toLocaleString('tr-TR',{day:'numeric',month:'long',year:'numeric',weekday:'short',hour:'2-digit',minute:'2-digit'}):'—';
+const TECH=/üzeri|boya|serigrafi|baskı|teknik|litografi|gravür|heykel|bronz|fotoğraf|kolaj|guaj|akrilik|karakalem|suluboya|pastel|mürekkep|yazma|tuyb|kuyb|seramik|halı|kilim|hat|ebru|kitap/i;
+function parse(l){const d=l.description||'';const parts=d.split(/\s*[,·]\s*/).filter(Boolean);
+ const sz=d.match(/(\d+(?:[.,]\d+)?)\s*[x×X]\s*(\d+(?:[.,]\d+)?)(?:\s*[x×X]\s*(\d+(?:[.,]\d+)?))?\s*(cm)?/);
+ const yr=(d.match(/((?:1[6-9]|20)\d{2})\s*Tarihli/i)||d.match(/\b((?:18|19|20)\d{2})\b/)||[])[1];
+ const tech=parts.find(p=>TECH.test(p)&&!/^\d/.test(p))||'';
+ let w,h,area=null;if(sz){w=+sz[1].replace(',','.');h=+sz[2].replace(',','.');if(!sz[3])area=w*h}
+ l.tech=tech;l.size=sz?sz[0].replace(/\s+/g,' ').trim()+(sz[4]?'':' cm'):'';l.year=yr||'';l.area=area;
+ l._p=l.current_bid||l.start_price||null;l.ppc=(area&&l._p)?l._p/area:null}
+D.lots.forEach(l=>{parse(l);l.key=l.site+'|'+l.lot_id;l._a=norm(l.artist);l._s=norm([l.title,l.artist,l.description,l.auction,l.site,l.category].join(' '));l._e=dt(l.end_date)});
+const byKey=Object.fromEntries(D.lots.map(l=>[l.key,l]));
+(D.past||[]).forEach(p=>{p._a=norm(p.artist);p.past=true;p.images=p.image?[p.image]:[]});
+const fav=new Set(JSON.parse(localStorage.getItem('mr_fav')||'[]'));let cmp=[];let view='all';
+const saveFav=()=>{localStorage.setItem('mr_fav',JSON.stringify([...fav]));$('favN').textContent=[...fav].filter(k=>byKey[k]).length};
+$('upd').textContent=`${D.lots.length.toLocaleString('tr-TR')} eser · ${new Set(D.lots.map(l=>l.site)).size} kaynak · son güncelleme ${fdate(dt(D.updated))} (İstanbul saati)`;
+[...new Set(D.lots.map(l=>l.site))].sort().forEach(s=>$('site').add(new Option(s,s)));
+[...new Set(D.lots.map(l=>l.artist).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr')).forEach(s=>$('artist').add(new Option(s,s)));
+D.runs.forEach(r=>{const li=document.createElement('li');li.textContent=`${r.status=='ok'?'✓':'✗'} ${r.site}: ${r.lots} eser — ${r.detail}`;$('runs').append(li)});
+function card(l){const e=l._e,now=new Date(),soon=e&&e-now<864e5&&e>now;return `<div class="card">
+${l.auction_type=='buy-now'?'<span class="badge">Hemen Al</span>':(soon?'<span class="badge" style="color:var(--red)">Son 24 saat</span>':'')}
+<div class="frame" data-open="${l.key}">${l.images[0]?`<img loading="lazy" src="${esc(l.images[0])}" alt="">`:''}</div>
+<div class="body"><div class="meta">${esc(l.site)}${l.lot_no?' · Lot '+esc(l.lot_no):''}</div>
+<div class="artist serif" data-open="${l.key}">${esc(l.artist||l.title)}</div><div class="desc">${esc(l.description)}</div>
+<div class="price"><small>${l.auction_type=='buy-now'?'Fiyat':'Açılış'}</small>${TL(l.start_price)}</div>
+<div class="meta" style="text-transform:none;letter-spacing:0">${l.bid_count?l.bid_count+' pey · ':''}${esc(l.auction)}</div>
+${e?`<div class="end ${soon?'soon':''}">Bitiş: ${fdate(e)}</div>`:''}
+<div class="acts"><button class="ic fav ${fav.has(l.key)?'on':''}" data-fav="${l.key}" title="Favorilere ekle">♥</button>
+<button class="ic ${cmp.includes(l.key)?'on':''}" data-cmp="${l.key}">⇄ Karşılaştır</button><a href="${esc(l.url)}" target="_blank" rel="noopener">Siteye git ↗</a></div></div></div>`}
+function render(){const q=norm($('q').value).split(/\s+/).filter(Boolean),s=$('site').value,a=$('artist').value,mn=+$('pmin').value||0,mx=+$('pmax').value||Infinity,e=+$('ending').value,now=new Date();
+ let r=D.lots.filter(l=>(view=='all'||fav.has(l.key))&&q.every(w=>l._s.includes(w))&&(!s||l.site==s)&&(!a||l.artist==a)&&((l._p||0)>=mn)&&((l._p||0)<=mx)&&(!e||(l._e&&l._e-now<=e*864e5&&l._e>now)));
+ const so=$('sort').value,N=(x)=>x??Infinity;
+ r.sort(so=='pa'?(x,y)=>N(x._p)-N(y._p):so=='pd'?(x,y)=>(y._p||0)-(x._p||0):so=='bids'?(x,y)=>y.bid_count-x.bid_count:so=='artist'?(x,y)=>(x.artist||'').localeCompare(y.artist||'','tr'):so=='ppc'?(x,y)=>N(x.ppc)-N(y.ppc):(x,y)=>(x._e||9e15)-(y._e||9e15));
+ $('stats').innerHTML=`<span>${r.length.toLocaleString('tr-TR')} / ${D.lots.length.toLocaleString('tr-TR')} eser gösteriliyor</span><span>Fiyatlar sitelerden alınan açılış/satış fiyatlarıdır; güncel pey tutarları sitelerde canlı yüklendiği için burada yoktur.</span>`;
+ $('g').innerHTML=r.length?r.slice(0,600).map(card).join('')+(r.length>600?'<p class="empty">İlk 600 eser gösteriliyor — aramayı daraltın.</p>':''):`<div class="empty">${view=='fav'?'Henüz favori eser yok. Kartlardaki ♥ ile ekleyin.':'Sonuç bulunamadı.'}</div>`}
+const median=a=>{const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
+function artistPanel(l){if(!l._a)return '<div class="panel"><h3>Sanatçı değer paneli</h3><p class="sub">Sanatçı bilgisi yok.</p></div>';
+ const all=[...D.lots.filter(x=>x._a==l._a),...(D.past||[]).filter(x=>x._a==l._a)];const others=all.filter(x=>!(x.site==l.site&&x.lot_id==l.lot_id));
+ const pr=all.map(x=>x.start_price).filter(Boolean);let h=`<div class="panel"><h3 style="font-size:26px;margin:0">Sanatçı değer paneli — ${esc(l.artist)}</h3>`;
+ if(pr.length>=2&&l.start_price){const avg=pr.reduce((a,b)=>a+b,0)/pr.length,md=median(pr),pct=(l.start_price-avg)/avg*100;
+  h+=`<div class="kpis"><div class="kpi"><span>Eser sayısı</span><b>${all.length}</b></div><div class="kpi"><span>En düşük</span><b>${TL(Math.min(...pr))}</b></div><div class="kpi"><span>Medyan</span><b>${TL(md)}</b></div><div class="kpi"><span>Ortalama</span><b>${TL(avg)}</b></div><div class="kpi"><span>En yüksek</span><b>${TL(Math.max(...pr))}</b></div></div>
+  <div class="verdict ${pct<0?'lo':'hi'}">${Math.abs(pct)<1?'Sanatçı ortalamasıyla aynı seviyede':`Sanatçı ortalamasının %${Math.abs(pct).toLocaleString('tr-TR',{maximumFractionDigits:0})} ${pct<0?'altında':'üstünde'}`}</div>
+  <p class="sub" style="color:var(--muted);font-size:12px">Veritabanındaki ${pr.length} açılış/satış fiyatına göre (medyana göre %${((l.start_price-md)/md*100).toLocaleString('tr-TR',{maximumFractionDigits:0})}). Boyut, teknik ve dönem farkları hesaba katılmaz; açılış fiyatı satış değeri değildir.</p>`}
+ else h+=`<p style="color:var(--muted)">Karşılaştırma için yeterli fiyat verisi yok (bu sanatçıdan veritabanında ${all.length} eser). Günlük taramalarla geçmiş biriktikçe panel zenginleşir.</p>`;
+ if(others.length)h+=`<h4 style="margin:14px 0 8px">Diğer eserleri (${others.length})</h4><div class="mini">${others.map(o=>`<div ${o.past?`onclick="window.open('${esc(o.url)}')"`:`data-open="${o.site}|${o.lot_id}"`}>${o.images&&o.images[0]?`<img src="${esc(o.images[0])}">`:''}<div>${esc(o.description||o.title)}</div><b>${TL(o.start_price)}</b><div style="color:var(--muted)">${esc(o.site)}${o.past?' · geçmiş':''}</div></div>`).join('')}</div>`;
+ return h+'</div>'}
+function openLot(k){const l=byKey[k];if(!l)return;const hist=(l.history||[]).map(r=>`${fdate(dt(r[0]))}: ${TL(r[1])}, ${r[2]} pey`).join('<br>');
+ $('mc').innerHTML=`<div class="det"><div><div class="big"><img id="bigI" src="${esc((l.images[0]||'').replace('/400/','/1500/'))}"></div><div class="thumbs">${l.images.map(i=>`<img src="${esc(i)}" onclick="$('bigI').src=this.src.replace('/400/','/1500/')">`).join('')}</div></div>
+ <div><div class="meta">${esc(l.site)}${l.lot_no?' · Lot '+esc(l.lot_no):''}</div><h2 style="font-size:36px;margin:4px 0 6px">${esc(l.artist||l.title)}</h2><p>${esc(l.description)}</p>
+ <table class="f"><tr><td>Müzayede</td><td>${esc(l.auction)}</td></tr><tr><td>Kategori</td><td>${esc(l.category)||'—'}</td></tr><tr><td>Teknik</td><td>${esc(l.tech)||'—'}</td></tr><tr><td>Ölçü</td><td>${esc(l.size)||'—'}</td></tr><tr><td>Yıl</td><td>${esc(l.year)||'—'}</td></tr>
+ <tr><td>${l.auction_type=='buy-now'?'Hemen Al fiyatı':'Açılış fiyatı'}</td><td><b>${TL(l.start_price)}</b></td></tr><tr><td>Tahmini değer</td><td>${TL(l.estimate)}</td></tr><tr><td>Güncel pey</td><td>${l.current_bid?TL(l.current_bid):'Sitede canlı görüntülenir'}</td></tr>
+ <tr><td>Pey sayısı</td><td>${l.bid_count||0}</td></tr><tr><td>cm² fiyatı</td><td>${l.ppc?l.ppc.toLocaleString('tr-TR',{maximumFractionDigits:0})+' TL/cm²':'—'}</td></tr><tr><td>Bitiş</td><td>${fdate(l._e)}</td></tr><tr><td>Fiyat geçmişi</td><td>${hist||'—'}</td></tr></table>
+ <div class="acts" style="margin-top:14px"><button class="ic fav ${fav.has(k)?'on':''}" data-fav="${k}">♥ Favori</button><button class="ic ${cmp.includes(k)?'on':''}" data-cmp="${k}">⇄ Karşılaştır</button><a href="${esc(l.url)}" target="_blank">Eser sayfasına git ↗</a></div></div></div>${artistPanel(l)}`;
+ $('m').classList.add('open');$('m').scrollTop=0}
+function closeM(){$('m').classList.remove('open')}
+function showCmp(){const L=cmp.map(k=>byKey[k]);const rows=[['','l=>l.images[0]?`<img src="${esc(l.images[0])}">`:""'],['Sanatçı','l=>`<b class="serif" style="font-size:19px">${esc(l.artist)}</b>`'],['Eser','l=>esc(l.description)'],['Teknik','l=>esc(l.tech)||"—"'],['Ölçü','l=>esc(l.size)||"—"'],['Yıl','l=>l.year||"—"'],['Açılış fiyatı','l=>TL(l.start_price)','start_price'],['Pey sayısı','l=>l.bid_count||0'],['Bitiş','l=>fdate(l._e)'],['cm² fiyatı','l=>l.ppc?l.ppc.toLocaleString("tr-TR",{maximumFractionDigits:0})+" TL/cm²":"Ölçü çözümlenemedi"','ppc'],['Site','l=>esc(l.site)+(l.lot_no?" · Lot "+esc(l.lot_no):"")'],['','l=>`<a href="${esc(l.url)}" target="_blank">Siteye git ↗</a>`']];
+ const html=rows.map(([h,f,best])=>{const fn=eval(f);let mi=null;if(best){const v=L.map(l=>l[best]).filter(Boolean);if(v.length>1)mi=Math.min(...v)}return `<tr><th>${h}</th>${L.map(l=>`<td class="${mi&&l[best]==mi?'best':''}">${fn(l)}</td>`).join('')}</tr>`}).join('');
+ $('mc').innerHTML=`<h2 style="font-size:32px;margin:0 0 12px">Karşılaştırma</h2><div class="cmp"><table>${html}</table></div><p style="color:var(--muted);font-size:12px">Yeşil: en düşük değer. cm² fiyatı = açılış fiyatı ÷ (en × boy); yalnızca iki boyutlu ölçüsü okunabilen eserlerde hesaplanır.</p>`;$('m').classList.add('open')}
+function dock(){$('dock').classList.toggle('show',cmp.length>0);$('dockItems').innerHTML=cmp.map(k=>`<img src="${esc(byKey[k].images[0]||'')}" title="${esc(byKey[k].artist)}">`).join('');$('doCmp').disabled=cmp.length<2;$('dockMsg').textContent=cmp.length<2?'En az 2 eser seçin':`${cmp.length}/4 seçili`}
+document.addEventListener('click',e=>{const t=e.target.closest('[data-fav],[data-cmp],[data-open]');if(!t)return;
+ if(t.dataset.fav){const k=t.dataset.fav;fav.has(k)?fav.delete(k):fav.add(k);saveFav();document.querySelectorAll(`[data-fav="${k}"]`).forEach(b=>b.classList.toggle('on',fav.has(k)));if(view=='fav')render()}
+ else if(t.dataset.cmp){const k=t.dataset.cmp;if(cmp.includes(k))cmp=cmp.filter(x=>x!=k);else if(cmp.length<4)cmp.push(k);else{alert('En fazla 4 eser karşılaştırabilirsiniz.');return}
+  document.querySelectorAll(`[data-cmp="${k}"]`).forEach(b=>b.classList.toggle('on',cmp.includes(k)));dock()}
+ else if(t.dataset.open)openLot(t.dataset.open)});
+$('m').onclick=e=>{if(e.target.id=='m')closeM()};document.onkeydown=e=>{if(e.key=='Escape')closeM()};
+$('doCmp').onclick=showCmp;$('clrCmp').onclick=()=>{cmp=[];dock();render()};
+$('tAll').onclick=()=>{view='all';$('tAll').classList.add('on');$('tFav').classList.remove('on');render()};
+$('tFav').onclick=()=>{view='fav';$('tFav').classList.add('on');$('tAll').classList.remove('on');render()};
+document.querySelectorAll('.bar input,.bar select').forEach(x=>x.oninput=render);saveFav();render();
+// deep links: #lot=site|id  or  #cmp=k1,k2
+(()=>{const h=decodeURIComponent(location.hash.slice(1));if(h.startsWith('lot='))openLot(h.slice(4));if(h.startsWith('cmp=')){cmp=h.slice(4).split(',').filter(k=>byKey[k]).slice(0,4);dock();if(cmp.length>1)showCmp()}})();
+</script></body></html>
