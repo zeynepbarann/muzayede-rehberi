@@ -4,7 +4,8 @@ import re, html, json, sqlite3, time, sys, datetime as dt, urllib.request, os
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
 HERE = os.path.dirname(os.path.abspath(__file__)); DB = os.path.join(HERE, "auctions.db")
 MUZAYEDEAPP = ["www.nefsmuzayede.com","www.dedemuzayede.com","www.anatoliamuzayede.com","www.kassanat.com",
-               "www.turkartproject.com","www.uxmuzayede.com","www.ranasartgallery.com","www.galeriberlin.com"]
+               "www.turkartproject.com","www.uxmuzayede.com","www.ranasartgallery.com","www.galeriberlin.com",
+               "www.kalamismuzayede.com","www.aysilmuzayede.com","www.nisartgallery.com"]
 
 def get(url, data=None, tries=3):
     for i in range(tries):
@@ -91,9 +92,61 @@ def scrape_sanatsal():
     return lots, [("sanatsalmuzayede.com", "eserler", "Eserler (buy-now catalogue)", len(lots))]
 
 def scrape_artam():
-    page = get("https://artam.com/")
+    page = get("https://artam.com/muzayede")
     if "Bakımdayız" in page: raise RuntimeError("site shows maintenance page ('Bakımdayız')")
-    raise RuntimeError("no scraper (site was down when built)")
+    r = json.loads(get("https://artam.com/muzayede/get-auctions?current=true"))
+    aucs = []
+    for a in r.get("auctions") or []:
+        end = dt.datetime.strptime(a["finishedAt"], "%d.%m.%Y %H:%M")
+        if end > dt.datetime.now():
+            raise RuntimeError(f"live auction '{a['name']}' found but Artam lot extraction is not implemented yet")
+        aucs.append(("artam.com", a["id"], f"{a['saleNo']}. {a['name']} (ended {a['finishedAt']})", 0))
+    return [], aucs
+
+ART_KW = r"sanat|resim|tablo|çağdaş|ÇAĞDAŞ|cagdas|modern|\bart\b|tuval|plastik|hat\b|HAT\b|minyatür"
+def scrape_mapp_portal(skip_ids):
+    """Art auctions (categories Resim/Hat, or Karma with art keywords) listed on muzayedeapp.com."""
+    base = "https://www.muzayedeapp.com"; h = get(base + "/")
+    h = h[h.find('class="auction-list"'):]
+    G = lambda p, b: (re.search(p, b, re.S) or [None, ""])[1]
+    out = {}
+    for blk in h.split('<div class="item hd">')[1:]:
+        m = re.search(r'data-category-id="(\d+)" data-id="(\d+)"', blk)
+        if not m: continue
+        cat, aid = m.groups(); name = html.unescape(G(r'class="ellipsis">([^<]*)', blk))
+        if not (cat in ("7", "17") or (cat == "8" and re.search(ART_KW, name, re.I))): continue
+        if int(G(r'data-end="(\d+)"', blk) or 0) / 1000 < time.time(): continue
+        house = html.unescape(G(r'auction-house-name[^>]*>([^<]*)', blk) or G(r'title="([^"]*)"', blk))
+        out[aid] = (house, name, base + G(r'href="(/muzayede/[^"]+)"', blk))
+    res = {}
+    for aid, (house, aname, url) in out.items():
+        site = "muzayedeapp: " + house; lots = []; seen = set(); n = 1; page = get(url)
+        endms = int(G(r'class="item remaining[^"]*" data-end="(\d+)"', page) or 0)
+        end = dt.datetime.fromtimestamp(endms / 1000).strftime("%Y-%m-%d %H:%M") if endms else None
+        while True:
+            new = 0
+            for blk in re.split(r'(?=<div class="item"\s+data-kkp=")', page)[1:]:
+                pid = G(r'data-kkp="(\d+)"', blk)
+                if not pid or pid in seen: continue
+                seen.add(pid); new += 1
+                if pid in skip_ids: continue
+                a = re.search(r'<div class="content">\s*<a href="([^"]+)">(.*?)<p\s+class="lot-explanation">(.*?)</p>', blk, re.S)
+                if not a: continue
+                artist, desc = txt(a.group(2)), txt(a.group(3)).rstrip(".")
+                lotno = G(r'Lot No: (\d+)', blk); cat_t = txt(G(r'</strong>([^<]*)</span>', blk))
+                imgs = list(dict.fromkeys(re.findall(r'data-full="([^"]+)"', blk)))
+                cur = num(re.sub(r"[^\d.,]", "", G(r'class="current-price"\s*>(.*?)</strong>', blk)))
+                opn = num(re.sub(r"[^\d.,]", "", G(r'Açılış</strong>\s*<p>(.*?)</p>', html.unescape(blk))))
+                bids = int(G(r'<strong>Peyler</strong>\s*<p>(\d+)', blk) or 0)
+                lots.append(dict(site=site, lot_id=pid, lot_no=lotno, title=(artist + " - " + desc).strip(" -"), artist=artist,
+                    description=desc, category=cat_t, start_price=opn, estimate=None, current_bid=cur if bids else None,
+                    bid_count=bids, currency="TL", auction=aname, auction_type="auction", end_date=end,
+                    images=json.dumps(imgs), url=base + a.group(1)))
+            if new == 0: break
+            n += 1; time.sleep(0.7); page = get(f"{url}?pageNumber={n}")
+        res.setdefault(site, ([], []))
+        res[site][0].extend(lots); res[site][1].append((site, aid, aname, len(lots)))
+    return res
 
 def main():
     db = sqlite3.connect(DB)
@@ -124,6 +177,22 @@ def main():
             kept = db.execute("SELECT count(*) FROM lots WHERE site=?", (site,)).fetchone()[0]
             print(f"{site:28} FAIL {e} (kept {kept} previous lots)")
         db.commit()
+    try:
+        skip = {r[0] for r in db.execute("SELECT lot_id FROM lots WHERE site NOT LIKE 'muzayedeapp:%'")}
+        portal = scrape_mapp_portal(skip)
+        db.execute("DELETE FROM lots WHERE site LIKE 'muzayedeapp:%'")
+        for site, (lots, aucs) in portal.items():
+            for l in lots:
+                l["scraped_at"] = now
+                db.execute("INSERT OR REPLACE INTO price_history VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", (now,l["site"],l["lot_id"],l["artist"],l["title"],l["description"],l["start_price"],l["estimate"],l["current_bid"],l["bid_count"],l["auction"],l["end_date"],l["url"],(json.loads(l["images"]) or [None])[0]))
+                db.execute(f"INSERT OR REPLACE INTO lots({','.join(l)}) VALUES({','.join('?'*len(l))})", list(l.values()))
+            detail = "; ".join(f"{a[2]} [{a[3]} lots]" for a in aucs)
+            db.execute("INSERT INTO runs VALUES(?,?,?,?,?)", (now, site, "ok", len(lots), detail))
+            print(f"{site:28} OK   {len(lots):5} lots | {detail}")
+    except Exception as e:
+        db.execute("INSERT INTO runs VALUES(?,?,?,?,?)", (now, "muzayedeapp.com", "fail", 0, str(e)))
+        print(f"muzayedeapp.com portal FAIL {e} (kept previous portal lots)")
+    db.commit()
     db.execute("INSERT INTO lots_fts(lots_fts) VALUES('rebuild')"); db.commit()
 
 if __name__ == "__main__": main()
