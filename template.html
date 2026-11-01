@@ -45,11 +45,21 @@ table.f{border-collapse:collapse;width:100%;font-size:13px}table.f td{padding:6p
 .cmp{overflow-x:auto}.cmp table{border-collapse:collapse;min-width:600px;width:100%}.cmp td,.cmp th{border-bottom:1px solid var(--line);padding:8px;text-align:left;vertical-align:top;font-size:13px}
 .cmp th{font-weight:400;color:var(--muted);width:150px}.cmp img{width:160px;height:160px;object-fit:contain;background:#f1ede6}.best{color:#2e6b3a;font-weight:600}
 .empty{padding:60px;text-align:center;color:var(--muted);grid-column:1/-1}
+#lb{display:none;padding:0 28px 80px}#lb.on{display:block}body.lbmode .bar,body.lbmode #stats,body.lbmode details,body.lbmode #g,body.lbmode .dock{display:none!important}
+.lbnote{background:#fff;border:1px solid var(--line);padding:10px 14px;font-size:13px;color:#4a453e;margin:14px 0}
+.lbbar{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}.lbbar input,.lbbar select{padding:9px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fff}#lbq{flex:1 1 280px}
+.sub{display:flex;gap:6px;margin:6px 0 10px}.sub button{background:none;border:0;border-bottom:2px solid transparent;padding:6px 10px;cursor:pointer;font:inherit;font-size:15px;color:var(--muted)}.sub button.on{border-color:var(--gold);color:var(--ink)}
+.alist{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}.arow{background:#fff;border:1px solid var(--line);padding:12px 14px;cursor:pointer}.arow:hover{box-shadow:0 6px 18px #0001}
+.arow .nm{font-family:"Cormorant Garamond",serif;font-size:21px;font-weight:600}.arow .mt{font-size:12px;color:var(--muted)}.live{display:inline-block;background:#9b2c2c;color:#fff;border-radius:999px;padding:1px 8px;font-size:11px;margin-top:4px}
+.erow{background:#fff;border:1px solid var(--line);padding:10px 14px;display:grid;grid-template-columns:150px 1fr auto;gap:10px;align-items:center;margin-bottom:8px}.erow .d{font-size:12px;color:var(--muted)}.erow .t{font-weight:600}.erow a{font-size:12px;color:var(--ink)}
+.bio{white-space:pre-line;font-size:14px;line-height:1.65;max-height:420px;overflow:auto;background:#fff;border:1px solid var(--line);padding:14px}
+.wks{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px}.wks div{background:#fff;border:1px solid var(--line);padding:6px;font-size:12px}.wks img{width:100%;height:120px;object-fit:contain;background:#f1ede6}
+@media(max-width:760px){#lb{padding:0 16px 80px}.erow{grid-template-columns:1fr}}
 @media(max-width:760px){.frame{height:190px;padding:10px}.frame img{max-height:170px}header{padding:18px 16px 12px}header h1{font-size:30px}.bar{padding:10px 16px;position:static}.bar .num{width:calc(50% - 4px)}.bar select{flex:1 1 45%}
 .grid{padding:10px 16px 120px;gap:16px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}.artist{font-size:18px}.body{padding:10px}.det{grid-template-columns:1fr}.sheet{padding:18px}#stats,details{padding-left:16px;padding-right:16px}}
 </style></head><body>
 <header><div><h1>Müzayede Rehberi</h1><div class="sub" id="upd"></div></div>
-<div class="tabs"><button id="tAll" class="on">Tüm Eserler</button> <button id="tFav">♥ Favorilerim (<span id="favN">0</span>)</button></div></header>
+<div class="tabs"><button id="tAll" class="on">Tüm Eserler</button> <button id="tFav">♥ Favorilerim (<span id="favN">0</span>)</button> <button id="tLb">Sanat Rehberi · Lebriz</button></div></header>
 <div class="bar"><input id="q" placeholder="Sanatçı, eser, teknik, müzayede ara… (ör. Doğançay, yağlı boya)">
 <select id="site"><option value="">Tüm siteler</option></select><select id="artist"><option value="">Tüm sanatçılar</option></select>
 <input id="pmin" class="num" type="number" placeholder="En az TL"><input id="pmax" class="num" type="number" placeholder="En çok TL">
@@ -57,6 +67,13 @@ table.f{border-collapse:collapse;width:100%;font-size:13px}table.f td{padding:6p
 <select id="sort"><option value="end">Bitişi en yakın</option><option value="pa">Fiyat (artan)</option><option value="pd">Fiyat (azalan)</option><option value="bids">En çok pey alan</option><option value="artist">Sanatçı (A–Z)</option><option value="ppc">cm² fiyatı (artan)</option></select></div>
 <div id="stats"></div><details><summary>Kaynak durumu (son tarama)</summary><ul id="runs"></ul></details>
 <div class="grid" id="g"></div>
+<section id="lb"><div class="lbnote" id="lbnote">Lebriz verileri yükleniyor…</div>
+<div class="lbbar"><input id="lbq" placeholder="Sanatçı, sergi, galeri ara… (ör. Doğançay, Kibele, retrospektif)"></div>
+<div class="sub"><button data-s="a" class="on">Sanatçılar</button><button data-s="e">Sergiler</button><button data-s="g">Galeriler</button></div>
+<div class="lbbar" id="exf" style="display:none"><select id="lbcity"><option value="">Tüm şehirler</option></select><select id="lbgal"><option value="">Tüm galeriler</option></select>
+<input id="lbfrom" type="date" title="Başlangıç (en erken)"><input id="lbto" type="date" title="Başlangıç (en geç)"><select id="lbsort"><option value="new">En yeni</option><option value="old">En eski</option></select></div>
+<div class="lbbar" id="arf"><label style="font-size:13px"><input type="checkbox" id="lblive"> Yalnızca şu an müzayedede eseri olanlar</label></div>
+<div id="lbres"></div></section>
 <div class="dock" id="dock"><span>Karşılaştır:</span><span id="dockItems" style="display:flex;gap:6px"></span><button id="doCmp">Yan yana karşılaştır</button><button class="clr" id="clrCmp">Temizle</button><span id="dockMsg" style="opacity:.7;font-size:12px"></span></div>
 <div class="modal" id="m"><div class="sheet"><button class="x" onclick="closeM()">×</button><div id="mc"></div></div></div>
 <script>
@@ -116,8 +133,8 @@ function openLot(k){const l=byKey[k];if(!l)return;const hist=(l.history||[]).map
  <table class="f"><tr><td>Müzayede</td><td>${esc(l.auction)}</td></tr><tr><td>Kategori</td><td>${esc(l.category)||'—'}</td></tr><tr><td>Teknik</td><td>${esc(l.tech)||'—'}</td></tr><tr><td>Ölçü</td><td>${esc(l.size)||'—'}</td></tr><tr><td>Yıl</td><td>${esc(l.year)||'—'}</td></tr>
  <tr><td>${l.auction_type=='buy-now'?'Hemen Al fiyatı':'Açılış fiyatı'}</td><td><b>${TL(l.start_price)}</b></td></tr><tr><td>Tahmini değer</td><td>${TL(l.estimate)}</td></tr><tr><td>Güncel pey</td><td>${l.current_bid?TL(l.current_bid):'Sitede canlı görüntülenir'}</td></tr>
  <tr><td>Pey sayısı</td><td>${l.bid_count||0}</td></tr><tr><td>cm² fiyatı</td><td>${l.ppc?l.ppc.toLocaleString('tr-TR',{maximumFractionDigits:0})+' TL/cm²':'—'}</td></tr><tr><td>Bitiş</td><td>${fdate(l._e)}</td></tr><tr><td>Fiyat geçmişi</td><td>${hist||'—'}</td></tr></table>
- <div class="acts" style="margin-top:14px"><button class="ic fav ${fav.has(k)?'on':''}" data-fav="${k}">♥ Favori</button><button class="ic ${cmp.includes(k)?'on':''}" data-cmp="${k}">⇄ Karşılaştır</button><a href="${esc(l.url)}" target="_blank">Eser sayfasına git ↗</a></div></div></div>${artistPanel(l)}`;
- $('m').classList.add('open');$('m').scrollTop=0}
+ <div class="acts" style="margin-top:14px"><button class="ic fav ${fav.has(k)?'on':''}" data-fav="${k}">♥ Favori</button><button class="ic ${cmp.includes(k)?'on':''}" data-cmp="${k}">⇄ Karşılaştır</button><a href="${esc(l.url)}" target="_blank">Eser sayfasına git ↗</a></div></div></div>${artistPanel(l)}<div id="lbPrice"></div><div id="lbLot"></div>`;
+ $('m').classList.add('open');$('m').scrollTop=0;lbLotBlock(l);lbPriceBlock(l)}
 function closeM(){$('m').classList.remove('open')}
 function showCmp(){const L=cmp.map(k=>byKey[k]);const rows=[['','l=>l.images[0]?`<img src="${esc(l.images[0])}">`:""'],['Sanatçı','l=>`<b class="serif" style="font-size:19px">${esc(l.artist)}</b>`'],['Eser','l=>esc(l.description)'],['Teknik','l=>esc(l.tech)||"—"'],['Ölçü','l=>esc(l.size)||"—"'],['Yıl','l=>l.year||"—"'],['Açılış fiyatı','l=>TL(l.start_price)','start_price'],['Pey sayısı','l=>l.bid_count||0'],['Bitiş','l=>fdate(l._e)'],['cm² fiyatı','l=>l.ppc?l.ppc.toLocaleString("tr-TR",{maximumFractionDigits:0})+" TL/cm²":"Ölçü çözümlenemedi"','ppc'],['Site','l=>esc(l.site)+(l.lot_no?" · Lot "+esc(l.lot_no):"")'],['','l=>`<a href="${esc(l.url)}" target="_blank">Siteye git ↗</a>`']];
  const html=rows.map(([h,f,best])=>{const fn=eval(f);let mi=null;if(best){const v=L.map(l=>l[best]).filter(Boolean);if(v.length>1)mi=Math.min(...v)}return `<tr><th>${h}</th>${L.map(l=>`<td class="${mi&&l[best]==mi?'best':''}">${fn(l)}</td>`).join('')}</tr>`}).join('');
@@ -130,9 +147,53 @@ document.addEventListener('click',e=>{const t=e.target.closest('[data-fav],[data
  else if(t.dataset.open)openLot(t.dataset.open)});
 $('m').onclick=e=>{if(e.target.id=='m')closeM()};document.onkeydown=e=>{if(e.key=='Escape')closeM()};
 $('doCmp').onclick=showCmp;$('clrCmp').onclick=()=>{cmp=[];dock();render()};
-$('tAll').onclick=()=>{view='all';$('tAll').classList.add('on');$('tFav').classList.remove('on');render()};
-$('tFav').onclick=()=>{view='fav';$('tFav').classList.add('on');$('tAll').classList.remove('on');render()};
+$('tAll').onclick=()=>{document.body.classList.remove('lbmode');$('lb').classList.remove('on');$('tLb').classList.remove('on');view='all';$('tAll').classList.add('on');$('tFav').classList.remove('on');render()};
+$('tFav').onclick=()=>{document.body.classList.remove('lbmode');$('lb').classList.remove('on');$('tLb').classList.remove('on');view='fav';$('tFav').classList.add('on');$('tAll').classList.remove('on');render()};
 document.querySelectorAll('.bar input,.bar select').forEach(x=>x.oninput=render);saveFav();render();
+
+// ================= Lebriz / Sanat Rehberi =================
+let LB=null,LBA=null,lbSub='a';
+const lbLoad=()=>LB?Promise.resolve(LB):fetch('data/lebriz_index.json').then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{LB=d;LB.byN={};d.artists.forEach(a=>{a._n=norm(a.n.replace(/\(.*?\)/g,''));LB.byN[a._n]=a;const al=(a.n.match(/\((.*?)\)/)||[])[1];if(al)LB.byN[norm(al)]=LB.byN[norm(al)]||a});return LB});
+let LBP=null;const lbPrices=()=>LBP?Promise.resolve(LBP):fetch('data/lebriz_prices.json').then(r=>r.json()).then(d=>LBP=d).catch(()=>LBP={});
+const lbDet=()=>LBA?Promise.resolve(LBA):fetch('data/lebriz_artists.json').then(r=>r.json()).then(d=>LBA=d);
+const liveCount=n=>D.lots.filter(l=>l._a&&l._a==n).length;
+const lbFor=lot=>LB&&lot._a?LB.byN[norm((lot.artist||'').replace(/\(.*?\)/g,''))]:null;
+const pd=s=>{if(!s)return null;const[d,m,y]=s.split('.');return new Date(+y,m-1,+d)};
+const wbLink=(u,sn)=>`https://web.archive.org/web/${sn||'2023'}/${u}`;
+function lbOpenTab(){document.body.classList.add('lbmode');$('lb').classList.add('on');['tAll','tFav'].forEach(i=>$(i).classList.remove('on'));$('tLb').classList.add('on');
+ lbLoad().then(()=>{const ex=LB.exhibitions;$('lbnote').innerHTML=`<b>Lebriz arşivi:</b> lebriz.com 30 Mart 2023'te faaliyetini sonlandırdı ve içerik güncellenmeyen bir arşiv olarak duruyor. Buradaki veriler bu arşivin Internet Archive (Wayback Machine) kopyalarından alınmıştır: ${LB.artists.length} sanatçı, ${ex.length.toLocaleString('tr-TR')} sergi, ${LB.galleries.length} galeri. Bu nedenle <b>güncel/yaklaşan sergi yoktur</b>; en yeni sergi ${ex[0]?ex[0].s:'—'} tarihlidir.`;
+  if($('lbcity').options.length<2){[...new Set(ex.map(e=>e.c).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr')).forEach(c=>$('lbcity').add(new Option(c,c)));[...new Set(ex.map(e=>e.g).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr')).forEach(c=>$('lbgal').add(new Option(c,c)))}
+  lbRender()}).catch(e=>{console.error(e);$('lbnote').textContent='Lebriz verileri yüklenemedi (data/lebriz_index.json). Sayfayı web sunucusu üzerinden (server.py veya GitHub Pages) açın. '+(e&&e.message?'['+e.message+']':'')})}
+function lbRender(){if(!LB)return;const q=norm($('lbq').value).split(/\s+/).filter(Boolean),M=t=>q.every(w=>norm(t).includes(w));
+ $('exf').style.display=lbSub=='e'?'flex':'none';$('arf').style.display=lbSub=='a'?'flex':'none';let h='';
+ if(lbSub=='a'){let r=LB.artists.filter(a=>M(a.n));r.forEach(a=>a._live=liveCount(a._n));if($('lblive').checked)r=r.filter(a=>a._live);r.sort((x,y)=>(y._live-x._live)||x.n.localeCompare(y.n,'tr'));
+  h=`<p class="mt" style="color:var(--muted)">${r.length} sanatçı</p><div class="alist">`+r.map(a=>`<div class="arow" data-lba="${a.id}"><div class="nm">${esc(a.n)}</div><div class="mt">${a.y?esc(a.y)+' · ':''}${a.w?a.w.toLocaleString('tr-TR')+' eserlik katalog':'katalog sayısı yok'}${a.b?' · özgeçmiş':''}</div>${a._live?`<span class="live">Şu an müzayedede: ${a._live} eser</span>`:''}</div>`).join('')+'</div>'}
+ else if(lbSub=='e'){const c=$('lbcity').value,g=$('lbgal').value,f=$('lbfrom').value?new Date($('lbfrom').value):null,t=$('lbto').value?new Date($('lbto').value):null;
+  let r=LB.exhibitions.filter(e=>M([e.t,e.g,e.c].join(' '))&&(!c||e.c==c)&&(!g||e.g==g)&&(!f||(pd(e.s)&&pd(e.s)>=f))&&(!t||(pd(e.s)&&pd(e.s)<=t)));if($('lbsort').value=='old')r=[...r].reverse();
+  h=`<p style="color:var(--muted);font-size:13px">${r.length.toLocaleString('tr-TR')} sergi${r.length>400?' · ilk 400 gösteriliyor':''}</p>`+r.slice(0,400).map(e=>`<div class="erow"><div class="d">${esc(e.s||'')}${e.e?' – '+esc(e.e):''}<br>${esc(e.c||'')}</div><div><div class="t">${esc(e.t)}</div><div class="d">${esc(e.g||'')}${e.n?' · '+e.n+' eser':''}</div></div><a href="${wbLink(e.u,e.sn)}" target="_blank" rel="noopener">Lebriz arşivi ↗</a></div>`).join('')}
+ else{const r=LB.galleries.filter(g=>M([g.n,g.c,g.a].join(' ')));h=`<p style="color:var(--muted);font-size:13px">${r.length} galeri (arşivdeki sergilerinden derlendi)</p>`+r.map(g=>`<div class="erow"><div class="d">${esc(g.c||'')}</div><div><div class="t">${esc(g.n)}</div><div class="d">${esc(g.a||'')}</div></div><a href="javascript:;" data-lbg="${esc(g.n)}">${g.x} sergi →</a></div>`).join('')}
+ $('lbres').innerHTML=h}
+function lbArtist(id){Promise.all([lbLoad(),lbDet()]).then(()=>{const a=LB.artists.find(x=>x.id==id),d=LBA[id]||{};const live=D.lots.filter(l=>l._a==a._n);
+ const kinds={online:'Lebriz çevrimiçi sergileri',solo:'Kişisel sergilerden seçmeler',group:'Karma sergilerden seçmeler'};
+ $('mc').innerHTML=`<div class="meta">Sanat Rehberi · Lebriz arşivi</div><h2 style="font-size:40px;margin:4px 0">${esc(a.n)}</h2><div style="color:var(--muted)">${a.y?esc(a.y):''}</div>
+ <div class="acts" style="margin:12px 0">${live.length?`<button class="ic on" onclick="closeM();lbGoLots('${esc(a.n)}')">Şu an müzayedede: ${live.length} eser →</button>`:'<span class="ic">Şu an müzayedede eseri yok</span>'}<a href="${esc(d.url)}" target="_blank" rel="noopener">lebriz.com'da aç ↗</a> <a href="${wbLink(d.url,d.sn)}" target="_blank" rel="noopener">Arşiv kopyası ↗</a></div>
+ <div class="kpis"><div class="kpi"><span>Lebriz katalog</span><b>${a.w?a.w.toLocaleString('tr-TR'):'—'}</b></div><div class="kpi"><span>Müzayede kataloglarında</span><b>${a.m??'—'}</b></div><div class="kpi"><span>Sergi kaydı</span><b>${(d.exh||[]).length}</b></div></div>
+ ${live.length?`<h3>Müzayededeki eserleri</h3><div class="mini">${live.slice(0,12).map(o=>`<div data-open="${o.key}">${o.images[0]?`<img src="${esc(o.images[0])}">`:''}<div>${esc(o.description)}</div><b>${TL(o.current_bid||o.start_price)}</b><div style="color:var(--muted)">${esc(o.site)}</div></div>`).join('')}</div>`:''}
+ <h3>Özgeçmiş</h3>${d.bio?`<div class="bio">${esc(d.bio)}</div><p style="font-size:11px;color:var(--muted)">Kaynak: <a href="${esc(d.bs)}" target="_blank">Lebriz (arşiv)</a></p>`:'<p style="color:var(--muted)">Arşivde bu sanatçının özgeçmiş sayfası bulunamadı.</p>'}
+ ${(d.series||[]).length?`<h3>Lebriz kataloğundaki seriler</h3><p>${d.series.map(s=>`${esc(s.n)} <span style="color:var(--muted)">(${s.c})</span>`).join(' · ')}</p>`:''}
+ ${(d.works||[]).length?`<h3>Sergilerdeki eserleri (${d.works.length})</h3><div class="wks">${d.works.map(w=>`<div>${w.i?`<img loading="lazy" src="${esc(w.i)}" onerror="this.style.display='none'">`:''}<b>${esc(w.t)}</b><div>${esc([w.s,w.k].filter(Boolean).join(', '))}</div><div style="color:var(--muted)">${esc(w.g||'')} ${esc(w.d||'')}</div></div>`).join('')}</div><p style="font-size:11px;color:var(--muted)">Görseller Internet Archive'dan yüklenir; arşivlenmemiş olanlar görünmez.</p>`:''}
+ ${['online','solo','group'].map(k=>{const r=(d.exh||[]).filter(e=>e.k==k);return r.length?`<h3>${kinds[k]}</h3><table class="f">${r.map(e=>`<tr><td style="width:110px">${esc(e.d)}</td><td>${esc(e.t)}</td></tr>`).join('')}</table>`:''}).join('')}`;
+ $('m').classList.add('open');$('m').scrollTop=0})}
+function lbGoLots(n){$('tAll').click();$('q').value=n;render()}
+$('tLb').onclick=lbOpenTab;
+document.querySelectorAll('#lb .sub button').forEach(b=>b.onclick=()=>{lbSub=b.dataset.s;document.querySelectorAll('#lb .sub button').forEach(x=>x.classList.toggle('on',x==b));lbRender()});
+['lbq','lbcity','lbgal','lbfrom','lbto','lbsort','lblive'].forEach(i=>$(i).oninput=lbRender);
+$('lbres').addEventListener('click',e=>{const a=e.target.closest('[data-lba]');if(a)return lbArtist(a.dataset.lba);const g=e.target.closest('[data-lbg]');if(g){lbSub='e';document.querySelectorAll('#lb .sub button').forEach(x=>x.classList.toggle('on',x.dataset.s=='e'));$('lbgal').value=g.dataset.lbg;lbRender()}});
+function lbPriceBlock(l){const el=$('lbPrice');if(!el||!l._a)return;lbPrices().then(P=>{const r=P[norm((l.artist||'').replace(/\(.*?\)/g,''))];if(!r||!r.length){el.innerHTML='';return}
+ el.innerHTML=`<div class="panel"><h4 style="margin:0 0 6px">Lebriz müzayede kataloglarındaki fiyatlar (arşiv, ${r.length} kayıt)</h4><p style="font-size:12px;color:var(--muted)">Lebriz'in "Müzayede Bilgi Bankası" kataloglarındaki <b>"Fiyat"</b> sütunu, 2008–2013 arası; arşivde yalnızca bazı sayfalar var. Para birimi o dönemin TL/YTL'sidir, enflasyon nedeniyle bugünkü fiyatlarla doğrudan kıyaslanamaz ve yukarıdaki ortalamaya katılmamıştır.</p><table class="f">${r.slice(0,15).map(x=>`<tr><td>${x[0].toLocaleString('tr-TR')} ${esc(x[1])}</td><td>${esc((x[2]||'').replace(/\s*\d{1,2} \S+ \d{4}.*$/,''))} · Lot ${x[3]}<br><span style="color:var(--muted)">${esc(((x[2]||'').match(/\d{1,2} \S+ \d{4}/)||[''])[0])}</span></td></tr>`).join('')}</table></div>`})}
+function lbLotBlock(l){const el=$('lbLot');if(!el)return;lbLoad().then(()=>{const a=lbFor(l);if(!a){el.innerHTML='';return}lbDet().then(()=>{const d=LBA[a.id]||{};
+ el.innerHTML=`<div class="panel"><h3 style="font-size:24px;margin:0">Lebriz'de ${esc(a.n)} ${a.y?'<span style="color:var(--muted);font-size:16px">('+esc(a.y)+')</span>':''}</h3>${d.bio?`<div class="bio" style="max-height:200px;margin-top:8px">${esc(d.bio.slice(0,1200))}${d.bio.length>1200?'…':''}</div>`:'<p style="color:var(--muted)">Arşivde özgeçmiş yok.</p>'}${a.m?`<p style="font-size:12px;color:var(--muted)">Lebriz: müzayede kataloglarında ${a.m} eser kaydı (Lebriz arşivinde bu kayıtlar için fiyat verisi alınamadı; değer paneline eklenmedi).</p>`:''}<div class="acts"><button class="ic" onclick="lbArtist(${a.id})">Sanatçı sayfası (Sanat Rehberi)</button><a href="${esc(d.url)}" target="_blank">lebriz.com ↗</a></div></div>`})}).catch(()=>{el.innerHTML=''})}
+
 // deep links: #lot=site|id  or  #cmp=k1,k2
-(()=>{const h=decodeURIComponent(location.hash.slice(1));if(h.startsWith('lot='))openLot(h.slice(4));if(h.startsWith('cmp=')){cmp=h.slice(4).split(',').filter(k=>byKey[k]).slice(0,4);dock();if(cmp.length>1)showCmp()}})();
+(()=>{const h=decodeURIComponent(location.hash.slice(1));if(h.startsWith('lot='))openLot(h.slice(4));if(h=='lebriz')lbOpenTab();if(h.startsWith('lba=')){lbOpenTab();lbArtist(h.slice(4))}if(h.startsWith('cmp=')){cmp=h.slice(4).split(',').filter(k=>byKey[k]).slice(0,4);dock();if(cmp.length>1)showCmp()}})();
 </script></body></html>

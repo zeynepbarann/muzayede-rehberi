@@ -10,3 +10,5 @@ _site/
 m1.html
 mapp.js
 artam_*
+lebriz_cache/
+lebriz*.log
