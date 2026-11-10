@@ -453,6 +453,7 @@ nav.tabs .ti{display:none}
 #mc .det .big img,#catGrid img,.wks img{cursor:zoom-in}
 @media(max-width:640px){.znav{display:none}#mc .thumbs::after{content:"";flex:none}}
 .zoomtip{font-size:12px;margin:6px 0 0;text-align:center}
+.btn.sm{height:34px;padding:0 12px;font-size:13px}.lbstat .src-pend{white-space:nowrap}
 </style></head><body>
 <header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -463,6 +464,7 @@ nav.tabs .ti{display:none}
  <label class="tgl"><span><b>Koyu tema</b><small>Siyah-altın görünüm</small></span><input type="checkbox" id="setDark"><i aria-hidden="true"></i></label>
  <label class="tgl"><span><b>Açılışta Favorilerim</b><small>Site, seçtiğiniz sanatçılarla açılır</small></span><input type="checkbox" id="setStart"><i aria-hidden="true"></i></label>
  <label class="tgl"><span><b>Kartlarda açıklama</b><small>Eserin tam açıklaması kartta da görünsün</small></span><input type="checkbox" id="setDesc"><i aria-hidden="true"></i></label>
+ <label class="tgl"><span><b>Lebriz yalnızca Wi-Fi'da</b><small>Mobil veride bekler, Wi-Fi'a bağlanınca kendiliğinden başlar (Android)</small></span><input type="checkbox" id="setWifi"><i aria-hidden="true"></i></label>
  <hr>
  <button type="button" class="mi" id="mPick">★ Favori sanatçıları düzenle</button>
  <button type="button" class="mi" id="mAdd">＋ Bağlantı ekle</button>
@@ -577,7 +579,7 @@ nav.tabs .ti{display:none}
  <details class="faq"><summary>Fiyatlar ve eserler nereden geliyor, ne sıklıkla güncelleniyor?</summary><p>Müzayede evlerinin herkese açık sayfalarından her sabah otomatik olarak toplanır. Bazı sitelerde güncel pey canlı yüklendiği için görünmeyebilir. Kesin bilgi için eserin sayfasına gidin.</p></details>
  <details class="faq"><summary>“Değer” sekmesi neyi gösteriyor?</summary><p>Aynı sanatçının sitede kayıtlı diğer eserlerinin fiyatlarıyla karşılaştırma yapar: en düşük, ortalama, en yüksek. Boyut, teknik ve dönem farkları hesaba katılmaz; fikir vermek içindir.</p></details>
  <details class="faq"><summary>Eserleri nasıl karşılaştırırım?</summary><p>Bir eseri açıp <b>⇄ Karşılaştır</b>'a basın; en fazla 4 eser seçebilirsiniz. Alttaki çubuktan <b>Yan yana</b> ile karşılaştırın.</p></details>
- <details class="faq"><summary>Lebriz kataloğunu nasıl görürüm?</summary><p>Lebriz arşivindeki bir sanatçının sayfasında <b>Lebriz kataloğu</b> sekmesini açın ya da <b>Favorilerim → Lebriz</b>'e gidin. Katalog henüz çekilmediyse <b>Lebriz'den çek</b>'e basın; açılan GitHub sayfasında <b>Create</b> deyin. Birkaç dakika sonra eserler görünür. Arşiv her sayfayı saklamadığı için katalog eksik olabilir.</p></details>
+ <details class="faq"><summary>Lebriz kataloğunu nasıl görürüm?</summary><p>Lebriz arşivindeki bir sanatçının sayfasında <b>Lebriz kataloğu</b> sekmesini açın ya da <b>Favorilerim → Lebriz</b>'e gidin. Katalog henüz çekilmediyse <b>Lebriz'den çek</b>'e basın; açılan GitHub sayfasında <b>Create</b> deyin. Birkaç dakika sonra eserler görünür. Arşiv her sayfayı saklamadığı için katalog eksik olabilir. Çekme GitHub'ın sunucularında yapılır, telefonunuzun internetini kullanmaz; yine de ⚙ → <b>Lebriz yalnızca Wi-Fi'da</b> açıksa mobil veride bekler (Android). Bekleyen ya da süren çekmeyi <b>İptal</b> ile durdurabilirsiniz.</p></details>
  <details class="faq"><summary>Bağlantı eklemek neden GitHub sayfası açıyor?</summary><p>Site GitHub üzerinde çalışır; tarayıcıyı başlatmak için GitHub izni gerekir. ⚙ → <b>GitHub bağlantısı</b> ile her cihazda bir kez anahtar eklerseniz <b>Ekle</b> ve <b>Lebriz'den çek</b> düğmeleri işi doğrudan başlatır.</p></details>
  <details class="faq"><summary>Favorilerim nerede saklanıyor?</summary><p>Yalnızca bu tarayıcıda. Hesap gerekmez ama başka bir cihazda görünmez.</p></details>
 </div></div>
@@ -602,7 +604,7 @@ const fav=new Set(LS.get('mr_fav',[]));let cmp=[];let view='';
 const F0={q:'',site:'',artist:'',pmin:0,pmax:Infinity,ending:0,type:'',sort:'end',tags:[],tech:'',fav:false,lb:false};
 const F={...F0,tags:[]};let PAGE=60,shown=0,curList=[];
 const favArt=new Set(LS.get('mr_fav_art',[]));let AR=null;
-const SET=Object.assign({start:true,desc:false},LS.get('mr_set',{}));const saveSet=()=>LS.set('mr_set',SET);
+const SET=Object.assign({start:true,desc:false,lbWifi:true},LS.get('mr_set',{}));const saveSet=()=>LS.set('mr_set',SET);
 let favTab=LS.get('mr_favtab','art');
 const tip=t=>`<details class="tip"><summary aria-label="Açıklama" title="Açıklama">ⓘ</summary><span>${t}</span></details>`;
 const startView=()=>SET.start?'fav':'lots';
@@ -634,6 +636,7 @@ $('menuBtn').onclick=e=>{e.stopPropagation();menuOpen(!$('menu').classList.conta
 document.addEventListener('click',e=>{if(!e.target.closest('#menu')&&!e.target.closest('#menuBtn'))menuOpen(false)});
 $('setDark').checked=document.documentElement.dataset.theme=='dark';$('setStart').checked=!!SET.start;$('setDesc').checked=!!SET.desc;
 $('setDark').onchange=e=>{const t=e.target.checked?'dark':'light';document.documentElement.dataset.theme=t;try{localStorage.setItem('mr_theme',t)}catch(x){}};
+$('setWifi').checked=!!SET.lbWifi;$('setWifi').onchange=e=>{SET.lbWifi=e.target.checked;saveSet();if(!SET.lbWifi)lbWaitCheck(true)};
 $('setStart').onchange=e=>{SET.start=e.target.checked;saveSet();toast(SET.start?'Site Favorilerim ile açılacak':'Site Keşfet ile açılacak')};
 $('setDesc').onchange=e=>{SET.desc=e.target.checked;saveSet();if(view=='lots')render();else if(view=='fav')renderFav()};
 $('mPick').onclick=()=>{menuOpen(false);openPick()};$('mAdd').onclick=()=>{menuOpen(false);openAdd()};$('mHelp').onclick=()=>{menuOpen(false);openHelp()};
@@ -779,10 +782,10 @@ function renderFav(){const el=$('favBody');if(!D.lots.length)return;updateFavBad
   if(!el.querySelector('.lbrow'))el.innerHTML='<div class="skc skel"></div>';
   lbLoad().catch(()=>{}).then(()=>{const rows=[...favArt].sort((a,b)=>a.localeCompare(b,'tr')).map(n=>({n,a:lbMatch(n)})),inLb=rows.filter(r=>r.a);
    Promise.all(inLb.map(r=>lbCat(r.a.id).then(c=>r.c=c))).then(()=>{if(view!='fav'||favTab!='lb')return;
-    const has=r=>r.c&&r.c.works&&r.c.works.length,missing=inLb.filter(r=>!has(r)&&!lbPending(r.a.id));
+    const has=r=>r.c&&r.c.works&&r.c.works.length,missing=inLb.filter(r=>!has(r)&&!lbBusy(r.a.id));
     let h=`<div class="lbhead"><p>${inLb.length?`${rows.length} favori sanatçınızdan <b>${inLb.length}</b> tanesi Lebriz arşivinde.`:'Favori sanatçılarınızdan hiçbiri Lebriz arşivinde (320 sanatçı) yok.'} ${tip('Lebriz 2023\'te kapanan bir sanat rehberiydi. “Çek” düğmesi GitHub\'da bir istek açar; Create\'e basınca sanatçının arşivdeki kataloğu birkaç dakika içinde siteye eklenir.')}</p>${missing.length>1?`<button type="button" class="btn pri" data-lbpull="${missing.map(r=>r.a.id).join(',')}">Eksik ${missing.length} kataloğu çek</button>`:''}</div>`;
-    h+=inLb.map(r=>{const c=r.c,ok=has(r),pend=lbPending(r.a.id);return `<div class="lbrow"><div class="lbinfo"><b>${aLink(r.n)}</b><span class="muted">${r.a.y?esc(r.a.y)+' · ':''}Lebriz'de ${r.a.w?r.a.w.toLocaleString('tr-TR')+' eserlik katalog':'katalog'}</span></div>
-     <div class="lbstat">${pend?'<span class="src-pend">⏳ Çekiliyor…</span>':ok?`<span class="src-ok">✓ ${c.works.length.toLocaleString('tr-TR')} eser</span><button type="button" class="btn" data-lbopen="${r.a.id}">Kataloğu aç →</button>`:`<button type="button" class="btn" data-lbpull="${r.a.id}">Lebriz'den çek</button>`}</div>
+    h+=inLb.map(r=>{const c=r.c,ok=has(r),badge=lbBadge(r.a.id);return `<div class="lbrow"><div class="lbinfo"><b>${aLink(r.n)}</b><span class="muted">${r.a.y?esc(r.a.y)+' · ':''}Lebriz'de ${r.a.w?r.a.w.toLocaleString('tr-TR')+' eserlik katalog':'katalog'}</span></div>
+     <div class="lbstat">${badge?badge:ok?`<span class="src-ok">✓ ${c.works.length.toLocaleString('tr-TR')} eser</span><button type="button" class="btn" data-lbopen="${r.a.id}">Kataloğu aç →</button>`:`<button type="button" class="btn" data-lbpull="${r.a.id}">Lebriz'den çek</button>`}</div>
      ${ok?`<div class="lbthumbs" data-lbopen="${r.a.id}">${c.works.filter(w=>w.i).slice(0,10).map(w=>`<img loading="lazy" onerror="this.remove()" src="${esc(w.i)}" alt="">`).join('')}</div>`:''}</div>`}).join('');
     const notIn=rows.filter(r=>!r.a);if(notIn.length)h+=`<div class="nolive"><h4>Lebriz arşivinde olmayanlar</h4><p class="muted">Arşivde 320 sanatçı var; bu sanatçılar aralarında değil.</p><div class="tags">${notIn.map(r=>`<span class="tag">${esc(r.n)}</span>`).join('')}</div></div>`;
     el.innerHTML=h})});return}
@@ -882,6 +885,7 @@ function dock(){$('dock').classList.toggle('show',cmp.length>0);$('dockItems').i
 document.addEventListener('click',e=>{document.querySelectorAll('details.tip[open]').forEach(d=>{if(!d.contains(e.target))d.open=false});
  const act=e.target.closest('[data-act]');if(act){e.preventDefault();const a=act.dataset.act;if(a=='pick')openPick();else if(a=='reset')resetF();else if(a=='add')openAdd();else if(a=='gh'){closeAdd();openGh()}else if(a=='addissue'){addViaIssue=true;$('addGo').click()}else if(a=='help')openHelp();return}
  const pa=e.target.closest('[data-past]');if(pa){e.preventDefault();openPast(pa.dataset.past);return}
+ const lc=e.target.closest('[data-lbcancel]');if(lc){e.preventDefault();lbCancel(lc.dataset.lbcancel);return}
  const lp=e.target.closest('[data-lbpull]');if(lp){e.preventDefault();lbPull(lp.dataset.lbpull.split(','));return}
  const lo=e.target.closest('[data-lbopen]');if(lo){e.preventDefault();openCatalog(+lo.dataset.lbopen);return}
  const go=e.target.closest('[data-go]');if(go){e.preventDefault();show(go.dataset.go);return}
@@ -900,9 +904,30 @@ $('m').onclick=e=>{if(e.target.id=='m')dismissM()};$('doCmp').onclick=showCmp;$(
 const LBC={};
 const lbCat=(id,fresh)=>(!fresh&&(id in LBC))?Promise.resolve(LBC[id]):fetch(`data/lebriz_catalog/${id}.json`+(fresh?'?t='+Date.now():''),{cache:'no-cache'}).then(r=>r.ok?r.json():null).catch(()=>null).then(c=>LBC[id]=c);
 const getLbPend=()=>LS.get('mr_lbpend',[]),setLbPend=a=>LS.set('mr_lbpend',a),lbPending=id=>getLbPend().some(p=>p.id==id);
+const getLbWait=()=>LS.get('mr_lbwait',[]),setLbWait=a=>LS.set('mr_lbwait',a),lbWaiting=id=>getLbWait().some(w=>w.id==id),lbBusy=id=>lbPending(id)||lbWaiting(id);
+const netType=()=>{const c=navigator.connection||navigator.mozConnection||navigator.webkitConnection;return c&&c.type||''};
+const onCellular=()=>netType()=='cellular';
+const lbBadge=id=>lbWaiting(id)?`<span class="src-pend">📶 Wi-Fi bekleniyor</span><button type="button" class="btn ghost sm" data-lbcancel="${id}">İptal</button>`:lbPending(id)?`<span class="src-pend">⏳ Çekiliyor…</span><button type="button" class="btn ghost sm" data-lbcancel="${id}">İptal</button>`:'';
+function lbWaitCheck(force){const W=getLbWait();if(!W.length||(!force&&onCellular()))return;setLbWait([]);toast('📶 Wi-Fi bağlandı; bekleyen Lebriz çekme başlıyor');lbPull(W.map(w=>w.id),true)}
+(()=>{const c=navigator.connection;if(c&&c.addEventListener)c.addEventListener('change',()=>lbWaitCheck())})();
+async function lbCancel(id){id=+id;
+ if(lbWaiting(id)){setLbWait(getLbWait().filter(w=>w.id!=id));toast('İptal edildi');refreshLbViews();return}
+ const p=getLbPend().find(x=>x.id==id);if(!p)return;
+ if(!ghOn()){setLbPend(getLbPend().filter(x=>x.id!=id));toast('Takip durduruldu. GitHub isteğini açtıysanız orada kapatabilirsiniz.');refreshLbViews();return}
+ toast('İptal ediliyor…');
+ const idsOf=r=>(r.display_title||'').replace(/^Lebriz:?\s*/,'').split(/\s*,\s*/).map(Number);
+ for(let t=0;t<5;t++){const runs=(await ghRuns('lebriz-pull.yml')).filter(r=>Date.parse(r.created_at)>=p.at-9e4&&idsOf(r).includes(id));
+  const live=runs.find(r=>r.status!='completed');
+  if(live){const res=await ghApi(`/actions/runs/${live.id}/cancel`,{method:'POST'}).catch(()=>({status:-1}));
+   if(res.status==202){const ids=idsOf(live);setLbPend(getLbPend().filter(x=>!ids.includes(x.id)));toast(ids.length>1?`İptal edildi (aynı işteki ${ids.length} sanatçı birlikte durduruldu)`:'✓ İptal edildi');refreshLbViews();return}
+   toast(res.status==409?'Bu çekme bitmek üzere; artık iptal edilemiyor':(GHERR[res.status]||'İptal edilemedi ('+res.status+')'));return}
+  if(runs.length){toast('Bu çekme zaten bitti; sonuç birazdan görünür');return}
+  await new Promise(r=>setTimeout(r,4000))}
+ setLbPend(getLbPend().filter(x=>x.id!=id));toast('GitHub\'da iş bulunamadı; takip durduruldu');refreshLbViews()}
 const lbName=id=>(LB&&LB.artists.find(a=>a.id==id)||{}).n||('#'+id);
 let lbPollT=null;
-function lbPull(ids){ids=[...new Set(ids.map(Number))].filter(Boolean);if(!ids.length)return;const names=ids.map(lbName);
+function lbPull(ids,force){ids=[...new Set(ids.map(Number))].filter(Boolean);if(!ids.length)return;const names=ids.map(lbName);
+ if(!force&&SET.lbWifi&&onCellular()){const now=Date.now();setLbWait([...getLbWait().filter(w=>!ids.includes(w.id)),...ids.map(id=>({id,at:now}))]);toast('📶 Mobil verideyken beklenir; Wi-Fi\'a bağlanınca kendiliğinden başlar');refreshLbViews();return}
  const title='Lebriz: '+(names.length>3?names.slice(0,3).join(', ')+` +${names.length-3}`:names.join(', '));
  const body='Lebriz ID: '+ids.join(', ')+'\n\nSanatçılar: '+names.join(', ')+'\n\n<!-- 16/22 Müzayede Rehberi: Lebriz kataloğu çekme isteği. Lütfen "Lebriz ID" satırını değiştirmeyin. -->';
  const go=auto=>{if(!auto)window.open('https://github.com/'+REPO+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body),'_blank','noopener');
@@ -917,9 +942,9 @@ function lbPoll(){clearTimeout(lbPollT);const P=getLbPend().filter(p=>Date.now()
 function refreshLbViews(){if(view=='fav'&&favTab=='lb')renderFav();const b=$('lbCatBox');if(b&&LB){const a=LB.artists.find(x=>x.id==b.dataset.id);if(a)fillCatalog(a)}}
 function openCatalog(id){openArtist(null,id).then(()=>{const b=document.querySelector('[data-pt=katalog]');if(b)b.click()})}
 const catCard=w=>`<div>${w.i?`<img loading="lazy" onerror="this.remove()" src="${esc(w.i)}" alt="">`:''}<b>${esc(w.t||'Adsız')}</b><div>${esc([w.y,w.k].filter(Boolean).join(' · '))}</div><div class="muted">${esc(w.s||'')}</div></div>`;
-function fillCatalog(a){const box=$('lbCatBox');if(!box)return;lbCat(a.id).then(c=>{if(!$('lbCatBox'))return;const pend=lbPending(a.id);
- if(!c||!c.works||!c.works.length){box.innerHTML=`<div class="empty"><div class="big">${pend?'⏳ Katalog çekiliyor…':'Katalog henüz çekilmedi'}</div><p>${a.w?`Lebriz'de bu sanatçının <b>${a.w.toLocaleString('tr-TR')} eserlik</b> kataloğu var. `:''}${pend?'GitHub\'da “Create”e bastıysanız birkaç dakika içinde burada görünür.':'Arşivden çekmek için düğmeye basın; açılan GitHub sayfasında <b>Create</b>\'e basmanız yeterli.'}</p>${c&&c.works&&!c.works.length?'<p class="muted" style="font-size:13px">Son denemede arşivde okunabilir katalog sayfası bulunamadı.</p>':''}${pend?'':`<div class="acts"><button type="button" class="btn pri" data-lbpull="${a.id}">Lebriz'den çek</button></div>`}</div>`;return}
- box.innerHTML=`<div class="catbar"><p class="muted">Arşivde bulunan <b>${c.works.length.toLocaleString('tr-TR')}</b> eser${c.total?` · Lebriz'de toplam ${c.total.toLocaleString('tr-TR')}`:''} ${tip('Lebriz 2023\'te kapandı; katalog Internet Archive kopyalarından çekilir. Arşiv her sayfayı saklamadığı için katalog eksik olabilir. Görseller arşivden yüklenir.')}</p><input class="fld" id="catQ" type="search" placeholder="Katalogda ara: başlık, yıl, teknik…">${pend?'<span class="src-pend">⏳ Yenileniyor…</span>':`<button type="button" class="btn ghost" data-lbpull="${a.id}">Yeniden çek</button>`}</div><div class="wks" id="catGrid"></div><div class="more"><button class="btn" id="catMore">Daha fazla</button></div>`;
+function fillCatalog(a){const box=$('lbCatBox');if(!box)return;lbCat(a.id).then(c=>{if(!$('lbCatBox'))return;const pend=lbBusy(a.id),wait=lbWaiting(a.id);
+ if(!c||!c.works||!c.works.length){box.innerHTML=`<div class="empty"><div class="big">${wait?'📶 Wi-Fi bekleniyor':pend?'⏳ Katalog çekiliyor…':'Katalog henüz çekilmedi'}</div><p>${a.w?`Lebriz'de bu sanatçının <b>${a.w.toLocaleString('tr-TR')} eserlik</b> kataloğu var. `:''}${wait?'Mobil verideyken beklenir; Wi-Fi\'a bağlanınca kendiliğinden başlar.':pend?'Büyük kataloglar 10–30 dakika sürebilir; bitince burada görünür.':'Arşivden çekmek için düğmeye basın; açılan GitHub sayfasında <b>Create</b>\'e basmanız yeterli.'}</p>${c&&c.works&&!c.works.length?'<p class="muted" style="font-size:13px">Son denemede arşivde okunabilir katalog sayfası bulunamadı.</p>':''}<div class="acts">${pend?`<button type="button" class="btn" data-lbcancel="${a.id}">İptal</button>`:`<button type="button" class="btn pri" data-lbpull="${a.id}">Lebriz'den çek</button>`}</div></div>`;return}
+ box.innerHTML=`<div class="catbar"><p class="muted">Arşivde bulunan <b>${c.works.length.toLocaleString('tr-TR')}</b> eser${c.total?` · Lebriz'de toplam ${c.total.toLocaleString('tr-TR')}`:''} ${tip('Lebriz 2023\'te kapandı; katalog Internet Archive kopyalarından çekilir. Arşiv her sayfayı saklamadığı için katalog eksik olabilir. Görseller arşivden yüklenir.')}</p><input class="fld" id="catQ" type="search" placeholder="Katalogda ara: başlık, yıl, teknik…">${pend?lbBadge(a.id):`<button type="button" class="btn ghost" data-lbpull="${a.id}">Yeniden çek</button>`}</div><div class="wks" id="catGrid"></div><div class="more"><button class="btn" id="catMore">Daha fazla</button></div>`;
  let L=c.works,n=0;const draw=reset=>{if(reset){n=0;$('catGrid').innerHTML=''}const next=L.slice(n,n+60);$('catGrid').insertAdjacentHTML('beforeend',next.map(catCard).join('')||'<p class="muted">Eşleşen eser yok.</p>');n+=next.length;$('catMore').style.display=n<L.length?'':'none'};
  $('catQ').oninput=e=>{const q=norm(e.target.value).split(' ').filter(Boolean);L=c.works.filter(w=>{const t=norm([w.t,w.y,w.k,w.s,w.c].join(' '));return q.every(x=>t.includes(x))});draw(true)};
  $('catMore').onclick=()=>draw();draw(true)})}
@@ -1178,7 +1203,7 @@ $('addGo').onclick=async()=>{const url=($('addUrl').value||'').trim();if(!/^http
  const base=(srcFor({url:u,host})||{}).last_run||'';setPend([...getPend().filter(p=>!sameUrl(p.url,u)),{url:u,host,at:Date.now(),base,auto}]);
  $('addUrl').value='';$('addNote').value='';if(auto){$('addMsg').textContent='✓ Tarama başladı; birkaç dakika içinde eklenir.';toast('✓ Tarama başladı: '+host)}else if(!ghOn())$('addMsg').textContent='GitHub sekmesinde “Create”e basın.';buildSources();houseTab('added');clearTimeout(pollT);pollT=setTimeout(pollPending,auto?15e3:3e4)};
 $('addUrl').addEventListener('keydown',e=>{if(e.key=='Enter'){e.preventDefault();$('addGo').click()}});
-document.addEventListener('visibilitychange',()=>{if(document.hidden)return;if(getPend().length)pollPending();if(getLbPend().length)lbPoll()});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)return;if(getPend().length)pollPending();if(getLbPend().length)lbPoll();if(getLbWait().length)lbWaitCheck()});
 function route(h,boot){h=dec(h);curRoute=h;
  if(!h){show(startView(),true);return}
  if(HASHTAB[h]){show(HASHTAB[h],true);return}
@@ -1201,5 +1226,5 @@ addEventListener('popstate',e=>{const st=e.state||{};menuOpen(false);navQuiet=tr
 /* ===== boot ===== */
 ghUI();
 (()=>{const h=dec(location.hash.slice(1));history.replaceState({},'',location.href);navQuiet=true;try{syncFilterUI();route(h,true)}finally{navQuiet=false}
- if(!h&&!LS.get('mr_welcomed',0))openHelp();if(getLbPend().length)ready.then(()=>lbLoad().catch(()=>{})).then(lbPoll)})();
+ if(!h&&!LS.get('mr_welcomed',0))openHelp();if(getLbPend().length)ready.then(()=>lbLoad().catch(()=>{})).then(lbPoll);if(getLbWait().length)ready.then(()=>lbLoad().catch(()=>{})).then(()=>lbWaitCheck())})();
 </script></body></html>
