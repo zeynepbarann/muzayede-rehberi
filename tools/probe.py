@@ -5,7 +5,10 @@ UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like 
 for url in sys.argv[1:]:
     print("=" * 100, "\nURL", url)
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": UA, "Accept": "text/html,application/json", "Accept-Language": "tr-TR,tr;q=0.9", "X-Requested-With": "XMLHttpRequest"})
+        body = None
+        if url.startswith("POST:"):
+            url, raw = url[5:].split("|", 1); body = raw.encode()
+        req = urllib.request.Request(url, data=body, headers={"User-Agent": UA, "Accept": "text/html,application/json", "Accept-Language": "tr-TR,tr;q=0.9", "X-Requested-With": "XMLHttpRequest", **({"Content-Type": "application/json"} if body else {})})
         with urllib.request.urlopen(req, timeout=40) as r:
             print("STATUS", r.status, "| TYPE", r.headers.get("content-type"), "| FINAL", r.geturl())
             b = r.read()
