@@ -848,7 +848,8 @@ function openLot(k){const l=byKey[k];if(!l)return;const hist=(l.history||[]).map
  openM();ovOpen('m','lot='+encodeURIComponent(k));loadPast().then(p=>{if($('apanel'))$('apanel').innerHTML=artistPanel(l,p)});lbLotBlock(l);lbPriceBlock(l)}
 function openPast(k){const o=PASTBY[k];if(!o){loadPast().then(()=>PASTBY[k]&&openPast(k));return}
  const live=o.artist?D.lots.filter(l=>l._a&&l._a==o._a).length:0;
- $('mc').innerHTML=`<div class="det"><div><div class="big">${o.image?`<img src="${esc(o.image)}" alt="">`:'<span class="muted">Görsel yok</span>'}</div></div>
+ const imgs=(o.images&&o.images.length?o.images:(o.image?[o.image]:[]));
+ $('mc').innerHTML=`<div class="det"><div><div class="big">${imgs[0]?`<img id="bigI" src="${esc(imgs[0])}" alt="">`:'<span class="muted">Görsel yok</span>'}</div><div class="thumbs">${imgs.length?imgs.map(i=>`<img loading="lazy" onerror="this.remove()" src="${esc(i)}" alt="" onclick="$('bigI')&&($('bigI').src=this.src)">`).join(''):'<p class="muted" style="padding:20px">Görsel yok</p>'}</div></div>
  <div class="info"><div class="meta">${esc(o.house)} · <span class="ended">Müzayede bitti</span></div><h2 class="lt">${o.artist?aLink(o.artist)+' '+starBtn(o.artist):'Eser'}</h2>${o.description?`<p class="ld">${esc(o.description)}</p>`:''}
  <div class="keyf"><div><span>Son görülen fiyat ${tip('Sitenin bu eseri son gördüğü andaki açılış ya da güncel fiyatı. Satış fiyatı değildir; müzayede evi satış sonucunu yayımlamamış olabilir.')}</span><b class="price">${TL(o.start_price)}</b></div><div><span>Bitiş</span><b>${o.end_date?esc(fshort(dt(o.end_date))):'—'}</b><small>${esc(o.auction||'')}</small></div></div>
  <div class="note">Bu eser artık satışta değil. ${o.artist?(live?`Sanatçının şu an satışta <b>${live}</b> eseri var.`:'Sanatçıyı ★ ile takip ederseniz yeni eseri çıktığında Favorilerim\'de görürsünüz.'):''}</div>
