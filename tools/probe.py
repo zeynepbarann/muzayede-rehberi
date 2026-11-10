@@ -13,7 +13,11 @@ for url in sys.argv[1:]:
         print("ERROR", repr(e)); continue
     t = b.decode("utf8", "replace"); print("LENGTH", len(t))
     try:
-        j = json.loads(t); print("JSON:", json.dumps(j, ensure_ascii=False, indent=1)[:6000]); continue
+        j = json.loads(t)
+        if isinstance(j, dict) and isinstance(j.get("products"), list):
+            print("KEYS:", {k: (v if not isinstance(v, (list, dict)) else type(v).__name__ + f"[{len(v)}]") for k, v in j.items()})
+            print("LOTS:", [(p.get("id"), p.get("lotno")) for p in j["products"]]); continue
+        print("JSON:", json.dumps(j, ensure_ascii=False, indent=1)[:6000]); continue
     except Exception: pass
     g = re.search(r"window\.artam_global\s*=\s*(\{.*?\});?\s*$", t, re.M)
     if g: print("ARTAM_GLOBAL:", g.group(1)[:8000])
