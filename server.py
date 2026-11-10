@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Local web app: python3 server.py [port] -> http://localhost:8000
-Serves the HTML shell (rebuilt from template.html per request) and data/*.json. Run export.py to refresh data."""
+Serves the HTML shell (rebuilt from template.html per request) and static assets (data/*.json, favicon). Run export.py to refresh data."""
 import http.server, sys, os, export
 HERE = os.path.dirname(os.path.abspath(__file__))
 class H(http.server.SimpleHTTPRequestHandler):

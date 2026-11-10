@@ -12,3 +12,5 @@ mapp.js
 artam_*
 lebriz_cache/
 lebriz*.log
+auctions.db
+sources.json.tmp

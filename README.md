@@ -5,25 +5,35 @@ Türkiye'deki çevrimiçi müzayede sitelerindeki devam eden eserleri tek yerde 
 **Canlı site:** https://zeynepbarann.github.io/muzayede-rehberi/
 
 ## Kaynaklar
-nefsmuzayede, dedemuzayede, anatoliamuzayede, kassanat, turkartproject, uxmuzayede, ranasartgallery, galeriberlin (MuzayedeApp altyapısı), artvela, sanatsalmuzayede, artam. Yalnızca herkese açık sayfalar kullanılır; giriş yapılmaz.
+nefsmuzayede, dedemuzayede, anatoliamuzayede, kassanat, turkartproject, uxmuzayede, ranasartgallery, galeriberlin, kalamismuzayede, aysilmuzayede, nisartgallery (MüzayedeApp altyapısı), artvela, sanatsalmuzayede, artam, MüzayedeApp portalındaki sanat müzayedeleri, ve kullanıcıların eklediği bağlantılar (`sources.json`). Yalnızca herkese açık sayfalar kullanılır; giriş yapılmaz.
+
+## Bağlantı ekleme
+Sitedeki **+ / Bağlantı ekle** formuna bir müzayede veya müzayede evi adresi yapıştırın. Form, `zeynepbarann/muzayede-rehberi` deposunda `kaynak` etiketli bir GitHub issue'su açar (istemcide token yoktur). Günlük tarama (`add_sources.py`) açık issue'ları okur, URL'yi `sources.json` listesine ekler, sayfayı tarar (önce MüzayedeApp altyapısı, sonra bilinen kazıyıcılar, sonra JSON-LD/OpenGraph), sonucu issue'ya yorum olarak yazar ve başarılıysa kapatır.
 
 ## Özellikler
-- Sanatçı, eser, teknik ve müzayede adına göre tam metin arama (Türkçe karakter duyarsız)
-- Site, sanatçı, fiyat aralığı ve bitiş süresi filtreleri; sıralama
-- Eser detay penceresi, 2–4 eser karşılaştırma (cm² fiyatı dahil)
-- Sanatçı değer paneli: en düşük / medyan / ortalama / en yüksek açılış fiyatı
-- Favoriler (tarayıcıda saklanır)
-- Her taramanın fiyatları `auctions.db` içindeki `price_history` tablosunda birikir
+- Genel arama (eser, sanatçı, ev, etiket, Lebriz sergi/galeri)
+- Yalın filtre çubuğu (ev, bitiş, fiyat, teknik) ve “Daha fazla filtre”
+- Birleşik sanatçı adları (yazım/büyük-küçük harf/tarih/kısaltma); elle düzeltmeler `artist_aliases.json`
+- Favori sanatçılar: ana sayfa varsayılan olarak yalnızca onları gösterir
+- Eser detayı, karşılaştırma, Lebriz sanatçı sayfası, değer paneli
 
 ## Otomatik güncelleme
-`.github/workflows/daily.yml` her gün 06:00 (İstanbul) çalışır: siteleri tarar, `index.html`'i oluşturur, `auctions.db`'yi depoya geri işler ve GitHub Pages'e yayınlar. Actions sekmesinden "Run workflow" ile elle de çalıştırılabilir.
+`./refresh.sh` her gün: `add_sources.py` → `scrape.py` → (Pazartesi veya `--lebriz`) `lebriz.py` → `lebriz_export.py` → `export.py`.
+
+**Günlük commit'e dahil edilmesi gerekenler:**
+- `index.html`
+- `data/` (`lots.json`, `past.json`, `artists.json`, `sources.json`, `lebriz_*.json`)
+- kökteki `sources.json` (yeni bağlantı eklendiyse)
+
+**Commit edilmemesi gerekenler:** `auctions.db` (artık gitignore'da; kutu üzerinde kalır), `*.png`, `*.log`, `lebriz_cache/`, `raw_*.html`.
 
 ## Yerelde çalıştırma
 ```bash
 ./refresh.sh            # tara + index.html oluştur
 python3 server.py 8000  # http://localhost:8000
+python3 add_sources.py --url https://www.ornek.com/
 ```
-Python 3 standart kütüphanesi dışında bağımlılık yoktur.
+Python 3 standart kütüphanesi dışında bağımlılık yoktur (`gh` yalnızca issue işlemek için gerekir).
 
 ## Sınırlar
-Güncel pey tutarları sitelerde canlı yüklendiği için toplanmaz; fiyatlar açılış / Hemen Al fiyatlarıdır. Veriler sitelerden alındığı gibidir.
+Güncel pey tutarları çoğu sitede canlı yüklendiği için her zaman toplanamaz. Veriler sitelerden alındığı gibidir.
