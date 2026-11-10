@@ -646,14 +646,14 @@ const runFor=(runs,needle,at)=>runs.find(r=>(r.display_title||'').includes(needl
 const RUNTXT={queued:'sırada',waiting:'sırada',requested:'sırada',pending:'sırada',in_progress:'taranıyor'};
 function ghUI(){$('ghState').textContent=ghOn()?'✓ bağlı':'';$('ghOn').hidden=!ghOn();$('ghSetup').hidden=ghOn();
  $('addSteps').innerHTML=ghOn()?'<li>Bağlantıyı yapıştırıp <b>Ekle</b>\'ye basın.</li><li>Tarama hemen başlar (1–3 dakika).</li><li>Eserler gelince bu sayfa haber verir.</li>'
-  :'<li>“Ekle”ye basın; GitHub\'da istek sayfası açılır.</li><li>Orada <b>Create</b> düğmesine basın.</li><li>Birkaç dakika içinde eserler eklenir; bu sayfa size haber verir.</li><li class="muted">Tam otomatik için ⚙ → <a href="javascript:;" data-act="gh">GitHub bağlantısı</a> (bir kez).</li>'}
+  :'<li><b>Bu cihaz henüz bağlı değil.</b> “Ekle”ye bastığınızda önce bir kerelik GitHub bağlantısı istenir (2 dakika); sonrası tam otomatik.</li><li class="muted">İsterseniz bağlanmadan <a href="javascript:;" data-act="addissue">GitHub sayfasıyla gönderin</a>.</li>'}
 const openGh=()=>{$('ghM').classList.add('open');document.body.style.overflow='hidden';$('ghMsg').textContent='';ghUI();ovOpen('gh')};
 const closeGh=()=>{$('ghM').classList.remove('open');document.body.style.overflow=''};
 const dismissGh=()=>ovClose('gh',closeGh);
 async function ghCheck(){try{const r=await ghApi('/actions/workflows/add-link.yml');return r.status}catch(e){return -1}}
 const GHERR={401:'Anahtar geçersiz ya da süresi dolmuş.',403:'Anahtarın Actions izni yok (Read and write seçin).',404:'Anahtar bu depoya erişemiyor (Only select repositories → muzayede-rehberi).',[-1]:'GitHub\'a ulaşılamadı; internet bağlantısını kontrol edin.'};
 $('ghSave').onclick=async()=>{const t=$('ghTok').value.trim();if(!/^(github_pat_|ghp_)\w{20,}/.test(t)){$('ghMsg').textContent='Anahtar “github_pat_” ile başlamalı.';return}
- LS.set('mr_gh',t);$('ghMsg').textContent='Deneniyor…';const c=await ghCheck();if(c==200){$('ghTok').value='';ghUI();toast('✓ GitHub bağlandı; düğmeler artık tam otomatik')}else{LS.set('mr_gh','');$('ghMsg').textContent=GHERR[c]||('GitHub hata verdi ('+c+').')}};
+ LS.set('mr_gh',t);$('ghMsg').textContent='Deneniyor…';const c=await ghCheck();if(c==200){$('ghTok').value='';ghUI();toast('✓ GitHub bağlandı; düğmeler artık tam otomatik');if(afterGh){const u=afterGh;afterGh='';closeGh();openAdd();$('addUrl').value=u;$('addMsg').textContent='✓ Bağlandı. Şimdi “Ekle”ye basın.'}}else{LS.set('mr_gh','');$('ghMsg').textContent=GHERR[c]||('GitHub hata verdi ('+c+').')}};
 $('ghTest').onclick=async()=>{const c=await ghCheck();toast(c==200?'✓ Bağlantı çalışıyor':(GHERR[c]||'GitHub hata verdi ('+c+')'))};
 $('ghOff').onclick=()=>{LS.set('mr_gh','');ghUI();toast('GitHub bağlantısı kaldırıldı')};
 $('ghX').onclick=dismissGh;$('ghM').onclick=e=>{if(e.target.id=='ghM')dismissGh()};$('mGh').onclick=()=>{menuOpen(false);openGh()};
@@ -856,7 +856,7 @@ function showCmp(){const L=cmp.map(k=>byKey[k]).filter(Boolean);const rows=[['',
  $('mc').innerHTML=`<h2 style="font-size:var(--fs-2xl);margin:0 0 12px">Karşılaştırma</h2><div class="cmp"><table>${html}</table></div><p class="muted" style="font-size:12px">Yeşil: en düşük değer. cm² fiyatı = açılış fiyatı ÷ (en × boy); yalnızca iki boyutlu ölçüsü okunabilen eserlerde hesaplanır.</p>`;openM();ovOpen('m','cmp='+cmp.map(encodeURIComponent).join(','))}
 function dock(){$('dock').classList.toggle('show',cmp.length>0);$('dockItems').innerHTML=cmp.map(k=>byKey[k]?`<img src="${esc(byKey[k].images[0]||'')}" title="${esc(byKey[k].artist)}" alt="">`:'').join('');$('doCmp').disabled=cmp.length<2;$('dockMsg').textContent=cmp.length<2?'En az 2 eser seçin':`${cmp.length}/4`}
 document.addEventListener('click',e=>{document.querySelectorAll('details.tip[open]').forEach(d=>{if(!d.contains(e.target))d.open=false});
- const act=e.target.closest('[data-act]');if(act){e.preventDefault();const a=act.dataset.act;if(a=='pick')openPick();else if(a=='reset')resetF();else if(a=='add')openAdd();else if(a=='gh'){closeAdd();openGh()}else if(a=='help')openHelp();return}
+ const act=e.target.closest('[data-act]');if(act){e.preventDefault();const a=act.dataset.act;if(a=='pick')openPick();else if(a=='reset')resetF();else if(a=='add')openAdd();else if(a=='gh'){closeAdd();openGh()}else if(a=='addissue'){addViaIssue=true;$('addGo').click()}else if(a=='help')openHelp();return}
  const pa=e.target.closest('[data-past]');if(pa){e.preventDefault();openPast(pa.dataset.past);return}
  const lp=e.target.closest('[data-lbpull]');if(lp){e.preventDefault();lbPull(lp.dataset.lbpull.split(','));return}
  const lo=e.target.closest('[data-lbopen]');if(lo){e.preventDefault();openCatalog(+lo.dataset.lbopen);return}
@@ -884,8 +884,8 @@ function lbPull(ids){ids=[...new Set(ids.map(Number))].filter(Boolean);if(!ids.l
  const go=auto=>{if(!auto)window.open('https://github.com/'+REPO+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body),'_blank','noopener');
   const now=Date.now();setLbPend([...getLbPend().filter(p=>!ids.includes(p.id)),...ids.map(id=>({id,at:now,base:(LBC[id]&&LBC[id].pulled_at)||''}))]);
   toast(auto?'✓ Lebriz çekme başladı; büyük kataloglar 10–30 dakika sürebilir':'GitHub sekmesinde “Create”e basın; katalog birkaç dakika içinde gelir');refreshLbViews();clearTimeout(lbPollT);lbPollT=setTimeout(lbPoll,45e3)};
- if(ghOn()){ghDispatch('lebriz-pull.yml',{ids:ids.join(',')}).then(c=>{if(c!=204)toast((GHERR[c]||'GitHub hata verdi ('+c+').')+' GitHub sayfası açılıyor.');go(c==204)});return}
- go(false);return;refreshLbViews();clearTimeout(lbPollT);lbPollT=setTimeout(lbPoll,45e3)}
+ if(!ghOn()){openGh();$('ghMsg').textContent='Lebriz kataloğunu çekmek için önce bu cihazı bir kez bağlayın; sonra düğmeye tekrar basın.';return}
+ ghDispatch('lebriz-pull.yml',{ids:ids.join(',')}).then(c=>{if(c==204)go(true);else toast((GHERR[c]||'GitHub hata verdi ('+c+').')+' ⚙ → GitHub bağlantısı\'nı kontrol edin.','GitHub sayfasıyla gönder',()=>go(false))});return;refreshLbViews();clearTimeout(lbPollT);lbPollT=setTimeout(lbPoll,45e3)}
 function lbPoll(){clearTimeout(lbPollT);const P=getLbPend().filter(p=>Date.now()-p.at<864e5);setLbPend(P);if(!P.length){refreshLbViews();return}
  Promise.all(P.map(p=>lbCat(p.id,true).then(c=>[p,c]))).then(R=>{const left=[];
   R.forEach(([p,c])=>{if(c&&c.pulled_at&&c.pulled_at!==p.base)toast(c.works.length?`✓ ${lbName(p.id)}: ${c.works.length.toLocaleString('tr-TR')} eser Lebriz'den çekildi`:`${lbName(p.id)}: arşivde katalog sayfası bulunamadı`,c.works.length?'Göster':'',()=>openCatalog(p.id));else left.push(p)});
@@ -1105,14 +1105,16 @@ const closeHelp=()=>{$('helpM').classList.remove('open');document.body.style.ove
 const dismissHelp=()=>ovClose('help',closeHelp);
 $('helpX').onclick=dismissHelp;$('helpClose').onclick=dismissHelp;$('helpPick').onclick=()=>{closeHelp();openPick()};$('helpM').onclick=e=>{if(e.target.id=='helpM')dismissHelp()};
 $('addM').onclick=e=>{if(e.target.id=='addM')dismissAdd()};
+let addViaIssue=false,afterGh='';
 $('addGo').onclick=async()=>{const url=($('addUrl').value||'').trim();if(!/^https?:\/\//i.test(url)&&!/^[\w.-]+\.[a-z]{2,}/i.test(url)){$('addMsg').textContent='Lütfen bir web adresi girin.';$('addUrl').focus();return}
  const u=normUrl(url),host=hostOf(u);
  const note=($('addNote').value||'').trim();
  const title='Kaynak: '+host;
  const body='Kaynak URL:\n'+u+'\n\nNot:\n'+(note||'—')+'\n\n<!-- 16/22 Müzayede Rehberi otomatik ekleme. Lütfen URL satırını değiştirmeyin. -->';
- let auto=false;if(ghOn()){$('addGo').disabled=true;$('addMsg').textContent='Başlatılıyor…';const c=await ghDispatch('add-link.yml',{url:u});$('addGo').disabled=false;
-  if(c==204)auto=true;else{$('addMsg').textContent=(GHERR[c]||'GitHub hata verdi ('+c+').')+' GitHub sayfası açılıyor.'}}
- if(!auto)window.open('https://github.com/'+REPO+'/issues/new?labels=kaynak&title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body),'_blank','noopener');
+ if(!ghOn()&&!addViaIssue){afterGh=u;closeAdd();openGh();$('ghMsg').textContent='Bağlantınızı eklemek için önce bu cihazı bir kez bağlayın; sonra kaldığınız yere döneceksiniz.';return}
+ let auto=false;if(ghOn()&&!addViaIssue){$('addGo').disabled=true;$('addMsg').textContent='Başlatılıyor…';const c=await ghDispatch('add-link.yml',{url:u});$('addGo').disabled=false;
+  if(c==204)auto=true;else{$('addMsg').innerHTML=esc(GHERR[c]||'GitHub hata verdi ('+c+').')+' <a href="javascript:;" data-act="gh">Bağlantıyı kontrol et</a> · <a href="javascript:;" data-act="addissue">GitHub sayfasıyla gönder</a>';return}}
+ if(!auto)window.open('https://github.com/'+REPO+'/issues/new?labels=kaynak&title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body),'_blank','noopener');addViaIssue=false;
  const base=(srcFor({url:u,host})||{}).last_run||'';setPend([...getPend().filter(p=>!sameUrl(p.url,u)),{url:u,host,at:Date.now(),base,auto}]);
  $('addUrl').value='';$('addNote').value='';if(auto){$('addMsg').textContent='✓ Tarama başladı; birkaç dakika içinde eklenir.';toast('✓ Tarama başladı: '+host)}else if(!ghOn())$('addMsg').textContent='GitHub sekmesinde “Create”e basın.';buildSources();houseTab('added');clearTimeout(pollT);pollT=setTimeout(pollPending,auto?15e3:3e4)};
 $('addUrl').addEventListener('keydown',e=>{if(e.key=='Enter'){e.preventDefault();$('addGo').click()}});
