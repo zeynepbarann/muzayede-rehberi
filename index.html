@@ -613,13 +613,19 @@ let curRoute='',navQuiet=false;try{history.scrollRestoration='manual'}catch(e){}
 const TABHASH={fav:'favorilerim',lots:'kesfet',houses:'evler',lb:'arsiv'},HASHTAB={favorilerim:'fav',kesfet:'lots',evler:'houses',arsiv:'lb',lebriz:'lb'};
 const dec=x=>{try{return decodeURIComponent(x||'')}catch(e){return x||''}};
 const urlFor=h=>location.pathname+location.search+(h?'#'+h:'');
+let spot=null;
+const spotNow=()=>{const t=view=='artist'&&document.querySelector('#artistPage [data-pt].on');return{y:Math.round(scrollY),pt:t?t.dataset.pt:undefined}};
+function takeSpot(){if(!navQuiet)spot=spotNow()}  /* call before the screen changes */
+function saveSpot(){try{const sp=spot||spotNow();spot=null;history.replaceState({...(history.state||{}),...sp},'')}catch(e){}}
 function pushNav(hash){if(navQuiet)return;curRoute=dec(hash);const st=history.state||{};
- if(!st.ov&&dec(location.hash.slice(1))===dec(hash)){history.replaceState({},'',urlFor(hash));return}
- history.pushState({},'',urlFor(hash))}
+ if(!st.ov&&dec(location.hash.slice(1))===dec(hash)){history.replaceState({...st},'',urlFor(hash));return}
+ saveSpot();history.pushState({},'',urlFor(hash))}
+function restoreSpot(st,pr){Promise.resolve(pr).then(()=>ready).then(()=>{if(view=='artist'&&st.pt){const b=document.querySelector(`#artistPage [data-pt="${st.pt}"]`);if(b&&!b.classList.contains('on'))b.click()}
+ let n=0;const step=()=>{if(view=='lots'&&document.documentElement.scrollHeight<st.y+innerHeight&&shown<curList.length&&n++<80){more();requestAnimationFrame(step);return}scrollTo(0,st.y)};requestAnimationFrame(()=>requestAnimationFrame(step))})}
 function ovIsOpen(n){const id={m:'m',pick:'pickM',add:'addM',help:'helpM',filters:'filters',gh:'ghM',zoom:'zoomV'}[n];if(n=='search')return $('gsWrap').classList.contains('full');return !!id&&$(id).classList.contains('open')}
 function ovOpen(name,hash){if(navQuiet)return;const st=history.state||{};const url=hash!=null?urlFor(hash):location.href;
  if(st.ov===name&&(hash==null||dec(location.hash.slice(1))===dec(hash))){history.replaceState(st,'',url);return}
- const replace=st.ov&&st.ov!==name&&!ovIsOpen(st.ov);
+ const replace=st.ov&&st.ov!==name&&!ovIsOpen(st.ov);if(!replace)saveSpot();
  history[replace?'replaceState':'pushState']({ov:name,base:replace?(st.base??curRoute):curRoute},'',url)}
 function ovClose(name,fn){if((history.state||{}).ov===name&&ovIsOpen(name))history.back();else fn()}
 let favKeys=null;const fk=n=>akey(n);
@@ -656,7 +662,7 @@ function initFilters(){$('nLots').textContent=D.lots.length.toLocaleString('tr-T
 const saveFav=()=>{LS.set('mr_fav',[...fav]);updateFavBadge()};
 function updateFavBadge(){if(!D.lots.length)return;const n=D.lots.filter(l=>favOf(l)).length;$('favTabN').textContent=n?n.toLocaleString('tr-TR'):'';
  $('favArtN').textContent=favArt.size||'';$('favSavedN').textContent=[...fav].filter(k=>byKey[k]).length||''}
-function favChanged(){updateFavBadge();if(view=='fav')renderFav();if(view=='lots'&&F.fav)render()}
+function favChanged(){updateFavBadge();if(view!='fav')favDirty=true;if(view=='fav')renderFav();if(view=='lots'&&F.fav)render()}
 function fillTech(){if(!$('tech'))return;const cur=$('tech').value,seen=new Set();D.lots.forEach(l=>(l._tags||[]).forEach(x=>x.k=='tech'&&seen.add(x.v)));
  const opts=['<option value="">Tüm teknikler</option>',...[...seen].sort((a,b)=>a.localeCompare(b,'tr')).map(v=>`<option value="${esc(v)}">${esc(v)}</option>`)];$('tech').innerHTML=opts.join('');$('tech').value=cur||F.tech||''}
 /* ===== GitHub connection: start the scrapers directly (token kept only in this browser) ===== */
@@ -774,7 +780,7 @@ function render(){if(view=='fav'){renderFav();return}if(!D.lots.length)return;
  more(24)}
 function more(n){if(view!='lots')return;const next=curList.slice(shown,shown+(+n||PAGE));$('g').insertAdjacentHTML('beforeend',next.map(card).join(''));shown+=next.length;const left=curList.length-shown;$('more').style.display=left>0?'':'none';$('more').textContent=`Daha fazla yükle (${left.toLocaleString('tr-TR')} kaldı)`}
 const emptyBox=(t,txt,btns)=>`<div class="empty"><div class="big">${t}</div><p>${txt}</p>${btns?`<div class="acts">${btns}</div>`:''}</div>`;
-function renderFav(){const el=$('favBody');if(!D.lots.length)return;updateFavBadge();
+function renderFav(){const el=$('favBody');if(!D.lots.length)return;favDirty=false;updateFavBadge();
  $('favSeg').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.f==favTab));$('pickOpen').style.display=favTab=='art'&&favArt.size?'':'none';
  const byEnd=(x,y)=>(x._e||9e15)-(y._e||9e15);
  if(favTab=='lb'){$('favSub').textContent='Favori sanatçılarınızın Lebriz arşivindeki kataloğu. Çekilen kataloglar sanatçı sayfasındaki “Lebriz kataloğu” sekmesinde açılır.';
@@ -825,10 +831,11 @@ const drawer=o=>{if(o)syncFilterUI();$('filters').classList.toggle('open',o);$('
 const openFilters=()=>{drawer(true);ovOpen('filters')},dismissFilters=()=>ovClose('filters',()=>drawer(false));
 $('fOpen').onclick=openFilters;$('fab').onclick=openFilters;$('fClose').onclick=dismissFilters;$('fApply').onclick=()=>{dismissFilters();scrollTo({top:0})};$('scrim').onclick=dismissFilters;
 /* ===== views ===== */
-function show(v,quiet){const prev=view;view=v;document.body.dataset.view=v;document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));
+let favDirty=false;
+function show(v,quiet,keep){const prev=view;if(!quiet&&!keep&&TABHASH[v]&&v!==prev)takeSpot();view=v;document.body.dataset.view=v;document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));
  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id=='v-'+v));
- if(v=='lots')ready.then(render);if(v=='fav')ready.then(renderFav);if(v=='lb')lbOpenTab();if(v=='houses')ready.then(()=>{buildHouses();buildSources()});
- if(TABHASH[v]&&!quiet&&v!==prev)pushNav(TABHASH[v]);window.scrollTo({top:0})}
+ if(v=='lots'&&!(keep&&$('g').childElementCount&&!$('g').querySelector('.skc')))ready.then(render);if(v=='fav'&&!(keep&&!favDirty&&$('favBody').childElementCount&&!$('favBody').querySelector('.skc')))ready.then(renderFav);if(v=='lb')lbOpenTab();if(v=='houses')ready.then(()=>{buildHouses();buildSources()});
+ if(TABHASH[v]&&!quiet&&v!==prev)pushNav(TABHASH[v]);if(!keep)window.scrollTo({top:0})}
 document.querySelector('nav.tabs').onclick=e=>{const b=e.target.closest('button');if(b)show(b.dataset.v)};$('home').onclick=()=>{resetF(true);show(startView())};
 function filterLots(k,v,quiet){resetF(true);F[k]=v;syncFilterUI();if(view=='lots'&&!quiet)pushNav(TABHASH.lots);show('lots',quiet)}
 $('favSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;favTab=b.dataset.f;LS.set('mr_favtab',favTab);renderFav()};
@@ -1058,7 +1065,7 @@ $('gsBtn').onclick=gsOpen;$('gsX').onclick=dismissSearch;
 $('sd').addEventListener('click',()=>setTimeout(()=>{if(!$('sd').classList.contains('open'))$('gsWrap').classList.remove('full')},0));
 document.addEventListener('keydown',e=>{if(e.key=='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();if(innerWidth<=640)gsOpen();$('gq').focus();$('gq').select()}else if(e.key=='Escape'){menuOpen(false);const st=history.state||{};if(st.ov&&ovIsOpen(st.ov)){history.back();return}closeM();closeAdd();closeGh();closePick();if($('helpM').classList.contains('open'))closeHelp();drawer(false);document.body.style.overflow=''}});
 let FR={g:'all',q:'',lotShown:0};
-function fullResults(g,quiet){const q=$('gq').value.trim();if(!q)return;const r=lastRes&&FR.q==q?lastRes:gsearch(q);lastRes=r;FR={g,q,r,lotShown:0};sdClose();$('gq').blur();
+function fullResults(g,quiet){if(!quiet&&view!='search')takeSpot();const q=$('gq').value.trim();if(!q)return;const r=lastRes&&FR.q==q?lastRes:gsearch(q);lastRes=r;FR={g,q,r,lotShown:0};sdClose();$('gq').blur();
  $('tSearch').style.display='';show('search');if(!quiet)pushNav('q='+encodeURIComponent(q));else curRoute='q='+q;
  const groups=g=='all'?['lot','artist','tag','house','exh','gal']:[g];let h=`<div class="toolbar"><h2 style="font-size:var(--fs-2xl)">“${esc(q)}” için sonuçlar</h2><div class="chips">${['all','lot','artist','house','exh','gal'].map(x=>`<span class="chip ${x==g?'on':''}" data-rg="${x}">${x=='all'?'Tümü':GL[x]} ${x=='all'?'':'('+r[x].length+')'}</span>`).join('')}</div></div>`;
  for(const k of groups){const L=r[k];if(!L.length)continue;const lim=g=='all'?(k=='lot'?12:8):Infinity;h+=`<div class="secthead"><h2 style="font-size:var(--fs-xl)">${GL[k]} <span class="muted" style="font-size:16px">${L.length.toLocaleString('tr-TR')}</span></h2>${g=='all'&&L.length>lim?`<a class="chip" data-rg="${k}">Tümünü gör →</a>`:''}</div>`;
@@ -1076,7 +1083,7 @@ $('sres').addEventListener('click',e=>{if(e.target.closest('[data-star]'))return
 new IntersectionObserver(es=>{if(es[0].isIntersecting&&view=='search'&&FR.r&&$('srLots')&&FR.lotShown<Math.min(FR.lim,FR.r.lot.length))srMore()},{rootMargin:'800px'}).observe($('sentinel'));
 /* ===== artist page ===== */
 function artistLots(a,name){const k=akey(name);return D.lots.filter(l=>l.artist&&(a?l._lb===a:akey(l.artist)==k))}
-async function openArtist(name,lbId,quiet){quiet=quiet||navQuiet;await ready;try{await lbLoad()}catch(e){}
+async function openArtist(name,lbId,quiet){quiet=quiet||navQuiet;if(!quiet)takeSpot();await ready;try{await lbLoad()}catch(e){}
  const a=lbId?(LB&&LB.artists.find(x=>x.id==lbId))||null:lbMatch(name);if(!name&&a)name=a.n;if(!name)return;
  closeM();closePick();sdClose&&sdClose();$('gsWrap').classList.remove('full');show('artist');const ah='artist='+(a?'lb:'+a.id:encodeURIComponent(name));if(!quiet)pushNav(ah);
  const el=$('artistPage');el.innerHTML='<div class="skc skel"></div>';
@@ -1204,20 +1211,20 @@ $('addGo').onclick=async()=>{const url=($('addUrl').value||'').trim();if(!/^http
  $('addUrl').value='';$('addNote').value='';if(auto){$('addMsg').textContent='✓ Tarama başladı; birkaç dakika içinde eklenir.';toast('✓ Tarama başladı: '+host)}else if(!ghOn())$('addMsg').textContent='GitHub sekmesinde “Create”e basın.';buildSources();houseTab('added');clearTimeout(pollT);pollT=setTimeout(pollPending,auto?15e3:3e4)};
 $('addUrl').addEventListener('keydown',e=>{if(e.key=='Enter'){e.preventDefault();$('addGo').click()}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)return;if(getPend().length)pollPending();if(getLbPend().length)lbPoll();if(getLbWait().length)lbWaitCheck()});
-function route(h,boot){h=dec(h);curRoute=h;
- if(!h){show(startView(),true);return}
- if(HASHTAB[h]){show(HASHTAB[h],true);return}
- if(h.startsWith('artist=')){const v=h.slice(7);v.startsWith('lb:')?openArtist(null,v.slice(3),true):openArtist(v,null,true);return}
- if(h.startsWith('lba=')){openArtist(null,h.slice(4),true);return}
+function route(h,boot,keep){h=dec(h);curRoute=h;
+ if(!h){show(startView(),true,keep);return ready}
+ if(HASHTAB[h]){show(HASHTAB[h],true,keep);return ready}
+ if(h.startsWith('artist=')){const v=h.slice(7);return v.startsWith('lb:')?openArtist(null,v.slice(3),true):openArtist(v,null,true)}
+ if(h.startsWith('lba=')){return openArtist(null,h.slice(4),true)}
  if(h.startsWith('site=')){showSite(h.slice(5),true);return}
- if(h.startsWith('q=')||h.startsWith('s=')){show('search',true);ready.then(()=>{$('gq').value=h.slice(2);lbLoad().catch(()=>{}).finally(()=>{IDX=null;fullResults('all',true)})});return}
+ if(h.startsWith('q=')||h.startsWith('s=')){show('search',true);return ready.then(()=>{$('gq').value=h.slice(2);return lbLoad().catch(()=>{}).finally(()=>{IDX=null;fullResults('all',true)})})}
  if(boot&&(h.startsWith('lot=')||h.startsWith('past=')||h.startsWith('cmp=')||h=='help'||h=='add')){// a shared link to a pop-up: open it over the start page, so back lands on the site
   history.replaceState({},'',urlFor(''));curRoute='';show(startView(),true);
   ready.then(()=>{if(h.startsWith('lot='))openLot(h.slice(4));else if(h.startsWith('past='))openPast(h.slice(5));else if(h.startsWith('cmp=')){cmp=h.slice(4).split(',').filter(k=>byKey[k]).slice(0,4);dock();if(cmp.length>1)showCmp()}else if(h=='help')openHelp();else openAdd()});return}
  show(startView(),true)}
 addEventListener('popstate',e=>{const st=e.state||{};menuOpen(false);navQuiet=true;
  try{if(st.ov!=='zoom')zClose();if(st.ov!=='m'&&st.ov!=='zoom')closeM();if(st.ov!=='filters')drawer(false);if(st.ov!=='pick')closePick();if(st.ov!=='add')closeAdd();if(st.ov!=='gh')closeGh();if(st.ov!=='help'&&$('helpM').classList.contains('open'))closeHelp();if(st.ov!=='search')gsShut();
-  const base=st.ov?(st.base||''):dec(location.hash.slice(1));if(base!==curRoute)route(base,e.state==null);
+  const base=st.ov?(st.base||''):dec(location.hash.slice(1));let pr=null;if(base!==curRoute)pr=route(base,e.state==null,true);if(st.y!=null)restoreSpot(st,pr);
   document.body.style.overflow=st.ov&&st.ov!=='search'&&st.ov!=='filters'?'hidden':''}finally{navQuiet=false}
  if(st.ov=='zoom'&&!ovIsOpen('zoom')){history.back();return}
  if(st.ov&&!ovIsOpen(st.ov)){const h=dec(location.hash.slice(1));// forward into a pop-up: reopen it
