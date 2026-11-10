@@ -397,6 +397,28 @@ nav.tabs .ti{display:none}
  .agrp h3{font-size:22px;flex-wrap:wrap}
  .card .star{min-width:30px;min-height:30px;font-size:17px}.card .artist{gap:2px}
 }
+
+/* ===== fixes: pop-up backgrounds + picker panel ===== */
+.modal .sheet{flex:none}
+#pickM .sheet.picker{display:flex;flex-direction:column;height:min(780px,calc(100vh - 60px));overflow:hidden}
+#pickM .sheet.picker>*{flex:none}
+.picker .favs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding-bottom:4px;margin:4px 0 8px}
+.picker .favs .chip{flex:none;white-space:nowrap}
+#pickM .sheet.picker>.plist{flex:1 1 0;min-height:120px;max-height:none;overflow:auto;overscroll-behavior:contain;margin-top:10px}
+.picker .prow{display:flex;align-items:center;gap:10px;flex-wrap:nowrap}
+.picker .prow .pt{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.picker .prow .pt b{flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.picker .prow .pt .pm{text-align:left;white-space:normal;width:auto;padding:0}
+#pickM .acts{margin-top:10px!important;padding-top:10px;border-top:1px solid var(--line)}
+@media(max-width:640px){
+ .modal{align-items:flex-start}
+ .modal .sheet{min-height:100%}
+ #pickM .sheet.picker{height:100%;min-height:0;max-height:none;padding-bottom:calc(14px + env(safe-area-inset-bottom))}
+ #pickM .sheet.picker>p{font-size:13px;margin:4px 0 6px}
+ .picker .prow{flex-wrap:nowrap!important}.picker .prow .pm{width:auto!important;padding-left:0!important}
+ #pickM .acts .btn{width:100%;height:48px}
+ .ltabs{top:calc(-1 * env(safe-area-inset-top))}
+}
 </style></head><body>
 <header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -548,7 +570,7 @@ let favKeys=null;const fk=n=>akey(n);
 const favMap=()=>favKeys||(favKeys=new Map([...favArt].map(n=>[fk(n),n])));
 const isFav=n=>!!n&&favMap().has(fk(n));
 const favOf=l=>{if(!l.artist)return null;const m=favMap();return m.get(fk(l.artist))||(l.artist_raw&&m.get(fk(l.artist_raw)))||null};
-function toggleFavArt(n){const k=fk(n);if(!k)return;const on=isFav(n);if(on){[...favArt].forEach(x=>{if(fk(x)==k)favArt.delete(x)})}else favArt.add(n);saveFavArt();toast(on?`☆ ${n} favorilerden çıkarıldı`:`★ ${n} favori sanatçılara eklendi`)}
+function toggleFavArt(n){const k=fk(n);if(!k)return;const on=isFav(n);if(on){[...favArt].forEach(x=>{if(fk(x)==k)favArt.delete(x)})}else favArt.add(n);saveFavArt();if(!$('pickM').classList.contains('open'))toast(on?`☆ ${n} favorilerden çıkarıldı`:`★ ${n} favori sanatçılara eklendi`)}
 const saveFavArt=()=>{favKeys=null;LS.set('mr_fav_art',[...favArt]);document.querySelectorAll('[data-star]').forEach(b=>{const on=isFav(b.dataset.star);b.classList.toggle('on',on);if(b.classList.contains('star'))b.textContent=on?'★':'☆'});favChanged()};
 const starBtn=n=>n?`<button type="button" class="star${isFav(n)?' on':''}" data-star="${esc(n)}" title="Favori sanatçı" aria-label="Favori sanatçı">${isFav(n)?'★':'☆'}</button>`:'';
 let toastT=null;function toast(msg,btn,fn){const t=$('toast');if(!t)return;t.innerHTML=`<span>${esc(msg)}</span>${btn?`<button type="button">${esc(btn)}</button>`:''}`;if(btn)t.querySelector('button').onclick=()=>{t.classList.remove('on');fn()};t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),btn?12000:3200)}
@@ -761,7 +783,7 @@ document.addEventListener('click',e=>{document.querySelectorAll('details.tip[ope
  const lt=e.target.closest('[data-lt],[data-pt]');if(lt){const box=lt.closest('#mc,#artistPage'),id=lt.dataset.lt||lt.dataset.pt;box.querySelectorAll('[data-lt],[data-pt]').forEach(b=>b.classList.toggle('on',b==lt));box.querySelectorAll('.lpane').forEach(p=>p.classList.toggle('on',p.dataset.pane==id));return}
  const tg=e.target.closest('[data-tag]');if(tg&&!tg.closest('#sd')){e.preventDefault();e.stopPropagation();toggleTag(tg.dataset.tag,!!tg.closest('#m,#artistPage'));return}
  const ar=e.target.closest('[data-artist]');if(ar&&!ar.closest('#sd')){e.preventDefault();e.stopPropagation();openArtist(ar.dataset.artist);return}
- const st=e.target.closest('[data-star]');if(st){e.preventDefault();e.stopPropagation();toggleFavArt(st.dataset.star);if($('pickM').classList.contains('open'))pickRender();return}
+ const st=e.target.closest('[data-star]');if(st){e.preventDefault();e.stopPropagation();toggleFavArt(st.dataset.star);if($('pickM').classList.contains('open'))pickRender(true);return}
  const t=e.target.closest('[data-fav],[data-cmp],[data-open],[data-lba]');if(!t||t.closest('#sd'))return;if(t.dataset.lba)e.preventDefault();
  if(t.dataset.fav){const k=t.dataset.fav;fav.has(k)?fav.delete(k):fav.add(k);saveFav();document.querySelectorAll(`[data-fav="${CSS.escape(k)}"]`).forEach(b=>b.classList.toggle('on',fav.has(k)));document.querySelectorAll(`.frame[data-open="${CSS.escape(k)}"]`).forEach(f=>{const m=f.querySelector('.saved');if(fav.has(k)&&!m)f.insertAdjacentHTML('beforeend','<span class="saved" title="Kaydedildi">♥</span>');if(!fav.has(k)&&m)m.remove()});if(view=='fav')renderFav();toast(fav.has(k)?'♥ Kaydettiklerim\'e eklendi':'Kaydettiklerim\'den çıkarıldı')}
  else if(t.dataset.cmp){const k=t.dataset.cmp;if(cmp.includes(k))cmp=cmp.filter(x=>x!=k);else if(cmp.length<4)cmp.push(k);else{alert('En fazla 4 eser karşılaştırabilirsiniz.');return}
@@ -950,8 +972,8 @@ function pickIndex(){if(PK&&PK.n==D.lots.length&&PK.ar==!!AR&&PK.lb==!!LB)return
  list.forEach(r=>{r.live=live[r.k]||0;if(!r.lb&&LB){const m=lbMatch(r.n);if(m)r.lb=m}});
  PK={n:D.lots.length,ar:!!AR,lb:!!LB,list};return list}
 function pickRow(a){const on=isFav(a.n);const meta=[a.live?`${a.live.toLocaleString('tr-TR')} eser şu an`:'şu an eseri yok',a.c>a.live?`${a.c.toLocaleString('tr-TR')} kayıt`:''].filter(Boolean).join(' · ');
- return `<div class="prow${on?' on':''}" data-star="${esc(a.n)}" role="button" tabindex="0"><span class="pstar" aria-hidden="true"></span><b>${esc(a.n)}${a.lb?'<sup class="lbi">Lebriz</sup>':''}</b><span class="pm">${meta}</span><a href="#artist=${encodeURIComponent(a.n)}" data-artist="${esc(a.n)}" title="Sanatçı sayfası">Sayfa →</a></div>`}
-function pickRender(){const raw=$('pickQ').value.trim(),q=norm(raw).split(' ').filter(Boolean);const L=pickIndex();
+ return `<div class="prow${on?' on':''}" data-star="${esc(a.n)}" role="button" tabindex="0"><span class="pstar" aria-hidden="true"></span><span class="pt"><b>${esc(a.n)}${a.lb?'<sup class="lbi">Lebriz</sup>':''}</b><span class="pm">${meta}</span></span><a href="#artist=${encodeURIComponent(a.n)}" data-artist="${esc(a.n)}" title="Sanatçı sayfası">Sayfa →</a></div>`}
+function pickRender(keep){const pl=$('pickList'),top=keep?pl.scrollTop:0;const raw=$('pickQ').value.trim(),q=norm(raw).split(' ').filter(Boolean);const L=pickIndex();
  $('pickFavs').innerHTML=favArt.size?[...favArt].sort((a,b)=>a.localeCompare(b,'tr')).map(n=>`<span class="chip">★ ${esc(n)} <button type="button" class="star on" data-star="${esc(n)}" title="Favorilerden çıkar" aria-label="${esc(n)} favorilerden çıkar" style="font-size:14px">✕</button></span>`).join(''):'<span class="muted" style="font-size:13px">Henüz favori sanatçı yok.</span>';
  let h='';
  if(!q.length){const top=L.filter(a=>a.live).sort((a,b)=>b.live-a.live||a.n.localeCompare(b.n,'tr')).slice(0,40);
@@ -961,7 +983,7 @@ function pickRender(){const raw=$('pickQ').value.trim(),q=norm(raw).split(' ').f
   r.sort((x,y)=>y[0]-x[0]||x[1].n.localeCompare(y[1].n,'tr'));
   h=r.length?`<h5>${r.length.toLocaleString('tr-TR')} sanatçı</h5>`+r.slice(0,60).map(x=>pickRow(x[1])).join('')+(r.length>60?'<p class="muted" style="font-size:13px">Daha fazlası için yazmaya devam edin.</p>':''):'<p class="muted">Eşleşen sanatçı yok.</p>';
   if(raw.length>=3&&!isFav(raw)&&!r.some(x=>norm(x[1].n)==norm(raw)))h+=`<button type="button" class="btn addname" data-star="${esc(raw)}">★ “${esc(raw)}” adını favorilere ekle</button>`}
- $('pickList').innerHTML=h}
+ pl.innerHTML=h;pl.scrollTop=top}
 $('pickList').addEventListener('keydown',e=>{const r=e.target.closest('.prow');if(r&&(e.key=='Enter'||e.key==' ')){e.preventDefault();r.click()}});
 $('pickQ').addEventListener('input',()=>pickRender());
 const openAdd=()=>{$('addM').classList.add('open');document.body.style.overflow='hidden';$('addMsg').textContent='';buildSources();$('addUrl').focus();ovOpen('add')};
