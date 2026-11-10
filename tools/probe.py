@@ -15,6 +15,17 @@ for url in sys.argv[1:]:
     try:
         j = json.loads(t); print("JSON:", json.dumps(j, ensure_ascii=False, indent=1)[:6000]); continue
     except Exception: pass
+    g = re.search(r"window\.artam_global\s*=\s*(\{.*?\});?\s*$", t, re.M)
+    if g: print("ARTAM_GLOBAL:", g.group(1)[:8000])
+    if url.split("?")[0].endswith(".js"):
+        paths = sorted(set(re.findall(r"[\"'`](/[A-Za-z0-9_\-/{}.:]{3,120})[\"'`]", t)))
+        print("JS PATHS:", paths[:300])
+        for kw in ["get-products", "products", "lots", "lot", "artam_global.links", "auction", "page"]:
+            for m in list(re.finditer(re.escape(kw), t))[:6]:
+                print(f"JS[{kw}]>", t[max(0, m.start()-200): m.start()+300].replace("\n", " "))
+        continue
+    for m in re.finditer(r"<(div|section)[^>]+(?:id|:[\w-]+|v-[\w-]+)=\"[^\"]*\"[^>]*>", t):
+        if re.search(r"auction|product|lot", m.group(0), re.I): print("VUE TAG>", m.group(0)[:400])
     print("TITLE", (re.search(r"<title>(.*?)</title>", t, re.S) or [None, ""])[1].strip()[:200], "| Bakımdayız:", "Bakımdayız" in t)
     hrefs = list(dict.fromkeys(re.findall(r'href="([^"#]+)"', t)))
     print("HREFS (auction/lot-like):", [h for h in hrefs if re.search(r"muzayede|lot|eser|urun|auction|product", h, re.I)][:60])
