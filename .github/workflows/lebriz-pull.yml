@@ -3,6 +3,7 @@
 # or by hand from the Actions tab ("Run workflow" with artist IDs).
 # Only the repo owner and collaborators can trigger it from an issue.
 name: Lebriz'den çek
+run-name: ${{ inputs.ids && format('Lebriz {0}', inputs.ids) || github.event.issue.title }}
 
 on:
   issues:
@@ -18,9 +19,6 @@ permissions:
   issues: write
   pages: write
 
-concurrency:
-  group: site-data
-  cancel-in-progress: false
 
 jobs:
   pull:

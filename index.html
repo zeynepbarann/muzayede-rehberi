@@ -432,6 +432,11 @@ nav.tabs .ti{display:none}
 .lbstat{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 .lbthumbs{grid-column:1/-1;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;cursor:pointer}.lbthumbs img{flex:none;width:72px;height:72px;object-fit:cover;border-radius:8px;background:var(--surface-2)}
 @media(max-width:640px){.lbrow{grid-template-columns:1fr}.lbstat{justify-content:flex-start}#favSeg button{padding:0 8px}}
+
+/* ===== GitHub connection ===== */
+.ghstate{font-size:12px;color:var(--ok);margin-left:6px}
+.how3.small li{padding:12px 14px}.how3.small p{font-size:13px}.how3.small a{color:var(--accent)}
+#ghM .note{margin:10px 0}#ghTok{font-family:ui-monospace,Menlo,monospace}
 </style></head><body>
 <header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -445,6 +450,7 @@ nav.tabs .ti{display:none}
  <hr>
  <button type="button" class="mi" id="mPick">★ Favori sanatçıları düzenle</button>
  <button type="button" class="mi" id="mAdd">＋ Bağlantı ekle</button>
+ <button type="button" class="mi" id="mGh">⚡ GitHub bağlantısı <span class="ghstate" id="ghState"></span></button>
  <button type="button" class="mi" id="mHelp">ⓘ Nasıl çalışır?</button>
 </div></div>
 <nav class="tabs" role="tablist"><button data-v="fav"><span class="ti" aria-hidden="true">★</span>Favorilerim<span class="n" id="favTabN"></span></button><button data-v="lots"><span class="ti" aria-hidden="true">◇</span>Keşfet<span class="n" id="nLots">…</span></button><button data-v="houses"><span class="ti" aria-hidden="true">⌂</span>Müzayede Evleri</button><button data-v="lb"><span class="ti" aria-hidden="true">▤</span>Arşiv</button><button data-v="search" id="tSearch" style="display:none"><span class="ti" aria-hidden="true">⚲</span>Arama</button></nav></header>
@@ -509,11 +515,25 @@ nav.tabs .ti{display:none}
  <p>Sitede olmayan bir <b>müzayede evi</b>, tek bir <b>müzayede</b> ya da tek bir <b>eser</b> mi var? Bağlantısını yapıştırın; eserler o sayfadan otomatik olarak çekilir.</p>
  <input class="fld" id="addUrl" type="url" placeholder="https://www.ornekmuzayede.com/" inputmode="url" autocomplete="off">
  <details class="more-d"><summary>Not eklemek istiyorum</summary><input class="fld" id="addNote" type="text" placeholder="Not (isteğe bağlı)"></details>
- <ol class="steps"><li>“Ekle”ye basın; GitHub'da istek sayfası açılır.</li><li>Orada <b>Create</b> düğmesine basın.</li><li>Birkaç dakika içinde eserler eklenir; bu sayfa size haber verir.</li></ol>
+ <ol class="steps" id="addSteps"></ol>
  <div class="acts" style="margin-top:6px"><button class="btn pri" id="addGo">Ekle</button><span class="muted" id="addMsg" style="font-size:13px"></span></div>
  <div class="pend-box" id="pendBox"></div>
 </div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="modal" id="ghM" role="dialog" aria-modal="true" aria-labelledby="ghT"><div class="sheet dlg" style="max-width:560px"><button class="x" id="ghX" aria-label="Kapat">×</button>
+ <h2 id="ghT">GitHub bağlantısı</h2>
+ <p>Bağlandıktan sonra <b>Bağlantı ekle</b> ve <b>Lebriz'den çek</b> düğmeleri işi doğrudan başlatır; GitHub sayfası açılmaz. Anahtar yalnızca bu tarayıcıda saklanır, her cihazda bir kez yapılır.</p>
+ <div id="ghOn" hidden><div class="note">✓ Bu tarayıcı bağlı. Bağlantı ekle ve Lebriz düğmeleri tam otomatik çalışıyor.</div><div class="acts"><button type="button" class="btn" id="ghTest">Bağlantıyı dene</button><button type="button" class="btn ghost" id="ghOff">Bağlantıyı kaldır</button></div></div>
+ <div id="ghSetup">
+  <ol class="how3 small">
+   <li><span class="num">1</span><div><b>Anahtar oluşturun</b><p><a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Yeni anahtar ↗</a> sayfasını açın. <b>Token name:</b> Müzayede Rehberi. <b>Expiration:</b> istediğiniz süre (ör. 1 yıl).</p></div></li>
+   <li><span class="num">2</span><div><b>Yalnızca bu depoya izin verin</b><p><b>Repository access → Only select repositories →</b> muzayede-rehberi. <b>Permissions → Repository permissions → Actions:</b> Read and write. Başka izin gerekmez.</p></div></li>
+   <li><span class="num">3</span><div><b>Kopyalayıp buraya yapıştırın</b><p><b>Generate token</b>'a basın, çıkan anahtarı (github_pat_…) kopyalayın.</p></div></li>
+  </ol>
+  <input class="fld" id="ghTok" type="password" placeholder="github_pat_…" autocomplete="off" spellcheck="false">
+  <div class="acts" style="margin-top:8px"><button type="button" class="btn pri" id="ghSave">Kaydet ve dene</button><span class="muted" id="ghMsg" style="font-size:13px"></span></div>
+ </div>
+</div></div>
 <div class="modal" id="pickM" role="dialog" aria-modal="true" aria-labelledby="pickT"><div class="sheet dlg picker"><button class="x" id="pickX" aria-label="Kapat">×</button>
  <h2 id="pickT">Favori sanatçılar</h2>
  <p>Satırın üstüne dokunarak sanatçıyı ekleyin ya da çıkarın. Seçtikleriniz <b>Favorilerim</b> sekmesinde toplanır. Şu an eseri olmayan bir sanatçıyı da ekleyebilirsiniz.</p>
@@ -539,6 +559,7 @@ nav.tabs .ti{display:none}
  <details class="faq"><summary>“Değer” sekmesi neyi gösteriyor?</summary><p>Aynı sanatçının sitede kayıtlı diğer eserlerinin fiyatlarıyla karşılaştırma yapar: en düşük, ortalama, en yüksek. Boyut, teknik ve dönem farkları hesaba katılmaz; fikir vermek içindir.</p></details>
  <details class="faq"><summary>Eserleri nasıl karşılaştırırım?</summary><p>Bir eseri açıp <b>⇄ Karşılaştır</b>'a basın; en fazla 4 eser seçebilirsiniz. Alttaki çubuktan <b>Yan yana</b> ile karşılaştırın.</p></details>
  <details class="faq"><summary>Lebriz kataloğunu nasıl görürüm?</summary><p>Lebriz arşivindeki bir sanatçının sayfasında <b>Lebriz kataloğu</b> sekmesini açın ya da <b>Favorilerim → Lebriz</b>'e gidin. Katalog henüz çekilmediyse <b>Lebriz'den çek</b>'e basın; açılan GitHub sayfasında <b>Create</b> deyin. Birkaç dakika sonra eserler görünür. Arşiv her sayfayı saklamadığı için katalog eksik olabilir.</p></details>
+ <details class="faq"><summary>Bağlantı eklemek neden GitHub sayfası açıyor?</summary><p>Site GitHub üzerinde çalışır; tarayıcıyı başlatmak için GitHub izni gerekir. ⚙ → <b>GitHub bağlantısı</b> ile her cihazda bir kez anahtar eklerseniz <b>Ekle</b> ve <b>Lebriz'den çek</b> düğmeleri işi doğrudan başlatır.</p></details>
  <details class="faq"><summary>Favorilerim nerede saklanıyor?</summary><p>Yalnızca bu tarayıcıda. Hesap gerekmez ama başka bir cihazda görünmez.</p></details>
 </div></div>
 <div class="modal" id="m" role="dialog" aria-modal="true"><div class="sheet"><button class="x" onclick="dismissM()" aria-label="Kapat">×</button><div id="mc"></div></div></div>
@@ -574,7 +595,7 @@ const urlFor=h=>location.pathname+location.search+(h?'#'+h:'');
 function pushNav(hash){if(navQuiet)return;curRoute=dec(hash);const st=history.state||{};
  if(!st.ov&&dec(location.hash.slice(1))===dec(hash)){history.replaceState({},'',urlFor(hash));return}
  history.pushState({},'',urlFor(hash))}
-function ovIsOpen(n){const id={m:'m',pick:'pickM',add:'addM',help:'helpM',filters:'filters'}[n];if(n=='search')return $('gsWrap').classList.contains('full');return !!id&&$(id).classList.contains('open')}
+function ovIsOpen(n){const id={m:'m',pick:'pickM',add:'addM',help:'helpM',filters:'filters',gh:'ghM'}[n];if(n=='search')return $('gsWrap').classList.contains('full');return !!id&&$(id).classList.contains('open')}
 function ovOpen(name,hash){if(navQuiet)return;const st=history.state||{};const url=hash!=null?urlFor(hash):location.href;
  if(st.ov===name&&(hash==null||dec(location.hash.slice(1))===dec(hash))){history.replaceState(st,'',url);return}
  const replace=st.ov&&st.ov!==name&&!ovIsOpen(st.ov);
@@ -616,6 +637,26 @@ function updateFavBadge(){if(!D.lots.length)return;const n=D.lots.filter(l=>favO
 function favChanged(){updateFavBadge();if(view=='fav')renderFav();if(view=='lots'&&F.fav)render()}
 function fillTech(){if(!$('tech'))return;const cur=$('tech').value,seen=new Set();D.lots.forEach(l=>(l._tags||[]).forEach(x=>x.k=='tech'&&seen.add(x.v)));
  const opts=['<option value="">Tüm teknikler</option>',...[...seen].sort((a,b)=>a.localeCompare(b,'tr')).map(v=>`<option value="${esc(v)}">${esc(v)}</option>`)];$('tech').innerHTML=opts.join('');$('tech').value=cur||F.tech||''}
+/* ===== GitHub connection: start the scrapers directly (token kept only in this browser) ===== */
+const ghTok=()=>LS.get('mr_gh',''),ghOn=()=>!!ghTok();
+const ghApi=(path,opt={})=>fetch('https://api.github.com/repos/'+REPO+path,{...opt,headers:{'Accept':'application/vnd.github+json','Authorization':'Bearer '+ghTok(),'X-GitHub-Api-Version':'2022-11-28',...(opt.body?{'Content-Type':'application/json'}:{})}});
+async function ghDispatch(wf,inputs){if(!ghOn())return 0;try{const r=await ghApi(`/actions/workflows/${wf}/dispatches`,{method:'POST',body:JSON.stringify({ref:'main',inputs})});return r.status}catch(e){return -1}}
+async function ghRuns(wf){try{const r=await ghApi(`/actions/workflows/${wf}/runs?event=workflow_dispatch&per_page=20`);return r.ok?(await r.json()).workflow_runs||[]:[]}catch(e){return []}}
+const runFor=(runs,needle,at)=>runs.find(r=>(r.display_title||'').includes(needle)&&Date.parse(r.created_at)>=at-9e4);
+const RUNTXT={queued:'sırada',waiting:'sırada',requested:'sırada',pending:'sırada',in_progress:'taranıyor'};
+function ghUI(){$('ghState').textContent=ghOn()?'✓ bağlı':'';$('ghOn').hidden=!ghOn();$('ghSetup').hidden=ghOn();
+ $('addSteps').innerHTML=ghOn()?'<li>Bağlantıyı yapıştırıp <b>Ekle</b>\'ye basın.</li><li>Tarama hemen başlar (1–3 dakika).</li><li>Eserler gelince bu sayfa haber verir.</li>'
+  :'<li>“Ekle”ye basın; GitHub\'da istek sayfası açılır.</li><li>Orada <b>Create</b> düğmesine basın.</li><li>Birkaç dakika içinde eserler eklenir; bu sayfa size haber verir.</li><li class="muted">Tam otomatik için ⚙ → <a href="javascript:;" data-act="gh">GitHub bağlantısı</a> (bir kez).</li>'}
+const openGh=()=>{$('ghM').classList.add('open');document.body.style.overflow='hidden';$('ghMsg').textContent='';ghUI();ovOpen('gh')};
+const closeGh=()=>{$('ghM').classList.remove('open');document.body.style.overflow=''};
+const dismissGh=()=>ovClose('gh',closeGh);
+async function ghCheck(){try{const r=await ghApi('/actions/workflows/add-link.yml');return r.status}catch(e){return -1}}
+const GHERR={401:'Anahtar geçersiz ya da süresi dolmuş.',403:'Anahtarın Actions izni yok (Read and write seçin).',404:'Anahtar bu depoya erişemiyor (Only select repositories → muzayede-rehberi).',[-1]:'GitHub\'a ulaşılamadı; internet bağlantısını kontrol edin.'};
+$('ghSave').onclick=async()=>{const t=$('ghTok').value.trim();if(!/^(github_pat_|ghp_)\w{20,}/.test(t)){$('ghMsg').textContent='Anahtar “github_pat_” ile başlamalı.';return}
+ LS.set('mr_gh',t);$('ghMsg').textContent='Deneniyor…';const c=await ghCheck();if(c==200){$('ghTok').value='';ghUI();toast('✓ GitHub bağlandı; düğmeler artık tam otomatik')}else{LS.set('mr_gh','');$('ghMsg').textContent=GHERR[c]||('GitHub hata verdi ('+c+').')}};
+$('ghTest').onclick=async()=>{const c=await ghCheck();toast(c==200?'✓ Bağlantı çalışıyor':(GHERR[c]||'GitHub hata verdi ('+c+')'))};
+$('ghOff').onclick=()=>{LS.set('mr_gh','');ghUI();toast('GitHub bağlantısı kaldırıldı')};
+$('ghX').onclick=dismissGh;$('ghM').onclick=e=>{if(e.target.id=='ghM')dismissGh()};$('mGh').onclick=()=>{menuOpen(false);openGh()};
 /* ===== added links: list, pending watcher ===== */
 let SRC=(META&&META.sources)||[];
 const REPO='zeynepbarann/muzayede-rehberi';
@@ -629,20 +670,22 @@ const setPend=a=>{try{localStorage.setItem('mr_pending',JSON.stringify(a))}catch
 const srcFor=p=>SRC.find(s=>sameUrl(s.url,p.url))||(isRoot(p.url)?SRC.find(s=>s.kind!='product'&&s.host==p.host):null);
 const kindLabel=s=>s.kind=='product'?'Eser':isRoot(s.url)?'Müzayede evi':'Müzayede';
 function buildSources(){const el=$('srcList');if(!el)return;const P=getPend().filter(p=>!srcFor(p)||(srcFor(p).last_run||'')==p.base);
- const rows=P.map(p=>`<div class="arow" style="cursor:default"><div><div class="nm">${esc(p.host)}</div><div class="mt"><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.url)}</a></div></div><div class="ra src-pend">⏳ Taranıyor…<div class="mt">${new Date(p.at).toLocaleString('tr-TR',{hour:'2-digit',minute:'2-digit'})} · <a href="https://github.com/${REPO}/issues?q=is%3Aissue+label%3Akaynak" target="_blank" rel="noopener">GitHub'daki istek ↗</a></div></div></div>`);
+ const rows=P.map(p=>`<div class="arow" style="cursor:default"><div><div class="nm">${esc(p.host)}</div><div class="mt"><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.url)}</a></div></div><div class="ra src-pend">⏳ ${p.auto?(p.st=='done'?'Site güncelleniyor…':'Otomatik tarama: '+(RUNTXT[p.st]||'başlatıldı')):'Taranıyor…'}<div class="mt">${new Date(p.at).toLocaleString('tr-TR',{hour:'2-digit',minute:'2-digit'})}${p.auto?'':` · <a href="https://github.com/${REPO}/issues?q=is%3Aissue+label%3Akaynak" target="_blank" rel="noopener">GitHub'daki istek ↗</a>`}</div></div></div>`);
  SRC.slice().reverse().forEach(s=>{const ok=s.status=='ok';rows.push(`<div class="arow" style="cursor:default"><div><div class="nm">${esc(s.host||s.url)}<span class="src-kind">${kindLabel(s)}</span></div><div class="mt"><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.url)}</a></div></div><div class="ra"><div class="${ok?'src-ok':'src-fail'}">${ok?'✓':'✗'} ${(s.lots||0).toLocaleString('tr-TR')} eser${s.last_run?' · '+esc(s.last_run):''}</div>${ok&&s.lots?`<button type="button" class="btn" data-srcsite="${esc(s.host)}">Eserleri gör →</button>`:''}<div class="mt">${esc((s.detail||'').slice(0,140))}</div></div></div>`)});
  el.innerHTML=rows.length?rows.join(''):'<div class="empty"><div class="big">Henüz eklenen bağlantı yok</div>Yukarıdaki <b>＋ Bağlantı ekle</b> ile bir müzayede evi, müzayede ya da eser bağlantısı gönderin.</div>';$('srcN').textContent=(SRC.length+P.length)||'';
- const pb=$('pendBox');if(pb)pb.innerHTML=P.map(p=>`<span class="chip"><b>⏳ ${esc(p.host)} taranıyor…</b><span class="muted">GitHub'da “Create”e bastıysanız birkaç dakika içinde eklenir.</span></span>`).join('')}
+ const pb=$('pendBox');if(pb)pb.innerHTML=P.map(p=>`<span class="chip"><b>⏳ ${esc(p.host)} ${p.auto?(p.st=='done'?'eklendi, site güncelleniyor…':(RUNTXT[p.st]||'başlatıldı')+'…'):'taranıyor…'}</b><span class="muted">${p.auto?'Otomatik tarama; birkaç dakika sürer, bu sayfa haber verir.':'GitHub\'da “Create”e bastıysanız birkaç dakika içinde eklenir.'}</span></span>`).join('')}
 $('srcList').addEventListener('click',e=>{const b=e.target.closest('[data-srcsite]');if(b)showSite(b.dataset.srcsite)});
 function showSite(host,quiet){ready.then(()=>{const sites=[...new Set(D.lots.map(l=>l.site))];const site=sites.find(x=>x==host)||sites.find(x=>houseName(x)==host)||host;filterLots('site',site,quiet)})}
 const freshReload=hash=>{location.href=location.pathname+'?r='+Date.now()+(hash?'#'+hash:'')};
 let pollT=null;
 function pollPending(){clearTimeout(pollT);let P=getPend();if(!P.length)return;
  const now=Date.now();P=P.filter(p=>now-p.at<864e5);setPend(P);if(!P.length){buildSources();return}
- loadSources(true).then(()=>{const done=[],left=[];P.forEach(p=>{const s=srcFor(p);(s&&(s.last_run||'')!=p.base?done:left).push([p,s])});
+ (P.some(p=>p.auto)&&ghOn()?ghRuns('add-link.yml'):Promise.resolve([])).then(runs=>{P.forEach(p=>{if(!p.auto)return;const r=runFor(runs,p.url,p.at);if(!r)return;p.st=r.status=='completed'?(r.conclusion=='success'?'done':'fail'):r.status});
+  const failed=P.filter(p=>p.st=='fail');failed.forEach(p=>toast(`✗ ${p.host} taranamadı (GitHub işi başarısız oldu)`));P=P.filter(p=>p.st!='fail');setPend(P);return loadSources(true)})
+ .then(()=>{const done=[],left=[];P.forEach(p=>{const s=srcFor(p);(s&&(s.last_run||'')!=p.base?done:left).push([p,s])});
   setPend(left.map(x=>x[0]));buildSources();
   done.forEach(([p,s])=>{if(s.status=='ok')toast(`✓ ${s.host}: ${(s.lots||0).toLocaleString('tr-TR')} eser eklendi`,'Göster',()=>freshReload('site='+encodeURIComponent(s.host)));else toast(`✗ ${s.host} taranamadı: ${(s.detail||'').slice(0,90)}`)});
-  if(left.length)pollT=setTimeout(pollPending,now-Math.min(...left.map(x=>x[0].at))>2*36e5?3e5:3e4)})}
+  if(left.length)pollT=setTimeout(pollPending,now-Math.min(...left.map(x=>x[0].at))>2*36e5?3e5:(left.some(x=>x[0].auto)?15e3:3e4))})}
 /* ===== cards & grid ===== */
 function imgTag(src,alt){return src?`<img loading="lazy" decoding="async" src="${esc(src)}" alt="${esc(alt||'')}" onload="this.classList.add('ld');this.parentNode.classList.remove('ph')" onerror="this.remove()">`:''}
 /* ===== Lebriz artist matching ===== */
@@ -813,7 +856,7 @@ function showCmp(){const L=cmp.map(k=>byKey[k]).filter(Boolean);const rows=[['',
  $('mc').innerHTML=`<h2 style="font-size:var(--fs-2xl);margin:0 0 12px">Karşılaştırma</h2><div class="cmp"><table>${html}</table></div><p class="muted" style="font-size:12px">Yeşil: en düşük değer. cm² fiyatı = açılış fiyatı ÷ (en × boy); yalnızca iki boyutlu ölçüsü okunabilen eserlerde hesaplanır.</p>`;openM();ovOpen('m','cmp='+cmp.map(encodeURIComponent).join(','))}
 function dock(){$('dock').classList.toggle('show',cmp.length>0);$('dockItems').innerHTML=cmp.map(k=>byKey[k]?`<img src="${esc(byKey[k].images[0]||'')}" title="${esc(byKey[k].artist)}" alt="">`:'').join('');$('doCmp').disabled=cmp.length<2;$('dockMsg').textContent=cmp.length<2?'En az 2 eser seçin':`${cmp.length}/4`}
 document.addEventListener('click',e=>{document.querySelectorAll('details.tip[open]').forEach(d=>{if(!d.contains(e.target))d.open=false});
- const act=e.target.closest('[data-act]');if(act){e.preventDefault();const a=act.dataset.act;if(a=='pick')openPick();else if(a=='reset')resetF();else if(a=='add')openAdd();else if(a=='help')openHelp();return}
+ const act=e.target.closest('[data-act]');if(act){e.preventDefault();const a=act.dataset.act;if(a=='pick')openPick();else if(a=='reset')resetF();else if(a=='add')openAdd();else if(a=='gh'){closeAdd();openGh()}else if(a=='help')openHelp();return}
  const pa=e.target.closest('[data-past]');if(pa){e.preventDefault();openPast(pa.dataset.past);return}
  const lp=e.target.closest('[data-lbpull]');if(lp){e.preventDefault();lbPull(lp.dataset.lbpull.split(','));return}
  const lo=e.target.closest('[data-lbopen]');if(lo){e.preventDefault();openCatalog(+lo.dataset.lbopen);return}
@@ -838,9 +881,11 @@ let lbPollT=null;
 function lbPull(ids){ids=[...new Set(ids.map(Number))].filter(Boolean);if(!ids.length)return;const names=ids.map(lbName);
  const title='Lebriz: '+(names.length>3?names.slice(0,3).join(', ')+` +${names.length-3}`:names.join(', '));
  const body='Lebriz ID: '+ids.join(', ')+'\n\nSanatçılar: '+names.join(', ')+'\n\n<!-- 16/22 Müzayede Rehberi: Lebriz kataloğu çekme isteği. Lütfen "Lebriz ID" satırını değiştirmeyin. -->';
- window.open('https://github.com/'+REPO+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body),'_blank','noopener');
- const now=Date.now();setLbPend([...getLbPend().filter(p=>!ids.includes(p.id)),...ids.map(id=>({id,at:now,base:(LBC[id]&&LBC[id].pulled_at)||''}))]);
- toast('GitHub sekmesinde “Create”e basın; katalog birkaç dakika içinde gelir');refreshLbViews();clearTimeout(lbPollT);lbPollT=setTimeout(lbPoll,45e3)}
+ const go=auto=>{if(!auto)window.open('https://github.com/'+REPO+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body),'_blank','noopener');
+  const now=Date.now();setLbPend([...getLbPend().filter(p=>!ids.includes(p.id)),...ids.map(id=>({id,at:now,base:(LBC[id]&&LBC[id].pulled_at)||''}))]);
+  toast(auto?'✓ Lebriz çekme başladı; büyük kataloglar 10–30 dakika sürebilir':'GitHub sekmesinde “Create”e basın; katalog birkaç dakika içinde gelir');refreshLbViews();clearTimeout(lbPollT);lbPollT=setTimeout(lbPoll,45e3)};
+ if(ghOn()){ghDispatch('lebriz-pull.yml',{ids:ids.join(',')}).then(c=>{if(c!=204)toast((GHERR[c]||'GitHub hata verdi ('+c+').')+' GitHub sayfası açılıyor.');go(c==204)});return}
+ go(false);return;refreshLbViews();clearTimeout(lbPollT);lbPollT=setTimeout(lbPoll,45e3)}
 function lbPoll(){clearTimeout(lbPollT);const P=getLbPend().filter(p=>Date.now()-p.at<864e5);setLbPend(P);if(!P.length){refreshLbViews();return}
  Promise.all(P.map(p=>lbCat(p.id,true).then(c=>[p,c]))).then(R=>{const left=[];
   R.forEach(([p,c])=>{if(c&&c.pulled_at&&c.pulled_at!==p.base)toast(c.works.length?`✓ ${lbName(p.id)}: ${c.works.length.toLocaleString('tr-TR')} eser Lebriz'den çekildi`:`${lbName(p.id)}: arşivde katalog sayfası bulunamadı`,c.works.length?'Göster':'',()=>openCatalog(p.id));else left.push(p)});
@@ -962,7 +1007,7 @@ const gsOpen=()=>{$('gsWrap').classList.add('full');$('gq').focus();ovOpen('sear
 const dismissSearch=()=>ovClose('search',gsShut);
 $('gsBtn').onclick=gsOpen;$('gsX').onclick=dismissSearch;
 $('sd').addEventListener('click',()=>setTimeout(()=>{if(!$('sd').classList.contains('open'))$('gsWrap').classList.remove('full')},0));
-document.addEventListener('keydown',e=>{if(e.key=='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();if(innerWidth<=640)gsOpen();$('gq').focus();$('gq').select()}else if(e.key=='Escape'){menuOpen(false);const st=history.state||{};if(st.ov&&ovIsOpen(st.ov)){history.back();return}closeM();closeAdd();closePick();if($('helpM').classList.contains('open'))closeHelp();drawer(false);document.body.style.overflow=''}});
+document.addEventListener('keydown',e=>{if(e.key=='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();if(innerWidth<=640)gsOpen();$('gq').focus();$('gq').select()}else if(e.key=='Escape'){menuOpen(false);const st=history.state||{};if(st.ov&&ovIsOpen(st.ov)){history.back();return}closeM();closeAdd();closeGh();closePick();if($('helpM').classList.contains('open'))closeHelp();drawer(false);document.body.style.overflow=''}});
 let FR={g:'all',q:'',lotShown:0};
 function fullResults(g,quiet){const q=$('gq').value.trim();if(!q)return;const r=lastRes&&FR.q==q?lastRes:gsearch(q);lastRes=r;FR={g,q,r,lotShown:0};sdClose();$('gq').blur();
  $('tSearch').style.display='';show('search');if(!quiet)pushNav('q='+encodeURIComponent(q));else curRoute='q='+q;
@@ -1050,7 +1095,7 @@ function pickRender(keep){const pl=$('pickList'),top=keep?pl.scrollTop:0;const r
  pl.innerHTML=h;pl.scrollTop=top}
 $('pickList').addEventListener('keydown',e=>{const r=e.target.closest('.prow');if(r&&(e.key=='Enter'||e.key==' ')){e.preventDefault();r.click()}});
 $('pickQ').addEventListener('input',()=>pickRender());
-const openAdd=()=>{$('addM').classList.add('open');document.body.style.overflow='hidden';$('addMsg').textContent='';buildSources();$('addUrl').focus();ovOpen('add')};
+const openAdd=()=>{$('addM').classList.add('open');document.body.style.overflow='hidden';$('addMsg').textContent='';ghUI();buildSources();$('addUrl').focus();ovOpen('add')};
 const closeAdd=()=>{$('addM').classList.remove('open');document.body.style.overflow=''};
 const dismissAdd=()=>ovClose('add',closeAdd);
 $('addOpen2').onclick=openAdd;$('addX').onclick=dismissAdd;
@@ -1060,14 +1105,16 @@ const closeHelp=()=>{$('helpM').classList.remove('open');document.body.style.ove
 const dismissHelp=()=>ovClose('help',closeHelp);
 $('helpX').onclick=dismissHelp;$('helpClose').onclick=dismissHelp;$('helpPick').onclick=()=>{closeHelp();openPick()};$('helpM').onclick=e=>{if(e.target.id=='helpM')dismissHelp()};
 $('addM').onclick=e=>{if(e.target.id=='addM')dismissAdd()};
-$('addGo').onclick=()=>{const url=($('addUrl').value||'').trim();if(!/^https?:\/\//i.test(url)&&!/^[\w.-]+\.[a-z]{2,}/i.test(url)){$('addMsg').textContent='Lütfen bir web adresi girin.';$('addUrl').focus();return}
+$('addGo').onclick=async()=>{const url=($('addUrl').value||'').trim();if(!/^https?:\/\//i.test(url)&&!/^[\w.-]+\.[a-z]{2,}/i.test(url)){$('addMsg').textContent='Lütfen bir web adresi girin.';$('addUrl').focus();return}
  const u=normUrl(url),host=hostOf(u);
  const note=($('addNote').value||'').trim();
  const title='Kaynak: '+host;
  const body='Kaynak URL:\n'+u+'\n\nNot:\n'+(note||'—')+'\n\n<!-- 16/22 Müzayede Rehberi otomatik ekleme. Lütfen URL satırını değiştirmeyin. -->';
- window.open('https://github.com/'+REPO+'/issues/new?labels=kaynak&title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body),'_blank','noopener');
- const base=(srcFor({url:u,host})||{}).last_run||'';setPend([...getPend().filter(p=>!sameUrl(p.url,u)),{url:u,host,at:Date.now(),base}]);
- $('addUrl').value='';$('addNote').value='';$('addMsg').textContent='GitHub sekmesinde “Create”e basın.';buildSources();houseTab('added');clearTimeout(pollT);pollT=setTimeout(pollPending,3e4)};
+ let auto=false;if(ghOn()){$('addGo').disabled=true;$('addMsg').textContent='Başlatılıyor…';const c=await ghDispatch('add-link.yml',{url:u});$('addGo').disabled=false;
+  if(c==204)auto=true;else{$('addMsg').textContent=(GHERR[c]||'GitHub hata verdi ('+c+').')+' GitHub sayfası açılıyor.'}}
+ if(!auto)window.open('https://github.com/'+REPO+'/issues/new?labels=kaynak&title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body),'_blank','noopener');
+ const base=(srcFor({url:u,host})||{}).last_run||'';setPend([...getPend().filter(p=>!sameUrl(p.url,u)),{url:u,host,at:Date.now(),base,auto}]);
+ $('addUrl').value='';$('addNote').value='';if(auto){$('addMsg').textContent='✓ Tarama başladı; birkaç dakika içinde eklenir.';toast('✓ Tarama başladı: '+host)}else if(!ghOn())$('addMsg').textContent='GitHub sekmesinde “Create”e basın.';buildSources();houseTab('added');clearTimeout(pollT);pollT=setTimeout(pollPending,auto?15e3:3e4)};
 $('addUrl').addEventListener('keydown',e=>{if(e.key=='Enter'){e.preventDefault();$('addGo').click()}});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)return;if(getPend().length)pollPending();if(getLbPend().length)lbPoll()});
 function route(h,boot){h=dec(h);curRoute=h;
@@ -1082,13 +1129,14 @@ function route(h,boot){h=dec(h);curRoute=h;
   ready.then(()=>{if(h.startsWith('lot='))openLot(h.slice(4));else if(h.startsWith('past='))openPast(h.slice(5));else if(h.startsWith('cmp=')){cmp=h.slice(4).split(',').filter(k=>byKey[k]).slice(0,4);dock();if(cmp.length>1)showCmp()}else if(h=='help')openHelp();else openAdd()});return}
  show(startView(),true)}
 addEventListener('popstate',e=>{const st=e.state||{};menuOpen(false);navQuiet=true;
- try{if(st.ov!=='m')closeM();if(st.ov!=='filters')drawer(false);if(st.ov!=='pick')closePick();if(st.ov!=='add')closeAdd();if(st.ov!=='help'&&$('helpM').classList.contains('open'))closeHelp();if(st.ov!=='search')gsShut();
+ try{if(st.ov!=='m')closeM();if(st.ov!=='filters')drawer(false);if(st.ov!=='pick')closePick();if(st.ov!=='add')closeAdd();if(st.ov!=='gh')closeGh();if(st.ov!=='help'&&$('helpM').classList.contains('open'))closeHelp();if(st.ov!=='search')gsShut();
   const base=st.ov?(st.base||''):dec(location.hash.slice(1));if(base!==curRoute)route(base,e.state==null);
   document.body.style.overflow=st.ov&&st.ov!=='search'&&st.ov!=='filters'?'hidden':''}finally{navQuiet=false}
  if(st.ov&&!ovIsOpen(st.ov)){const h=dec(location.hash.slice(1));// forward into a pop-up: reopen it
   if(st.ov=='m')ready.then(()=>{if(h.startsWith('lot='))openLot(h.slice(4));else if(h.startsWith('past='))openPast(h.slice(5));else if(h.startsWith('cmp=')&&cmp.length>1)showCmp()});
-  else if(st.ov=='filters')openFilters();else if(st.ov=='pick')openPick();else if(st.ov=='add')openAdd();else if(st.ov=='help')openHelp();else if(st.ov=='search')gsOpen()}});
+  else if(st.ov=='filters')openFilters();else if(st.ov=='pick')openPick();else if(st.ov=='add')openAdd();else if(st.ov=='gh')openGh();else if(st.ov=='help')openHelp();else if(st.ov=='search')gsOpen()}});
 /* ===== boot ===== */
+ghUI();
 (()=>{const h=dec(location.hash.slice(1));history.replaceState({},'',location.href);navQuiet=true;try{syncFilterUI();route(h,true)}finally{navQuiet=false}
  if(!h&&!LS.get('mr_welcomed',0))openHelp();if(getLbPend().length)ready.then(()=>lbLoad().catch(()=>{})).then(lbPoll)})();
 </script></body></html>
