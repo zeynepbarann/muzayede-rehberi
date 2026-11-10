@@ -439,6 +439,20 @@ nav.tabs .ti{display:none}
 #ghM .note{margin:10px 0}#ghTok{font-family:ui-monospace,Menlo,monospace}
 .card .spec{font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.4}
 @media(max-width:640px){.card .spec{font-size:12px}}
+
+/* ===== image viewer ===== */
+.zoom{position:fixed;inset:0;z-index:120;background:#000;display:none;touch-action:none;user-select:none;-webkit-user-select:none}
+.zoom.open{display:block}
+.zstage{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden;touch-action:none;cursor:grab}
+.zstage img{max-width:100%;max-height:100%;object-fit:contain;transform-origin:center center;will-change:transform;-webkit-user-drag:none;pointer-events:none}
+.zoom .zx{position:absolute;top:calc(10px + env(safe-area-inset-top));right:12px;z-index:3;background:rgba(20,18,14,.7);color:#f2ead8;border-color:rgba(212,175,55,.4)}
+.znav{position:absolute;top:50%;transform:translateY(-50%);z-index:3;width:48px;height:48px;border-radius:50%;border:1px solid rgba(212,175,55,.4);background:rgba(20,18,14,.6);color:#f2ead8;font-size:30px;line-height:1;cursor:pointer}
+.zprev{left:12px}.znext{right:12px}.znav[hidden]{display:none}
+.zbar{position:absolute;left:0;right:0;bottom:calc(14px + env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;gap:4px;color:#d3c9b3;font-size:13px;pointer-events:none;text-shadow:0 1px 3px #000}
+.zhint{opacity:.7;font-size:12px}
+#mc .det .big img,#catGrid img,.wks img{cursor:zoom-in}
+@media(max-width:640px){.znav{display:none}#mc .thumbs::after{content:"";flex:none}}
+.zoomtip{font-size:12px;margin:6px 0 0;text-align:center}
 </style></head><body>
 <header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -522,6 +536,9 @@ nav.tabs .ti{display:none}
  <div class="pend-box" id="pendBox"></div>
 </div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="zoom" id="zoomV" role="dialog" aria-modal="true" aria-label="Görsel"><div class="zstage" id="zStage"><img id="zImg" alt="" draggable="false"></div>
+ <button class="x zx" id="zX" aria-label="Kapat">×</button><button class="znav zprev" id="zPrev" aria-label="Önceki görsel">‹</button><button class="znav znext" id="zNext" aria-label="Sonraki görsel">›</button>
+ <div class="zbar"><span id="zCount"></span><span class="zhint" id="zHint">İki parmakla ya da çift dokunarak yakınlaştırın</span></div></div>
 <div class="modal" id="ghM" role="dialog" aria-modal="true" aria-labelledby="ghT"><div class="sheet dlg" style="max-width:560px"><button class="x" id="ghX" aria-label="Kapat">×</button>
  <h2 id="ghT">GitHub bağlantısı</h2>
  <p>Bağlandıktan sonra <b>Bağlantı ekle</b> ve <b>Lebriz'den çek</b> düğmeleri işi doğrudan başlatır; GitHub sayfası açılmaz. Anahtar yalnızca bu tarayıcıda saklanır, her cihazda bir kez yapılır.</p>
@@ -597,7 +614,7 @@ const urlFor=h=>location.pathname+location.search+(h?'#'+h:'');
 function pushNav(hash){if(navQuiet)return;curRoute=dec(hash);const st=history.state||{};
  if(!st.ov&&dec(location.hash.slice(1))===dec(hash)){history.replaceState({},'',urlFor(hash));return}
  history.pushState({},'',urlFor(hash))}
-function ovIsOpen(n){const id={m:'m',pick:'pickM',add:'addM',help:'helpM',filters:'filters',gh:'ghM'}[n];if(n=='search')return $('gsWrap').classList.contains('full');return !!id&&$(id).classList.contains('open')}
+function ovIsOpen(n){const id={m:'m',pick:'pickM',add:'addM',help:'helpM',filters:'filters',gh:'ghM',zoom:'zoomV'}[n];if(n=='search')return $('gsWrap').classList.contains('full');return !!id&&$(id).classList.contains('open')}
 function ovOpen(name,hash){if(navQuiet)return;const st=history.state||{};const url=hash!=null?urlFor(hash):location.href;
  if(st.ov===name&&(hash==null||dec(location.hash.slice(1))===dec(hash))){history.replaceState(st,'',url);return}
  const replace=st.ov&&st.ov!==name&&!ovIsOpen(st.ov);
@@ -833,7 +850,7 @@ function artistPanel(l,past){if(!l._a)return '<div class="panel first"><p class=
 function openLot(k){const l=byKey[k];if(!l)return;const hist=(l.history||[]).map(r=>`${fdate(dt(r[0]))}: ${TL(r[1])}, ${r[2]} pey`).join('<br>');
  const pr=priceOf(l),lab=priceLab(l),soon=l._e&&l._e-Date.now()<864e5&&l._e>Date.now();
  const PRICE_TIP='<b>Açılış fiyatı:</b> müzayedenin başladığı fiyat, satış fiyatı değildir. <b>Güncel pey:</b> şu ana kadarki en yüksek teklif. <b>Hemen Al:</b> beklemeden bu fiyata alınabilir.';
- $('mc').innerHTML=`<div class="det"><div><div class="big"><img id="bigI" src="${esc((l.images[0]||'').replace('/400/','/1500/'))}" alt=""></div><div class="thumbs">${l.images.map(i=>`<img loading="lazy" onerror="this.remove()" src="${esc(i)}" onclick="$('bigI').src=this.src.replace('/400/','/1500/')">`).join('')}</div></div>
+ $('mc').innerHTML=`<div class="det"><div><div class="big"><img id="bigI" src="${esc((l.images[0]||'').replace('/400/','/1500/'))}" alt=""></div><div class="thumbs">${l.images.map(i=>`<img loading="lazy" onerror="this.remove()" src="${esc(i)}" onclick="$('bigI').src=this.src.replace('/400/','/1500/')">`).join('')}</div><p class="muted zoomtip">Büyütmek için görsele dokunun</p></div>
  <div class="info"><div class="meta">${esc(l.house)}${l.lot_no?' · Lot '+esc(l.lot_no):''}</div><h2 class="lt">${l.artist?aLink(l.artist)+' '+starBtn(l.artist):esc(l.title)}</h2>${l.description?`<p class="ld">${esc(l.description)}</p>`:''}
  <div class="keyf"><div><span>${lab} ${tip(PRICE_TIP)}</span><b class="price">${TL(pr)}</b>${l.estimate&&l.estimate!=pr?`<small>Tahmini değer ${TL(l.estimate)}</small>`:''}</div><div><span>Bitiş</span><b class="${soon?'soon':''}">${esc(leftTxt(l)||'—')}</b><small>${l._e?fdate(l._e):''}</small></div></div>
  <div class="acts lacts"><a class="btn pri" href="${esc(l.url)}" target="_blank" rel="noopener">Eser sayfasına git ↗</a><button class="ic fav ${fav.has(k)?'on':''}" data-fav="${esc(k)}" title="Kaydettiklerim'e ekle">♥ Kaydet</button><button class="ic ${cmp.includes(k)?'on':''}" data-cmp="${esc(k)}" title="En fazla 4 eseri yan yana karşılaştırın">⇄ Karşılaştır</button></div></div></div>
@@ -1106,6 +1123,42 @@ const openAdd=()=>{$('addM').classList.add('open');document.body.style.overflow=
 const closeAdd=()=>{$('addM').classList.remove('open');document.body.style.overflow=''};
 const dismissAdd=()=>ovClose('add',closeAdd);
 $('addOpen2').onclick=openAdd;$('addX').onclick=dismissAdd;
+/* ===== image viewer: pinch / wheel / double-tap zoom, drag, swipe ===== */
+const hiRes=u=>(u||'').replace('/400/','/1500/').replace(/-(large|medium|thumb|small|desktop|medium_masonry)\.(jpe?g|png|webp)$/i,'.$2');
+const Z={list:[],i:0,s:1,x:0,y:0,p:new Map(),pinch:null,drag:null,tap:0};
+function zoomOpen(list,i){list=list.filter(Boolean);if(!list.length)return;Z.list=list;Z.i=Math.max(0,Math.min(i||0,list.length-1));$('zoomV').classList.add('open');zShow();
+ $('zHint').textContent=matchMedia('(pointer:coarse)').matches?'İki parmakla ya da çift dokunarak yakınlaştırın':'Tekerlek ya da çift tıklama ile yakınlaştırın · ← → ile gezin';ovOpen('zoom')}
+function zShow(){Z.s=1;Z.x=Z.y=0;const im=$('zImg'),src=Z.list[Z.i],hi=hiRes(src);im.onerror=()=>{if(im.src!==src&&!im.dataset.fb){im.dataset.fb=1;im.src=src}};im.dataset.fb='';im.src=hi;zApply();
+ $('zCount').textContent=Z.list.length>1?(Z.i+1)+' / '+Z.list.length:'';$('zPrev').hidden=$('zNext').hidden=Z.list.length<2}
+function zClamp(){const r=$('zStage').getBoundingClientRect(),mx=(Z.s-1)*r.width/2+40,my=(Z.s-1)*r.height/2+40;Z.x=Math.max(-mx,Math.min(mx,Z.x));Z.y=Math.max(-my,Math.min(my,Z.y))}
+function zApply(anim){const im=$('zImg');im.style.transition=anim?'transform .2s':'none';im.style.transform=`translate(${Z.x}px,${Z.y}px) scale(${Z.s})`}
+function zScale(ns,cx,cy,anim){ns=Math.min(6,Math.max(1,ns));const k=ns/Z.s;Z.x=cx-(cx-Z.x)*k;Z.y=cy-(cy-Z.y)*k;Z.s=ns;if(Z.s<=1.01){Z.s=1;Z.x=Z.y=0}zClamp();zApply(anim)}
+const zPt=e=>{const r=$('zStage').getBoundingClientRect();return [e.clientX-(r.left+r.width/2),e.clientY-(r.top+r.height/2)]};
+const zClose=()=>{$('zoomV').classList.remove('open');Z.p.clear()};
+const zDismiss=()=>ovClose('zoom',zClose);
+function zGo(d){if(Z.list.length<2)return;Z.i=(Z.i+d+Z.list.length)%Z.list.length;zShow()}
+$('zX').onclick=zDismiss;$('zPrev').onclick=()=>zGo(-1);$('zNext').onclick=()=>zGo(1);
+const zs=$('zStage');
+zs.addEventListener('pointerdown',e=>{try{zs.setPointerCapture(e.pointerId)}catch(x){}Z.p.set(e.pointerId,[e.clientX,e.clientY]);
+ if(Z.p.size==2){const[a,b]=[...Z.p.values()];Z.pinch={d:Math.hypot(a[0]-b[0],a[1]-b[1]),s:Z.s,x:Z.x,y:Z.y,c:zPt({clientX:(a[0]+b[0])/2,clientY:(a[1]+b[1])/2})};Z.drag=null}
+ else Z.drag={x0:e.clientX,y0:e.clientY,x:Z.x,y:Z.y,t:Date.now(),moved:false}});
+zs.addEventListener('pointermove',e=>{if(!Z.p.has(e.pointerId))return;Z.p.set(e.pointerId,[e.clientX,e.clientY]);
+ if(Z.pinch&&Z.p.size>=2){const[a,b]=[...Z.p.values()],d=Math.hypot(a[0]-b[0],a[1]-b[1]);Z.s=Z.pinch.s;Z.x=Z.pinch.x;Z.y=Z.pinch.y;zScale(Z.pinch.s*d/Z.pinch.d,Z.pinch.c[0],Z.pinch.c[1]);return}
+ if(!Z.drag)return;const dx=e.clientX-Z.drag.x0,dy=e.clientY-Z.drag.y0;if(Math.abs(dx)+Math.abs(dy)>6)Z.drag.moved=true;
+ if(Z.s>1){Z.x=Z.drag.x+dx;Z.y=Z.drag.y+dy;zClamp();zApply()}else{Z.x=dx;zApply()}});
+function zUp(e){const had=Z.p.has(e.pointerId);Z.p.delete(e.pointerId);if(!had)return;if(Z.pinch){if(Z.p.size<2)Z.pinch=null;Z.drag=null;return}
+ const d=Z.drag;Z.drag=null;if(!d)return;const dx=e.clientX-d.x0;
+ if(Z.s==1&&d.moved){if(Math.abs(dx)>60&&Z.list.length>1)zGo(dx<0?1:-1);else{Z.x=0;zApply(true)}return}
+ if(!d.moved){const now=Date.now();if(now-Z.tap<300){const[cx,cy]=zPt(e);Z.s>1?zScale(1,0,0,true):zScale(2.5,cx,cy,true);Z.tap=0}else Z.tap=now}}
+zs.addEventListener('pointerup',zUp);zs.addEventListener('pointercancel',zUp);
+zs.addEventListener('wheel',e=>{e.preventDefault();const[cx,cy]=zPt(e);zScale(Z.s*(e.deltaY<0?1.2:1/1.2),cx,cy)},{passive:false});
+document.addEventListener('keydown',e=>{if(!$('zoomV').classList.contains('open'))return;if(e.key=='ArrowLeft')zGo(-1);else if(e.key=='ArrowRight')zGo(1);else if(e.key=='+'||e.key=='=')zScale(Z.s*1.3,0,0,true);else if(e.key=='-')zScale(Z.s/1.3,0,0,true)});
+/* open the viewer from artwork images and catalogue images */
+document.addEventListener('click',e=>{const im=e.target.closest('#mc .det .big img, #mc .thumbs img, #catGrid img, .wks img');if(!im)return;
+ const inThumbs=!!im.closest('.thumbs');if(inThumbs&&innerWidth>640&&$('bigI'))return;
+ e.preventDefault();e.stopPropagation();const box=im.closest('#catGrid')||im.closest('.wks')||im.closest('#mc');
+ let list=[...box.querySelectorAll(box.id=='mc'?'.thumbs img':'img')].map(x=>x.src);if(!list.length)list=[im.src];
+ let i=list.indexOf(im.src);if(i<0){i=list.findIndex(u=>hiRes(u)===hiRes(im.src));if(i<0){list=[im.src,...list];i=0}}zoomOpen(list,i)},true);
 /* ===== help / welcome ===== */
 const openHelp=()=>{$('helpM').classList.add('open');document.body.style.overflow='hidden';ovOpen('help')};
 const closeHelp=()=>{$('helpM').classList.remove('open');document.body.style.overflow='';LS.set('mr_welcomed',1)};
@@ -1138,9 +1191,10 @@ function route(h,boot){h=dec(h);curRoute=h;
   ready.then(()=>{if(h.startsWith('lot='))openLot(h.slice(4));else if(h.startsWith('past='))openPast(h.slice(5));else if(h.startsWith('cmp=')){cmp=h.slice(4).split(',').filter(k=>byKey[k]).slice(0,4);dock();if(cmp.length>1)showCmp()}else if(h=='help')openHelp();else openAdd()});return}
  show(startView(),true)}
 addEventListener('popstate',e=>{const st=e.state||{};menuOpen(false);navQuiet=true;
- try{if(st.ov!=='m')closeM();if(st.ov!=='filters')drawer(false);if(st.ov!=='pick')closePick();if(st.ov!=='add')closeAdd();if(st.ov!=='gh')closeGh();if(st.ov!=='help'&&$('helpM').classList.contains('open'))closeHelp();if(st.ov!=='search')gsShut();
+ try{if(st.ov!=='zoom')zClose();if(st.ov!=='m'&&st.ov!=='zoom')closeM();if(st.ov!=='filters')drawer(false);if(st.ov!=='pick')closePick();if(st.ov!=='add')closeAdd();if(st.ov!=='gh')closeGh();if(st.ov!=='help'&&$('helpM').classList.contains('open'))closeHelp();if(st.ov!=='search')gsShut();
   const base=st.ov?(st.base||''):dec(location.hash.slice(1));if(base!==curRoute)route(base,e.state==null);
   document.body.style.overflow=st.ov&&st.ov!=='search'&&st.ov!=='filters'?'hidden':''}finally{navQuiet=false}
+ if(st.ov=='zoom'&&!ovIsOpen('zoom')){history.back();return}
  if(st.ov&&!ovIsOpen(st.ov)){const h=dec(location.hash.slice(1));// forward into a pop-up: reopen it
   if(st.ov=='m')ready.then(()=>{if(h.startsWith('lot='))openLot(h.slice(4));else if(h.startsWith('past='))openPast(h.slice(5));else if(h.startsWith('cmp=')&&cmp.length>1)showCmp()});
   else if(st.ov=='filters')openFilters();else if(st.ov=='pick')openPick();else if(st.ov=='add')openAdd();else if(st.ov=='gh')openGh();else if(st.ov=='help')openHelp();else if(st.ov=='search')gsOpen()}});
