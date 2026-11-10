@@ -1,0 +1,65 @@
+# Pulls Lebriz catalogues (from the Internet Archive) for the artists asked for.
+# Triggered by the site's "Lebriz'den çek" button (a GitHub issue titled "Lebriz: …"),
+# or by hand from the Actions tab ("Run workflow" with artist IDs).
+# Only the repo owner and collaborators can trigger it from an issue.
+name: Lebriz'den çek
+
+on:
+  issues:
+    types: [opened, reopened]
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: "Lebriz sanatçı numaraları (virgülle)"
+        required: true
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+
+concurrency:
+  group: site-data
+  cancel-in-progress: false
+
+jobs:
+  pull:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (startsWith(github.event.issue.title, 'Lebriz:') &&
+       contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association))
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      TZ: Europe/Istanbul
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Kataloğu arşivden çek
+        id: pull
+        run: python3 lebriz_pull.py --event "$GITHUB_EVENT_PATH" --summary "$RUNNER_TEMP/summary.md"
+
+      - name: Yayınla
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/lebriz_catalog
+          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
+          git commit -q -m "Lebriz kataloğu çekildi (${{ steps.pull.outputs.count }} sanatçı)"
+          for i in 1 2 3 4; do
+            git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && break
+            sleep $((i * 5))
+          done
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" >/dev/null 2>&1 || true
+
+      - name: İsteğe sonucu yaz
+        if: always() && github.event_name == 'issues'
+        env:
+          NUM: ${{ github.event.issue.number }}
+          OK: ${{ steps.pull.outputs.ok }}
+        run: |
+          f="$RUNNER_TEMP/summary.md"
+          [ -s "$f" ] || echo "Çekme çalıştırılamadı; ayrıntılar için Actions kaydına bakın." > "$f"
+          gh issue comment "$NUM" --repo "${{ github.repository }}" --body-file "$f"
+          if [ "$OK" = "true" ]; then gh issue close "$NUM" --repo "${{ github.repository }}" --reason completed; fi

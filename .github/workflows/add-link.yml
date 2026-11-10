@@ -19,7 +19,7 @@ permissions:
   pages: write
 
 concurrency:
-  group: add-link
+  group: site-data
   cancel-in-progress: false
 
 jobs:
