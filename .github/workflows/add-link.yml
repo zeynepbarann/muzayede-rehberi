@@ -1,0 +1,66 @@
+# Adds a link to the site as soon as it is submitted.
+# Triggered by the site's "Bağlantı ekle" form (a GitHub issue labelled "kaynak" / titled "Kaynak: …"),
+# or by hand from the Actions tab ("Run workflow" with a URL).
+# Only the repo owner and collaborators can trigger it from an issue.
+name: Bağlantı ekle
+
+on:
+  issues:
+    types: [opened, reopened]
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Müzayede evi, müzayede veya eser bağlantısı"
+        required: true
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+
+concurrency:
+  group: add-link
+  cancel-in-progress: false
+
+jobs:
+  add:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      ((contains(github.event.issue.labels.*.name, 'kaynak') || startsWith(github.event.issue.title, 'Kaynak:')) &&
+       contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.issue.author_association))
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TZ: Europe/Istanbul
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Bağlantıyı tara, siteye ekle ve yayınla
+        id: scrape
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          branch="${GITHUB_REF_NAME}"
+          for i in 1 2 3; do
+            python3 add_sources.py --json --event "$GITHUB_EVENT_PATH" --summary "$RUNNER_TEMP/summary.md"
+            git add data/lots.json data/sources.json data/artists.json sources.json index.html
+            if git diff --cached --quiet; then echo "Değişiklik yok"; break; fi
+            git commit -q -m "Bağlantı eklendi: $(sed -n 's/^host=//p' "$GITHUB_OUTPUT" | tail -1)"
+            if git push -q origin "HEAD:$branch"; then break; fi
+            # Someone else pushed meanwhile: start again from their version.
+            sleep $((i * 5)); git fetch -q origin "$branch"; git reset -q --hard "origin/$branch"
+          done
+          # Ask Pages to rebuild now (ignored if Pages is set up differently).
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" >/dev/null 2>&1 || true
+
+      - name: İsteğe sonucu yaz
+        if: always() && github.event_name == 'issues'
+        env:
+          NUM: ${{ github.event.issue.number }}
+          OK: ${{ steps.scrape.outputs.ok }}
+        run: |
+          f="$RUNNER_TEMP/summary.md"
+          [ -s "$f" ] || echo "Tarama çalıştırılamadı; ayrıntılar için Actions kaydına bakın." > "$f"
+          gh issue comment "$NUM" --repo "${{ github.repository }}" --body-file "$f"
+          if [ "$OK" = "true" ]; then gh issue close "$NUM" --repo "${{ github.repository }}" --reason completed; fi
