@@ -71,6 +71,26 @@ WORK_RE = [
 ]
 
 
+SIZE = re.compile(r"\d+(?:[.,]\d+)?\s*[x×X]\s*\d+(?:[.,]\d+)?(?:\s*[x×X]\s*\d+(?:[.,]\d+)?)?\s*cm", re.I)
+def clean(w):
+    """Split Lebriz's one-string label ("Title\\r\\rTechnique\\r89 x 127 cm") into title / technique / size / year."""
+    raw = " \n ".join(x for x in (w.get("t"), w.get("k"), w.get("s")) if x)
+    parts = [re.sub(r"\s+", " ", x).strip(" ,-") for x in re.split(r"[\r\n]+", raw)]
+    parts = [x for x in parts if x]
+    size = next((SIZE.search(x).group(0) for x in parts if SIZE.search(x)), "")
+    parts = [SIZE.sub("", x).strip(" ,-") for x in parts]
+    parts = [x for x in parts if x]
+    title, tech = (parts[0] if parts else ""), ", ".join(parts[1:])
+    yr = re.search(r"\b(1[89]\d{2}|20[0-2]\d)\b", raw)
+    w.update(t=title, k=tech, s=re.sub(r"\s+", " ", size), y=yr.group(1) if yr else "")
+    return w
+
+def lebriz_name(aid):
+    try:
+        return next((a["n"] for a in json.load(open(os.path.join(HERE, "data", "lebriz_index.json"), encoding="utf8"))["artists"] if a["id"] == aid), None)
+    except Exception:
+        return None
+
 def parse_works(h, ts, page_url):
     """Return works found on one archived catalogue page."""
     out, seen = [], set()
@@ -81,14 +101,10 @@ def parse_works(h, ts, page_url):
             src = attr("src")
             c = re.match(r"(?:Eser kodu|Work code|Code)\s*:\s*(\S+)\s*(.*)", txt, re.I)
             if not c or not src: continue
-            code, rest = c.group(1), c.group(2).strip()
+            code, rest = c.group(1), c.group(2)
             if code in seen: continue
             seen.add(code)
-            sz = re.search(r"\d+(?:[.,]\d+)?\s*[x×]\s*\d+(?:[.,]\d+)?(?:\s*[x×]\s*\d+(?:[.,]\d+)?)?\s*cm", rest)
-            before, after = (rest[:sz.start()].strip(" ,-"), rest[sz.end():].strip(" ,-")) if sz else (rest, "")
-            yr = re.search(r"\b(1[89]\d{2}|20[0-2]\d)\b", rest)
-            out.append({"c": code, "t": before, "s": sz.group(0) if sz else "", "k": after,
-                        "y": yr.group(1) if yr else "", "i": wbimg(src, ts), "p": f"{WB}{ts}/{page_url}"})
+            out.append(clean({"c": code, "t": rest, "i": wbimg(src, ts), "p": f"{WB}{ts}/{page_url}"}))
         if out: break
     return out
 
@@ -109,9 +125,6 @@ def pull(aid):
         h = b.decode("utf8", "replace")
         if len(b) < 6000 or "bhawkTest" in h: continue
         read += 1
-        if not name:
-            m = re.search(r"<title>([^<]+)</title>", h, re.I)
-            name = T(m.group(1)).split("|")[0].split(" - ")[0].strip() if m else None
         for m in re.finditer(r'class="rmText">([^<]{2,90}?)\s*\((\d+)\)</span>', h):
             nm, c = T(m.group(1)), int(m.group(2))
             if nm == "Bütün Katalog" or nm.lower() == "all catalogue": total = total or c
@@ -128,7 +141,7 @@ def pull(aid):
             works.setdefault(w["c"], w)
         if read % 10 == 0: print(f"  {read} pages read, {len(works)} works", flush=True)
         if time.time() - t0 > 40 * 60: print("  time limit reached for this artist", flush=True); break
-    rec = {"id": aid, "name": name, "total": total, "series": series, "pages_archived": len(cat), "pages_read": read,
+    rec = {"id": aid, "name": lebriz_name(aid) or name, "total": total, "series": series, "pages_archived": len(cat), "pages_read": read,
            "pulled_at": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "works": list(works.values())}
     return rec
 
