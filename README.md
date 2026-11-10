@@ -15,12 +15,15 @@ Issue açılınca `.github/workflows/add-link.yml` hemen çalışır: `add_sourc
 Tek eser bağlantıları (`kind: "product"`) o evin diğer eserlerinin yerine geçmez, yanlarına eklenir. Günlük tarama (`refresh.sh`) önce `git pull` yapar ve eklenen tüm bağlantıları yeniden tarar.
 
 ## Özellikler
-- Genel arama (eser, sanatçı, ev, etiket, Lebriz sergi/galeri)
-- Yalın filtre çubuğu (ev, bitiş, fiyat, teknik) ve “Daha fazla filtre”
+- Dört sekme: **Favorilerim** (seçilen sanatçıların satıştaki eserleri + kaydedilen eserler), **Keşfet** (tüm eserler), **Müzayede Evleri** (evler + eklenen bağlantılar), **Arşiv** (Lebriz)
+- Keşfet'te tek bir **Filtrele** paneli: anahtarlar (favori sanatçılarım, Hemen Al, arşivde olanlar), bitiş ve fiyat seçenekleri, ev, teknik, sanatçı, etiketler; etkin filtreler kaldırılabilir çipler olarak görünür
+- Sade kartlar (görsel, sanatçı, fiyat, kalan süre); eser ve sanatçı sayfaları sekmeli (Eser / Değer / Sanatçı / Arşiv; Şu an satışta / Değer / Biyografi / Sergiler)
+- ⚙ menüsü: koyu tema, açılışta Favorilerim, kartlarda açıklama; Bağlantı ekle; Nasıl çalışır?
+- İlk ziyarette 3 adımlık rehber + sık sorulanlar; ⓘ ile kısa açıklamalar; her boş ekranda ne yapılacağı yazar
+- Genel arama (eser, sanatçı, ev, etiket, Lebriz sergi/galeri); sanatçılar ☆ ile favorilere eklenebilir
 - Birleşik sanatçı adları (yazım/büyük-küçük harf/tarih/kısaltma); elle düzeltmeler `artist_aliases.json`
-- Favori sanatçılar: tüm sanatçılar (canlı, geçmiş, Lebriz) aranarak eklenir; henüz eseri olmayan bir ad da eklenebilir. Ana sayfa varsayılan olarak yalnızca onları gösterir. Genel aramada da ☆ ile eklenebilir.
-- Altın-siyah tema (varsayılan koyu; ◐ ile açık tema)
-- Eser detayı, karşılaştırma, Lebriz sanatçı sayfası, değer paneli
+- Karşılaştırma (en fazla 4 eser), altın-siyah tema; telefonda alt sekmeler ve yüzen Filtrele düğmesi
+- Ayarlar ve favoriler yalnızca tarayıcıda (localStorage) tutulur
 
 ## Otomatik güncelleme
 `./refresh.sh` her gün: `add_sources.py` → `scrape.py` → (Pazartesi veya `--lebriz`) `lebriz.py` → `lebriz_export.py` → `export.py`.

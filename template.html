@@ -286,72 +286,224 @@ input[type=search]::-webkit-search-cancel-button{-webkit-appearance:none;appeara
 .toast.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}.toast button{background:var(--gold-grad);color:#0c0b09;border:0;border-radius:999px;padding:7px 14px;font-weight:700;cursor:pointer;white-space:nowrap}
 .si .star{margin-left:4px}
 @media(max-width:640px){.toast{bottom:calc(var(--tabbar) + 12px)}.picker .prow{flex-wrap:wrap}.picker .prow .pm{width:100%;text-align:left;padding-left:34px}}
+
+/* ===== v6 calm layout ===== */
+.view{display:none}.view.on{display:block}
+.hrow{position:relative}
+.vhead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin:8px 0 18px}
+.vhead h1{font-size:clamp(30px,4vw,40px);font-weight:500;letter-spacing:-.02em}.vhead p{margin:6px 0 0;max-width:720px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:0 0 18px}
+.bar .grow{flex:1 1 220px;width:auto;height:42px}
+.seg button .sn,.ltabs .sn{font-size:11px;color:var(--muted);margin-left:4px;font-weight:600}.seg button.on .sn{color:var(--accent)}
+.sortl{margin-left:auto;display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);font-weight:600}
+.fld.sm{height:40px;width:auto;min-width:170px;border-radius:999px;padding:0 14px;background:var(--surface)}
+.fbtn{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;font-weight:600}
+.badge-n{display:inline-flex;align-items:center;justify-content:center;min-width:20px;height:20px;padding:0 6px;border-radius:999px;background:var(--gold-grad);color:#0c0b09;font-size:11px;font-weight:700}.badge-n:empty{display:none}
+.active-f{display:flex;flex-wrap:wrap;gap:6px;margin:-6px 0 18px}.active-f:empty{display:none}
+.active-f .chip{background:color-mix(in srgb,var(--gold) 12%,var(--surface));border-color:color-mix(in srgb,var(--gold) 40%,var(--line))}.active-f .chip.ghost{background:transparent;border-color:transparent;color:var(--accent);font-weight:600}
+/* toggle switch */
+.tgl{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 0;cursor:pointer;position:relative}
+.tgl>span{display:flex;flex-direction:column;gap:1px;min-width:0}.tgl b{font-weight:600;font-size:14px}.tgl small{color:var(--muted);font-size:12px;line-height:1.35}
+.tgl input{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.tgl i{flex:none;width:46px;height:28px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);position:relative;transition:background .2s}
+.tgl i::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--muted);transition:transform .2s,background .2s}
+.tgl input:checked+i{background:var(--gold-grad);border-color:transparent}.tgl input:checked+i::after{transform:translateX(18px);background:#0c0b09}
+.tgl input:focus-visible+i{outline:2px solid var(--gold);outline-offset:2px}
+#arf{max-width:460px;margin:-8px 0 8px}
+/* settings menu */
+.menu{position:absolute;right:var(--s5);top:calc(100% + 4px);width:min(320px,calc(100vw - 24px));background:var(--sheet);border:1px solid color-mix(in srgb,var(--gold) 30%,var(--line));border-radius:18px;box-shadow:var(--shadow-lg);padding:10px 18px 12px;display:none;z-index:80}
+.menu.open{display:block}.menu h5{margin:6px 0 0;font:600 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.menu hr{border:0;border-top:1px solid var(--line);margin:6px 0}
+.mi{display:block;width:100%;text-align:left;background:none;border:0;padding:11px 0;font-weight:600;cursor:pointer;color:var(--ink)}.mi:hover{color:var(--accent)}
+#menuBtn[aria-expanded=true]{border-color:var(--gold);color:var(--accent)}
+/* filter panel */
+aside.filters{display:flex;flex-direction:column;padding:0!important;overflow:hidden}
+.fhead{display:flex;justify-content:space-between;align-items:center;padding:16px 20px 6px}.fhead h3{font-size:26px}.fhead .x{position:static}
+.fbody{flex:1;overflow:auto;padding:0 20px 8px}
+.fs{padding:14px 0;border-bottom:1px solid var(--line)}.fs:last-child{border-bottom:0}
+.fs h4,.filters .fs h4{margin:0 0 8px!important}
+.ffoot{display:flex;gap:10px;padding:12px 20px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--line);background:var(--sheet)}.ffoot .pri{flex:1;height:46px}.ffoot .ghost{height:46px}
+details.more-d>summary{cursor:pointer;color:var(--accent);font-weight:600;font-size:13px;margin-top:10px;list-style:none}details.more-d>summary::-webkit-details-marker{display:none}
+details.more-d>summary::before{content:"+ "}details.more-d[open]>summary::before{content:"− "}
+details.fs.more-d>summary{margin:0}details.more-d .row2{margin-top:8px}details.more-d .tags{margin-top:10px}
+/* cards */
+.card .body{padding:12px 4px 10px;gap:3px}
+.crow{display:flex;justify-content:space-between;align-items:baseline;gap:8px;cursor:pointer}
+.crow .price{margin:0;font-size:17px}.left{font-size:12px;color:var(--muted);white-space:nowrap;font-weight:600}.left.soon,.soon{color:var(--danger)!important}
+.card .meta{font-size:12px}
+.saved{position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:rgba(12,11,9,.82);color:#d4af37;display:flex;align-items:center;justify-content:center;font-size:15px;border:1px solid rgba(212,175,55,.5)}
+/* empty states */
+.empty{grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--ink-2);background:var(--surface);border-radius:18px;border:1px dashed color-mix(in srgb,var(--gold) 35%,var(--line))}
+.empty p{max-width:520px;margin:6px auto 0;line-height:1.6}.empty .acts{justify-content:center;margin-top:18px;flex-wrap:wrap;gap:10px}
+.mini-steps{display:inline-block;text-align:left;margin:14px auto 0;padding-left:22px}.mini-steps li{margin:4px 0}
+.nolive{margin:8px 0 24px;padding:18px 20px;background:var(--surface);border-radius:16px}.nolive h4{margin:0;font:600 15px var(--sans)}.nolive p{margin:2px 0 10px;font-size:13px}
+.agrp h3 a.more{font-size:13px}
+/* tips */
+details.tip{display:inline-block;position:relative;vertical-align:middle;text-transform:none;letter-spacing:0;font-variant-caps:normal}
+details.tip>summary{list-style:none;cursor:pointer;width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font:600 12px/1 var(--sans);color:var(--accent);border:1px solid color-mix(in srgb,var(--gold) 50%,transparent)}
+details.tip>summary::-webkit-details-marker{display:none}
+details.tip>span{position:absolute;z-index:40;left:-8px;top:26px;width:min(300px,78vw);background:var(--sheet);border:1px solid color-mix(in srgb,var(--gold) 35%,var(--line));padding:12px 14px;border-radius:12px;box-shadow:var(--shadow-lg);font:400 13px/1.55 var(--sans);color:var(--ink-2);white-space:normal;text-align:left}
+details.tip-block{background:var(--surface);border-radius:14px;padding:12px 16px;margin:-6px 0 18px}details.tip-block>summary{cursor:pointer;font-weight:600;color:var(--accent)}details.tip-block p{margin:8px 0 2px;line-height:1.6;color:var(--ink-2)}
+/* lot detail */
+.det .info .lt{font-size:clamp(28px,3.4vw,40px);margin:4px 0 8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}.det .info .ld{color:var(--ink-2);margin:0 0 14px}
+.keyf{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}.keyf>div{background:var(--surface);border-radius:14px;padding:12px 14px}
+.keyf span{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:600}.keyf b{display:block;font-family:var(--serif);font-weight:500;font-size:26px;margin-top:2px}.keyf small{display:block;color:var(--muted);font-size:12px}
+.lacts{flex-wrap:wrap;gap:8px}.lacts .btn.pri{display:inline-flex;align-items:center;text-decoration:none;height:44px;padding:0 20px}.lacts .ic{height:44px;padding:0 16px;font-size:14px}
+.ltabs{display:flex;gap:4px;align-items:center;border-bottom:1px solid var(--line);margin:26px 0 0;position:sticky;top:-30px;z-index:4;background:var(--sheet);overflow-x:auto;scrollbar-width:none}
+.ltabs button{background:none;border:0;border-bottom:2px solid transparent;padding:12px 14px;cursor:pointer;color:var(--muted);font-weight:600;white-space:nowrap}.ltabs button.on{color:var(--ink);border-color:var(--gold)}
+.ltabs .lmini{margin-left:auto;font-family:var(--serif);color:var(--accent);font-size:18px;padding-right:4px;white-space:nowrap}
+.ltabs.page{top:calc(var(--hdr) + 44px);background:var(--bg);margin-top:18px}
+.lpane{display:none;padding-top:18px}.lpane.on{display:block}
+.panel.first{margin-top:0;border-top:0;padding-top:0}.panel h3{display:flex;align-items:center;gap:8px}
+.lsart{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--surface);border-radius:14px;padding:14px 16px;margin-bottom:12px}.lsart .acts{margin:0}
+.favbtn::before{content:"☆ Favorilere ekle"}.favbtn.on::before{content:"★ Favorilerimde"}
+.btn.favbtn:not(.pri).on{border-color:var(--gold);color:var(--accent)}
+.subh{font-size:22px;margin:26px 0 12px;display:flex;align-items:center;gap:8px}.subh small{font:600 13px var(--sans);color:var(--muted)}
+.ap-hero{margin-top:8px}
+/* houses */
+.howto{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 18px}.howto>div{background:var(--surface);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.howto .num,.how3 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--gold-grad);color:#0c0b09;font-weight:700;font-size:14px;margin-bottom:6px;flex:none}
+.howto small{color:var(--muted);font-size:13px}
+/* help */
+.help{max-width:640px}.help h2{font-size:34px;margin:2px 0 6px}.help h3{font-size:22px;margin:26px 0 8px}
+.how3{list-style:none;padding:0;margin:16px 0;display:flex;flex-direction:column;gap:10px}.how3 li{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border-radius:14px;padding:14px 16px}.how3 .num{margin:0}.how3 p{margin:2px 0 0;color:var(--ink-2);font-size:14px}
+.help .acts{gap:10px;flex-wrap:wrap}
+details.faq{border-bottom:1px solid var(--line);padding:12px 0}details.faq summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}details.faq summary::-webkit-details-marker{display:none}
+details.faq summary::after{content:"+";color:var(--accent);font-size:18px;line-height:1}details.faq[open] summary::after{content:"−"}details.faq p{margin:8px 0 0;color:var(--ink-2);line-height:1.6}
+footer a{color:var(--accent)}
+/* plain labels (small-caps mangles Turkish İ/ı) */
+.meta,.filters h4,.sg h5,.price small,.kpi span,.cmp th,table.f td:first-child,.secthead .muted{font-variant-caps:normal!important;text-transform:none!important;letter-spacing:0!important}
+.filters h4{font:600 14px var(--sans)!important;color:var(--ink)!important}
+table.f td:first-child,.kpi span,.cmp th{font-size:13px;font-weight:500;color:var(--muted)}
+.sg h5{font-size:12px}
+.lacts a,.lsart .acts a{margin-left:0!important}
+/* tabs: icons only on phones */
+nav.tabs .ti{display:none}
+.fab{display:none}
+@media(max-width:640px){
+ .menu{right:10px}
+ .vhead{margin:4px 0 12px}.vhead h1{font-size:28px}.vhead .btn.pri{width:100%;justify-content:center}
+ .bar{gap:8px}.sortl{margin-left:0;flex:1}.sortl .fld.sm{flex:1;min-width:0}.fbtn{display:none}
+ nav.tabs .ti{display:block;font-size:17px;line-height:1;color:var(--muted)}nav.tabs button.on .ti{color:var(--gold)}
+ nav.tabs button{font-size:11.5px}
+ body[data-view=lots] .fab{display:inline-flex;align-items:center;gap:8px;position:fixed;right:14px;bottom:calc(var(--tabbar) + 14px);z-index:36;height:48px;padding:0 20px;border-radius:999px;border:0;background:var(--gold-grad);color:#0c0b09;font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+ body[data-view=lots] .fab .badge-n{background:#0c0b09;color:#d4af37}
+ .dock.show~.fab{display:none!important}
+ .toast{bottom:calc(var(--tabbar) + 74px)}
+ .keyf b{font-size:22px}.lacts .btn.pri{width:100%;justify-content:center}
+ .ltabs{top:calc(-56px - env(safe-area-inset-top));margin-right:-14px;padding-right:56px}.ltabs .lmini{display:none}.ltabs.page{top:var(--hdr);margin-right:0;padding-right:0}
+ .howto{grid-template-columns:1fr}
+ .empty{padding:32px 16px}
+ .agrp h3{font-size:22px;flex-wrap:wrap}
+ .card .star{min-width:30px;min-height:30px;font-size:17px}.card .artist{gap:2px}
+}
 </style></head><body>
 <header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
 <input id="gq" type="search" autocomplete="off" placeholder="Her şeyi ara: sanatçı, eser, müzayede evi, sergi, galeri…" aria-label="Genel arama" aria-controls="sd" aria-expanded="false"><kbd>/</kbd><div class="sd" id="sd" role="listbox"></div></div>
-<div class="hbtns"><button class="iconbtn gsBtn" id="gsBtn" aria-label="Ara"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button><button class="iconbtn" id="addOpen" title="Bağlantı ekle" aria-label="Bağlantı ekle">+</button><button class="iconbtn" id="theme" title="Açık/koyu tema" aria-label="Tema değiştir">◐</button></div></div>
-<nav class="tabs" role="tablist"><button data-v="lots" class="on">Eserler<span class="n" id="nLots">…</span></button><button data-v="fav">♥ Favoriler<span class="n" id="favN">0</span></button><button data-v="houses">Müzayede Evleri</button><button data-v="lb">Sanat Rehberi · Lebriz</button><button data-v="search" id="tSearch" style="display:none">Arama sonuçları</button></nav></header>
+<div class="hbtns"><button class="iconbtn gsBtn" id="gsBtn" aria-label="Ara"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button><button class="iconbtn" id="menuBtn" aria-label="Ayarlar ve yardım" aria-haspopup="true" aria-expanded="false" title="Ayarlar ve yardım"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div>
+<div class="menu" id="menu" role="menu" aria-label="Ayarlar ve yardım">
+ <h5>Görünüm</h5>
+ <label class="tgl"><span><b>Koyu tema</b><small>Siyah-altın görünüm</small></span><input type="checkbox" id="setDark"><i aria-hidden="true"></i></label>
+ <label class="tgl"><span><b>Açılışta Favorilerim</b><small>Site, seçtiğiniz sanatçılarla açılır</small></span><input type="checkbox" id="setStart"><i aria-hidden="true"></i></label>
+ <label class="tgl"><span><b>Kartlarda açıklama</b><small>Teknik ve ölçü kartta da görünsün</small></span><input type="checkbox" id="setDesc"><i aria-hidden="true"></i></label>
+ <hr>
+ <button type="button" class="mi" id="mPick">★ Favori sanatçıları düzenle</button>
+ <button type="button" class="mi" id="mAdd">＋ Bağlantı ekle</button>
+ <button type="button" class="mi" id="mHelp">ⓘ Nasıl çalışır?</button>
+</div></div>
+<nav class="tabs" role="tablist"><button data-v="fav"><span class="ti" aria-hidden="true">★</span>Favorilerim<span class="n" id="favTabN"></span></button><button data-v="lots"><span class="ti" aria-hidden="true">◇</span>Keşfet<span class="n" id="nLots">…</span></button><button data-v="houses"><span class="ti" aria-hidden="true">⌂</span>Müzayede Evleri</button><button data-v="lb"><span class="ti" aria-hidden="true">▤</span>Arşiv</button><button data-v="search" id="tSearch" style="display:none"><span class="ti" aria-hidden="true">⚲</span>Arama</button></nav></header>
 <main>
-<section class="view on" id="v-lots">
-<div class="landbar" id="landbar">
-  <div class="seg" role="tablist" aria-label="Liste">
-    <button type="button" id="modeFav" class="on">Favori sanatçılar</button>
-    <button type="button" id="modeAll">Tüm eserler</button>
-  </div>
-  <button type="button" class="btn" id="pickOpen">☆ Sanatçı seç</button>
-  <span class="cnt" id="stats">Yükleniyor…</span>
-</div>
-<div class="prompt" id="favPrompt"><p>Ana sayfada yalnızca seçtiğiniz sanatçıların eserlerini görmek için favori ekleyin. İstediğiniz zaman “Tüm eserler”e geçebilirsiniz.</p><button type="button" class="btn pri" id="pickOpen2">Sanatçı seç</button></div>
-<div class="fbar" id="fbar">
-  <select class="fld" id="site" aria-label="Müzayede evi"><option value="">Tüm evler</option></select>
-  <div class="chips" id="endChips"><span class="chip on" data-e="">Tümü</span><span class="chip" data-e="1">24 saat</span><span class="chip" data-e="3">3 gün</span><span class="chip" data-e="7">7 gün</span></div>
-  <div class="row2"><input class="fld" id="pmin" type="number" inputmode="numeric" placeholder="En az TL" aria-label="En az fiyat"><input class="fld" id="pmax" type="number" inputmode="numeric" placeholder="En çok TL" aria-label="En çok fiyat"></div>
-  <select class="fld" id="tech" aria-label="Teknik"><option value="">Tüm teknikler</option></select>
-  <button type="button" class="btn" id="fOpen">Daha fazla filtre</button>
-  <button type="button" class="btn ghost" id="fReset">Sıfırla</button>
-</div>
-<div class="active-f" id="activeF"></div>
-<aside class="filters" id="filters" aria-label="Daha fazla filtre">
- <div style="display:flex;justify-content:space-between;align-items:center"><h4 style="margin:0">Daha fazla filtre</h4><button class="btn" id="fClose">Kapat</button></div>
- <h4>Bu listede ara</h4><input class="fld" id="q" type="search" placeholder="ör. yağlı boya, 1970">
- <h4>Sıralama</h4><select class="fld" id="sort"><option value="end">Bitişi en yakın</option><option value="pa">Fiyat (artan)</option><option value="pd">Fiyat (azalan)</option><option value="bids">En çok pey alan</option><option value="artist">Sanatçı (A–Z)</option><option value="ppc">cm² fiyatı (artan)</option></select>
- <h4>Sanatçı</h4><input class="fld" id="artist" list="artistList" placeholder="Tüm sanatçılar"><datalist id="artistList"></datalist>
- <h4>Etiketler</h4><div class="tags tagcloud" id="tagCloud"></div>
- <h4>Tür</h4><div class="chips" id="typeChips"><span class="chip on" data-t="">Tümü</span><span class="chip" data-t="auction">Müzayede</span><span class="chip" data-t="buy-now">Hemen Al</span></div>
-</aside>
-<div class="grid" id="g"></div><div class="more" id="moreWrap"><button class="btn" id="more" style="display:none">Daha fazla yükle</button></div><div id="sentinel"></div>
-<p class="muted" style="font-size:var(--fs-xs);text-align:center">Fiyatlar sitelerden alınan açılış/Hemen Al fiyatları ve (MüzayedeApp'te) güncel peylerdir. Veriler sitelerden alındığı gibidir.</p></div>
-</div></section>
-<section class="view" id="v-houses"><div class="secthead"><h2>Eklenen bağlantılar</h2><button class="btn" id="addOpen2">Bağlantı ekle</button></div><div class="src-list" id="srcList"></div><div class="secthead"><h2>Müzayede evleri</h2><span class="muted" id="hCount"></span></div><div class="alist" id="hList"></div></section>
-<section class="view" id="v-lb"><div class="note" id="lbnote">Lebriz verileri yükleniyor…</div>
- <div class="lbf"><input class="fld" id="lbq" type="search" placeholder="Lebriz içinde ara: sanatçı, sergi, galeri…"></div>
- <div class="subtabs"><span class="chip on" data-s="a">Sanatçılar</span><span class="chip" data-s="e">Sergiler</span><span class="chip" data-s="g">Galeriler</span></div>
+<section class="view" id="v-fav">
+ <div class="vhead"><div><h1>Favorilerim</h1><p class="muted" id="favSub">Takip ettiğiniz sanatçıların şu an satıştaki eserleri ve kaydettiğiniz eserler.</p></div></div>
+ <div class="bar"><div class="seg" id="favSeg" role="tablist"><button type="button" data-f="art" class="on">Sanatçılarım <span class="sn" id="favArtN"></span></button><button type="button" data-f="saved">Kaydettiklerim <span class="sn" id="favSavedN"></span></button></div><button type="button" class="btn" id="pickOpen">★ Sanatçıları düzenle</button></div>
+ <div id="favBody"><div class="skc skel"></div></div>
+</section>
+<section class="view" id="v-lots">
+ <div class="vhead"><div><h1>Keşfet</h1><p class="muted"><span id="stats">Yükleniyor…</span> <span class="tip-wrap" id="statsTip"></span></p></div></div>
+ <div class="bar"><button type="button" class="btn fbtn" id="fOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg> Filtrele <span class="badge-n" id="fN"></span></button>
+  <label class="sortl">Sırala <select class="fld sm" id="sort"><option value="end">Bitişi en yakın</option><option value="pa">En ucuz</option><option value="pd">En pahalı</option><option value="bids">En çok pey alan</option><option value="artist">Sanatçı (A–Z)</option><option value="ppc">cm² başına en ucuz</option></select></label></div>
+ <div class="active-f" id="activeF"></div>
+ <div class="grid" id="g"></div><div class="more" id="moreWrap"><button class="btn" id="more" style="display:none">Daha fazla yükle</button></div>
+</section>
+<section class="view" id="v-houses">
+ <div class="vhead"><div><h1>Müzayede Evleri</h1><p class="muted">Sitedeki evler ve sonradan eklenen bağlantılar. Burada olmayan bir ev, müzayede ya da eser varsa ekleyin.</p></div><button type="button" class="btn pri" id="addOpen2">＋ Bağlantı ekle</button></div>
+ <div class="bar"><div class="seg" id="hSeg" role="tablist"><button type="button" data-h="all" class="on">Tüm evler <span class="sn" id="hCount"></span></button><button type="button" data-h="added">Eklenen bağlantılar <span class="sn" id="srcN"></span></button></div></div>
+ <div id="hAll"><div class="alist" id="hList"></div></div>
+ <div id="hAdded" hidden>
+  <div class="howto"><div><span class="num">1</span><b>Bağlantıyı yapıştırın</b><small>Bir müzayede evi, tek müzayede ya da tek eser sayfası.</small></div><div><span class="num">2</span><b>GitHub'da “Create”e basın</b><small>İstek sayfası kendiliğinden açılır.</small></div><div><span class="num">3</span><b>Birkaç dakika bekleyin</b><small>Eserler gelince bu sayfa haber verir.</small></div></div>
+  <div class="src-list" id="srcList"></div>
+ </div>
+</section>
+<section class="view" id="v-lb">
+ <div class="vhead"><div><h1>Arşiv</h1><p class="muted" id="lbnote">Lebriz arşivi yükleniyor…</p></div></div>
+ <details class="tip-block"><summary>ⓘ Bu arşiv nedir?</summary><p>Lebriz, Türk sanatçıları ve sergileri üzerine 2023'e kadar yayın yapan bir sanat rehberiydi. Site kapandığı için veriler Internet Archive (Wayback Machine) kopyalarından derlendi. Bu yüzden <b>güncel ya da yaklaşan sergi yoktur</b>; sanatçı biyografileri, eski sergiler ve 2008–2013 arası bazı müzayede fiyatları bulunur. Bir sanatçı arşivde varsa eser kartlarında <sup class="lbi">Lebriz</sup> rozeti görünür.</p></details>
+ <div class="bar"><div class="seg" id="lbSeg" role="tablist"><button type="button" data-s="a" class="on">Sanatçılar</button><button type="button" data-s="e">Sergiler</button><button type="button" data-s="g">Galeriler</button></div><input class="fld grow" id="lbq" type="search" placeholder="Arşivde ara: sanatçı, sergi, galeri…"></div>
  <div class="lbf" id="exf" style="display:none"><select class="fld" id="lbcity"><option value="">Tüm şehirler</option></select><select class="fld" id="lbgal"><option value="">Tüm galeriler</option></select><input class="fld" id="lbfrom" type="date" title="Başlangıç (en erken)"><input class="fld" id="lbto" type="date" title="Başlangıç (en geç)"><select class="fld" id="lbsort"><option value="new">En yeni</option><option value="old">En eski</option></select></div>
- <div class="lbf" id="arf"><label class="chip"><input type="checkbox" id="lblive"> Yalnızca şu an müzayedede eseri olanlar</label></div>
+ <div id="arf"><label class="tgl"><span><b>Yalnızca şu an satışta eseri olanlar</b><small>Keşfet’te eseri bulunan arşiv sanatçıları</small></span><input type="checkbox" id="lblive"><i aria-hidden="true"></i></label></div>
  <div id="lbres"></div></section>
 <section class="view" id="v-artist"><div id="artistPage"></div></section>
 <section class="view" id="v-search"><div id="sres"></div></section>
+<div id="sentinel"></div>
 </main>
-<footer><b><i>16/22</i> Müzayede Rehberi</b><br>Türkiye sanat müzayedeleri ve Lebriz arşivi · Veriler kaynak sitelerden alındığı gibidir.</footer>
+<footer><b><i>16/22</i> Müzayede Rehberi</b><br>Türkiye sanat müzayedeleri ve Lebriz arşivi · Veriler kaynak sitelerden alındığı gibidir · <a href="javascript:;" data-act="help">Nasıl çalışır?</a></footer>
+<aside class="filters" id="filters" aria-label="Filtreler">
+ <div class="fhead"><h3>Filtrele</h3><button type="button" class="x" id="fClose" aria-label="Kapat">×</button></div>
+ <div class="fbody">
+  <div class="fs"><h4>Ara</h4><input class="fld" id="q" type="search" placeholder="Eser, teknik, yıl… ör. yağlı boya 1970"></div>
+  <div class="fs"><h4>Hızlı seçimler</h4>
+   <label class="tgl"><span><b>Yalnızca favori sanatçılarım</b><small>★ ile seçtiğiniz sanatçıların eserleri</small></span><input type="checkbox" id="fFav"><i aria-hidden="true"></i></label>
+   <label class="tgl"><span><b>Yalnızca “Hemen Al”</b><small>Açık artırma beklemeden satın alınabilenler</small></span><input type="checkbox" id="fBuy"><i aria-hidden="true"></i></label>
+   <label class="tgl"><span><b>Arşivde kaydı olan sanatçılar</b><small>Biyografisi ya da eski fiyatı bulunanlar</small></span><input type="checkbox" id="fLb"><i aria-hidden="true"></i></label>
+  </div>
+  <div class="fs"><h4>Ne zaman bitiyor?</h4><div class="chips" id="endChips"><span class="chip on" data-e="">Hepsi</span><span class="chip" data-e="1">24 saat içinde</span><span class="chip" data-e="3">3 gün içinde</span><span class="chip" data-e="7">Bu hafta</span></div></div>
+  <div class="fs"><h4>Fiyat</h4><div class="chips" id="priceChips"><span class="chip on" data-p="">Hepsi</span><span class="chip" data-p="0-10000">10 bin TL altı</span><span class="chip" data-p="10000-50000">10–50 bin</span><span class="chip" data-p="50000-250000">50–250 bin</span><span class="chip" data-p="250000-">250 bin üzeri</span></div>
+   <details class="more-d"><summary>Kendi aralığımı gireceğim</summary><div class="row2"><input class="fld" id="pmin" type="number" inputmode="numeric" placeholder="En az TL" aria-label="En az fiyat"><input class="fld" id="pmax" type="number" inputmode="numeric" placeholder="En çok TL" aria-label="En çok fiyat"></div></details></div>
+  <div class="fs"><h4>Müzayede evi</h4><select class="fld" id="site" aria-label="Müzayede evi"><option value="">Tüm evler</option></select></div>
+  <div class="fs"><h4>Teknik</h4><select class="fld" id="tech" aria-label="Teknik"><option value="">Tüm teknikler</option></select></div>
+  <div class="fs"><h4>Sanatçı</h4><input class="fld" id="artist" list="artistList" placeholder="Sanatçı adı yazın"><datalist id="artistList"></datalist></div>
+  <details class="fs more-d"><summary>Daha fazla: etiketler</summary><div class="tags tagcloud" id="tagCloud"></div></details>
+ </div>
+ <div class="ffoot"><button type="button" class="btn ghost" id="fReset">Temizle</button><button type="button" class="btn pri" id="fApply">Sonuçları göster</button></div>
+</aside>
 <div class="scrim" id="scrim"></div>
 <div class="dock" id="dock"><span>Karşılaştır</span><span id="dockItems" style="display:flex;gap:4px"></span><button id="doCmp">Yan yana</button><button class="clr" id="clrCmp">Temizle</button><span id="dockMsg" style="opacity:.75;font-size:12px"></span></div>
-<div class="modal" id="addM" role="dialog" aria-modal="true"><div class="sheet dlg" style="max-width:520px"><button class="x" id="addX" aria-label="Kapat">×</button>
- <h2>Bağlantı ekle</h2>
- <p>Bir <b>müzayede evi</b>, tek bir <b>müzayede</b> ya da tek bir <b>eser</b> bağlantısı yapıştırın. Eserler o sayfadan otomatik olarak çekilip siteye eklenir.</p>
- <input class="fld" id="addUrl" type="url" placeholder="https://www.ornekmuzayede.com/  veya bir eser sayfası" inputmode="url" autocomplete="off">
- <input class="fld" id="addNote" type="text" placeholder="Not (isteğe bağlı)">
- <ol class="steps"><li>“Ekle”ye basın; GitHub'da istek sayfası açılır.</li><li>Orada <b>Create</b> (Submit new issue) düğmesine basın.</li><li>Birkaç dakika içinde eserler siteye eklenir; bu sayfa size haber verir.</li></ol>
+<button type="button" class="fab" id="fab">Filtrele <span class="badge-n" id="fabN"></span></button>
+<div class="modal" id="addM" role="dialog" aria-modal="true" aria-labelledby="addT"><div class="sheet dlg" style="max-width:540px"><button class="x" id="addX" aria-label="Kapat">×</button>
+ <h2 id="addT">Bağlantı ekle</h2>
+ <p>Sitede olmayan bir <b>müzayede evi</b>, tek bir <b>müzayede</b> ya da tek bir <b>eser</b> mi var? Bağlantısını yapıştırın; eserler o sayfadan otomatik olarak çekilir.</p>
+ <input class="fld" id="addUrl" type="url" placeholder="https://www.ornekmuzayede.com/" inputmode="url" autocomplete="off">
+ <details class="more-d"><summary>Not eklemek istiyorum</summary><input class="fld" id="addNote" type="text" placeholder="Not (isteğe bağlı)"></details>
+ <ol class="steps"><li>“Ekle”ye basın; GitHub'da istek sayfası açılır.</li><li>Orada <b>Create</b> düğmesine basın.</li><li>Birkaç dakika içinde eserler eklenir; bu sayfa size haber verir.</li></ol>
  <div class="acts" style="margin-top:6px"><button class="btn pri" id="addGo">Ekle</button><span class="muted" id="addMsg" style="font-size:13px"></span></div>
  <div class="pend-box" id="pendBox"></div>
 </div></div>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
-<div class="modal" id="pickM" role="dialog" aria-modal="true"><div class="sheet dlg picker"><button class="x" id="pickX" aria-label="Kapat">×</button>
- <h2>Favori sanatçılar</h2>
- <p>Ana sayfa varsayılan olarak yalnızca bu sanatçıların eserlerini gösterir. Şu an eseri olmayan bir sanatçıyı da ekleyebilirsiniz; eseri müzayedeye çıktığında burada görünür.</p>
+<div class="modal" id="pickM" role="dialog" aria-modal="true" aria-labelledby="pickT"><div class="sheet dlg picker"><button class="x" id="pickX" aria-label="Kapat">×</button>
+ <h2 id="pickT">Favori sanatçılar</h2>
+ <p>Satırın üstüne dokunarak sanatçıyı ekleyin ya da çıkarın. Seçtikleriniz <b>Favorilerim</b> sekmesinde toplanır. Şu an eseri olmayan bir sanatçıyı da ekleyebilirsiniz.</p>
  <div class="favs" id="pickFavs"></div>
- <input class="fld" id="pickQ" type="search" placeholder="Sanatçı ara: ad, soyad (Türkçe karakter gerekmez)…" autocomplete="off">
+ <input class="fld" id="pickQ" type="search" placeholder="Sanatçı ara: ad ya da soyad (Türkçe karakter gerekmez)" autocomplete="off">
  <div class="plist" id="pickList"></div>
+ <div class="acts" style="margin-top:12px;justify-content:flex-end"><button type="button" class="btn pri" id="pickDone">Tamam</button></div>
+</div></div>
+<div class="modal" id="helpM" role="dialog" aria-modal="true" aria-labelledby="helpT"><div class="sheet dlg help"><button class="x" id="helpX" aria-label="Kapat">×</button>
+ <div class="meta">16/22 Müzayede Rehberi</div>
+ <h2 id="helpT">Nasıl çalışır?</h2>
+ <p>Türkiye'deki çevrimiçi sanat müzayedelerindeki eserler her gün tek yerde toplanır. Üç adımda kullanın:</p>
+ <ol class="how3">
+  <li><span class="num">1</span><div><b>Sanatçılarınızı seçin</b><p>★ ile takip etmek istediğiniz sanatçıları seçin. Şu an eseri olmayan bir adı da ekleyebilirsiniz.</p></div></li>
+  <li><span class="num">2</span><div><b>Favorilerim'e bakın</b><p>Seçtiğiniz sanatçıların şu an satıştaki eserleri burada toplanır. Beğendiğiniz eseri açıp <b>♥ Kaydet</b>'e basın.</p></div></li>
+  <li><span class="num">3</span><div><b>Gerekirse bağlantı ekleyin</b><p>Sitede olmayan bir ev ya da eser mi var? ⚙ menüsünden <b>Bağlantı ekle</b>; eserler birkaç dakika içinde gelir.</p></div></li>
+ </ol>
+ <div class="acts"><button type="button" class="btn pri" id="helpPick">★ Sanatçı seç</button><button type="button" class="btn" id="helpClose">Siteyi gez</button></div>
+ <h3>Sık sorulanlar</h3>
+ <details class="faq"><summary>Sekmeler ne işe yarıyor?</summary><p><b>Favorilerim:</b> seçtiğiniz sanatçıların eserleri ve kaydettikleriniz. <b>Keşfet:</b> şu an satıştaki bütün eserler; <b>Filtrele</b> ile daraltın. <b>Müzayede Evleri:</b> evler ve eklenen bağlantılar. <b>Arşiv:</b> Lebriz'in eski sanatçı ve sergi kayıtları.</p></details>
+ <details class="faq"><summary>Açılış fiyatı, güncel pey ve tahmini değer ne demek?</summary><p><b>Açılış fiyatı</b> müzayedenin başladığı fiyattır; satış fiyatı değildir. <b>Güncel pey</b> şu ana kadar verilen en yüksek tekliftir. <b>Tahmini değer</b> evin verdiği tahmindir. <b>Hemen Al</b> eserler beklemeden bu fiyata alınabilir. Kartlarda güncel pey varsa o, yoksa açılış fiyatı görünür.</p></details>
+ <details class="faq"><summary>Fiyatlar ve eserler nereden geliyor, ne sıklıkla güncelleniyor?</summary><p>Müzayede evlerinin herkese açık sayfalarından her sabah otomatik olarak toplanır. Bazı sitelerde güncel pey canlı yüklendiği için görünmeyebilir. Kesin bilgi için eserin sayfasına gidin.</p></details>
+ <details class="faq"><summary>“Değer” sekmesi neyi gösteriyor?</summary><p>Aynı sanatçının sitede kayıtlı diğer eserlerinin fiyatlarıyla karşılaştırma yapar: en düşük, ortalama, en yüksek. Boyut, teknik ve dönem farkları hesaba katılmaz; fikir vermek içindir.</p></details>
+ <details class="faq"><summary>Eserleri nasıl karşılaştırırım?</summary><p>Bir eseri açıp <b>⇄ Karşılaştır</b>'a basın; en fazla 4 eser seçebilirsiniz. Alttaki çubuktan <b>Yan yana</b> ile karşılaştırın.</p></details>
+ <details class="faq"><summary>Favorilerim nerede saklanıyor?</summary><p>Yalnızca bu tarayıcıda. Hesap gerekmez ama başka bir cihazda görünmez.</p></details>
 </div></div>
 <div class="modal" id="m" role="dialog" aria-modal="true"><div class="sheet"><button class="x" onclick="closeM()" aria-label="Kapat">×</button><div id="mc"></div></div></div>
 <script>
@@ -369,32 +521,48 @@ function parse(l){const d=l.description||'';const parts=d.split(/\s*[,·]\s*/).f
  const tech=parts.find(p=>TECH.test(p)&&!/^\d/.test(p))||'';let area=null;if(sz&&!sz[3])area=+sz[1].replace(',','.')*+sz[2].replace(',','.');
  l.tech=tech;l.size=sz?sz[0].replace(/\s+/g,' ').trim()+(sz[4]?'':' cm'):'';l.year=yr||'';l.area=area;l._p=l.current_bid||l.start_price||null;l.ppc=(area&&l._p)?l._p/area:null}
 let D={lots:[],updated:META&&META.updated},byKey={},PAST=null;
-const fav=new Set(JSON.parse(localStorage.getItem('mr_fav')||'[]'));let cmp=[];let view='lots';
-const F={q:'',site:'',artist:'',pmin:0,pmax:Infinity,ending:0,type:'',sort:'end',tags:[],tech:''};let PAGE=60,shown=0,curList=[];
-const favArt=new Set(JSON.parse(localStorage.getItem('mr_fav_art')||'[]'));let land=localStorage.getItem('mr_land')||'fav';let AR=null,grouped=false;
+const LS={get:(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const fav=new Set(LS.get('mr_fav',[]));let cmp=[];let view='';
+const F0={q:'',site:'',artist:'',pmin:0,pmax:Infinity,ending:0,type:'',sort:'end',tags:[],tech:'',fav:false,lb:false};
+const F={...F0,tags:[]};let PAGE=60,shown=0,curList=[];
+const favArt=new Set(LS.get('mr_fav_art',[]));let AR=null;
+const SET=Object.assign({start:true,desc:false},LS.get('mr_set',{}));const saveSet=()=>LS.set('mr_set',SET);
+let favTab=LS.get('mr_favtab','art');
+const tip=t=>`<details class="tip"><summary aria-label="Açıklama" title="Açıklama">ⓘ</summary><span>${t}</span></details>`;
+const startView=()=>SET.start?'fav':'lots';
 let favKeys=null;const fk=n=>akey(n);
 const favMap=()=>favKeys||(favKeys=new Map([...favArt].map(n=>[fk(n),n])));
 const isFav=n=>!!n&&favMap().has(fk(n));
 const favOf=l=>{if(!l.artist)return null;const m=favMap();return m.get(fk(l.artist))||(l.artist_raw&&m.get(fk(l.artist_raw)))||null};
 function toggleFavArt(n){const k=fk(n);if(!k)return;const on=isFav(n);if(on){[...favArt].forEach(x=>{if(fk(x)==k)favArt.delete(x)})}else favArt.add(n);saveFavArt();toast(on?`☆ ${n} favorilerden çıkarıldı`:`★ ${n} favori sanatçılara eklendi`)}
-const saveFavArt=()=>{favKeys=null;try{localStorage.setItem('mr_fav_art',JSON.stringify([...favArt]))}catch(e){}document.querySelectorAll('[data-star]').forEach(b=>{const on=isFav(b.dataset.star);b.classList.toggle('on',on);if(b.classList.contains('star'))b.textContent=on?'★':'☆'});updateLand()};
+const saveFavArt=()=>{favKeys=null;LS.set('mr_fav_art',[...favArt]);document.querySelectorAll('[data-star]').forEach(b=>{const on=isFav(b.dataset.star);b.classList.toggle('on',on);if(b.classList.contains('star'))b.textContent=on?'★':'☆'});favChanged()};
 const starBtn=n=>n?`<button type="button" class="star${isFav(n)?' on':''}" data-star="${esc(n)}" title="Favori sanatçı" aria-label="Favori sanatçı">${isFav(n)?'★':'☆'}</button>`:'';
 let toastT=null;function toast(msg,btn,fn){const t=$('toast');if(!t)return;t.innerHTML=`<span>${esc(msg)}</span>${btn?`<button type="button">${esc(btn)}</button>`:''}`;if(btn)t.querySelector('button').onclick=()=>{t.classList.remove('on');fn()};t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),btn?12000:3200)}
-/* ===== theme ===== */
-$('theme').onclick=()=>{const t=document.documentElement.dataset.theme=='dark'?'light':'dark';document.documentElement.dataset.theme=t;localStorage.setItem('mr_theme',t)};
+/* ===== settings menu ===== */
+const menuOpen=o=>{$('menu').classList.toggle('open',o);$('menuBtn').setAttribute('aria-expanded',o?'true':'false')};
+$('menuBtn').onclick=e=>{e.stopPropagation();menuOpen(!$('menu').classList.contains('open'))};
+document.addEventListener('click',e=>{if(!e.target.closest('#menu')&&!e.target.closest('#menuBtn'))menuOpen(false)});
+$('setDark').checked=document.documentElement.dataset.theme=='dark';$('setStart').checked=!!SET.start;$('setDesc').checked=!!SET.desc;
+$('setDark').onchange=e=>{const t=e.target.checked?'dark':'light';document.documentElement.dataset.theme=t;try{localStorage.setItem('mr_theme',t)}catch(x){}};
+$('setStart').onchange=e=>{SET.start=e.target.checked;saveSet();toast(SET.start?'Site Favorilerim ile açılacak':'Site Keşfet ile açılacak')};
+$('setDesc').onchange=e=>{SET.desc=e.target.checked;saveSet();if(view=='lots')render();else if(view=='fav')renderFav()};
+$('mPick').onclick=()=>{menuOpen(false);openPick()};$('mAdd').onclick=()=>{menuOpen(false);openAdd()};$('mHelp').onclick=()=>{menuOpen(false);openHelp()};
 /* ===== skeleton + data load ===== */
 $('g').innerHTML=Array.from({length:8},()=>'<div class="skc skel"></div>').join('');
 const ready=fetch('data/lots.json'+V).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{D=d;
  D.lots.forEach(l=>{l.title=l.title||[l.artist,l.description].filter(Boolean).join(' - ');parse(l);l.key=l.site+'|'+l.lot_id;l.house=houseName(l.site);l._a=norm(l.artist);l._s=norm([l.title,l.artist,l.description,l.auction,l.house,l.category].join(' '));l._e=dt(l.end_date);mkTags(l)});
- byKey=Object.fromEntries(D.lots.map(l=>[l.key,l]));initFilters();saveFav();render();buildHouses();buildTagCloud();loadSources().then(()=>{buildSources();pollPending()});
- artLoad().then(()=>lbLoad()).then(()=>{D.lots.forEach(l=>{l._lb=lbMatch(l.artist)||(l.lb_id&&LB&&LB.artists.find(x=>x.id==l.lb_id))||null;mkTags(l)});IDX=null;const sh=shown;fillTech();render();if(sh>24)more(sh-24);buildTagCloud();const n=D.lots.filter(l=>l._lb).length;console.info('Lebriz eşleşmesi:',n,'/',D.lots.length)}).catch(()=>{});return D})
- .catch(e=>{$('g').innerHTML=`<div class="empty"><div class="big">Veriler yüklenemedi</div>data/lots.json okunamadı (${esc(e.message)}). Sayfayı bir web sunucusu (server.py veya GitHub Pages) üzerinden açın.</div>`;$('stats').textContent=''});
+ byKey=Object.fromEntries(D.lots.map(l=>[l.key,l]));initFilters();saveFav();render();updateFavBadge();buildHouses();buildTagCloud();loadSources().then(()=>{buildSources();pollPending()});
+ artLoad().then(()=>lbLoad()).then(()=>{D.lots.forEach(l=>{l._lb=lbMatch(l.artist)||(l.lb_id&&LB&&LB.artists.find(x=>x.id==l.lb_id))||null;mkTags(l)});IDX=null;const sh=shown;fillTech();render();if(sh>24&&view=='lots')more(sh-24);buildTagCloud();updateFavBadge();const n=D.lots.filter(l=>l._lb).length;console.info('Lebriz eşleşmesi:',n,'/',D.lots.length)}).catch(()=>{});return D})
+ .catch(e=>{$('g').innerHTML=`<div class="empty"><div class="big">Veriler yüklenemedi</div>data/lots.json okunamadı (${esc(e.message)}). Sayfayı bir web sunucusu (server.py veya GitHub Pages) üzerinden açın.</div>`;$('stats').textContent='';$('favBody').innerHTML=''});
 const loadPast=()=>PAST?Promise.resolve(PAST):fetch('data/past.json'+V).then(r=>r.json()).then(p=>{p.forEach(x=>{x._a=norm(x.artist);x.past=true;x.images=x.image?[x.image]:[];x.house=houseName(x.site)});return PAST=p}).catch(()=>PAST=[]);
 function initFilters(){$('nLots').textContent=D.lots.length.toLocaleString('tr-TR');
  [...new Set(D.lots.map(l=>l.site))].sort((a,b)=>houseName(a).localeCompare(houseName(b),'tr')).forEach(s=>$('site').add(new Option(houseName(s),s)));
  $('artistList').innerHTML=[...new Set(D.lots.map(l=>l.artist).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr')).map(a=>`<option value="${esc(a)}">`).join('');
  fillTech();buildSources()}
-const saveFav=()=>{localStorage.setItem('mr_fav',JSON.stringify([...fav]));$('favN').textContent=[...fav].filter(k=>byKey[k]).length};
+const saveFav=()=>{LS.set('mr_fav',[...fav]);updateFavBadge()};
+function updateFavBadge(){if(!D.lots.length)return;const n=D.lots.filter(l=>favOf(l)).length;$('favTabN').textContent=n?n.toLocaleString('tr-TR'):'';
+ $('favArtN').textContent=favArt.size||'';$('favSavedN').textContent=[...fav].filter(k=>byKey[k]).length||''}
+function favChanged(){updateFavBadge();if(view=='fav')renderFav();if(view=='lots'&&F.fav)render()}
 function fillTech(){if(!$('tech'))return;const cur=$('tech').value,seen=new Set();D.lots.forEach(l=>(l._tags||[]).forEach(x=>x.k=='tech'&&seen.add(x.v)));
  const opts=['<option value="">Tüm teknikler</option>',...[...seen].sort((a,b)=>a.localeCompare(b,'tr')).map(v=>`<option value="${esc(v)}">${esc(v)}</option>`)];$('tech').innerHTML=opts.join('');$('tech').value=cur||F.tech||''}
 /* ===== added links: list, pending watcher ===== */
@@ -412,7 +580,7 @@ const kindLabel=s=>s.kind=='product'?'Eser':isRoot(s.url)?'Müzayede evi':'Müza
 function buildSources(){const el=$('srcList');if(!el)return;const P=getPend().filter(p=>!srcFor(p)||(srcFor(p).last_run||'')==p.base);
  const rows=P.map(p=>`<div class="arow" style="cursor:default"><div><div class="nm">${esc(p.host)}</div><div class="mt"><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.url)}</a></div></div><div class="ra src-pend">⏳ Taranıyor…<div class="mt">${new Date(p.at).toLocaleString('tr-TR',{hour:'2-digit',minute:'2-digit'})} · <a href="https://github.com/${REPO}/issues?q=is%3Aissue+label%3Akaynak" target="_blank" rel="noopener">GitHub'daki istek ↗</a></div></div></div>`);
  SRC.slice().reverse().forEach(s=>{const ok=s.status=='ok';rows.push(`<div class="arow" style="cursor:default"><div><div class="nm">${esc(s.host||s.url)}<span class="src-kind">${kindLabel(s)}</span></div><div class="mt"><a href="${esc(s.url)}" target="_blank" rel="noopener">${esc(s.url)}</a></div></div><div class="ra"><div class="${ok?'src-ok':'src-fail'}">${ok?'✓':'✗'} ${(s.lots||0).toLocaleString('tr-TR')} eser${s.last_run?' · '+esc(s.last_run):''}</div>${ok&&s.lots?`<button type="button" class="btn" data-srcsite="${esc(s.host)}">Eserleri gör →</button>`:''}<div class="mt">${esc((s.detail||'').slice(0,140))}</div></div></div>`)});
- el.innerHTML=rows.length?rows.join(''):'<p class="muted">Henüz eklenmiş bir bağlantı yok. “Bağlantı ekle” ile bir müzayede evi, müzayede veya eser bağlantısı gönderebilirsiniz.</p>';
+ el.innerHTML=rows.length?rows.join(''):'<div class="empty"><div class="big">Henüz eklenen bağlantı yok</div>Yukarıdaki <b>＋ Bağlantı ekle</b> ile bir müzayede evi, müzayede ya da eser bağlantısı gönderin.</div>';$('srcN').textContent=(SRC.length+P.length)||'';
  const pb=$('pendBox');if(pb)pb.innerHTML=P.map(p=>`<span class="chip"><b>⏳ ${esc(p.host)} taranıyor…</b><span class="muted">GitHub'da “Create”e bastıysanız birkaç dakika içinde eklenir.</span></span>`).join('')}
 $('srcList').addEventListener('click',e=>{const b=e.target.closest('[data-srcsite]');if(b)showSite(b.dataset.srcsite)});
 function showSite(host){ready.then(()=>{const sites=[...new Set(D.lots.map(l=>l.site))];const site=sites.find(x=>x==host)||sites.find(x=>houseName(x)==host)||host;filterLots('site',site)})}
@@ -455,66 +623,93 @@ const cardTags=l=>{const pr=['tech','lb','per','size','type'];return (l._tags||[
 function toggleTag(id,only){if(only){resetF(true);F.tags=[id]}else F.tags=F.tags.includes(id)?F.tags.filter(x=>x!=id):[...F.tags,id];closeM();if(view!='lots'&&view!='fav')show('lots');else render();buildTagCloud();scrollTo({top:0})}
 function buildTagCloud(){const c={};D.lots.forEach(l=>(l._tags||[]).forEach(x=>{if(x.k=='house')return;(c[x.id]=c[x.id]||{x,n:0}).n++}));
  const top=Object.values(c).filter(o=>o.n>=3).sort((a,b)=>b.n-a.n).slice(0,36);$('tagCloud').innerHTML=top.map(o=>tagChip(o.x,F.tags.includes(o.x.id)).replace('</span>',`<i>${o.n.toLocaleString('tr-TR')}</i></span>`)).join('')}
-function card(l){const e=l._e,now=new Date(),soon=e&&e-now<864e5&&e>now;
- const est=l.estimate||l.current_bid||l.start_price;
- const plab=l.estimate?'Tahmini':l.current_bid?'Güncel':l.auction_type=='buy-now'?'Fiyat':'Açılış';
- const title=l.description||l.title||'';
+function leftTxt(l){const e=l._e;if(!e)return l.auction_type=='buy-now'?'Hemen Al':'';const ms=e-Date.now();if(ms<=0)return 'Bitti';const h=ms/36e5;
+ if(h<1)return Math.max(1,Math.round(ms/6e4))+' dk kaldı';if(h<24)return Math.round(h)+' saat kaldı';const d=Math.round(h/24);return d<8?d+' gün kaldı':fshort(e)}
+const priceOf=l=>l.current_bid||l.start_price||l.estimate;
+const priceLab=l=>l.current_bid?'Güncel pey':l.auction_type=='buy-now'?'Hemen Al fiyatı':l.start_price?'Açılış fiyatı':'Tahmini değer';
+function card(l){const e=l._e,soon=e&&e-Date.now()<864e5&&e>Date.now();const title=l.description||l.title||'';
  return `<article class="card">
-<div class="frame ${l.images[0]?'ph':'noimg'}" data-open="${esc(l.key)}">${imgTag(l.images[0],l.artist)}</div>
+<div class="frame ${l.images[0]?'ph':'noimg'}" data-open="${esc(l.key)}">${imgTag(l.images[0],l.artist)}${fav.has(l.key)?'<span class="saved" title="Kaydedildi">♥</span>':''}</div>
 <div class="body">
- <div class="artist">${l.artist?aLink(l.artist)+starBtn(l.artist):esc(l.title||'')}</div>
- <div class="desc" data-open="${esc(l.key)}">${esc(title)}</div>
- <div class="meta">${esc(l.house)}${e?' · '+(soon?'Bitiş ':'')+fshort(e):''}</div>
- <div class="price"><small>${plab}</small>${TL(est)}</div>
+ <div class="artist">${l.artist?aLink(l.artist)+starBtn(l.artist):`<span data-open="${esc(l.key)}">${esc(l.title||'')}</span>`}</div>
+ ${SET.desc&&title?`<div class="desc" data-open="${esc(l.key)}">${esc(title)}</div>`:''}
+ <div class="crow" data-open="${esc(l.key)}"><span class="price" title="${priceLab(l)}">${TL(priceOf(l))}</span><span class="left${soon?' soon':''}">${leftTxt(l)}</span></div>
+ <div class="meta">${esc(l.house)}</div>
 </div></article>`}
 function filtered(){const q=norm(F.q).split(' ').filter(Boolean),now=new Date(),A=norm(F.artist);
- let r=D.lots.filter(l=>(view!='fav'||fav.has(l.key))&&q.every(w=>l._s.includes(w))&&(!F.site||l.site==F.site)&&(!A||l.artist==F.artist||l._a==A)&&(!F.type||l.auction_type==F.type)&&((l._p||0)>=F.pmin)&&((l._p||0)<=F.pmax)&&(!F.ending||(l._e&&l._e-now<=F.ending*864e5&&l._e>now))&&(!F.tags.length||F.tags.every(t=>l._tk&&l._tk.has(t)))&&(!F.tech||(l._tk&&l._tk.has('tech:'+F.tech))));
+ let r=D.lots.filter(l=>q.every(w=>l._s.includes(w))&&(!F.site||l.site==F.site)&&(!A||l.artist==F.artist||l._a==A)&&(!F.type||l.auction_type==F.type)&&((l._p||0)>=F.pmin)&&((l._p||0)<=F.pmax)&&(!F.ending||(l._e&&l._e-now<=F.ending*864e5&&l._e>now))&&(!F.tags.length||F.tags.every(t=>l._tk&&l._tk.has(t)))&&(!F.tech||(l._tk&&l._tk.has('tech:'+F.tech)))&&(!F.fav||favOf(l))&&(!F.lb||l._lb));
  const so=F.sort,N=x=>x??Infinity;r.sort(so=='pa'?(x,y)=>N(x._p)-N(y._p):so=='pd'?(x,y)=>(y._p||0)-(x._p||0):so=='bids'?(x,y)=>y.bid_count-x.bid_count:so=='artist'?(x,y)=>(x.artist||'').localeCompare(y.artist||'','tr'):so=='ppc'?(x,y)=>N(x.ppc)-N(y.ppc):(x,y)=>(x._e||9e15)-(y._e||9e15));return r}
-function updateLand(){const has=favArt.size>0,favMode=land=='fav';
- $('modeFav').classList.toggle('on',favMode);$('modeAll').classList.toggle('on',!favMode);
- $('favPrompt').classList.toggle('on',!has&&favMode);
- $('modeFav').textContent=has?`Favori sanatçılar (${favArt.size})`:'Favori sanatçılar'}
-function render(){if(!D.lots.length&&!byKey)return;updateLand();
- curList=filtered();const favMode=view=='lots'&&land=='fav'&&favArt.size>0;if(favMode)curList=curList.filter(l=>favOf(l));
- shown=0;$('g').className='grid';$('g').innerHTML='';grouped=favMode;
- $('stats').textContent=`${curList.length.toLocaleString('tr-TR')} eser${favMode?' · favori sanatçılar':''}${!favMode&&curList.length!=D.lots.length?' · toplam '+D.lots.length.toLocaleString('tr-TR'):''}`;
- const act=[];if(F.q)act.push(['q','“'+F.q+'”']);if(F.site)act.push(['site',houseName(F.site)]);if(F.artist)act.push(['artist',F.artist]);if(F.type)act.push(['type',F.type=='buy-now'?'Hemen Al':'Müzayede']);if(F.ending)act.push(['ending',F.ending+' gün içinde']);if(F.pmin)act.push(['pmin','≥ '+TL(F.pmin)]);if(F.pmax<Infinity)act.push(['pmax','≤ '+TL(F.pmax)]);if(F.tech)act.push(['tech',F.tech]);F.tags.forEach(id=>act.push(['tag:'+id,'# '+id.split(':').slice(1).join(':')]));
- $('activeF').innerHTML=act.map(([k,t])=>`<span class="chip" data-rmf="${esc(k)}">${esc(t)} ✕</span>`).join('');
- if(!curList.length){$('g').innerHTML=`<div class="empty"><div class="big">${view=='fav'?'Henüz favori eser yok':(favMode?'Favori sanatçılarınızın şu an açık eseri yok':'Sonuç bulunamadı')}</div>${view=='fav'?'Eser penceresindeki ♥ ile eser ekleyebilirsiniz.':(favMode?'Sanatçı seçin veya “Tüm eserler”e geçin.':'Filtreleri gevşetmeyi veya üstteki genel aramayı deneyin.')}</div>`;$('more').style.display='none';return}
- if(grouped){renderGroups();return}
+const PRICES={'0-10000':'10 bin TL altı','10000-50000':'10–50 bin TL','50000-250000':'50–250 bin TL','250000-':'250 bin TL üzeri'};
+const priceKey=()=>{const k=(F.pmin||0)+'-'+(F.pmax<Infinity?F.pmax:'');return k=='0-'?'':k};
+function activeList(){const a=[];if(F.fav)a.push(['fav','★ Favori sanatçılarım']);if(F.q)a.push(['q','“'+F.q+'”']);if(F.site)a.push(['site',houseName(F.site)]);if(F.artist)a.push(['artist',F.artist]);if(F.type)a.push(['type','Hemen Al']);
+ if(F.ending)a.push(['ending',{1:'24 saat içinde',3:'3 gün içinde',7:'Bu hafta'}[F.ending]||F.ending+' gün']);const pk=priceKey();if(pk)a.push(['price',PRICES[pk]||((F.pmin?TL(F.pmin):'0')+' – '+(F.pmax<Infinity?TL(F.pmax):'…'))]);
+ if(F.tech)a.push(['tech',F.tech]);if(F.lb)a.push(['lb','Arşivde kaydı olanlar']);F.tags.forEach(id=>a.push(['tag:'+id,'# '+id.split(':').slice(1).join(':')]));return a}
+function render(){if(view=='fav'){renderFav();return}if(!D.lots.length)return;
+ curList=filtered();shown=0;$('g').className='grid';$('g').innerHTML='';
+ const n=curList.length,T=D.lots.length,act=activeList();
+ $('stats').textContent=n==T?`Şu an satışta ${T.toLocaleString('tr-TR')} eser`:`${n.toLocaleString('tr-TR')} eser gösteriliyor · toplam ${T.toLocaleString('tr-TR')}`;
+ $('fN').textContent=act.length||'';$('fabN').textContent=act.length||'';
+ $('activeF').innerHTML=act.length?act.map(([k,t])=>`<span class="chip" data-rmf="${esc(k)}" title="Kaldır">${esc(t)} ✕</span>`).join('')+(act.length>1?'<span class="chip ghost" data-act="reset">Hepsini temizle</span>':''):'';
+ if(!n){$('g').innerHTML=`<div class="empty"><div class="big">Bu seçimlerle eser yok</div>Filtreleri azaltmayı ya da üstteki genel aramayı deneyin.<div class="acts"><button type="button" class="btn pri" data-act="reset">Filtreleri temizle</button></div></div>`;$('more').style.display='none';return}
  more(24)}
-function more(n){if(grouped)return;const next=curList.slice(shown,shown+(n||PAGE));$('g').insertAdjacentHTML('beforeend',next.map(card).join(''));shown+=next.length;const left=curList.length-shown;$('more').style.display=left>0?'':'none';$('more').textContent=`Daha fazla yükle (${left.toLocaleString('tr-TR')} kaldı)`}
-function renderGroups(){const by={};curList.forEach(l=>{const n=favOf(l);if(n)(by[n]=by[n]||[]).push(l)});
- const names=[...favArt].filter(n=>by[n]&&by[n].length).sort((a,b)=>a.localeCompare(b,'tr'));
- const empty=[...favArt].filter(n=>!by[n]||!by[n].length);
- $('g').className='';$('g').innerHTML=names.map(n=>{const L=by[n];return `<section class="agrp"><h3>${aLink(n)}${starBtn(n)}<span class="n">${L.length} eser</span><a class="more" href="#artist=${encodeURIComponent(n)}" data-artist="${esc(n)}">Sanatçı sayfası →</a></h3><div class="grid">${L.slice(0,8).map(card).join('')}</div>${L.length>8?`<p class="muted" style="margin:10px 0 0">${L.length-8} eser daha · sanatçı sayfasında hepsi görünür.</p>`:''}</section>`}).join('')+(empty.length?`<p class="muted">Şu an açık eseri olmayan favoriler: ${empty.map(esc).join(', ')}</p>`:'');
- $('more').style.display='none';shown=curList.length}
-$('more').onclick=more;new IntersectionObserver(es=>{if(es[0].isIntersecting&&(view=='lots'||view=='fav')&&shown<curList.length)more()},{rootMargin:'800px'}).observe($('sentinel'));
+function more(n){if(view!='lots')return;const next=curList.slice(shown,shown+(+n||PAGE));$('g').insertAdjacentHTML('beforeend',next.map(card).join(''));shown+=next.length;const left=curList.length-shown;$('more').style.display=left>0?'':'none';$('more').textContent=`Daha fazla yükle (${left.toLocaleString('tr-TR')} kaldı)`}
+const emptyBox=(t,txt,btns)=>`<div class="empty"><div class="big">${t}</div><p>${txt}</p>${btns?`<div class="acts">${btns}</div>`:''}</div>`;
+function renderFav(){const el=$('favBody');if(!D.lots.length)return;updateFavBadge();
+ $('favSeg').querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.f==favTab));$('pickOpen').style.display=favTab=='art'&&favArt.size?'':'none';
+ const byEnd=(x,y)=>(x._e||9e15)-(y._e||9e15);
+ if(favTab=='saved'){const L=[...fav].map(k=>byKey[k]).filter(Boolean).sort(byEnd);
+  $('favSub').textContent=L.length?`Kaydettiğiniz ${L.length} eser. Bitenler listeden kendiliğinden düşer.`:'Kaydettiğiniz eserler burada durur.';
+  el.innerHTML=L.length?`<div class="grid">${L.map(card).join('')}</div>`:emptyBox('Henüz kaydedilmiş eser yok','Bir eserin üstüne dokunun ve açılan pencerede <b>♥ Kaydet</b>\'e basın. Kaydettikleriniz burada toplanır.','<button type="button" class="btn pri" data-go="lots">Keşfet\'e git</button>');return}
+ if(!favArt.size){$('favSub').textContent='Takip ettiğiniz sanatçıların şu an satıştaki eserleri burada toplanır.';
+  el.innerHTML=emptyBox('Henüz favori sanatçınız yok','Takip etmek istediğiniz sanatçıları seçin; şu an satıştaki eserleri burada, sanatçı sanatçı toplanır.<ol class="mini-steps"><li><b>★ Sanatçı seç</b>\'e basın</li><li>Adını yazıp satıra dokunun</li><li><b>Tamam</b> deyin, eserler burada</li></ol>','<button type="button" class="btn pri" data-act="pick">★ Sanatçı seç</button><button type="button" class="btn" data-go="lots">Önce gezineyim</button>');return}
+ const by={};D.lots.filter(l=>favOf(l)).sort(byEnd).forEach(l=>{const n=favOf(l);(by[n]=by[n]||[]).push(l)});
+ const names=[...favArt].filter(n=>by[n]).sort((a,b)=>by[b].length-by[a].length||a.localeCompare(b,'tr'));const none=[...favArt].filter(n=>!by[n]).sort((a,b)=>a.localeCompare(b,'tr'));
+ const tot=names.reduce((x,n)=>x+by[n].length,0);
+ $('favSub').textContent=tot?`${favArt.size} sanatçınızın ${tot.toLocaleString('tr-TR')} eseri şu an satışta.`:`${favArt.size} sanatçı takip ediyorsunuz; şu an satışta eserleri yok.`;
+ el.innerHTML=(names.length?'':emptyBox('Şu an satışta eser yok','Takip ettiğiniz sanatçıların eseri müzayedeye çıktığında burada görünür. Bu arada başka sanatçılar ekleyebilirsiniz.','<button type="button" class="btn pri" data-act="pick">★ Sanatçı ekle</button>'))+
+  names.map(n=>{const L=by[n];return `<section class="agrp"><h3>${aLink(n)}${starBtn(n)}<span class="n">${L.length} eser</span><a class="more" href="#artist=${encodeURIComponent(n)}" data-artist="${esc(n)}">${L.length>8?'Tümünü gör':'Sanatçı sayfası'} →</a></h3><div class="grid">${L.slice(0,8).map(card).join('')}</div></section>`}).join('')+
+  (none.length&&names.length?`<div class="nolive"><h4>Şu an satışta eseri olmayanlar</h4><p class="muted">Eserleri müzayedeye çıkınca yukarıda görünür.</p><div class="tags">${none.map(n=>`<a class="tag" href="#artist=${encodeURIComponent(n)}" data-artist="${esc(n)}">${esc(n)}</a>`).join('')}</div></div>`:'')}
+$('more').onclick=()=>more();new IntersectionObserver(es=>{if(es[0].isIntersecting&&view=='lots'&&shown<curList.length)more()},{rootMargin:'800px'}).observe($('sentinel'));
 /* filters wiring */
-const setF=(k,v)=>{F[k]=v;render()};
+const setF=(k,v)=>{F[k]=v;syncFilterUI();render()};
+function syncFilterUI(){$('q').value=F.q;$('sort').value=F.sort;$('site').value=F.site;$('artist').value=F.artist;$('tech').value=F.tech||'';
+ $('fFav').checked=F.fav;$('fBuy').checked=F.type=='buy-now';$('fLb').checked=F.lb;
+ $('pmin').value=F.pmin||'';$('pmax').value=F.pmax<Infinity?F.pmax:'';
+ $('endChips').querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',(+c.dataset.e||0)==F.ending));
+ const pk=priceKey();$('priceChips').querySelectorAll('.chip').forEach(c=>c.classList.toggle('on',c.dataset.p==pk));
+ $('fApply').textContent=D.lots.length?`${filtered().length.toLocaleString('tr-TR')} eseri göster`:'Sonuçları göster'}
 $('q').oninput=e=>setF('q',e.target.value);$('sort').onchange=e=>setF('sort',e.target.value);$('site').onchange=e=>setF('site',e.target.value);
-$('artist').onchange=e=>setF('artist',e.target.value);$('pmin').oninput=e=>setF('pmin',+e.target.value||0);$('pmax').oninput=e=>setF('pmax',+e.target.value||Infinity);
-const chipGroup=(id,key,attr,conv)=>$(id).onclick=e=>{const c=e.target.closest('.chip');if(!c)return;$(id).querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x==c));setF(key,conv(c.dataset[attr]))};
-chipGroup('endChips','ending','e',v=>+v||0);chipGroup('typeChips','type','t',v=>v);
-function resetF(noRender){Object.assign(F,{q:'',site:'',artist:'',pmin:0,pmax:Infinity,ending:0,type:'',tags:[],tech:''});['q','site','artist','pmin','pmax','tech'].forEach(i=>$(i)&&($(i).value=''));['endChips','typeChips'].forEach(id=>$(id).querySelectorAll('.chip').forEach((c,i)=>c.classList.toggle('on',i==0)));if(noRender!==true){render();if(D.lots.length)buildTagCloud()}}
-$('fReset').onclick=resetF;
-$('activeF').onclick=e=>{const c=e.target.closest('[data-rmf]');if(!c)return;const k=c.dataset.rmf;if(k.startsWith('tag:')){F.tags=F.tags.filter(x=>x!=k.slice(4));render();buildTagCloud();return}if(k=='tech'){F.tech='';if($('tech'))$('tech').value='';render();return}const def={q:'',site:'',artist:'',type:'',ending:0,pmin:0,pmax:Infinity}[k];F[k]=def;if($(k))$(k).value='';if(k=='ending')$('endChips').querySelectorAll('.chip').forEach((c,i)=>c.classList.toggle('on',i==0));if(k=='type')$('typeChips').querySelectorAll('.chip').forEach((c,i)=>c.classList.toggle('on',i==0));render()};
-const drawer=o=>{$('filters').classList.toggle('open',o);$('scrim').classList.toggle('on',o)};$('fOpen').onclick=()=>drawer(true);$('fClose').onclick=()=>drawer(false);$('scrim').onclick=()=>drawer(false);
+$('artist').onchange=e=>setF('artist',e.target.value);$('tech').onchange=e=>setF('tech',e.target.value);
+$('pmin').oninput=e=>setF('pmin',+e.target.value||0);$('pmax').oninput=e=>setF('pmax',+e.target.value||Infinity);
+$('fFav').onchange=e=>{if(e.target.checked&&!favArt.size){e.target.checked=false;toast('Önce favori sanatçı seçin','★ Sanatçı seç',openPick);return}setF('fav',e.target.checked)};
+$('fBuy').onchange=e=>setF('type',e.target.checked?'buy-now':'');$('fLb').onchange=e=>setF('lb',e.target.checked);
+$('endChips').onclick=e=>{const c=e.target.closest('.chip');if(c)setF('ending',+c.dataset.e||0)};
+$('priceChips').onclick=e=>{const c=e.target.closest('.chip');if(!c)return;const[a,b]=(c.dataset.p||'-').split('-');F.pmin=+a||0;F.pmax=b?+b:Infinity;syncFilterUI();render()};
+function resetF(noRender){Object.assign(F,{...F0,sort:F.sort,tags:[]});syncFilterUI();if(noRender!==true){render();if(D.lots.length)buildTagCloud()}}
+$('fReset').onclick=()=>resetF();
+$('activeF').onclick=e=>{const c=e.target.closest('[data-rmf]');if(!c)return;const k=c.dataset.rmf;
+ if(k.startsWith('tag:')){F.tags=F.tags.filter(x=>x!=k.slice(4));buildTagCloud()}else if(k=='price'){F.pmin=0;F.pmax=Infinity}else F[k]=F0[k];syncFilterUI();render()};
+const drawer=o=>{if(o)syncFilterUI();$('filters').classList.toggle('open',o);$('scrim').classList.toggle('on',o)};
+$('fOpen').onclick=()=>drawer(true);$('fab').onclick=()=>drawer(true);$('fClose').onclick=()=>drawer(false);$('fApply').onclick=()=>{drawer(false);scrollTo({top:0})};$('scrim').onclick=()=>drawer(false);
 /* ===== views ===== */
-function show(v){view=v;document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));
- const sec=v=='fav'?'lots':v;document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id=='v-'+sec));
- if(v=='lots'||v=='fav')ready.then(render);if(v=='lb')lbOpenTab();if(v=='houses')ready.then(buildHouses);window.scrollTo({top:0})}
-document.querySelector('nav.tabs').onclick=e=>{const b=e.target.closest('button');if(b)show(b.dataset.v)};$('home').onclick=()=>{resetF();show('lots')};
-function filterLots(k,v){resetF();F[k]=v;if($(k))$(k).value=v;land='all';show('lots')}
+function show(v){view=v;document.body.dataset.view=v;document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));
+ document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id=='v-'+v));
+ if(v=='lots')ready.then(render);if(v=='fav')ready.then(renderFav);if(v=='lb')lbOpenTab();if(v=='houses')ready.then(()=>{buildHouses();buildSources()});
+ if(['fav','lots','houses','lb'].includes(v)&&/^#(artist|lot|q|s|site|lba)=/.test(location.hash))history.replaceState(null,'',location.pathname+location.search);window.scrollTo({top:0})}
+document.querySelector('nav.tabs').onclick=e=>{const b=e.target.closest('button');if(b)show(b.dataset.v)};$('home').onclick=()=>{resetF(true);show(startView())};
+function filterLots(k,v){resetF(true);F[k]=v;syncFilterUI();show('lots')}
+$('favSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;favTab=b.dataset.f;LS.set('mr_favtab',favTab);renderFav()};
+$('hSeg').onclick=e=>{const b=e.target.closest('button');if(b)houseTab(b.dataset.h)};
+function houseTab(t){$('hSeg').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.h==t));$('hAll').hidden=t!='all';$('hAdded').hidden=t!='added'}
 /* ===== houses ===== */
 function houses(){const m={};D.lots.forEach(l=>{const h=m[l.site]||(m[l.site]={site:l.site,n:l.house,c:0,img:null,auctions:new Set(),end:null});h.c++;h.auctions.add(l.auction);if(!h.img&&l.images[0])h.img=l.images[0];if(l._e&&(!h.end||l._e<h.end))h.end=l._e});return Object.values(m).sort((a,b)=>b.c-a.c)}
-function buildHouses(){const H=houses();$('hCount').textContent=H.length+' ev';$('hList').innerHTML=H.map(h=>`<div class="arow" data-house="${esc(h.site)}" style="display:flex;gap:12px;align-items:center"><div class="si" style="padding:0"><div class="th" style="width:64px;height:64px">${h.img?`<img loading="lazy" onerror="this.remove()" src="${esc(h.img)}" alt="">`:esc(h.n[0])}</div></div><div><div class="nm">${esc(h.n)}</div><div class="mt">${h.c.toLocaleString('tr-TR')} eser · ${h.auctions.size} müzayede${h.end?' · ilk bitiş '+fshort(h.end):''}</div></div></div>`).join('')}
+function buildHouses(){const H=houses();$('hCount').textContent=H.length;$('hList').innerHTML=H.map(h=>`<div class="arow" data-house="${esc(h.site)}" style="display:flex;gap:12px;align-items:center"><div class="si" style="padding:0"><div class="th" style="width:64px;height:64px">${h.img?`<img loading="lazy" onerror="this.remove()" src="${esc(h.img)}" alt="">`:esc(h.n[0])}</div></div><div><div class="nm">${esc(h.n)}</div><div class="mt">${h.c.toLocaleString('tr-TR')} eser · ${h.auctions.size} müzayede${h.end?' · ilk bitiş '+fshort(h.end):''}</div></div></div>`).join('')}
 $('hList').onclick=e=>{const h=e.target.closest('[data-house]');if(h)filterLots('site',h.dataset.house)};
 /* ===== lot modal, value panel, compare ===== */
 const median=a=>{const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
-function artistPanel(l,past){if(!l._a)return '<div class="panel"><h3>Sanatçı değer paneli</h3><p class="muted">Sanatçı bilgisi yok.</p></div>';
+function artistPanel(l,past){if(!l._a)return '<div class="panel first"><p class="muted">Bu eserde sanatçı bilgisi olmadığı için karşılaştırma yapılamıyor.</p></div>';
  const all=[...D.lots.filter(x=>x._a==l._a),...(past||[]).filter(x=>x._a==l._a)];const others=all.filter(x=>!(x.site==l.site&&x.lot_id==l.lot_id));
- const pr=all.map(x=>x.start_price).filter(Boolean);let h=`<div class="panel"><h3>Sanatçı değer paneli — ${aLink(l.artist)}</h3>`;
+ const pr=all.map(x=>x.start_price).filter(Boolean);let h=`<div class="panel first"><h3>Bu fiyat nasıl? ${tip('Bu eserin fiyatı, aynı sanatçının sitede kayıtlı diğer eserlerinin (şu an satışta ve geçmiş) açılış fiyatlarıyla karşılaştırılır. Boyut, teknik ve dönem farkları hesaba katılmaz; yalnızca fikir verir.')}</h3><p class="muted" style="margin:2px 0 0">${aLink(l.artist)} eserleriyle karşılaştırma</p>`;
  if(pr.length>=2&&l.start_price){const avg=pr.reduce((a,b)=>a+b,0)/pr.length,md=median(pr),pct=(l.start_price-avg)/avg*100;
   h+=`<div class="kpis"><div class="kpi"><span>Eser sayısı</span><b>${all.length}</b></div><div class="kpi"><span>En düşük</span><b>${TL(Math.min(...pr))}</b></div><div class="kpi"><span>Medyan</span><b>${TL(md)}</b></div><div class="kpi"><span>Ortalama</span><b>${TL(avg)}</b></div><div class="kpi"><span>En yüksek</span><b>${TL(Math.max(...pr))}</b></div></div>
   <div class="verdict ${pct<0?'lo':'hi'}">${Math.abs(pct)<1?'Sanatçı ortalamasıyla aynı seviyede':`Sanatçı ortalamasının %${Math.abs(pct).toLocaleString('tr-TR',{maximumFractionDigits:0})} ${pct<0?'altında':'üstünde'}`}</div>
@@ -523,25 +718,36 @@ function artistPanel(l,past){if(!l._a)return '<div class="panel"><h3>Sanatçı d
  if(others.length)h+=`<h4 style="margin:14px 0 8px">Diğer eserleri (${others.length})</h4><div class="mini">${others.slice(0,60).map(o=>`<div ${o.past?`onclick="window.open('${esc(o.url)}')"`:`data-open="${esc(o.site+'|'+o.lot_id)}"`}>${o.images&&o.images[0]?`<img loading="lazy" onerror="this.remove()" src="${esc(o.images[0])}">`:''}<div>${esc(o.description||o.title)}</div><b>${TL(o.start_price)}</b><div class="muted">${esc(o.house||houseName(o.site))}${o.past?' · geçmiş':''}</div></div>`).join('')}</div>`;
  return h+'</div>'}
 function openLot(k){const l=byKey[k];if(!l)return;const hist=(l.history||[]).map(r=>`${fdate(dt(r[0]))}: ${TL(r[1])}, ${r[2]} pey`).join('<br>');
+ const pr=priceOf(l),lab=priceLab(l),soon=l._e&&l._e-Date.now()<864e5&&l._e>Date.now();
+ const PRICE_TIP='<b>Açılış fiyatı:</b> müzayedenin başladığı fiyat, satış fiyatı değildir. <b>Güncel pey:</b> şu ana kadarki en yüksek teklif. <b>Hemen Al:</b> beklemeden bu fiyata alınabilir.';
  $('mc').innerHTML=`<div class="det"><div><div class="big"><img id="bigI" src="${esc((l.images[0]||'').replace('/400/','/1500/'))}" alt=""></div><div class="thumbs">${l.images.map(i=>`<img loading="lazy" onerror="this.remove()" src="${esc(i)}" onclick="$('bigI').src=this.src.replace('/400/','/1500/')">`).join('')}</div></div>
- <div><div class="meta">${esc(l.house)}${l.lot_no?' · Lot '+esc(l.lot_no):''}</div><h2 style="font-size:var(--fs-3xl);margin:4px 0 6px">${l.artist?aLink(l.artist):esc(l.title)}</h2><p>${esc(l.description)}</p><div class="tags" style="margin:0 0 12px">${(l._tags||[]).map(x=>tagChip(x,F.tags.includes(x.id))).join('')}</div>
+ <div class="info"><div class="meta">${esc(l.house)}${l.lot_no?' · Lot '+esc(l.lot_no):''}</div><h2 class="lt">${l.artist?aLink(l.artist)+' '+starBtn(l.artist):esc(l.title)}</h2>${l.description?`<p class="ld">${esc(l.description)}</p>`:''}
+ <div class="keyf"><div><span>${lab} ${tip(PRICE_TIP)}</span><b class="price">${TL(pr)}</b>${l.estimate&&l.estimate!=pr?`<small>Tahmini değer ${TL(l.estimate)}</small>`:''}</div><div><span>Bitiş</span><b class="${soon?'soon':''}">${esc(leftTxt(l)||'—')}</b><small>${l._e?fdate(l._e):''}</small></div></div>
+ <div class="acts lacts"><a class="btn pri" href="${esc(l.url)}" target="_blank" rel="noopener">Eser sayfasına git ↗</a><button class="ic fav ${fav.has(k)?'on':''}" data-fav="${esc(k)}" title="Kaydettiklerim'e ekle">♥ Kaydet</button><button class="ic ${cmp.includes(k)?'on':''}" data-cmp="${esc(k)}" title="En fazla 4 eseri yan yana karşılaştırın">⇄ Karşılaştır</button></div></div></div>
+ <div class="ltabs" role="tablist"><button data-lt="eser" class="on">Eser</button><button data-lt="deger">Değer</button><button data-lt="sanatci">Sanatçı</button><button data-lt="arsiv">Arşiv</button><span class="lmini">${TL(pr)}</span></div>
+ <div class="lpane on" data-pane="eser"><div class="tags" style="margin:0 0 12px">${(l._tags||[]).map(x=>tagChip(x,F.tags.includes(x.id))).join('')}</div><p class="muted" style="font-size:12px;margin:-4px 0 10px">Bir etikete dokunarak benzer eserleri Keşfet'te listeleyin.</p>
  <table class="f"><tr><td>Müzayede</td><td>${esc(l.auction)}</td></tr><tr><td>Kategori</td><td>${esc(l.category)||'—'}</td></tr><tr><td>Teknik</td><td>${esc(l.tech)||'—'}</td></tr><tr><td>Ölçü</td><td>${esc(l.size)||'—'}</td></tr><tr><td>Yıl</td><td>${esc(l.year)||'—'}</td></tr>
- <tr><td>${l.auction_type=='buy-now'?'Hemen Al fiyatı':'Açılış fiyatı'}</td><td><b>${TL(l.start_price)}</b></td></tr><tr><td>Tahmini değer</td><td>${TL(l.estimate)}</td></tr><tr><td>Güncel pey</td><td>${l.current_bid?TL(l.current_bid):'Sitede canlı görüntülenir'}</td></tr>
- <tr><td>Pey sayısı</td><td>${l.bid_count||0}</td></tr><tr><td>cm² fiyatı</td><td>${l.ppc?l.ppc.toLocaleString('tr-TR',{maximumFractionDigits:0})+' TL/cm²':'—'}</td></tr><tr><td>Bitiş</td><td>${fdate(l._e)}</td></tr><tr><td>Fiyat geçmişi</td><td>${hist||'—'}</td></tr></table>
- <div class="acts" style="margin-top:14px"><button class="ic fav ${fav.has(k)?'on':''}" data-fav="${esc(k)}">♥ Favori</button><button class="ic ${cmp.includes(k)?'on':''}" data-cmp="${esc(k)}">⇄ Karşılaştır</button><a href="${esc(l.url)}" target="_blank" rel="noopener" style="display:inline">Eser sayfasına git ↗</a></div></div></div>
- <div id="apanel">${artistPanel(l,null)}</div><div id="lbPrice"></div><div id="lbLot"></div>`;
- openM();loadPast().then(p=>{if($('apanel'))$('apanel').innerHTML=artistPanel(l,p)});lbLotBlock(l);lbPriceBlock(l)}
+ <tr><td>${l.auction_type=='buy-now'?'Hemen Al fiyatı':'Açılış fiyatı'}</td><td><b>${TL(l.start_price)}</b></td></tr><tr><td>Tahmini değer</td><td>${TL(l.estimate)}</td></tr><tr><td>Güncel pey</td><td>${l.current_bid?TL(l.current_bid):'Sitede canlı görünür'}</td></tr>
+ <tr><td>Pey sayısı</td><td>${l.bid_count||0}</td></tr><tr><td>cm² fiyatı ${tip('Fiyatın eserin yüzey alanına (en × boy) bölünmesiyle bulunur. Farklı boyuttaki eserleri kıyaslamak içindir.')}</td><td>${l.ppc?l.ppc.toLocaleString('tr-TR',{maximumFractionDigits:0})+' TL/cm²':'—'}</td></tr><tr><td>Bitiş</td><td>${fdate(l._e)}</td></tr><tr><td>Fiyat geçmişi</td><td>${hist||'—'}</td></tr></table></div>
+ <div class="lpane" data-pane="deger"><div id="apanel">${artistPanel(l,null)}</div></div>
+ <div class="lpane" data-pane="sanatci">${l.artist?`<div class="lsart"><div><b class="serif" style="font-size:22px">${esc(l.artist)}</b><div class="muted" style="font-size:13px">${D.lots.filter(x=>x._a==l._a).length} eseri şu an satışta</div></div><div class="acts"><button type="button" class="btn favbtn${isFav(l.artist)?' on':''}" data-star="${esc(l.artist)}"></button><a class="btn" href="#artist=${encodeURIComponent(l.artist)}" data-artist="${esc(l.artist)}">Sanatçı sayfası →</a></div></div>`:''}<div id="lbLot"><p class="muted">Arşivde bu sanatçının biyografisi bulunamadı.</p></div></div>
+ <div class="lpane" data-pane="arsiv"><p class="muted" style="font-size:13px;margin-top:0">Lebriz arşivindeki (2023'te kapanan sanat rehberi) eski müzayede fiyatları. ${tip('Fiyatlar 2008–2013 arası kataloglardan alınmıştır ve o dönemin TL/YTL\'sidir; bugünkü fiyatlarla doğrudan kıyaslanamaz.')}</p><div id="lbPrice"><p class="muted">Bu sanatçı için arşivde eski fiyat kaydı yok.</p></div></div>`;
+ openM();history.replaceState(null,'','#lot='+encodeURIComponent(k));loadPast().then(p=>{if($('apanel'))$('apanel').innerHTML=artistPanel(l,p)});lbLotBlock(l);lbPriceBlock(l)}
 function openM(){$('m').classList.add('open');$('m').scrollTop=0;document.body.style.overflow='hidden'}
-function closeM(){$('m').classList.remove('open');document.body.style.overflow=''}
+function closeM(){if(!$('m').classList.contains('open'))return;$('m').classList.remove('open');document.body.style.overflow='';if(/^#(lot|cmp)=/.test(location.hash))history.replaceState(null,'',location.pathname+location.search)}
 function showCmp(){const L=cmp.map(k=>byKey[k]).filter(Boolean);const rows=[['',l=>l.images[0]?`<img src="${esc(l.images[0])}">`:''],['Sanatçı',l=>`<b class="serif" style="font-size:19px">${aLink(l.artist)}</b>`],['Etiketler',l=>`<div class="tags">${(l._tags||[]).filter(x=>x.k!='house').map(x=>tagChip(x)).join('')}</div>`],['Eser',l=>esc(l.description)],['Teknik',l=>esc(l.tech)||'—'],['Ölçü',l=>esc(l.size)||'—'],['Yıl',l=>l.year||'—'],['Açılış fiyatı',l=>TL(l.start_price),'start_price'],['Pey sayısı',l=>l.bid_count||0],['Bitiş',l=>fdate(l._e)],['cm² fiyatı',l=>l.ppc?l.ppc.toLocaleString('tr-TR',{maximumFractionDigits:0})+' TL/cm²':'Ölçü çözümlenemedi','ppc'],['Müzayede evi',l=>esc(l.house)+(l.lot_no?' · Lot '+esc(l.lot_no):'')],['',l=>`<a href="${esc(l.url)}" target="_blank" rel="noopener">Siteye git ↗</a>`]];
  const html=rows.map(([h,fn,best])=>{let mi=null;if(best){const v=L.map(l=>l[best]).filter(Boolean);if(v.length>1)mi=Math.min(...v)}return `<tr><th>${h}</th>${L.map(l=>`<td class="${mi&&l[best]==mi?'best':''}">${fn(l)}</td>`).join('')}</tr>`}).join('');
  $('mc').innerHTML=`<h2 style="font-size:var(--fs-2xl);margin:0 0 12px">Karşılaştırma</h2><div class="cmp"><table>${html}</table></div><p class="muted" style="font-size:12px">Yeşil: en düşük değer. cm² fiyatı = açılış fiyatı ÷ (en × boy); yalnızca iki boyutlu ölçüsü okunabilen eserlerde hesaplanır.</p>`;openM()}
 function dock(){$('dock').classList.toggle('show',cmp.length>0);$('dockItems').innerHTML=cmp.map(k=>byKey[k]?`<img src="${esc(byKey[k].images[0]||'')}" title="${esc(byKey[k].artist)}" alt="">`:'').join('');$('doCmp').disabled=cmp.length<2;$('dockMsg').textContent=cmp.length<2?'En az 2 eser seçin':`${cmp.length}/4`}
-document.addEventListener('click',e=>{const tg=e.target.closest('[data-tag]');if(tg&&!tg.closest('#sd')){e.preventDefault();e.stopPropagation();toggleTag(tg.dataset.tag,!!tg.closest('#m'));return}
+document.addEventListener('click',e=>{document.querySelectorAll('details.tip[open]').forEach(d=>{if(!d.contains(e.target))d.open=false});
+ const act=e.target.closest('[data-act]');if(act){e.preventDefault();const a=act.dataset.act;if(a=='pick')openPick();else if(a=='reset')resetF();else if(a=='add')openAdd();else if(a=='help')openHelp();return}
+ const go=e.target.closest('[data-go]');if(go){e.preventDefault();show(go.dataset.go);return}
+ const lt=e.target.closest('[data-lt],[data-pt]');if(lt){const box=lt.closest('#mc,#artistPage'),id=lt.dataset.lt||lt.dataset.pt;box.querySelectorAll('[data-lt],[data-pt]').forEach(b=>b.classList.toggle('on',b==lt));box.querySelectorAll('.lpane').forEach(p=>p.classList.toggle('on',p.dataset.pane==id));return}
+ const tg=e.target.closest('[data-tag]');if(tg&&!tg.closest('#sd')){e.preventDefault();e.stopPropagation();toggleTag(tg.dataset.tag,!!tg.closest('#m,#artistPage'));return}
  const ar=e.target.closest('[data-artist]');if(ar&&!ar.closest('#sd')){e.preventDefault();e.stopPropagation();openArtist(ar.dataset.artist);return}
- const st=e.target.closest('[data-star]');if(st){e.preventDefault();e.stopPropagation();toggleFavArt(st.dataset.star);if(view=='lots')render();if($('pickM').classList.contains('open'))pickRender();return}
+ const st=e.target.closest('[data-star]');if(st){e.preventDefault();e.stopPropagation();toggleFavArt(st.dataset.star);if($('pickM').classList.contains('open'))pickRender();return}
  const t=e.target.closest('[data-fav],[data-cmp],[data-open],[data-lba]');if(!t||t.closest('#sd'))return;if(t.dataset.lba)e.preventDefault();
- if(t.dataset.fav){const k=t.dataset.fav;fav.has(k)?fav.delete(k):fav.add(k);saveFav();document.querySelectorAll(`[data-fav="${CSS.escape(k)}"]`).forEach(b=>b.classList.toggle('on',fav.has(k)));if(view=='fav')render()}
+ if(t.dataset.fav){const k=t.dataset.fav;fav.has(k)?fav.delete(k):fav.add(k);saveFav();document.querySelectorAll(`[data-fav="${CSS.escape(k)}"]`).forEach(b=>b.classList.toggle('on',fav.has(k)));document.querySelectorAll(`.frame[data-open="${CSS.escape(k)}"]`).forEach(f=>{const m=f.querySelector('.saved');if(fav.has(k)&&!m)f.insertAdjacentHTML('beforeend','<span class="saved" title="Kaydedildi">♥</span>');if(!fav.has(k)&&m)m.remove()});if(view=='fav')renderFav();toast(fav.has(k)?'♥ Kaydettiklerim\'e eklendi':'Kaydettiklerim\'den çıkarıldı')}
  else if(t.dataset.cmp){const k=t.dataset.cmp;if(cmp.includes(k))cmp=cmp.filter(x=>x!=k);else if(cmp.length<4)cmp.push(k);else{alert('En fazla 4 eser karşılaştırabilirsiniz.');return}
   document.querySelectorAll(`[data-cmp="${CSS.escape(k)}"]`).forEach(b=>b.classList.toggle('on',cmp.includes(k)));dock()}
  else if(t.dataset.open)openLot(t.dataset.open);else if(t.dataset.lba)lbArtist(t.dataset.lba)});
@@ -556,16 +762,16 @@ const liveCount=n=>{const a=LB&&LB.byK[n]||LB&&LB.artists.find(x=>x._n==n);retur
 const lbFor=lot=>lbMatch(lot.artist);
 const pd=s=>{if(!s)return null;const[d,m,y]=s.split('.');return new Date(+y,m-1,+d)};
 const wbLink=(u,sn)=>`https://web.archive.org/web/${sn||'2023'}/${u}`;
-function lbOpenTab(){if(view!='lb'){view='lb';document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v=='lb'));document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id=='v-lb'))}
+function lbOpenTab(){if(view!='lb'){view='lb';document.body.dataset.view='lb';document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v=='lb'));document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id=='v-lb'))}
  if(!LB)$('lbres').innerHTML='<div class="alist">'+Array.from({length:9},()=>'<div class="skel" style="height:86px;border-radius:14px"></div>').join('')+'</div>';
- Promise.all([lbLoad(),ready]).then(()=>{const ex=LB.exhibitions;$('lbnote').innerHTML=`<b>Lebriz arşivi:</b> lebriz.com 30 Mart 2023'te faaliyetini sonlandırdı; içerik güncellenmeyen bir arşivdir. Veriler Internet Archive (Wayback Machine) kopyalarından alınmıştır: ${LB.artists.length} sanatçı, ${ex.length.toLocaleString('tr-TR')} sergi, ${LB.galleries.length} galeri. <b>Güncel/yaklaşan sergi yoktur</b>; en yeni sergi ${ex[0]?ex[0].s:'—'} tarihlidir.`;
+ Promise.all([lbLoad(),ready]).then(()=>{const ex=LB.exhibitions;$('lbnote').textContent=`Lebriz arşivinden ${LB.artists.length} sanatçı, ${ex.length.toLocaleString('tr-TR')} sergi, ${LB.galleries.length} galeri. En yeni kayıt ${ex[0]?ex[0].s:'—'} tarihli.`;
   if($('lbcity').options.length<2){[...new Set(ex.map(e=>e.c).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr')).forEach(c=>$('lbcity').add(new Option(c,c)));[...new Set(ex.map(e=>e.g).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr')).forEach(c=>$('lbgal').add(new Option(c,c)))}
   lbRender()}).catch(e=>{$('lbnote').textContent='Lebriz verileri yüklenemedi. Sayfayı web sunucusu üzerinden açın. '+(e&&e.message?'['+e.message+']':'');$('lbres').innerHTML=''})}
 const exYear=e=>((e.s||'').match(/\d{4}$/)||[])[0]||'';
 function exRow(e){const y=exYear(e);return `<div class="erow" id="ex${e.id}"><div class="d">${esc(e.s||'')}${e.e?' – '+esc(e.e):''}<br>${esc(e.c||'')}</div><div><div class="t">${esc(e.t)}</div><div class="d">${esc(e.g||'')}${e.n?' · '+e.n+' eser':''}</div><div class="tags">${e.c?`<span class="tag" data-lbt="c" data-v="${esc(e.c)}">${esc(e.c)}</span>`:''}${e.g?`<span class="tag" data-lbt="g" data-v="${esc(e.g)}">${esc(e.g)}</span>`:''}${y?`<span class="tag" data-lbt="y" data-v="${y}">${y}</span>`:''}</div></div><a href="${wbLink(e.u,e.sn)}" target="_blank" rel="noopener">Lebriz arşivi ↗</a></div>`}
-function artistCard(a){return `<div class="arow" data-lba="${a.id}"><div class="nm">${esc(a.n)} ${starBtn(a.n)}</div><div class="mt">${a.y?esc(a.y)+' · ':''}${a.w?a.w.toLocaleString('tr-TR')+' eserlik katalog':'katalog sayısı yok'}${a.b?' · özgeçmiş':''}</div>${a._live?`<span class="live">Şu an müzayedede: ${a._live} eser</span>`:''}</div>`}
+function artistCard(a){return `<div class="arow" data-lba="${a.id}"><div class="nm">${esc(a.n)} ${starBtn(a.n)}</div><div class="mt">${a.y?esc(a.y)+' · ':''}${a.w?a.w.toLocaleString('tr-TR')+' eserlik katalog':'katalog sayısı yok'}${a.b?' · özgeçmiş':''}</div>${a._live?`<span class="live">Şu an satışta: ${a._live} eser</span>`:''}</div>`}
 function lbRender(){if(!LB)return;const q=norm($('lbq').value).split(' ').filter(Boolean),M=t=>q.every(w=>norm(t).includes(w));
- $('exf').style.display=lbSub=='e'?'flex':'none';$('arf').style.display=lbSub=='a'?'flex':'none';let h='';
+ $('exf').style.display=lbSub=='e'?'flex':'none';$('arf').style.display=lbSub=='a'?'':'none';let h='';
  if(lbSub=='a'){let r=LB.artists.filter(a=>M(a.n));r.forEach(a=>a._live=liveCount(a._n));if($('lblive').checked)r=r.filter(a=>a._live);r.sort((x,y)=>(y._live-x._live)||x.n.localeCompare(y.n,'tr'));
   h=r.length?`<p class="muted" style="font-size:13px">${r.length} sanatçı</p><div class="alist">`+r.map(artistCard).join('')+'</div>':'<div class="empty"><div class="big">Sanatçı bulunamadı</div></div>'}
  else if(lbSub=='e'){const c=$('lbcity').value,g=$('lbgal').value,f=$('lbfrom').value?new Date($('lbfrom').value):null,t=$('lbto').value?new Date($('lbto').value):null;
@@ -577,7 +783,7 @@ function lbTag(k,v){if(k=='c'){if(![...$('lbcity').options].some(o=>o.value==v))
 function lbExh(id,title){lbOpenTab();lbLoad().then(()=>{['lbcity','lbgal','lbfrom','lbto'].forEach(i=>$(i).value='');const e=LB.byEx[id];$('lbq').value=e?e.t:(title||'');lbSetSub('e');closeM();scrollTo({top:0})})}
 const exURL=(id)=>{const e=LB&&LB.byEx[id];return e?wbLink(e.u,e.sn):`https://web.archive.org/web/2023*/lebriz.com/pages/exhibition.aspx*exhID=${id}*`};
 const exLinks=(id,title)=>`${LB&&LB.byEx[id]?`<a href="javascript:;" class="exlink" onclick="lbExh(${+id})">Sanat Rehberi'nde gör</a> · `:''}<a href="${esc(exURL(id))}" target="_blank" rel="noopener">Lebriz arşivi ↗</a>`;
-function lbSetSub(s){lbSub=s;document.querySelectorAll('#v-lb .subtabs .chip').forEach(x=>x.classList.toggle('on',x.dataset.s==s));lbRender()}
+function lbSetSub(s){lbSub=s;document.querySelectorAll('#lbSeg button').forEach(x=>x.classList.toggle('on',x.dataset.s==s));lbRender()}
 function lbGallery(n){lbOpenTab();lbLoad().then(()=>{$('lbgal').value=n;lbSetSub('e')})}
 function lbArtist(id){return openArtist(null,id)}
 function lbArtistOld(id){Promise.all([lbLoad(),lbDet(),ready]).then(()=>{const a=LB.artists.find(x=>x.id==id);if(!a)return;const d=LBA[id]||{};const live=D.lots.filter(l=>lbMatch(l.artist)===a);
@@ -591,12 +797,12 @@ function lbArtistOld(id){Promise.all([lbLoad(),lbDet(),ready]).then(()=>{const a
  ${(d.works||[]).length?`<h3 style="margin-top:16px">Sergilerdeki eserleri (${d.works.length})</h3><div class="wks">${d.works.map(w=>`<div>${w.i?`<a href="${esc(exURL(w.e))}" target="_blank" rel="noopener"><img loading="lazy" onerror="this.remove()" src="${esc(w.i)}"></a>`:''}<b>${esc(w.t||'Adsız')}</b><div>${esc([w.s,w.k].filter(Boolean).join(', '))}</div><div class="muted">${esc(w.et||'')}${w.et?'<br>':''}${esc(w.g||'')} ${esc(w.d||'')}</div><div style="font-size:11px;margin-top:4px">${w.e?exLinks(w.e,w.et):''}</div></div>`).join('')}</div><p class="muted" style="font-size:11px">Görseller Internet Archive'dan yüklenir; arşivlenmemiş olanlar görünmez.</p>`:''}
  ${['online','solo','group'].map(k=>{const r=(d.exh||[]).filter(e=>e.k==k);return r.length?`<h3 style="margin-top:16px">${kinds[k]}</h3><table class="f">${r.map(e=>`<tr><td style="width:110px">${esc(e.d)}</td><td>${esc(e.t)}${e.x?`<div style="font-size:11px">${exLinks(e.x,e.t)}</div>`:''}</td></tr>`).join('')}</table>`:''}).join('')}`;
  openM()})}
-function lbGoLots(n){resetF();F.artist=n;$('artist').value=n;land='all';show('lots')}
-document.querySelector('#v-lb .subtabs').onclick=e=>{const c=e.target.closest('.chip');if(c)lbSetSub(c.dataset.s)};
+function lbGoLots(n){resetF(true);F.artist=n;syncFilterUI();show('lots')}
+$('lbSeg').onclick=e=>{const c=e.target.closest('button');if(c)lbSetSub(c.dataset.s)};
 ['lbq','lbcity','lbgal','lbfrom','lbto','lbsort','lblive'].forEach(i=>$(i).oninput=lbRender);
 $('lbres').addEventListener('click',e=>{const tg=e.target.closest('[data-lbt]');if(tg){lbTag(tg.dataset.lbt,tg.dataset.v);return}const g=e.target.closest('[data-lbg]');if(g){$('lbgal').value=g.dataset.lbg;lbSetSub('e')}});
 function lbPriceBlock(l){const el=$('lbPrice');if(!el||!l._a)return;lbPrices().then(P=>{const r=P[norm((l.artist||'').replace(/\(.*?\)/g,''))];if(!r||!r.length||!$('lbPrice')){return}
- $('lbPrice').innerHTML=`<div class="panel"><h4 style="margin:0 0 6px">Lebriz müzayede kataloglarındaki fiyatlar (arşiv, ${r.length} kayıt)</h4><p class="muted" style="font-size:12px">Lebriz'in "Müzayede Bilgi Bankası" kataloglarındaki <b>"Fiyat"</b> sütunu, 2008–2013 arası; arşivde yalnızca bazı sayfalar var. Para birimi o dönemin TL/YTL'sidir, bugünkü fiyatlarla doğrudan kıyaslanamaz ve yukarıdaki ortalamaya katılmamıştır.</p><table class="f">${r.slice(0,15).map(x=>`<tr><td>${x[0].toLocaleString('tr-TR')} ${esc(x[1])}</td><td>${esc((x[2]||'').replace(/\s*\d{1,2} \S+ \d{4}.*$/,''))} · Lot ${x[3]}<br><span class="muted">${esc(((x[2]||'').match(/\d{1,2} \S+ \d{4}/)||[''])[0])}</span></td></tr>`).join('')}</table></div>`})}
+ $('lbPrice').innerHTML=`<div class="panel first"><h4 style="margin:0 0 6px">${r.length} eski müzayede kaydı</h4><table class="f">${r.slice(0,15).map(x=>`<tr><td>${x[0].toLocaleString('tr-TR')} ${esc(x[1])}</td><td>${esc((x[2]||'').replace(/\s*\d{1,2} \S+ \d{4}.*$/,''))} · Lot ${x[3]}<br><span class="muted">${esc(((x[2]||'').match(/\d{1,2} \S+ \d{4}/)||[''])[0])}</span></td></tr>`).join('')}</table></div>`})}
 const GENERIC=new Set(['isimsiz','adsiz','kompozisyon','soyut','soyut kompozisyon','portre','natürmort','naturmort','peyzaj','manzara','figur','figuratif','figuratif kompozisyon','cicekler','cicek','resim','eser','untitled','imzali','tablo']);
 function lbWorkMatches(l,d){const ld=' '+norm([l.title,l.description].join(' '))+' ',lt=new Set(ld.trim().split(' ').filter(w=>w.length>2));const out=[];
  const sim=t=>{const n=norm((t||'').replace(/^.*?"(.*?)".*$/,'$1'));if(n.length<4||GENERIC.has(n))return 0;if(ld.includes(' '+n+' '))return 1;const w=n.split(' ').filter(x=>x.length>2);if(w.length<2)return 0;const h=w.filter(x=>lt.has(x)).length;return h/w.length};
@@ -606,7 +812,7 @@ function lbWorkMatches(l,d){const ld=' '+norm([l.title,l.description].join(' '))
  return out.sort((a,b)=>b.s-a.s).slice(0,6)}
 function lbLotBlock(l){lbLoad().then(()=>{const a=lbFor(l);if(!a)return;lbDet().then(()=>{const d=LBA[a.id]||{};if(!$('lbLot'))return;
  const wm=lbWorkMatches(l,d);
- $('lbLot').innerHTML=`<div class="panel"><h3>Lebriz'de <a class="alink" href="#lba=${a.id}" data-lba="${a.id}">${esc(a.n)}</a> ${a.y?'<span class="muted" style="font-size:16px">('+esc(a.y)+')</span>':''}</h3>${d.bio?`<div class="bio" style="max-height:200px;margin-top:8px">${esc(d.bio.slice(0,1200))}${d.bio.length>1200?'…':''}</div>`:'<p class="muted">Arşivde özgeçmiş yok.</p>'}${a.m?`<p class="muted" style="font-size:12px">Lebriz: müzayede kataloglarında ${a.m} eser kaydı.</p>`:''}${wm.length?`<div class="lbmatch"><b>Bu eser Lebriz kayıtlarıyla eşleşiyor olabilir</b> <span class="muted">(başlık + sanatçı benzerliği)</span>${wm.map(m=>`<div style="margin-top:6px">${m.w.i?`<img src="${esc(m.w.i)}" onerror="this.remove()" style="height:48px;vertical-align:middle;margin-right:8px;border-radius:4px">`:''}${m.kind=='work'?'Eser':'Sergi'}: <b>${esc(m.w.t||m.w.et)}</b> <span class="muted">${esc([m.w.et&&m.kind=='work'?m.w.et:'',m.w.g,m.w.d].filter(Boolean).join(' · '))}</span> — ${exLinks(m.id,m.w.et||m.w.t)}</div>`).join('')}</div>`:''}
+ $('lbLot').innerHTML=`<div class="panel"><h3>Arşivde <a class="alink" href="#lba=${a.id}" data-lba="${a.id}">${esc(a.n)}</a> ${a.y?'<span class="muted" style="font-size:16px">('+esc(a.y)+')</span>':''}</h3>${d.bio?`<div class="bio" style="max-height:200px;margin-top:8px">${esc(d.bio.slice(0,1200))}${d.bio.length>1200?'…':''}</div>`:'<p class="muted">Arşivde özgeçmiş yok.</p>'}${a.m?`<p class="muted" style="font-size:12px">Lebriz: müzayede kataloglarında ${a.m} eser kaydı.</p>`:''}${wm.length?`<div class="lbmatch"><b>Bu eser Lebriz kayıtlarıyla eşleşiyor olabilir</b> <span class="muted">(başlık + sanatçı benzerliği)</span>${wm.map(m=>`<div style="margin-top:6px">${m.w.i?`<img src="${esc(m.w.i)}" onerror="this.remove()" style="height:48px;vertical-align:middle;margin-right:8px;border-radius:4px">`:''}${m.kind=='work'?'Eser':'Sergi'}: <b>${esc(m.w.t||m.w.et)}</b> <span class="muted">${esc([m.w.et&&m.kind=='work'?m.w.et:'',m.w.g,m.w.d].filter(Boolean).join(' · '))}</span> — ${exLinks(m.id,m.w.et||m.w.t)}</div>`).join('')}</div>`:''}
  <div class="acts"><button class="ic" data-lba="${a.id}">Sanatçı sayfası (Sanat Rehberi)</button><a href="${esc(d.url)}" target="_blank" rel="noopener" style="display:inline">lebriz.com ↗</a></div></div>`})}).catch(()=>{})}
 
 /* ===== global search ===== */
@@ -654,14 +860,14 @@ $('gq').addEventListener('blur',()=>setTimeout(()=>{if(!$('gsWrap').classList.co
 const gsOpen=()=>{$('gsWrap').classList.add('full');$('gq').focus()},gsShut=()=>{$('gsWrap').classList.remove('full');sdClose()};
 $('gsBtn').onclick=gsOpen;$('gsX').onclick=gsShut;
 $('sd').addEventListener('click',()=>setTimeout(()=>{if(!$('sd').classList.contains('open'))$('gsWrap').classList.remove('full')},0));
-document.addEventListener('keydown',e=>{if(e.key=='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();if(innerWidth<=640)gsOpen();$('gq').focus();$('gq').select()}else if(e.key=='Escape'){closeM();if($('addM'))$('addM').classList.remove('open');if($('pickM'))$('pickM').classList.remove('open');document.body.style.overflow=''}});
+document.addEventListener('keydown',e=>{if(e.key=='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();if(innerWidth<=640)gsOpen();$('gq').focus();$('gq').select()}else if(e.key=='Escape'){closeM();$('addM').classList.remove('open');$('pickM').classList.remove('open');if($('helpM').classList.contains('open'))closeHelp();drawer(false);menuOpen(false);document.body.style.overflow=''}});
 let FR={g:'all',q:'',lotShown:0};
 function fullResults(g){const q=$('gq').value.trim();if(!q)return;const r=lastRes&&FR.q==q?lastRes:gsearch(q);lastRes=r;FR={g,q,r,lotShown:0};sdClose();$('gq').blur();
  $('tSearch').style.display='';show('search');history.replaceState(null,'','#q='+encodeURIComponent(q));
  const groups=g=='all'?['lot','artist','tag','house','exh','gal']:[g];let h=`<div class="toolbar"><h2 style="font-size:var(--fs-2xl)">“${esc(q)}” için sonuçlar</h2><div class="chips">${['all','lot','artist','house','exh','gal'].map(x=>`<span class="chip ${x==g?'on':''}" data-rg="${x}">${x=='all'?'Tümü':GL[x]} ${x=='all'?'':'('+r[x].length+')'}</span>`).join('')}</div></div>`;
  for(const k of groups){const L=r[k];if(!L.length)continue;const lim=g=='all'?(k=='lot'?12:8):Infinity;h+=`<div class="secthead"><h2 style="font-size:var(--fs-xl)">${GL[k]} <span class="muted" style="font-size:16px">${L.length.toLocaleString('tr-TR')}</span></h2>${g=='all'&&L.length>lim?`<a class="chip" data-rg="${k}">Tümünü gör →</a>`:''}</div>`;
   if(k=='lot')h+=`<div class="grid" id="srLots"></div>${g!='all'?'<div class="more"><button class="btn" id="srMore">Daha fazla yükle</button></div>':''}`;
-  else if(k=='artist')h+=`<div class="alist">${L.slice(0,lim).map(x=>{const o=x.o;return `<div class="arow" data-sa="${esc(o.n)}"><div class="nm">${hl(o.n,q)} ${starBtn(o.n)}</div><div class="mt">${o.lb&&o.lb.y?esc(o.lb.y)+' · ':''}${o.lb?'Lebriz profili':''}</div>${o.c?`<span class="live">Şu an müzayedede: ${o.c} eser</span>`:''}</div>`}).join('')}</div>`;
+  else if(k=='artist')h+=`<div class="alist">${L.slice(0,lim).map(x=>{const o=x.o;return `<div class="arow" data-sa="${esc(o.n)}"><div class="nm">${hl(o.n,q)} ${starBtn(o.n)}</div><div class="mt">${o.lb&&o.lb.y?esc(o.lb.y)+' · ':''}${o.lb?'Lebriz profili':''}</div>${o.c?`<span class="live">Şu an satışta: ${o.c} eser</span>`:''}</div>`}).join('')}</div>`;
   else if(k=='house')h+=`<div class="alist">${L.slice(0,lim).map(x=>`<div class="arow" data-house="${esc(x.o.site)}"><div class="nm">${hl(x.o.n,q)}</div><div class="mt">${x.o.c} eser · ${x.o.auctions.size} müzayede</div></div>`).join('')}</div>`;
   else if(k=='exh')h+=L.slice(0,g=='all'?lim:400).map(x=>exRow(x.o)).join('');
   else h+=L.slice(0,lim).map(x=>`<div class="erow"><div class="d">${esc(x.o.c||'')}</div><div><div class="t">${hl(x.o.n,q)}</div><div class="d">${esc(x.o.a||'')}</div></div><a href="javascript:;" data-sg="${esc(x.o.n)}">${x.o.x} sergi →</a></div>`).join('')}
@@ -688,34 +894,32 @@ async function openArtist(name,lbId){await ready;try{await lbLoad()}catch(e){}
  const gal={};(d.works||[]).forEach(w=>{if(w.g)gal[w.g]=(gal[w.g]||0)+1});exAll.forEach(e=>{const g=(e.t||'').split(' - ').pop().trim();if(g&&g!=e.t&&g.length<60)gal[g]=(gal[g]||0)+1});
  const prows=[...new Set([norm(name.replace(/\(.*?\)/g,'')),a&&a._n,...names.map(n=>norm(n.replace(/\(.*?\)/g,'')))].filter(Boolean))].map(x=>P[x]).find(r=>r&&r.length)||[];
  const houses=[...new Set(live.map(l=>l.house))];
- const S=(id,t,n,body)=>`<section class="ap-sec" id="ap-${id}"><h2>${t}${n!=null?` <small>${n}</small>`:''}</h2>${body}</section>`;
- const secs=[];
- let stats='';if(pr.length){const avg=pr.reduce((x,y)=>x+y,0)/pr.length;stats=`<div class="kpis"><div class="kpi"><span>Kayıtlı eser</span><b>${live.length+pastL.length}</b></div><div class="kpi"><span>Şu an müzayedede</span><b>${live.length}</b></div><div class="kpi"><span>En düşük</span><b>${TL(Math.min(...pr))}</b></div><div class="kpi"><span>Medyan</span><b>${TL(median(pr))}</b></div><div class="kpi"><span>Ortalama</span><b>${TL(avg)}</b></div><div class="kpi"><span>En yüksek</span><b>${TL(Math.max(...pr))}</b></div>${a&&a.w?`<div class="kpi"><span>Lebriz katalog</span><b>${a.w.toLocaleString('tr-TR')}</b></div>`:''}${a&&a.m?`<div class="kpi"><span>Lebriz müzayede kaydı</span><b>${a.m}</b></div>`:''}</div><p class="muted" style="font-size:12px">Veritabanındaki ${pr.length} açılış/güncel/satış fiyatına göre. Boyut, teknik ve dönem farkları hesaba katılmaz; açılış fiyatı satış değeri değildir.</p>`}
- else stats='<p class="muted">Bu sanatçı için fiyat verisi yok.</p>';
- secs.push(['deger','Değer paneli',null,`<div class="ap-box">${stats}</div>`]);
- if(tags.length)secs.push(['etiket','Etiketler',tags.length,`<div class="tags">${tags.map(o=>tagChip(o.x).replace('</span>',`<i>${o.n}</i></span>`)).join('')}</div>`]);
- secs.push(['guncel','Şu an müzayedede',live.length,live.length?`<div class="grid">${live.map(card).join('')}</div>`:'<p class="muted">Şu an açık müzayedede eseri yok.</p>']);
- if(pastL.length)secs.push(['gecmis','Geçmiş müzayede eserleri',pastL.length,`<div class="mini">${pastL.sort((x,y)=>(y.end_date||'').localeCompare(x.end_date||'')).map(o=>`<div onclick="window.open('${esc(o.url)}','_blank','noopener')">${o.images&&o.images[0]?`<img loading="lazy" onerror="this.remove()" src="${esc(o.images[0])}">`:''}<div>${esc(o.description||'')}</div><b>${TL(o.start_price)}</b><div class="muted">${esc(houseName(o.site))}${o.end_date?' · '+esc(o.end_date.slice(0,10)):''}</div></div>`).join('')}</div>`]);
- if(prows.length)secs.push(['lbfiyat','Eski Lebriz müzayede fiyatları',prows.length,`<div class="ap-box"><p class="muted" style="font-size:12px;margin-top:0">Lebriz "Müzayede Bilgi Bankası" kataloglarındaki fiyat sütunu (2008–2013, arşivde bulunan sayfalar). O dönemin TL/YTL'si; bugünkü fiyatlarla doğrudan kıyaslanamaz.</p><table class="f">${prows.map(x=>`<tr><td>${(+x[0]).toLocaleString('tr-TR')} ${esc(x[1])}</td><td>${esc((x[2]||'').replace(/\s*\d{1,2} \S+ \d{4}.*$/,''))}${x[3]?' · Lot '+esc(x[3]):''}<br><span class="muted">${esc(((x[2]||'').match(/\d{1,2} \S+ \d{4}/)||[''])[0])}</span></td></tr>`).join('')}</table></div>`]);
- if(a){secs.push(['bio','Özgeçmiş',null,d.bio?`<div class="bio">${esc(d.bio)}</div>${d.bs?`<p class="muted" style="font-size:12px">Kaynak: <a href="${esc(d.bs)}" target="_blank" rel="noopener">Lebriz (arşiv) ↗</a></p>`:''}`:'<p class="muted">Arşivde bu sanatçının özgeçmiş sayfası bulunamadı.</p>']);
-  if((d.series||[]).length)secs.push(['seri','Lebriz kataloğundaki seriler',d.series.length,`<div class="tags">${d.series.map(s=>`<span class="tag">${esc(s.n)}<i>${s.c}</i></span>`).join('')}</div>`]);
-  const kinds={online:'Lebriz çevrimiçi',solo:'Kişisel',group:'Karma',lb:'Sergi kaydı'};
-  if(exAll.length)secs.push(['sergi','Sergiler',exAll.length,`<div class="ap-box"><table class="f">${exAll.map(e=>`<tr><td style="width:120px">${esc(e.d||'')}<br><span class="muted" style="font-size:11px">${kinds[e.k]||''}</span></td><td>${esc(e.t)}${e.x?`<div style="font-size:12px;margin-top:2px">${exLinks(e.x,e.t)}</div>`:''}</td></tr>`).join('')}</table></div>`]);
-  const G=Object.entries(gal).sort((p,q)=>q[1]-p[1]);if(G.length)secs.push(['galeri','Galeriler',G.length,`<div class="tags">${G.map(([g,n])=>`<a class="tag" href="javascript:;" onclick="lbGallery(${JSON.stringify(g).replace(/"/g,'&quot;')})">${esc(g)}<i>${n}</i></a>`).join('')}</div>`]);
-  if((d.works||[]).length)secs.push(['eser','Lebriz sergilerindeki eserleri',d.works.length,`<div class="wks">${d.works.map(w=>`<div>${w.i?`<a href="${esc(exURL(w.e))}" target="_blank" rel="noopener"><img loading="lazy" onerror="this.remove()" src="${esc(w.i)}"></a>`:''}<b>${esc(w.t||'Adsız')}</b><div>${esc([w.s,w.k].filter(Boolean).join(', '))}</div><div class="muted">${esc(w.et||'')}${w.et?'<br>':''}${esc(w.g||'')} ${esc(w.d||'')}</div><div style="font-size:11px;margin-top:4px">${w.e?exLinks(w.e,w.et):''}</div></div>`).join('')}</div><p class="muted" style="font-size:11px">Görseller Internet Archive'dan yüklenir; arşivlenmemiş olanlar görünmez.</p>`])}
- else secs.push(['bio','Lebriz',null,'<p class="muted">Bu sanatçı Lebriz arşivimizde (320 sanatçı) bulunamadı.</p>']);
- const rec=AR&&(AR.byN[name]||(a&&AR.byN[a.n]));const variants=rec?rec.v.filter(v=>v!==rec.n):names.filter(v=>v!==(rec?rec.n:name));
- if(variants.length)secs.splice(1,0,['ad','Kayıtlardaki yazımlar',variants.length,`<div class="tags">${variants.map(v=>`<span class="tag">${esc(v)}</span>`).join('')}</div>`]);
- el.innerHTML=`<div class="ap-hero"><div><div class="meta">Sanatçı${a?' · Lebriz arşivinde':''}</div><h1>${esc(a?a.n:name)} ${starBtn(a?a.n:name)}</h1><div class="muted">${[a&&a.y,houses.length?houses.length+' müzayede evinde':''].filter(Boolean).map(esc).join(' · ')}</div></div>
- <div class="acts" style="flex-wrap:wrap">${live.length?`<button class="btn pri" onclick="lbGoLots(${JSON.stringify(live[0].artist).replace(/"/g,'&quot;')})">Eserleri filtrele →</button>`:''}${a&&d.url?`<a class="btn" style="display:inline-flex;align-items:center;text-decoration:none" href="${esc(wbLink(d.url,d.sn))}" target="_blank" rel="noopener">Lebriz arşivi ↗</a>`:''}<button class="btn" onclick="navigator.clipboard&&navigator.clipboard.writeText(location.href)">Bağlantıyı kopyala</button></div></div>
- <nav class="ap-nav">${secs.map(([id,t,n])=>`<a href="javascript:;" onclick="document.getElementById('ap-${id}').scrollIntoView({behavior:'smooth'})">${t}${n?' · '+n:''}</a>`).join('')}</nav>${secs.map(s=>S(...s)).join('')}`;
+ const tab={satis:'',deger:'',bio:'',sergi:''};
+ let stats='';if(pr.length){const avg=pr.reduce((x,y)=>x+y,0)/pr.length;stats=`<div class="kpis"><div class="kpi"><span>Şu an satışta</span><b>${live.length}</b></div><div class="kpi"><span>Kayıtlı eser</span><b>${live.length+pastL.length}</b></div><div class="kpi"><span>En düşük</span><b>${TL(Math.min(...pr))}</b></div><div class="kpi"><span>Ortalama</span><b>${TL(avg)}</b></div><div class="kpi"><span>En yüksek</span><b>${TL(Math.max(...pr))}</b></div></div><p class="muted" style="font-size:13px">${pr.length} açılış/güncel fiyata göre (medyan ${TL(median(pr))}). ${tip('Boyut, teknik ve dönem farkları hesaba katılmaz; açılış fiyatı satış değeri değildir. Fikir vermek içindir.')}</p>`}
+ else stats='<p class="muted">Bu sanatçı için henüz fiyat verisi yok.</p>';
+ tab.satis=(live.length?`<div class="grid">${live.map(card).join('')}</div>`:emptyBox('Şu an satışta eseri yok',isFav(name)?'Bu sanatçıyı takip ediyorsunuz; eseri müzayedeye çıkınca <b>Favorilerim</b>\'de görünür.':'★ ile favorilere ekleyin; eseri müzayedeye çıkınca <b>Favorilerim</b>\'de görünür.',''))
+  +(pastL.length?`<h3 class="subh">Geçmiş müzayedeler <small>${pastL.length}</small></h3><p class="muted" style="font-size:13px;margin-top:-6px">Sitenin daha önce kaydettiği, artık satışta olmayan eserler. Dokununca evin sayfası açılır.</p><div class="mini">${pastL.sort((x,y)=>(y.end_date||'').localeCompare(x.end_date||'')).map(o=>`<div onclick="window.open('${esc(o.url)}','_blank','noopener')">${o.images&&o.images[0]?`<img loading="lazy" onerror="this.remove()" src="${esc(o.images[0])}">`:''}<div>${esc(o.description||'')}</div><b>${TL(o.start_price)}</b><div class="muted">${esc(houseName(o.site))}${o.end_date?' · '+esc(o.end_date.slice(0,10)):''}</div></div>`).join('')}</div>`:'');
+ tab.deger=`<div class="ap-box">${stats}</div>`+(prows.length?`<h3 class="subh">Eski müzayede fiyatları (arşiv) <small>${prows.length}</small></h3><div class="ap-box"><p class="muted" style="font-size:12px;margin-top:0">Lebriz kataloglarından, 2008–2013. O dönemin TL/YTL'si; bugünkü fiyatlarla doğrudan kıyaslanamaz.</p><table class="f">${prows.map(x=>`<tr><td>${(+x[0]).toLocaleString('tr-TR')} ${esc(x[1])}</td><td>${esc((x[2]||'').replace(/\s*\d{1,2} \S+ \d{4}.*$/,''))}${x[3]?' · Lot '+esc(x[3]):''}<br><span class="muted">${esc(((x[2]||'').match(/\d{1,2} \S+ \d{4}/)||[''])[0])}</span></td></tr>`).join('')}</table></div>`:'');
+ const rec=AR&&(AR.byN[name]||(a&&AR.byN[a.n]));const variants=rec?rec.v.filter(v=>v!==rec.n):names.filter(v=>v!==name);
+ tab.bio=(a&&d.bio?`<div class="bio">${esc(d.bio)}</div>${d.bs?`<p class="muted" style="font-size:12px">Kaynak: <a href="${esc(d.bs)}" target="_blank" rel="noopener">Lebriz (arşiv) ↗</a></p>`:''}`:`<p class="muted">${a?'Arşivde bu sanatçının özgeçmiş sayfası bulunamadı.':'Bu sanatçı Lebriz arşivinde (320 sanatçı) yok; biyografi bulunmuyor.'}</p>`)
+  +(a&&(d.series||[]).length?`<h3 class="subh">Lebriz kataloğundaki seriler</h3><div class="tags">${d.series.map(s=>`<span class="tag">${esc(s.n)}<i>${s.c}</i></span>`).join('')}</div>`:'')
+  +(tags.length?`<h3 class="subh">Eserlerinde öne çıkanlar</h3><div class="tags">${tags.map(o=>tagChip(o.x).replace('</span>',`<i>${o.n}</i></span>`)).join('')}</div>`:'')
+  +(variants.length?`<h3 class="subh">Kayıtlardaki yazımlar ${tip('Müzayede evleri aynı sanatçının adını farklı yazabiliyor. Bu yazımların hepsi bu sayfada birleştirildi.')}</h3><div class="tags">${variants.map(v=>`<span class="tag">${esc(v)}</span>`).join('')}</div>`:'');
+ if(a){const kinds={online:'Lebriz çevrimiçi',solo:'Kişisel',group:'Karma',lb:'Sergi kaydı'};const G=Object.entries(gal).sort((p,q)=>q[1]-p[1]);
+  tab.sergi=(exAll.length?`<div class="ap-box"><table class="f">${exAll.map(e=>`<tr><td style="width:120px">${esc(e.d||'')}<br><span class="muted" style="font-size:11px">${kinds[e.k]||''}</span></td><td>${esc(e.t)}${e.x?`<div style="font-size:12px;margin-top:2px">${exLinks(e.x,e.t)}</div>`:''}</td></tr>`).join('')}</table></div>`:'<p class="muted">Arşivde sergi kaydı yok.</p>')
+   +(G.length?`<h3 class="subh">Galeriler</h3><div class="tags">${G.map(([g,n])=>`<a class="tag" href="javascript:;" onclick="lbGallery(${JSON.stringify(g).replace(/"/g,'&quot;')})">${esc(g)}<i>${n}</i></a>`).join('')}</div>`:'')
+   +((d.works||[]).length?`<h3 class="subh">Sergilerdeki eserleri <small>${d.works.length}</small></h3><div class="wks">${d.works.map(w=>`<div>${w.i?`<a href="${esc(exURL(w.e))}" target="_blank" rel="noopener"><img loading="lazy" onerror="this.remove()" src="${esc(w.i)}"></a>`:''}<b>${esc(w.t||'Adsız')}</b><div>${esc([w.s,w.k].filter(Boolean).join(', '))}</div><div class="muted">${esc(w.et||'')}${w.et?'<br>':''}${esc(w.g||'')} ${esc(w.d||'')}</div><div style="font-size:11px;margin-top:4px">${w.e?exLinks(w.e,w.et):''}</div></div>`).join('')}</div><p class="muted" style="font-size:11px">Görseller Internet Archive'dan yüklenir; arşivlenmemiş olanlar görünmez.</p>`:'')}
+ else tab.sergi='<p class="muted">Bu sanatçı Lebriz arşivinde olmadığı için sergi kaydı yok.</p>';
+ const T=[['satis','Şu an satışta',live.length],['deger','Değer',null],['bio','Biyografi',null],['sergi','Sergiler',exAll.length||null]];
+ const nm=a?a.n:name;
+ el.innerHTML=`<div class="ap-hero"><div><div class="meta">Sanatçı${a?' · Lebriz arşivinde':''}</div><h1>${esc(nm)}</h1><div class="muted">${[a&&a.y,live.length?live.length+' eser şu an satışta':'şu an satışta eseri yok',houses.length?houses.length+' müzayede evinde':''].filter(Boolean).map(esc).join(' · ')}</div></div>
+ <div class="acts" style="flex-wrap:wrap"><button type="button" class="btn pri favbtn${isFav(nm)?' on':''}" data-star="${esc(nm)}"></button><button class="btn" onclick="navigator.clipboard&&navigator.clipboard.writeText(location.href).then(()=>toast('Bağlantı kopyalandı'))">Bağlantıyı kopyala</button></div></div>
+ <div class="ltabs page" role="tablist">${T.map(([id,t,n],i)=>`<button data-pt="${id}" class="${i?'':'on'}">${t}${n?` <span class="sn">${n}</span>`:''}</button>`).join('')}</div>
+ ${T.map(([id],i)=>`<div class="lpane${i?'':' on'}" data-pane="${id}">${tab[id]}</div>`).join('')}`;
  scrollTo({top:0})}
-$('tech').onchange=()=>{F.tech=$('tech').value;render()};
-$('modeFav').onclick=()=>{land='fav';localStorage.setItem('mr_land',land);render()};
-$('modeAll').onclick=()=>{land='all';localStorage.setItem('mr_land',land);render()};
 const openPick=()=>{$('pickM').classList.add('open');document.body.style.overflow='hidden';$('pickQ').value='';pickRender();$('pickQ').focus();Promise.all([ready,artLoad(),lbLoad().catch(()=>{})]).then(()=>{if($('pickM').classList.contains('open'))pickRender()})};
 const closePick=()=>{$('pickM').classList.remove('open');document.body.style.overflow=''};
-$('pickOpen').onclick=openPick;$('pickOpen2').onclick=openPick;$('pickX').onclick=closePick;
+$('pickOpen').onclick=openPick;$('pickX').onclick=closePick;$('pickDone').onclick=closePick;
 $('pickM').onclick=e=>{if(e.target.id=='pickM')closePick()};
 let PK=null;
 function pickIndex(){if(PK&&PK.n==D.lots.length&&PK.ar==!!AR&&PK.lb==!!LB)return PK.list;
@@ -744,7 +948,11 @@ $('pickList').addEventListener('keydown',e=>{const r=e.target.closest('.prow');i
 $('pickQ').addEventListener('input',()=>pickRender());
 const openAdd=()=>{$('addM').classList.add('open');document.body.style.overflow='hidden';$('addMsg').textContent='';buildSources();$('addUrl').focus()};
 const closeAdd=()=>{$('addM').classList.remove('open');document.body.style.overflow=''};
-$('addOpen').onclick=openAdd;$('addOpen2').onclick=openAdd;$('addX').onclick=closeAdd;
+$('addOpen2').onclick=openAdd;$('addX').onclick=closeAdd;
+/* ===== help / welcome ===== */
+const openHelp=()=>{$('helpM').classList.add('open');document.body.style.overflow='hidden'};
+const closeHelp=()=>{$('helpM').classList.remove('open');document.body.style.overflow='';LS.set('mr_welcomed',1)};
+$('helpX').onclick=closeHelp;$('helpClose').onclick=closeHelp;$('helpPick').onclick=()=>{closeHelp();openPick()};$('helpM').onclick=e=>{if(e.target.id=='helpM')closeHelp()};
 $('addM').onclick=e=>{if(e.target.id=='addM')closeAdd()};
 $('addGo').onclick=()=>{const url=($('addUrl').value||'').trim();if(!/^https?:\/\//i.test(url)&&!/^[\w.-]+\.[a-z]{2,}/i.test(url)){$('addMsg').textContent='Lütfen bir web adresi girin.';$('addUrl').focus();return}
  const u=normUrl(url),host=hostOf(u);
@@ -753,12 +961,12 @@ $('addGo').onclick=()=>{const url=($('addUrl').value||'').trim();if(!/^https?:\/
  const body='Kaynak URL:\n'+u+'\n\nNot:\n'+(note||'—')+'\n\n<!-- 16/22 Müzayede Rehberi otomatik ekleme. Lütfen URL satırını değiştirmeyin. -->';
  window.open('https://github.com/'+REPO+'/issues/new?labels=kaynak&title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body),'_blank','noopener');
  const base=(srcFor({url:u,host})||{}).last_run||'';setPend([...getPend().filter(p=>!sameUrl(p.url,u)),{url:u,host,at:Date.now(),base}]);
- $('addUrl').value='';$('addNote').value='';$('addMsg').textContent='GitHub sekmesinde “Create”e basın.';buildSources();clearTimeout(pollT);pollT=setTimeout(pollPending,3e4)};
+ $('addUrl').value='';$('addNote').value='';$('addMsg').textContent='GitHub sekmesinde “Create”e basın.';buildSources();houseTab('added');clearTimeout(pollT);pollT=setTimeout(pollPending,3e4)};
 $('addUrl').addEventListener('keydown',e=>{if(e.key=='Enter'){e.preventDefault();$('addGo').click()}});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden&&getPend().length)pollPending()});
 addEventListener('hashchange',()=>{const h=decodeURIComponent(location.hash.slice(1));if(h=='add')openAdd();else if(h.startsWith('site='))showSite(h.slice(5));else if(h.startsWith('artist=')){const v=h.slice(7);v.startsWith('lb:')?openArtist(null,v.slice(3)):openArtist(v)}else if(h.startsWith('lot='))ready.then(()=>openLot(h.slice(4)))});
 /* ===== deep links: #lot=site|id  #cmp=k1,k2  #lebriz  #lba=id  #q=text ===== */
-(()=>{const h=decodeURIComponent(location.hash.slice(1));if(!h)return;
- if(h=='lebriz')show('lb');else if(h=='add')openAdd();else if(h.startsWith('site='))showSite(h.slice(5));else if(h.startsWith('lba='))openArtist(null,h.slice(4));else if(h.startsWith('artist=')){const v=h.slice(7);v.startsWith('lb:')?openArtist(null,v.slice(3)):openArtist(v)}
+(()=>{const h=decodeURIComponent(location.hash.slice(1));show(startView());syncFilterUI();if(!h){if(!LS.get('mr_welcomed',0))openHelp();return}
+ if(h=='lebriz'||h=='arsiv')show('lb');else if(h=='kesfet')show('lots');else if(h=='help')openHelp();else if(h=='add')openAdd();else if(h.startsWith('site='))showSite(h.slice(5));else if(h.startsWith('lba='))openArtist(null,h.slice(4));else if(h.startsWith('artist=')){const v=h.slice(7);v.startsWith('lb:')?openArtist(null,v.slice(3)):openArtist(v)}
  else ready.then(()=>{if(h.startsWith('lot='))openLot(h.slice(4));else if(h.startsWith('cmp=')){cmp=h.slice(4).split(',').filter(k=>byKey[k]).slice(0,4);dock();if(cmp.length>1)showCmp()}else if(h.startsWith('q=')){$('gq').value=h.slice(2);lbLoad().catch(()=>{}).finally(()=>{IDX=null;fullResults('all')})}else if(h.startsWith('s=')){$('gq').value=h.slice(2);lbLoad().catch(()=>{}).finally(()=>{IDX=null;$('gq').focus();sdRender()})}})})();
 </script></body></html>
