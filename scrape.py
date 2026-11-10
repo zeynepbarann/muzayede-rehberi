@@ -91,17 +91,43 @@ def scrape_sanatsal():
             url="https://sanatsalmuzayede.com" + href))
     return lots, [("sanatsalmuzayede.com", "eserler", "Eserler (buy-now catalogue)", len(lots))]
 
+ARTAM = "https://artam.com"; ARTAM_IMG = "https://img.artam.com/storage"
 def scrape_artam():
-    page = get("https://artam.com/muzayede")
-    if "Bakımdayız" in page: raise RuntimeError("site shows maintenance page ('Bakımdayız')")
-    r = json.loads(get("https://artam.com/muzayede/get-auctions?current=true"))
-    aucs = []
+    """Artam online auctions: the page loads lots from a JSON API (24 per page)."""
+    r = json.loads(get(ARTAM + "/muzayede/get-auctions?current=true"))
+    lots, aucs, now = [], [], dt.datetime.now()
     for a in r.get("auctions") or []:
-        end = dt.datetime.strptime(a["finishedAt"], "%d.%m.%Y %H:%M")
-        if end > dt.datetime.now():
-            raise RuntimeError(f"live auction '{a['name']}' found but Artam lot extraction is not implemented yet")
-        aucs.append(("artam.com", a["id"], f"{a['saleNo']}. {a['name']} (ended {a['finishedAt']})", 0))
-    return [], aucs
+        end = dt.datetime.strptime((a.get("finishedAt") or "")[:16], "%d.%m.%Y %H:%M")
+        title = f"Artam {a.get('saleNo')}. Müzayede – {(a.get('name') or '').strip().title().replace(' Ve ', ' ve ')}"
+        if end <= now or a.get("isFinished"):
+            aucs.append(("artam.com", a["id"], title + " (bitti)", 0)); continue
+        base = ARTAM + (a.get("url") or a.get("detailPageSlug") or "/muzayede/" + a.get("slug", ""))
+        seen, cnt = set(), 0
+        for page in range(1, 120):
+            j = json.loads(get(f"{ARTAM}/api/v1/auction/online-products/get-all?auction_id={a['id']}&page={page}"))
+            new = [p for p in (j.get("products") or []) if p.get("id") not in seen]
+            if not new: break
+            for p in new:
+                seen.add(p["id"]); cnt += 1
+                imgs = []
+                for im in p.get("images") or []:
+                    f = ((im.get("conversions") or {}).get("large") or {}).get("filename") or im.get("filename")
+                    if f: imgs.append(ARTAM_IMG + f)
+                name, short = (p.get("fullName") or p.get("name") or "").strip(), txt(p.get("short_description") or "")
+                artist = txt(p.get("artistName") or "")
+                bids = int(p.get("offersCount") or 0)
+                try: opening = float(p.get("opening_price") or 0) or None
+                except ValueError: opening = None
+                cur = float(p["auction_price"]) if bids and p.get("auction_price") else None
+                fin = (p.get("finishTime") or "")[:16].replace("T", " ") or end.strftime("%Y-%m-%d %H:%M")
+                lots.append(dict(site="artam.com", lot_id=str(p["id"]), lot_no=str(p.get("lotno") or ""),
+                    title=(artist + " - " + name).strip(" -"), artist=artist, description=", ".join(x for x in (name, short) if x),
+                    category="", start_price=opening, estimate=None, current_bid=cur, bid_count=bids, currency="TL",
+                    auction=title, auction_type="auction", end_date=fin, images=json.dumps(imgs[:8]),
+                    url=base + (p.get("detailPageUrl") or "")))
+            time.sleep(0.6)
+        aucs.append(("artam.com", a["id"], title, cnt))
+    return lots, aucs
 
 ART_KW = r"sanat|resim|tablo|çağdaş|ÇAĞDAŞ|cagdas|modern|\bart\b|tuval|plastik|hat\b|HAT\b|minyatür"
 def scrape_mapp_portal(skip_ids):
