@@ -102,12 +102,14 @@ def scrape_artam():
         if end <= now or a.get("isFinished"):
             aucs.append(("artam.com", a["id"], title + " (bitti)", 0)); continue
         base = ARTAM + (a.get("url") or a.get("detailPageSlug") or "/muzayede/" + a.get("slug", ""))
-        seen, cnt = set(), 0
-        for page in range(1, 120):
-            j = json.loads(get(f"{ARTAM}/api/v1/auction/online-products/get-all?auction_id={a['id']}&page={page}"))
-            new = [p for p in (j.get("products") or []) if p.get("id") not in seen]
-            if not new: break
-            for p in new:
+        # The API ignores "page" but returns the first <count> lots, so ask for all of them at once.
+        seen, cnt, want, prods = set(), 0, 400, []
+        while True:
+            prods = json.loads(get(f"{ARTAM}/api/v1/auction/online-products/get-all?auction_id={a['id']}&page=1&count={want}")).get("products") or []
+            if len(prods) < want or want >= 6400: break
+            want *= 2; time.sleep(0.6)
+        if True:
+            for p in [p for p in prods if p.get("id") not in seen]:
                 seen.add(p["id"]); cnt += 1
                 imgs = []
                 for im in p.get("images") or []:
@@ -125,7 +127,6 @@ def scrape_artam():
                     category="", start_price=opening, estimate=None, current_bid=cur, bid_count=bids, currency="TL",
                     auction=title, auction_type="auction", end_date=fin, images=json.dumps(imgs[:8]),
                     url=base + (p.get("detailPageUrl") or "")))
-            time.sleep(0.6)
         aucs.append(("artam.com", a["id"], title, cnt))
     return lots, aucs
 

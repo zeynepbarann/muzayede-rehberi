@@ -437,6 +437,8 @@ nav.tabs .ti{display:none}
 .ghstate{font-size:12px;color:var(--ok);margin-left:6px}
 .how3.small li{padding:12px 14px}.how3.small p{font-size:13px}.how3.small a{color:var(--accent)}
 #ghM .note{margin:10px 0}#ghTok{font-family:ui-monospace,Menlo,monospace}
+.card .spec{font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;cursor:pointer;line-height:1.4}
+@media(max-width:640px){.card .spec{font-size:12px}}
 </style></head><body>
 <header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -446,7 +448,7 @@ nav.tabs .ti{display:none}
  <h5>Görünüm</h5>
  <label class="tgl"><span><b>Koyu tema</b><small>Siyah-altın görünüm</small></span><input type="checkbox" id="setDark"><i aria-hidden="true"></i></label>
  <label class="tgl"><span><b>Açılışta Favorilerim</b><small>Site, seçtiğiniz sanatçılarla açılır</small></span><input type="checkbox" id="setStart"><i aria-hidden="true"></i></label>
- <label class="tgl"><span><b>Kartlarda açıklama</b><small>Teknik ve ölçü kartta da görünsün</small></span><input type="checkbox" id="setDesc"><i aria-hidden="true"></i></label>
+ <label class="tgl"><span><b>Kartlarda açıklama</b><small>Eserin tam açıklaması kartta da görünsün</small></span><input type="checkbox" id="setDesc"><i aria-hidden="true"></i></label>
  <hr>
  <button type="button" class="mi" id="mPick">★ Favori sanatçıları düzenle</button>
  <button type="button" class="mi" id="mAdd">＋ Bağlantı ekle</button>
@@ -721,11 +723,15 @@ function leftTxt(l){const e=l._e;if(!e)return l.auction_type=='buy-now'?'Hemen A
  if(h<1)return Math.max(1,Math.round(ms/6e4))+' dk kaldı';if(h<24)return Math.round(h)+' saat kaldı';const d=Math.round(h/24);return d<8?d+' gün kaldı':fshort(e)}
 const priceOf=l=>l.current_bid||l.start_price||l.estimate;
 const priceLab=l=>l.current_bid?'Güncel pey':l.auction_type=='buy-now'?'Hemen Al fiyatı':l.start_price?'Açılış fiyatı':'Tahmini değer';
-function card(l){const e=l._e,soon=e&&e-Date.now()<864e5&&e>Date.now();const title=l.description||l.title||'';
+const specOf=l=>{if(l._spec!=null)return l._spec;const t=(l._tags||[]).find(x=>x.k=='tech');
+ let raw=(l.tech||'').replace(/\d+(?:[.,]\d+)?\s*[x×X]\s*\d+(?:[.,]\d+)?(?:\s*[x×X]\s*\d+(?:[.,]\d+)?)?\s*(cm)?/g,' ').replace(/\b(imzal[ıi]|imzas[ıi]z|tarihli|monogramlı|sertifikal[ıi]|çerçeveli|ebat|ölçü)\b.*$/i,' ').replace(/\b(1[6-9]|20)\d{2}\b/g,' ').replace(/[\s,.;:|-]+$/,'').replace(/\s+/g,' ').trim();
+ let tech=raw.length>=6&&raw.length<=46?raw:(t?t.v:'');tech=tech.toLocaleLowerCase('tr');tech=tech.charAt(0).toLocaleUpperCase('tr')+tech.slice(1);return l._spec=[tech,l.size].filter(Boolean).join(' · ')};
+function card(l){const e=l._e,soon=e&&e-Date.now()<864e5&&e>Date.now();const title=l.description||l.title||'';const spec=specOf(l);
  return `<article class="card">
 <div class="frame ${l.images[0]?'ph':'noimg'}" data-open="${esc(l.key)}">${imgTag(l.images[0],l.artist)}${fav.has(l.key)?'<span class="saved" title="Kaydedildi">♥</span>':''}</div>
 <div class="body">
  <div class="artist">${l.artist?aLink(l.artist)+starBtn(l.artist):`<span data-open="${esc(l.key)}">${esc(l.title||'')}</span>`}</div>
+ ${spec?`<div class="spec" data-open="${esc(l.key)}" title="${esc(spec)}">${esc(spec)}</div>`:''}
  ${SET.desc&&title?`<div class="desc" data-open="${esc(l.key)}">${esc(title)}</div>`:''}
  <div class="crow" data-open="${esc(l.key)}"><span class="price" title="${priceLab(l)}">${TL(priceOf(l))}</span><span class="left${soon?' soon':''}">${leftTxt(l)}</span></div>
  <div class="meta">${esc(l.house)}</div>
