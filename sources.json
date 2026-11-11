@@ -8,8 +8,9 @@
       "status": "ok",
       "lots": 82,
       "detail": "muzayedeapp: İKİ DÜNYANIN MİRASI / OSMANLI VE AVRUPANIN NADİDE ESERLERİ [82 lots]",
-      "last_run": "2026-11-10 17:23",
-      "method": "muzayedeapp"
+      "last_run": "2026-11-11 06:12",
+      "method": "muzayedeapp",
+      "kind": "house"
     },
     {
       "url": "https://artam.com/muzayede",
@@ -20,7 +21,7 @@
       "status": "ok",
       "lots": 288,
       "detail": "known:artam.com: Artam 409. Müzayede – Modern ve Çağdaş Tablolar [288 lots]",
-      "last_run": "2026-11-10 19:54",
+      "last_run": "2026-11-11 06:12",
       "method": "known:artam.com"
     }
   ]
