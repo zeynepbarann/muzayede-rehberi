@@ -92,22 +92,41 @@ def scrape_sanatsal():
     return lots, [("sanatsalmuzayede.com", "eserler", "Eserler (buy-now catalogue)", len(lots))]
 
 ARTAM = "https://artam.com"; ARTAM_IMG = "https://img.artam.com/storage"
+def trtitle(x):
+    """Title case that respects Turkish İ/I (Python's str.title() breaks 'KLASİK')."""
+    low = (x or "").replace("İ", "i").replace("I", "ı").lower()
+    w = " ".join((t[:1].replace("i", "İ").replace("ı", "I").upper() + t[1:]) if t else t for t in low.split(" "))
+    return w.replace(" Ve ", " ve ")
+
+def artam_products(auction_id):
+    """All lots of an Artam auction. The API returns the first <count> lots, but answers a too-large
+    count with its default 24, so grow the count and keep the largest answer."""
+    url = lambda c: f"{ARTAM}/api/v1/auction/online-products/get-all?auction_id={auction_id}&page=1&count={c}"
+    best = json.loads(get(url(24))).get("products") or []
+    if len(best) < 24: return best
+    lo, hi, c = 24, None, 48                       # lo: largest count that came back in full
+    for _ in range(40):
+        got = json.loads(get(url(c))).get("products") or []
+        if len(got) == c: lo, best = c, got
+        elif lo < len(got) < c: return got          # fewer than asked: that is everything
+        else: hi = c                                # fell back to the default page
+        c = c * 2 if hi is None else (lo + hi) // 2
+        if c <= lo or c > 6400 or (hi is not None and hi - lo <= 1): break
+        time.sleep(0.4)
+    return best
 def scrape_artam():
     """Artam online auctions: the page loads lots from a JSON API (24 per page)."""
     r = json.loads(get(ARTAM + "/muzayede/get-auctions?current=true"))
     lots, aucs, now = [], [], dt.datetime.now()
     for a in r.get("auctions") or []:
         end = dt.datetime.strptime((a.get("finishedAt") or "")[:16], "%d.%m.%Y %H:%M")
-        title = f"Artam {a.get('saleNo')}. Müzayede – {(a.get('name') or '').strip().title().replace(' Ve ', ' ve ')}"
+        title = f"Artam {a.get('saleNo')}. Müzayede – {trtitle((a.get('name') or '').strip())}"
         if end <= now or a.get("isFinished"):
             aucs.append(("artam.com", a["id"], title + " (bitti)", 0)); continue
         base = ARTAM + (a.get("url") or a.get("detailPageSlug") or "/muzayede/" + a.get("slug", ""))
         # The API ignores "page" but returns the first <count> lots, so ask for all of them at once.
-        seen, cnt, want, prods = set(), 0, 400, []
-        while True:
-            prods = json.loads(get(f"{ARTAM}/api/v1/auction/online-products/get-all?auction_id={a['id']}&page=1&count={want}")).get("products") or []
-            if len(prods) < want or want >= 6400: break
-            want *= 2; time.sleep(0.6)
+        seen, cnt = set(), 0
+        prods = artam_products(a["id"])
         if True:
             for p in [p for p in prods if p.get("id") not in seen]:
                 seen.add(p["id"]); cnt += 1

@@ -28,13 +28,9 @@ def artam(since):
             except ValueError: continue
             if not a.get("isFinished") or end > dt.datetime.now(): continue
             if end < since: stop = True; continue
-            title = f"Artam {a.get('saleNo')}. Müzayede – {(a.get('name') or '').strip().title().replace(' Ve ', ' ve ')}"
+            title = f"Artam {a.get('saleNo')}. Müzayede – {scrape.trtitle((a.get('name') or '').strip())}"
             base = scrape.ARTAM + (a.get("url") or "/muzayede/" + a.get("slug", ""))
-            want, prods = 400, []
-            while True:
-                prods = json.loads(scrape.get(f"{scrape.ARTAM}/api/v1/auction/online-products/get-all?auction_id={a['id']}&page=1&count={want}")).get("products") or []
-                if len(prods) < want or want >= 6400: break
-                want *= 2
+            prods = scrape.artam_products(a["id"])
             for p in prods:
                 im = (p.get("images") or [{}])[0]
                 f = ((im.get("conversions") or {}).get("large") or {}).get("filename") or im.get("filename")
