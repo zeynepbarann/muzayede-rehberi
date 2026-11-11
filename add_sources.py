@@ -402,7 +402,12 @@ def json_add(url, issue=None):
         if rec is None:
             rec = {"url": url, "host": host, "added_at": now.date().isoformat(), "issue": issue}
             src["added"].append(rec)
-        rec.update(status="fail", lots=0, detail=str(err), last_run=stamp, method=method)
+        blocked = "403" in str(err) or "Forbidden" in str(err)
+        if blocked:  # MüzayedeApp-based sites refuse cloud servers; the daily scan on the owner's computer can read them
+            rec.update(status="queued", lots=rec.get("lots") or 0, last_run=stamp, method=method,
+                       detail="Bu site GitHub sunucularını engelliyor; bilgisayarınızdaki günlük taramada eklenecek.")
+        else:
+            rec.update(status="fail", lots=0, detail=str(err), last_run=stamp, method=method)
         if issue and not rec.get("issue"): rec["issue"] = issue
         save_sources(src); write_json(os.path.join(DATA, "sources.json"), src)
         store = read_json(os.path.join(DATA, "lots.json"), {"lots": []})
@@ -472,7 +477,10 @@ def json_main(args):
             traceback.print_exc()
             ok, rec, detail, n = False, {"url": url, "lots": 0}, f"{type(e).__name__}: {e}", 0
     print(("OK" if ok else "FAIL"), n, detail)
-    if ok:
+    if not ok and rec.get("status") == "queued":
+        body = (f"Bu site GitHub'ın sunucularından gelen istekleri engelliyor (403), bu yüzden şimdi taranamadı.\n\n"
+                f"- Bağlantı: {url}\n\nBağlantı listeye kaydedildi; bilgisayarınızdaki günlük taramada otomatik olarak eklenecek.")
+    elif ok:
         what = "eser sayfası" if rec.get("kind") == "product" else "kaynak"
         body = (f"Eklendi: **{n} eser** sitede.\n\n- Bağlantı: {url}\n- Tür: {what}\n- Yöntem: `{rec.get('method')}`\n"
                 f"- Ayrıntı: {detail[:600]}\n\nSite birkaç dakika içinde güncellenir. Bağlantı günlük taramaya da eklendi.")

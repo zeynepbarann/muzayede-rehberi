@@ -131,6 +131,30 @@ def scrape_artam():
     return lots, aucs
 
 ART_KW = r"sanat|resim|tablo|çağdaş|ÇAĞDAŞ|cagdas|modern|\bart\b|tuval|plastik|hat\b|HAT\b|minyatür"
+def page_description(page):
+    """Description of a MüzayedeApp work page: og/meta description, else the explanation block."""
+    for pat in (r'<meta[^>]+property="og:description"[^>]+content="([^"]*)"', r'<meta[^>]+content="([^"]*)"[^>]+property="og:description"',
+                r'<meta[^>]+name="description"[^>]+content="([^"]*)"', r'class="lot-explanation"[^>]*>(.*?)</',
+                r'class="product-description"[^>]*>(.*?)</div>', r'class="description"[^>]*>(.*?)</div>'):
+        m = re.search(pat, page, re.S | re.I)
+        if m:
+            d = txt(m.group(1))
+            if len(d) > 4 and "müzayedeapp" not in d.lower(): return d
+    return ""
+
+def fill_descriptions(lots, limit=300):
+    """Some houses (e.g. THE_ONLINE) list only the artist name; read size/technique from each work's page."""
+    n = 0
+    for l in lots:
+        if l.get("description") or n >= limit or not l.get("url"): continue
+        n += 1
+        try:
+            d = page_description(get(l["url"], tries=2))
+            if d: l["description"] = d.rstrip(".")
+        except Exception:
+            pass
+        time.sleep(0.5)
+
 def scrape_mapp_portal(skip_ids):
     """Art auctions (categories Resim/Hat, or Karma with art keywords) listed on muzayedeapp.com."""
     base = "https://www.muzayedeapp.com"; h = get(base + "/")
@@ -171,6 +195,7 @@ def scrape_mapp_portal(skip_ids):
                     images=json.dumps(imgs), url=base + a.group(1)))
             if new == 0: break
             n += 1; time.sleep(0.7); page = get(f"{url}?pageNumber={n}")
+        fill_descriptions(lots)
         res.setdefault(site, ([], []))
         res[site][0].extend(lots); res[site][1].append((site, aid, aname, len(lots)))
     return res

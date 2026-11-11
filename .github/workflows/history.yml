@@ -1,0 +1,41 @@
+# Collects older finished auctions (Artam archive) into data/past_archive.json.
+# Runs on the 1st of every month, or by hand from the Actions tab.
+name: Geçmiş müzayedeleri çek
+run-name: ${{ inputs.since && format('Geçmiş {0}', inputs.since) || 'Geçmiş müzayedeler' }}
+on:
+  schedule:
+    - cron: "17 4 1 * *"
+  workflow_dispatch:
+    inputs:
+      since:
+        description: "Bu tarihten sonra biten müzayedeler (YYYY-AA-GG)"
+        required: false
+        default: "2024-01-01"
+permissions:
+  contents: write
+  pages: write
+jobs:
+  history:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      TZ: Europe/Istanbul
+      GH_TOKEN: ${{ github.token }}
+      SINCE: ${{ inputs.since || '2024-01-01' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Geçmiş müzayedeleri çek
+        id: hist
+        run: python3 history.py --since "$SINCE" --summary "$RUNNER_TEMP/summary.md"
+      - name: Yayınla
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/past_archive.json 2>/dev/null || true
+          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
+          git commit -q -m "Geçmiş müzayedeler güncellendi (${{ steps.hist.outputs.count }} eser)"
+          for i in 1 2 3 4; do
+            git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && break
+            sleep $((i * 5))
+          done
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" >/dev/null 2>&1 || true
