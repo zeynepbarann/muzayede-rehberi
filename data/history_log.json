@@ -1,0 +1,909 @@
+{
+ "run": "2026-11-12 16:01",
+ "since": "2024-01-01",
+ "houses": {
+  "nefsmuzayede.com": {
+   "auctions_found": 1,
+   "read": 0,
+   "lots": 0,
+   "tried": [
+    [
+     "https://www.nefsmuzayede.com/gecmis-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nefsmuzayede.com/gecmis-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nefsmuzayede.com/muzayedeler/gecmis",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nefsmuzayede.com/sonuclanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nefsmuzayede.com/tamamlanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nefsmuzayede.com/muzayede-arsivi",
+     0
+    ],
+    [
+     "https://www.nefsmuzayede.com/arsiv",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nefsmuzayede.com/muzayedeler",
+     1
+    ],
+    [
+     "https://www.nefsmuzayede.com/muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nefsmuzayede.com/guncel-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nefsmuzayede.com/aktif-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nefsmuzayede.com/devam-eden-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nefsmuzayede.com/canli-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nefsmuzayede.com/online-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nefsmuzayede.com/online-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ]
+   ]
+  },
+  "dedemuzayede.com": {
+   "auctions_found": 5,
+   "read": 5,
+   "lots": 571,
+   "tried": [
+    [
+     "https://www.dedemuzayede.com/gecmis-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.dedemuzayede.com/gecmis-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.dedemuzayede.com/muzayedeler/gecmis",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.dedemuzayede.com/sonuclanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.dedemuzayede.com/tamamlanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.dedemuzayede.com/muzayede-arsivi",
+     5
+    ],
+    [
+     "https://www.dedemuzayede.com/arsiv",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.dedemuzayede.com/muzayedeler",
+     5
+    ],
+    [
+     "https://www.dedemuzayede.com/muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.dedemuzayede.com/guncel-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.dedemuzayede.com/aktif-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.dedemuzayede.com/devam-eden-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.dedemuzayede.com/canli-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.dedemuzayede.com/online-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.dedemuzayede.com/online-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ]
+   ]
+  },
+  "anatoliamuzayede.com": {
+   "auctions_found": 61,
+   "read": 41,
+   "lots": 9382,
+   "tried": [
+    [
+     "https://www.anatoliamuzayede.com/gecmis-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.anatoliamuzayede.com/gecmis-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.anatoliamuzayede.com/muzayedeler/gecmis",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.anatoliamuzayede.com/sonuclanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.anatoliamuzayede.com/tamamlanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.anatoliamuzayede.com/muzayede-arsivi",
+     4
+    ],
+    [
+     "https://www.anatoliamuzayede.com/arsiv",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.anatoliamuzayede.com/muzayedeler",
+     7
+    ],
+    [
+     "https://www.anatoliamuzayede.com/muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.anatoliamuzayede.com/guncel-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.anatoliamuzayede.com/aktif-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.anatoliamuzayede.com/devam-eden-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.anatoliamuzayede.com/canli-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.anatoliamuzayede.com/online-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.anatoliamuzayede.com/online-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ]
+   ]
+  },
+  "kassanat.com": {
+   "auctions_found": 2,
+   "read": 2,
+   "lots": 169,
+   "tried": [
+    [
+     "https://www.kassanat.com/gecmis-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kassanat.com/gecmis-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kassanat.com/muzayedeler/gecmis",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kassanat.com/sonuclanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kassanat.com/tamamlanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kassanat.com/muzayede-arsivi",
+     0
+    ],
+    [
+     "https://www.kassanat.com/arsiv",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kassanat.com/muzayedeler",
+     2
+    ],
+    [
+     "https://www.kassanat.com/muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kassanat.com/guncel-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kassanat.com/aktif-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kassanat.com/devam-eden-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kassanat.com/canli-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kassanat.com/online-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kassanat.com/online-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ]
+   ]
+  },
+  "turkartproject.com": {
+   "auctions_found": 27,
+   "read": 27,
+   "lots": 4613,
+   "tried": [
+    [
+     "https://www.turkartproject.com/gecmis-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.turkartproject.com/gecmis-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.turkartproject.com/muzayedeler/gecmis",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.turkartproject.com/sonuclanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.turkartproject.com/tamamlanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.turkartproject.com/muzayede-arsivi",
+     27
+    ],
+    [
+     "https://www.turkartproject.com/arsiv",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.turkartproject.com/muzayedeler",
+     6
+    ],
+    [
+     "https://www.turkartproject.com/muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.turkartproject.com/guncel-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.turkartproject.com/aktif-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.turkartproject.com/devam-eden-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.turkartproject.com/canli-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.turkartproject.com/online-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.turkartproject.com/online-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ]
+   ]
+  },
+  "uxmuzayede.com": {
+   "auctions_found": 51,
+   "read": 22,
+   "lots": 3838,
+   "tried": [
+    [
+     "https://www.uxmuzayede.com/gecmis-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/gecmis-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/muzayedeler/gecmis",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/sonuclanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/tamamlanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/muzayede-arsivi",
+     50
+    ],
+    [
+     "https://www.uxmuzayede.com/arsiv",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/muzayedeler",
+     7
+    ],
+    [
+     "https://www.uxmuzayede.com/muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/guncel-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/aktif-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/devam-eden-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/canli-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/online-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/online-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/blog?categoryId=263",
+     50
+    ]
+   ]
+  },
+  "ranasartgallery.com": {
+   "auctions_found": 7,
+   "read": 7,
+   "lots": 1862,
+   "tried": [
+    [
+     "https://www.ranasartgallery.com/gecmis-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.ranasartgallery.com/gecmis-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.ranasartgallery.com/muzayedeler/gecmis",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.ranasartgallery.com/sonuclanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.ranasartgallery.com/tamamlanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.ranasartgallery.com/muzayede-arsivi",
+     0
+    ],
+    [
+     "https://www.ranasartgallery.com/arsiv",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.ranasartgallery.com/muzayedeler",
+     7
+    ],
+    [
+     "https://www.ranasartgallery.com/muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.ranasartgallery.com/guncel-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.ranasartgallery.com/aktif-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.ranasartgallery.com/devam-eden-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.ranasartgallery.com/canli-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.ranasartgallery.com/online-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.ranasartgallery.com/online-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ]
+   ]
+  },
+  "galeriberlin.com": {
+   "auctions_found": 31,
+   "read": 25,
+   "lots": 6024,
+   "tried": [
+    [
+     "https://www.galeriberlin.com/gecmis-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.galeriberlin.com/gecmis-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.galeriberlin.com/muzayedeler/gecmis",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.galeriberlin.com/sonuclanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.galeriberlin.com/tamamlanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.galeriberlin.com/muzayede-arsivi",
+     31
+    ],
+    [
+     "https://www.galeriberlin.com/arsiv",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.galeriberlin.com/muzayedeler",
+     6
+    ],
+    [
+     "https://www.galeriberlin.com/muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.galeriberlin.com/guncel-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.galeriberlin.com/aktif-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.galeriberlin.com/devam-eden-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.galeriberlin.com/canli-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.galeriberlin.com/online-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.galeriberlin.com/online-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ]
+   ]
+  },
+  "kalamismuzayede.com": {
+   "auctions_found": 9,
+   "read": 9,
+   "lots": 878,
+   "tried": [
+    [
+     "https://www.kalamismuzayede.com/gecmis-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kalamismuzayede.com/gecmis-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kalamismuzayede.com/muzayedeler/gecmis",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kalamismuzayede.com/sonuclanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kalamismuzayede.com/tamamlanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kalamismuzayede.com/muzayede-arsivi",
+     0
+    ],
+    [
+     "https://www.kalamismuzayede.com/arsiv",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kalamismuzayede.com/muzayedeler",
+     9
+    ],
+    [
+     "https://www.kalamismuzayede.com/muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kalamismuzayede.com/guncel-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kalamismuzayede.com/aktif-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kalamismuzayede.com/devam-eden-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kalamismuzayede.com/canli-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kalamismuzayede.com/online-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.kalamismuzayede.com/online-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ]
+   ]
+  },
+  "aysilmuzayede.com": {
+   "auctions_found": 15,
+   "read": 3,
+   "lots": 335,
+   "tried": [
+    [
+     "https://www.aysilmuzayede.com/gecmis-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.aysilmuzayede.com/gecmis-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.aysilmuzayede.com/muzayedeler/gecmis",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.aysilmuzayede.com/sonuclanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.aysilmuzayede.com/tamamlanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.aysilmuzayede.com/muzayede-arsivi",
+     8
+    ],
+    [
+     "https://www.aysilmuzayede.com/arsiv",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.aysilmuzayede.com/muzayedeler",
+     7
+    ],
+    [
+     "https://www.aysilmuzayede.com/muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.aysilmuzayede.com/guncel-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.aysilmuzayede.com/aktif-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.aysilmuzayede.com/devam-eden-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.aysilmuzayede.com/canli-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.aysilmuzayede.com/online-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.aysilmuzayede.com/online-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ]
+   ],
+   "note": "time budget used; continues next run"
+  },
+  "nisartgallery.com": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "note": "time budget used; continues next run"
+  },
+  "akartgaleri.com": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "note": "time budget used; continues next run"
+  }
+ },
+ "skip": [
+  [
+   "anatoliamuzayede.com",
+   "12824"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "12947"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "13080"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "13370"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "13652"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "13956"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "14279"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "14699"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "15210"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "15604"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "15990"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "16557"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "17135"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "17546"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "18021"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "18526"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "18986"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "20649"
+  ],
+  [
+   "anatoliamuzayede.com",
+   "21279"
+  ],
+  [
+   "galeriberlin.com",
+   "17259"
+  ],
+  [
+   "galeriberlin.com",
+   "18088"
+  ],
+  [
+   "galeriberlin.com",
+   "18674"
+  ],
+  [
+   "galeriberlin.com",
+   "19240"
+  ],
+  [
+   "galeriberlin.com",
+   "21011"
+  ],
+  [
+   "galeriberlin.com",
+   "21625"
+  ],
+  [
+   "uxmuzayede.com",
+   "10216"
+  ],
+  [
+   "uxmuzayede.com",
+   "10669"
+  ],
+  [
+   "uxmuzayede.com",
+   "10900"
+  ],
+  [
+   "uxmuzayede.com",
+   "11017"
+  ],
+  [
+   "uxmuzayede.com",
+   "11402"
+  ],
+  [
+   "uxmuzayede.com",
+   "11762"
+  ],
+  [
+   "uxmuzayede.com",
+   "12138"
+  ],
+  [
+   "uxmuzayede.com",
+   "12474"
+  ],
+  [
+   "uxmuzayede.com",
+   "13730"
+  ],
+  [
+   "uxmuzayede.com",
+   "14069"
+  ],
+  [
+   "uxmuzayede.com",
+   "14539"
+  ],
+  [
+   "uxmuzayede.com",
+   "14720"
+  ],
+  [
+   "uxmuzayede.com",
+   "15024"
+  ],
+  [
+   "uxmuzayede.com",
+   "15462"
+  ],
+  [
+   "uxmuzayede.com",
+   "15789"
+  ],
+  [
+   "uxmuzayede.com",
+   "16447"
+  ],
+  [
+   "uxmuzayede.com",
+   "16820"
+  ],
+  [
+   "uxmuzayede.com",
+   "17561"
+  ],
+  [
+   "uxmuzayede.com",
+   "18961"
+  ],
+  [
+   "uxmuzayede.com",
+   "19406"
+  ],
+  [
+   "uxmuzayede.com",
+   "20742"
+  ],
+  [
+   "uxmuzayede.com",
+   "21017"
+  ],
+  [
+   "uxmuzayede.com",
+   "21477"
+  ],
+  [
+   "uxmuzayede.com",
+   "7962"
+  ],
+  [
+   "uxmuzayede.com",
+   "8512"
+  ],
+  [
+   "uxmuzayede.com",
+   "8596"
+  ],
+  [
+   "uxmuzayede.com",
+   "9000"
+  ],
+  [
+   "uxmuzayede.com",
+   "9760"
+  ]
+ ],
+ "added": 27672,
+ "total": 27672
+}
