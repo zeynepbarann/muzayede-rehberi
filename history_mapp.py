@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Collect finished auctions of MüzayedeApp-based houses into data/past_archive_mapp.json.
+"""Collect finished auctions of MüzayedeApp-based houses (own sites and the muzayedeapp.com portal)
+into data/past_archive_mapp.json.
 
 These sites refuse GitHub's servers, so this runs from refresh.sh on the machine that does the
 daily scan. It is incremental and time-boxed: every run adds auctions it has not seen yet
@@ -92,6 +93,76 @@ def read_auction(host, aid, slug, since):
     return "ok", out
 
 
+PORTAL = "https://www.muzayedeapp.com"
+
+def portal_houses():
+    """Portal houses the site already shows (sites named 'muzayedeapp: <house>')."""
+    names = set()
+    for f in ("lots.json", "past.json"):
+        try:
+            d = json.load(open(os.path.join(HERE, "data", f), encoding="utf8"))
+            for l in (d.get("lots") if isinstance(d, dict) else d) or []:
+                if (l.get("site") or "").startswith("muzayedeapp: "): names.add(l["site"][len("muzayedeapp: "):])
+        except Exception:
+            pass
+    return sorted(names)
+
+def portal_discover(house, home, log):
+    """From a current auction of the house, follow the link to its own portal page and collect its auctions."""
+    G = lambda p, b: (re.search(p, b, re.S) or [None, ""])[1]
+    cur = []
+    for blk in home.split('<div class="item hd">')[1:]:
+        hn = scrape.html.unescape(G(r'auction-house-name[^>]*>([^<]*)', blk) or G(r'title="([^"]*)"', blk)).strip()
+        if hn == house: cur.append(PORTAL + G(r'href="(/muzayede/[^"]+)"', blk))
+    log["current_auctions"] = len(cur)
+    pages = set()
+    for u in cur[:2]:
+        try: page = scrape.get(u, tries=2)
+        except Exception as e: log.setdefault("tried", []).append([u, str(e)[:60]]); continue
+        for href, t in links(page, PORTAL):
+            if urlparse(href).netloc.endswith("muzayedeapp.com") and not re.search(r"/(muzayede|urun)/", href) \
+               and house.lower() in t.lower() and href.rstrip("/") != PORTAL: pages.add(href.split("#")[0])
+    log["house_pages"] = sorted(pages)[:5]
+    found = {}
+    for hp in sorted(pages)[:3]:
+        try: page = scrape.get(hp, tries=2)
+        except Exception as e: log.setdefault("tried", []).append([hp, str(e)[:60]]); continue
+        found.update(dict(AUC.findall(page)))
+        for u, t in links(page, hp):                       # an archive tab on the house page, if any
+            if KW.search(t + " " + u) and urlparse(u).netloc.endswith("muzayedeapp.com"):
+                try: found.update(dict(AUC.findall(scrape.get(u, tries=1))))
+                except Exception: pass
+        for n in range(2, 30):
+            nxt = [x for x, _ in links(page, hp) if re.search(rf"([?&](page|sayfa|p|pageNumber)={n}\b|/sayfa/{n}\b)", x)]
+            if not nxt: break
+            try: page = scrape.get(nxt[0], tries=1)
+            except Exception: break
+            new = dict(AUC.findall(page))
+            if not set(new) - set(found): break
+            found.update(new); time.sleep(0.6)
+    return found
+
+def read_portal_auction(house, aid, slug, since):
+    G = lambda p, b: (re.search(p, b, re.S) or [None, ""])[1]
+    url = f"{PORTAL}/muzayede/{aid}/{slug}"; page = scrape.get(url, tries=2)
+    endms = int(G(r'class="item remaining[^"]*" data-end="(\d+)"', page) or 0)
+    end = dt.datetime.fromtimestamp(endms / 1000) if endms else None
+    if end and end > dt.datetime.now(): return "live", []
+    if end and end < since: return "old", []
+    aname = scrape.html.unescape(G(r'<h1[^>]*>(.*?)</h1>', page)).strip() or slug.replace("-", " ").title()
+    aname = scrape.txt(aname)
+    site = "muzayedeapp: " + house
+    lots = scrape.portal_auction_lots(page, url, site, aname, end.strftime("%Y-%m-%d %H:%M") if end else None)
+    scrape.fill_descriptions(lots, limit=150)
+    out = []
+    for l in lots:
+        imgs = json.loads(l["images"] or "[]")
+        out.append({"site": site, "lot_id": l["lot_id"], "aid": aid, "artist": l["artist"], "description": l["description"],
+                    "start_price": l["start_price"], "estimate_min": None,
+                    "last_bid": l["current_bid"] if l["bid_count"] else None, "bid_count": l["bid_count"],
+                    "auction": aname, "end_date": l["end_date"], "url": l["url"], "image": imgs[0] if imgs else None})
+    return "ok", out
+
 def main():
     a = sys.argv[1:]
     since = dt.datetime.strptime(a[a.index("--since") + 1], "%Y-%m-%d") if "--since" in a else dt.datetime(2024, 1, 1)
@@ -124,6 +195,34 @@ def main():
             archive += recs; done.add((site, aid)); added += len(recs)
             hl["read"] += 1; hl["lots"] += len(recs)
             time.sleep(1.0)
+    # houses listed on the muzayedeapp.com portal
+    if not only and time.time() < budget:
+        try:
+            home = scrape.get(PORTAL + "/", tries=2)
+        except Exception as e:
+            home = ""; log["portal_error"] = str(e)[:120]
+        for house in portal_houses():
+            site = "muzayedeapp: " + house; hl = log["houses"][site] = {"auctions_found": 0, "read": 0, "lots": 0}
+            if time.time() > budget or not home: hl["note"] = "time budget used; continues next run"; continue
+            try:
+                found = portal_discover(house, home, hl)
+            except Exception as e:
+                hl["error"] = str(e)[:120]; continue
+            hl["auctions_found"] = len(found)
+            if not found: hl["note"] = "house page not found (no current auction on the portal?)"
+            for aid, slug in sorted(found.items(), key=lambda x: -int(x[0])):
+                if (site, aid) in done or (site, aid) in skipped: continue
+                if time.time() > budget: hl["note"] = "time budget used; continues next run"; break
+                try:
+                    state, recs = read_portal_auction(house, aid, slug, since)
+                except Exception as e:
+                    hl.setdefault("errors", []).append([aid, str(e)[:80]]); continue
+                if state in ("old", "live"):
+                    if state == "old": skipped.add((site, aid))
+                    continue
+                archive += recs; done.add((site, aid)); added += len(recs)
+                hl["read"] += 1; hl["lots"] += len(recs)
+                time.sleep(1.0)
     log["skip"] = sorted([list(x) for x in skipped])
     log["added"] = added; log["total"] = len(archive)
     archive.sort(key=lambda x: x.get("end_date") or "", reverse=True)

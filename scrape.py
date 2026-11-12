@@ -188,6 +188,33 @@ def fill_descriptions(lots, limit=300):
             pass
         time.sleep(0.5)
 
+def portal_auction_lots(page, url, site, aname, end, skip_ids=()):
+    """All lots of one auction page on muzayedeapp.com (follows ?pageNumber=N)."""
+    base = "https://www.muzayedeapp.com"; G = lambda p, b: (re.search(p, b, re.S) or [None, ""])[1]
+    lots, seen, n = [], set(), 1
+    while True:
+        new = 0
+        for blk in re.split(r'(?=<div class="item"\s+data-kkp=")', page)[1:]:
+            pid = G(r'data-kkp="(\d+)"', blk)
+            if not pid or pid in seen: continue
+            seen.add(pid); new += 1
+            if pid in skip_ids: continue
+            a = re.search(r'<div class="content">\s*<a href="([^"]+)">(.*?)<p\s+class="lot-explanation">(.*?)</p>', blk, re.S)
+            if not a: continue
+            artist, desc = txt(a.group(2)), txt(a.group(3)).rstrip(".")
+            lotno = G(r'Lot No: (\d+)', blk); cat_t = txt(G(r'</strong>([^<]*)</span>', blk))
+            imgs = list(dict.fromkeys(re.findall(r'data-full="([^"]+)"', blk)))
+            cur = num(re.sub(r"[^\d.,]", "", G(r'class="current-price"\s*>(.*?)</strong>', blk)))
+            opn = num(re.sub(r"[^\d.,]", "", G(r'Açılış</strong>\s*<p>(.*?)</p>', html.unescape(blk))))
+            bids = int(G(r'<strong>Peyler</strong>\s*<p>(\d+)', blk) or 0)
+            lots.append(dict(site=site, lot_id=pid, lot_no=lotno, title=(artist + " - " + desc).strip(" -"), artist=artist,
+                description=desc, category=cat_t, start_price=opn, estimate=None, current_bid=cur if bids else None,
+                bid_count=bids, currency="TL", auction=aname, auction_type="auction", end_date=end,
+                images=json.dumps(imgs), url=base + a.group(1)))
+        if new == 0: break
+        n += 1; time.sleep(0.7); page = get(f"{url}?pageNumber={n}")
+    return lots
+
 def scrape_mapp_portal(skip_ids):
     """Art auctions (categories Resim/Hat, or Karma with art keywords) listed on muzayedeapp.com."""
     base = "https://www.muzayedeapp.com"; h = get(base + "/")
@@ -204,30 +231,10 @@ def scrape_mapp_portal(skip_ids):
         out[aid] = (house, name, base + G(r'href="(/muzayede/[^"]+)"', blk))
     res = {}
     for aid, (house, aname, url) in out.items():
-        site = "muzayedeapp: " + house; lots = []; seen = set(); n = 1; page = get(url)
+        site = "muzayedeapp: " + house; page = get(url)
         endms = int(G(r'class="item remaining[^"]*" data-end="(\d+)"', page) or 0)
         end = dt.datetime.fromtimestamp(endms / 1000).strftime("%Y-%m-%d %H:%M") if endms else None
-        while True:
-            new = 0
-            for blk in re.split(r'(?=<div class="item"\s+data-kkp=")', page)[1:]:
-                pid = G(r'data-kkp="(\d+)"', blk)
-                if not pid or pid in seen: continue
-                seen.add(pid); new += 1
-                if pid in skip_ids: continue
-                a = re.search(r'<div class="content">\s*<a href="([^"]+)">(.*?)<p\s+class="lot-explanation">(.*?)</p>', blk, re.S)
-                if not a: continue
-                artist, desc = txt(a.group(2)), txt(a.group(3)).rstrip(".")
-                lotno = G(r'Lot No: (\d+)', blk); cat_t = txt(G(r'</strong>([^<]*)</span>', blk))
-                imgs = list(dict.fromkeys(re.findall(r'data-full="([^"]+)"', blk)))
-                cur = num(re.sub(r"[^\d.,]", "", G(r'class="current-price"\s*>(.*?)</strong>', blk)))
-                opn = num(re.sub(r"[^\d.,]", "", G(r'Açılış</strong>\s*<p>(.*?)</p>', html.unescape(blk))))
-                bids = int(G(r'<strong>Peyler</strong>\s*<p>(\d+)', blk) or 0)
-                lots.append(dict(site=site, lot_id=pid, lot_no=lotno, title=(artist + " - " + desc).strip(" -"), artist=artist,
-                    description=desc, category=cat_t, start_price=opn, estimate=None, current_bid=cur if bids else None,
-                    bid_count=bids, currency="TL", auction=aname, auction_type="auction", end_date=end,
-                    images=json.dumps(imgs), url=base + a.group(1)))
-            if new == 0: break
-            n += 1; time.sleep(0.7); page = get(f"{url}?pageNumber={n}")
+        lots = portal_auction_lots(page, url, site, aname, end, skip_ids)
         fill_descriptions(lots)
         res.setdefault(site, ([], []))
         res[site][0].extend(lots); res[site][1].append((site, aid, aname, len(lots)))
