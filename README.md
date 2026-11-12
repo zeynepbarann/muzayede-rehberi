@@ -21,6 +21,7 @@ Tek eser bağlantıları (`kind: "product"`) o evin diğer eserlerinin yerine ge
 - ⚙ menüsü: koyu tema, açılışta Favorilerim, kartlarda açıklama; Bağlantı ekle; Nasıl çalışır?
 - İlk ziyarette 3 adımlık rehber + sık sorulanlar; ⓘ ile kısa açıklamalar; her boş ekranda ne yapılacağı yazar
 - Genel arama (eser, sanatçı, ev, etiket, Lebriz sergi/galeri); sanatçılar ☆ ile favorilere eklenebilir
+- **Müzayede Evleri**'nde ev arama (ad ya da müzayede adı; sıralama: en çok eser, A–Z, son müzayede). Her evin kendi sayfası var (`#house=<site>`): şu an müzayededeki eserleri ve geçmiş müzayedeleri, müzayede müzayede kaydırılabilir sıralar halinde; sayfa içinde arama
 - Birleşik sanatçı adları (yazım/büyük-küçük harf/tarih/kısaltma); elle düzeltmeler `artist_aliases.json`
 - Karşılaştırma (en fazla 4 eser), altın-siyah tema; telefonda alt sekmeler ve yüzen Filtrele düğmesi
 - Ayarlar ve favoriler yalnızca tarayıcıda (localStorage) tutulur
@@ -40,6 +41,7 @@ Tek eser bağlantıları (`kind: "product"`) o evin diğer eserlerinin yerine ge
 - `data/past.json`: günlük taramanın canlıyken gördüğü, artık bitmiş eserler (Ekim 2026'dan beri).
 - `data/past_archive.json`: Artam'ın 2024'ten beri biten müzayedeleri (`history.py`, GitHub Action, her ayın 1'i). Artam çekiç fiyatını yalnızca üyelerine gösterdiği için tahmin değeri vardır.
 - `data/past_archive_mapp.json`: MüzayedeApp altyapılı evlerin biten müzayedeleri (`history_mapp.py`, `refresh.sh` içinde her gün en fazla ~40 dk, kaldığı yerden devam eder). Bu siteler GitHub sunucularını engellediği için yalnızca günlük taramanın çalıştığı makinede çalışır. Ne bulduğu `data/history_log.json`'a yazılır.
+- Bir MüzayedeApp evinde müzayede bağlantısı bulunamazsa günlük tarama `data/debug/<ev>.json`'a sayfanın kısa bir özetini (başlık, bağlantılar, denenen adresler) yazar; okuyucu o eve göre buradan düzeltilir. Bulunca dosya silinir.
 
 ## Yerelde çalıştırma
 ```bash

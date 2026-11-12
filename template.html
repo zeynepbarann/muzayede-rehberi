@@ -457,6 +457,7 @@ nav.tabs .ti{display:none}
 
 /* ===== swipeable artist rows ===== */
 .slider{position:relative}
+.hbar{margin-bottom:6px}.hnote{font-size:13px;margin:0 0 10px}.hp-q{margin:16px 0 4px}.hp-auc{margin:22px 0 10px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:20px}.hp-auc small{font:500 13px var(--sans);color:var(--muted)}.card.pastc .left{color:var(--muted)}#hList .arow{cursor:pointer}
 .srow{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(200px,240px);gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:4px;overscroll-behavior-x:contain}
 .srow::-webkit-scrollbar{display:none}.srow>.card{scroll-snap-align:start}
 .sl-btn{position:absolute;top:calc(50% - 60px);z-index:5;width:44px;height:44px;border-radius:50%;border:1px solid color-mix(in srgb,var(--gold) 50%,transparent);background:color-mix(in srgb,var(--bg) 82%,transparent);color:var(--ink);font-size:28px;line-height:1;cursor:pointer;box-shadow:var(--shadow);display:flex;align-items:center;justify-content:center}
@@ -497,7 +498,7 @@ nav.tabs .ti{display:none}
 <section class="view" id="v-houses">
  <div class="vhead"><div><h1>Müzayede Evleri</h1><p class="muted">Sitedeki evler ve sonradan eklenen bağlantılar. Burada olmayan bir ev, müzayede ya da eser varsa ekleyin.</p></div><button type="button" class="btn pri" id="addOpen2">＋ Bağlantı ekle</button></div>
  <div class="bar"><div class="seg" id="hSeg" role="tablist"><button type="button" data-h="all" class="on">Tüm evler <span class="sn" id="hCount"></span></button><button type="button" data-h="added">Eklenen bağlantılar <span class="sn" id="srcN"></span></button></div></div>
- <div id="hAll"><div class="alist" id="hList"></div></div>
+ <div id="hAll"><div class="bar hbar"><input class="fld grow" id="hQ" type="search" placeholder="Ev ara: adı ya da müzayede adı…" aria-label="Müzayede evi ara"><select class="fld sm" id="hSort" aria-label="Sırala"><option value="n">En çok eser</option><option value="az">A–Z</option><option value="new">Son müzayede</option></select></div><p class="muted hnote" id="hNote"></p><div class="alist" id="hList"></div></div>
  <div id="hAdded" hidden>
   <div class="howto"><div><span class="num">1</span><b>Bağlantıyı yapıştırın</b><small>Bir müzayede evi, tek müzayede ya da tek eser sayfası.</small></div><div><span class="num">2</span><b>GitHub'da “Create”e basın</b><small>İstek sayfası kendiliğinden açılır.</small></div><div><span class="num">3</span><b>Birkaç dakika bekleyin</b><small>Eserler gelince bu sayfa haber verir.</small></div></div>
   <div class="src-list" id="srcList"></div>
@@ -511,6 +512,7 @@ nav.tabs .ti{display:none}
  <div id="arf"><label class="tgl"><span><b>Yalnızca şu an satışta eseri olanlar</b><small>Keşfet’te eseri bulunan arşiv sanatçıları</small></span><input type="checkbox" id="lblive"><i aria-hidden="true"></i></label></div>
  <div id="lbres"></div></section>
 <section class="view" id="v-artist"><div id="artistPage"></div></section>
+<section class="view" id="v-house"><div id="housePage"></div></section>
 <section class="view" id="v-search"><div id="sres"></div></section>
 <div id="sentinel"></div>
 </main>
@@ -874,9 +876,46 @@ $('favSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;favTab=b
 $('hSeg').onclick=e=>{const b=e.target.closest('button');if(b)houseTab(b.dataset.h)};
 function houseTab(t){$('hSeg').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.h==t));$('hAll').hidden=t!='all';$('hAdded').hidden=t!='added'}
 /* ===== houses ===== */
-function houses(){const m={};D.lots.forEach(l=>{const h=m[l.site]||(m[l.site]={site:l.site,n:l.house,c:0,img:null,auctions:new Set(),end:null});h.c++;h.auctions.add(l.auction);if(!h.img&&l.images[0])h.img=l.images[0];if(l._e&&(!h.end||l._e<h.end))h.end=l._e});return Object.values(m).sort((a,b)=>b.c-a.c)}
-function buildHouses(){const H=houses();$('hCount').textContent=H.length;$('hList').innerHTML=H.map(h=>`<div class="arow" data-house="${esc(h.site)}" style="display:flex;gap:12px;align-items:center"><div class="si" style="padding:0"><div class="th" style="width:64px;height:64px">${h.img?`<img loading="lazy" onerror="this.remove()" src="${esc(h.img)}" alt="">`:esc(h.n[0])}</div></div><div><div class="nm">${esc(h.n)}</div><div class="mt">${h.c.toLocaleString('tr-TR')} eser · ${h.auctions.size} müzayede${h.end?' · ilk bitiş '+fshort(h.end):''}</div></div></div>`).join('')}
-$('hList').onclick=e=>{const h=e.target.closest('[data-house]');if(h)filterLots('site',h.dataset.house)};
+function houses(){const m={},H=s=>m[s]||(m[s]={site:s,n:houseName(s),c:0,p:0,img:null,auctions:new Set(),pa:new Set(),end:null,last:''});
+ D.lots.forEach(l=>{const h=H(l.site);h.c++;h.auctions.add(l.auction);if(!h.img&&l.images[0])h.img=l.images[0];if(l._e&&(!h.end||l._e<h.end))h.end=l._e});
+ (PAST||[]).forEach(x=>{const h=H(x.site);h.p++;if(x.auction)h.pa.add(x.auction);if(!h.img&&x.image)h.img=x.image;if((x.end_date||'')>h.last)h.last=x.end_date||''});
+ return Object.values(m).sort((a,b)=>b.c-a.c||b.p-a.p)}
+const houseMeta=h=>[h.c?h.c.toLocaleString('tr-TR')+' güncel eser':'şu an müzayedesi yok',h.p?h.p.toLocaleString('tr-TR')+' geçmiş eser':'',h.pa.size?h.pa.size+' geçmiş müzayede':'',h.end?'ilk bitiş '+fshort(h.end):''].filter(Boolean).join(' · ');
+function buildHouses(){let H=houses();$('hCount').textContent=H.length;const q=norm($('hQ').value).split(' ').filter(Boolean),srt=$('hSort').value;
+ if(q.length)H=H.filter(h=>{const t=norm(h.n+' '+h.site+' '+[...h.auctions,...h.pa].join(' '));return q.every(w=>t.includes(w))});
+ if(srt=='az')H.sort((a,b)=>a.n.localeCompare(b.n,'tr'));else if(srt=='new')H.sort((a,b)=>(b.end?1:0)-(a.end?1:0)||(b.last||'').localeCompare(a.last||''));
+ $('hNote').textContent=PAST?(q.length?H.length+' ev bulundu':'Bir eve dokunun: güncel eserleri ve geçmiş müzayedeleri açılır.'):'Geçmiş müzayedeler yükleniyor…';
+ $('hList').innerHTML=H.length?H.map(h=>`<div class="arow" data-house="${esc(h.site)}" style="display:flex;gap:12px;align-items:center"><div class="si" style="padding:0"><div class="th" style="width:64px;height:64px">${h.img?`<img loading="lazy" onerror="this.remove()" src="${esc(h.img)}" alt="">`:esc(h.n[0])}</div></div><div><div class="nm">${esc(h.n)}</div><div class="mt">${houseMeta(h)}</div></div></div>`).join(''):emptyBox('Bu adla bir ev bulunamadı','Yazımı değiştirin ya da evi <b>＋ Bağlantı ekle</b> ile ekleyin.','');
+ if(!PAST)loadPast().then(()=>{IDX=null;if(view=='houses')buildHouses()})}
+let hqT=null;$('hQ').addEventListener('input',()=>{clearTimeout(hqT);hqT=setTimeout(buildHouses,120)});$('hSort').onchange=buildHouses;
+/* ===== house page ===== */
+let HP=null;
+function pastCard(o){const k=esc(o.key);return `<article class="card pastc"><div class="frame ${o.image?'ph':'noimg'}" data-past="${k}">${imgTag(o.image,o.artist)}</div><div class="body">
+ <div class="artist">${o.artist?aLink(o.artist)+starBtn(o.artist):`<span data-past="${k}">Eser</span>`}</div>${o.description?`<div class="desc" data-past="${k}">${esc(o.description)}</div>`:''}
+ <div class="crow" data-past="${k}"><span class="price">${pastPrice(o)}</span><span class="left">${o.end_date?esc(o.end_date.slice(0,10).split('-').reverse().join('.')):'bitti'}</span></div></div></article>`}
+const pastSlider=L=>`<div class="slider"><button type="button" class="sl-btn sl-prev" aria-label="Önceki eserler" hidden>‹</button><div class="srow">${L.map(pastCard).join('')}</div><button type="button" class="sl-btn sl-next" aria-label="Sonraki eserler"${L.length<2?' hidden':''}>›</button></div>`;
+async function openHouse(site,quiet){quiet=quiet||navQuiet;if(!quiet)takeSpot();await ready;closeM();$('gsWrap').classList.remove('full');show('house');if(!quiet)pushNav('house='+encodeURIComponent(site));
+ const el=$('housePage');el.innerHTML='<div class="skc skel"></div>';const past=await loadPast().catch(()=>[]);
+ const sites=new Set([...D.lots.map(l=>l.site),...past.map(x=>x.site)]);if(!sites.has(site))site=[...sites].find(x=>houseName(x)==site)||site;
+ const live=D.lots.filter(l=>l.site==site).sort((x,y)=>(x._e||9e15)-(y._e||9e15)),pl=past.filter(x=>x.site==site).sort((x,y)=>(y.end_date||'').localeCompare(x.end_date||''));
+ const g={};pl.forEach(x=>{const a=(x.auction||'Müzayede')+'|'+(x.end_date||'').slice(0,10);(g[a]=g[a]||{n:x.auction||'Müzayede',d:(x.end_date||'').slice(0,10),L:[]}).L.push(x)});
+ const u=(live[0]||pl[0]||{}).url||'',home=/muzayedeapp:/.test(site)?'':(u.match(/^https?:\/\/[^/]+/)||[''])[0];
+ HP={site,live,past:pl,groups:Object.values(g),lim:8};const n=houseName(site);
+ el.innerHTML=`<div class="ap-hero"><div><div class="meta">Müzayede evi</div><h1>${esc(n)}</h1><div class="muted">${[live.length?live.length+' eser şu an müzayedede':'şu an müzayedesi yok',pl.length?pl.length.toLocaleString('tr-TR')+' geçmiş eser':'',HP.groups.length?HP.groups.length+' geçmiş müzayede':''].filter(Boolean).join(' · ')}</div></div>
+ <div class="acts" style="flex-wrap:wrap">${live.length?`<button type="button" class="btn pri" id="hpLive">Güncel eserleri Keşfet'te aç</button>`:''}${home?`<a class="btn" href="${esc(home)}" target="_blank" rel="noopener">Siteye git ↗</a>`:''}</div></div>
+ <input class="fld hp-q" id="hpQ" type="search" placeholder="${esc(n)} içinde ara: sanatçı, eser, müzayede…" aria-label="Bu evde ara"><div id="hpBody"></div>`;
+ $('hpQ').addEventListener('input',()=>{clearTimeout(hqT);hqT=setTimeout(drawHouse,150)});const b=$('hpLive');if(b)b.onclick=()=>filterLots('site',site);
+ drawHouse();if(!quiet)scrollTo({top:0})}
+function drawHouse(){if(!HP)return;const q=norm($('hpQ').value).split(' ').filter(Boolean),M=o=>{const t=o._s||(o._s=norm([o.artist,o.description,o.title,o.auction].join(' ')));return q.every(w=>t.includes(w))};
+ const live=HP.live.filter(M);let h='';
+ h+=`<h3 class="subh">Şu an müzayedede <small>${live.length}</small></h3>`+(live.length?slider(live):`<p class="muted">${q.length?'Aramanıza uyan güncel eser yok.':'Bu evin şu an açık müzayedesi yok.'}</p>`);
+ const G=HP.groups.map(x=>({...x,L:q.length?x.L.filter(M):x.L})).filter(x=>x.L.length),tot=G.reduce((a,x)=>a+x.L.length,0);
+ h+=`<h3 class="subh">Geçmiş müzayedeler <small>${tot.toLocaleString('tr-TR')} eser</small></h3>`;
+ if(!G.length)h+=`<p class="muted">${q.length?'Aramanıza uyan geçmiş eser yok.':'Bu ev için henüz geçmiş müzayede kaydı yok. Eski müzayedeler günlük taramada toplandıkça burada görünür.'}</p>`;
+ G.slice(0,HP.lim).forEach(x=>{h+=`<div class="hp-auc"><b>${esc(x.n)}</b><small>${x.d?esc(x.d.split('-').reverse().join('.'))+' · ':''}${x.L.length} eser</small></div>`+pastSlider(x.L)});
+ if(G.length>HP.lim)h+=`<div class="acts" style="justify-content:center;margin:18px 0"><button type="button" class="btn" id="hpMore">Daha eski müzayedeler (${G.length-HP.lim} kaldı)</button></div>`;
+ $('hpBody').innerHTML=h;const m=$('hpMore');if(m)m.onclick=()=>{HP.lim+=8;drawHouse()};$('hpBody').querySelectorAll('.srow').forEach(slArrows)}
+$('hList').onclick=e=>{const h=e.target.closest('[data-house]');if(h)openHouse(h.dataset.house)};
 /* ===== lot modal, value panel, compare ===== */
 const median=a=>{const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
 function artistPanel(l,past){if(!l._a)return '<div class="panel first"><p class="muted">Bu eserde sanatçı bilgisi olmadığı için karşılaştırma yapılamıyor.</p></div>';
@@ -1072,7 +1111,7 @@ function hl(text,q){let s=esc(text);norm(q).split(' ').filter(t=>t.length>1).for
 function resItem(g,o,q){if(g=='lot')return{th:o.images[0]?`<img loading="lazy" onerror="this.remove()" src="${esc(o.images[0])}" alt="">`:'◇',t1:hl(o.artist||o.title,q),t2:hl([o.description,o.house].filter(Boolean).join(' · '),q),pr:TL(o.current_bid||o.start_price),act:()=>openLot(o.key)};
  if(g=='artist')return{star:starBtn(o.n),th:o.img?`<img loading="lazy" onerror="this.remove()" src="${esc(o.img)}" alt="">`:esc((o.n||'?')[0]),t1:hl(o.n,q),t2:[o.c?o.c+' eser müzayedede':'Şu an müzayedede eseri yok',o.lb?'Lebriz profili':''].filter(Boolean).join(' · '),act:()=>openArtist(o.c?o.n:null,o.lb&&o.lb.id)};
  if(g=='tag')return{th:'#',t1:hl(o.x.v,q),t2:`${TAGK[o.x.k]} · ${o.n.toLocaleString('tr-TR')} eser`,act:()=>toggleTag(o.x.id,true)};
- if(g=='house')return{th:o.img?`<img loading="lazy" onerror="this.remove()" src="${esc(o.img)}" alt="">`:esc(o.n[0]),t1:hl(o.n,q),t2:`${o.c} eser · ${o.auctions.size} müzayede`,act:()=>filterLots('site',o.site)};
+ if(g=='house')return{th:o.img?`<img loading="lazy" onerror="this.remove()" src="${esc(o.img)}" alt="">`:esc(o.n[0]),t1:hl(o.n,q),t2:houseMeta(o),act:()=>openHouse(o.site)};
  if(g=='exh')return{th:'▦',t1:hl(o.t,q),t2:hl([o.g,o.c,o.s].filter(Boolean).join(' · '),q),act:()=>lbExh(o.id)};
  return{th:'⌂',t1:hl(o.n,q),t2:hl([o.c,o.x+' sergi'].filter(Boolean).join(' · '),q),act:()=>lbGallery(o.n)}}
 let sdItems=[],sdAct=-1,sdTimer=null,lastRes=null;
@@ -1103,7 +1142,7 @@ function fullResults(g,quiet){if(!quiet&&view!='search')takeSpot();const q=$('gq
  for(const k of groups){const L=r[k];if(!L.length)continue;const lim=g=='all'?(k=='lot'?12:8):Infinity;h+=`<div class="secthead"><h2 style="font-size:var(--fs-xl)">${GL[k]} <span class="muted" style="font-size:16px">${L.length.toLocaleString('tr-TR')}</span></h2>${g=='all'&&L.length>lim?`<a class="chip" data-rg="${k}">Tümünü gör →</a>`:''}</div>`;
   if(k=='lot')h+=`<div class="grid" id="srLots"></div>${g!='all'?'<div class="more"><button class="btn" id="srMore">Daha fazla yükle</button></div>':''}`;
   else if(k=='artist')h+=`<div class="alist">${L.slice(0,lim).map(x=>{const o=x.o;return `<div class="arow" data-sa="${esc(o.n)}"><div class="nm">${hl(o.n,q)} ${starBtn(o.n)}</div><div class="mt">${o.lb&&o.lb.y?esc(o.lb.y)+' · ':''}${o.lb?'Lebriz profili':''}</div>${o.c?`<span class="live">Şu an satışta: ${o.c} eser</span>`:''}</div>`}).join('')}</div>`;
-  else if(k=='house')h+=`<div class="alist">${L.slice(0,lim).map(x=>`<div class="arow" data-house="${esc(x.o.site)}"><div class="nm">${hl(x.o.n,q)}</div><div class="mt">${x.o.c} eser · ${x.o.auctions.size} müzayede</div></div>`).join('')}</div>`;
+  else if(k=='house')h+=`<div class="alist">${L.slice(0,lim).map(x=>`<div class="arow" data-house="${esc(x.o.site)}"><div class="nm">${hl(x.o.n,q)}</div><div class="mt">${houseMeta(x.o)}</div></div>`).join('')}</div>`;
   else if(k=='exh')h+=L.slice(0,g=='all'?lim:400).map(x=>exRow(x.o)).join('');
   else h+=L.slice(0,lim).map(x=>`<div class="erow"><div class="d">${esc(x.o.c||'')}</div><div><div class="t">${hl(x.o.n,q)}</div><div class="d">${esc(x.o.a||'')}</div></div><a href="javascript:;" data-sg="${esc(x.o.n)}">${x.o.x} sergi →</a></div>`).join('')}
  if(!groups.some(k=>r[k].length))h+=`<div class="empty"><div class="big">Sonuç yok</div></div>`;
@@ -1111,7 +1150,7 @@ function fullResults(g,quiet){if(!quiet&&view!='search')takeSpot();const q=$('gq
 function srMore(){const L=FR.r.lot,n=Math.min(FR.lim,FR.lotShown+PAGE);$('srLots').insertAdjacentHTML('beforeend',L.slice(FR.lotShown,n).map(x=>card(x.o)).join(''));FR.lotShown=n;if($('srMore'))$('srMore').style.display=n<L.length?'':'none'}
 $('sres').addEventListener('click',e=>{if(e.target.closest('[data-star]'))return;const c=e.target.closest('[data-rg]');if(c)return fullResults(c.dataset.rg);if(e.target.id=='srMore')return srMore();
  const a=e.target.closest('[data-sa]');if(a){const o=FR.r.artist.find(x=>x.o.n==a.dataset.sa).o;return o.lb?lbArtist(o.lb.id):filterLots('artist',o.n)}
- const h=e.target.closest('[data-house]');if(h)return filterLots('site',h.dataset.house);const gg=e.target.closest('[data-sg]');if(gg)return lbGallery(gg.dataset.sg)});
+ const h=e.target.closest('[data-house]');if(h)return openHouse(h.dataset.house);const gg=e.target.closest('[data-sg]');if(gg)return lbGallery(gg.dataset.sg)});
 new IntersectionObserver(es=>{if(es[0].isIntersecting&&view=='search'&&FR.r&&$('srLots')&&FR.lotShown<Math.min(FR.lim,FR.r.lot.length))srMore()},{rootMargin:'800px'}).observe($('sentinel'));
 /* ===== artist page ===== */
 function artistLots(a,name){const k=akey(name);return D.lots.filter(l=>l.artist&&(a?l._lb===a:akey(l.artist)==k))}
@@ -1249,6 +1288,7 @@ function route(h,boot,keep){h=dec(h);curRoute=h;
  if(h.startsWith('artist=')){const v=h.slice(7);return v.startsWith('lb:')?openArtist(null,v.slice(3),true):openArtist(v,null,true)}
  if(h.startsWith('lba=')){return openArtist(null,h.slice(4),true)}
  if(h.startsWith('site=')){showSite(h.slice(5),true);return}
+ if(h.startsWith('house=')){return openHouse(h.slice(6),true)}
  if(h.startsWith('q=')||h.startsWith('s=')){show('search',true);return ready.then(()=>{$('gq').value=h.slice(2);return lbLoad().catch(()=>{}).finally(()=>{IDX=null;fullResults('all',true)})})}
  if(boot&&(h.startsWith('lot=')||h.startsWith('past=')||h.startsWith('cmp=')||h=='help'||h=='add')){// a shared link to a pop-up: open it over the start page, so back lands on the site
   history.replaceState({},'',urlFor(''));curRoute='';show(startView(),true);

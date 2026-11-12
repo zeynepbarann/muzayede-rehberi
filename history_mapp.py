@@ -8,7 +8,7 @@ daily scan. It is incremental and time-boxed: every run adds auctions it has not
 only add the auctions that ended since.
 
 For each house it looks for its archive of past auctions (links named "Geçmiş", "Arşiv",
-"Sonuçlanan", "Tamamlanan" … and a few usual addresses), collects /muzayede/<id>/<slug> links,
+"Sonuçlanan", "Tamamlanan" … and a few usual addresses), collects auction links (/muzayede/<id>/…),
 then reads every finished auction with the same lot reader as the daily scan. What it found is
 written to data/history_log.json so the discovery can be checked and tuned.
 
@@ -45,19 +45,18 @@ def links(page, base):
 
 
 def discover(host, log):
-    """Auction ids/slugs a house links to from its archive pages (and home page)."""
-    base = "https://" + host
-    found, tried = {}, []
-    home = scrape.get(base + "/", tries=2)
-    found.update({a: s for a, s in AUC.findall(home)})
-    cands = [base + p for p in ARCHIVE_PATHS]
-    cands += [u for u, t in links(home, base) if urlparse(u).netloc.endswith(host.replace("www.", "")) and KW.search(t + " " + u)]
-    for u in list(dict.fromkeys(cands))[:16]:
+    """{auction id: url} a house links to from its archive pages (and home page)."""
+    home = scrape.get("https://" + host + "/", tries=2)
+    f = urlparse(scrape.LAST_URL[0] or "https://" + host); base = f"{f.scheme}://{f.netloc}"
+    found, tried = scrape.find_auctions(home, base), []
+    cands = [base + p for p in ARCHIVE_PATHS + scrape.AUC_PAGES]
+    cands += [u for u, t in links(home, base) if urlparse(u).netloc.replace("www.", "") == f.netloc.replace("www.", "") and KW.search(t + " " + u)]
+    for u in list(dict.fromkeys(cands))[:22]:
         try:
             page = scrape.get(u, tries=1)
         except Exception as e:
             tried.append([u, str(e)[:60]]); continue
-        ids = dict(AUC.findall(page)); tried.append([u, len(ids)])
+        ids = scrape.find_auctions(page, base); tried.append([u, len(ids)])
         if not ids: continue
         found.update(ids)
         for n in range(2, 40):                      # follow the archive's own paging
@@ -65,7 +64,7 @@ def discover(host, log):
             if not nxt: break
             try: page = scrape.get(nxt[0], tries=1)
             except Exception: break
-            new = dict(AUC.findall(page))
+            new = scrape.find_auctions(page, base)
             if not set(new) - set(found): break
             found.update(new); time.sleep(0.6)
         time.sleep(0.6)
@@ -73,8 +72,8 @@ def discover(host, log):
     return found
 
 
-def read_auction(host, aid, slug, since):
-    base = "https://" + host; site = host.replace("www.", ""); url = f"{base}/muzayede/{aid}/{slug}"
+def read_auction(host, aid, url, since):
+    f = urlparse(url); base = f"{f.scheme}://{f.netloc}"; site = host.replace("www.", ""); slug = url.rstrip("/").split("/")[-1]
     page = scrape.get(url, tries=2)
     ms = scrape.mapp_remaining_ms(page, aid)
     if ms is not None and ms > 0: return "live", []
@@ -182,11 +181,11 @@ def main():
         except Exception as e:
             hl["error"] = str(e)[:120]; continue
         hl["auctions_found"] = len(found)
-        for aid, slug in sorted(found.items(), key=lambda x: -int(x[0])):          # newest first
+        for aid, aurl in sorted(found.items(), key=lambda x: -int(x[0])):          # newest first
             if (site, aid) in done or (site, aid) in skipped: continue
             if time.time() > budget: hl["note"] = "time budget used; continues next run"; break
             try:
-                state, recs = read_auction(host, aid, slug, since)
+                state, recs = read_auction(host, aid, aurl, since)
             except Exception as e:
                 hl.setdefault("errors", []).append([aid, str(e)[:80]]); continue
             if state in ("old", "live"):

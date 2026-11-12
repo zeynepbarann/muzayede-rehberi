@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Scrape ongoing auction lots into auctions.db. Public pages only."""
 import re, html, json, sqlite3, time, sys, datetime as dt, urllib.request, urllib.error, os
+from urllib.parse import urljoin, urlparse
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
 HERE = os.path.dirname(os.path.abspath(__file__)); DB = os.path.join(HERE, "auctions.db")
 MUZAYEDEAPP = ["www.nefsmuzayede.com","www.dedemuzayede.com","www.anatoliamuzayede.com","www.kassanat.com",
                "www.turkartproject.com","www.uxmuzayede.com","www.ranasartgallery.com","www.galeriberlin.com",
                "www.kalamismuzayede.com","www.aysilmuzayede.com","www.nisartgallery.com"]
+
+LAST_URL = [""]
 
 def get(url, data=None, tries=3):
     err = None
@@ -14,6 +17,7 @@ def get(url, data=None, tries=3):
             h = {"User-Agent": UA, "Accept": "text/html,application/json", "Accept-Language": "tr-TR,tr;q=0.9"}
             if data is not None: h["Content-Type"] = "application/json"; data = json.dumps(data).encode() if not isinstance(data, bytes) else data
             with urllib.request.urlopen(urllib.request.Request(url, data=data, headers=h), timeout=40) as r:
+                LAST_URL[0] = r.geturl()
                 return r.read().decode("utf-8", "ignore")
         except urllib.error.HTTPError as e:
             err = e
@@ -40,9 +44,9 @@ def mapp_auction_lots(page, url, site, base, aname, end):
             if not pid or pid in seen: continue
             seen.add(pid); new += 1
             lc = blk[blk.find('class="lot-content"'):]
-            href = (re.search(r'href="(/urun/[^"]+)"', lc) or [None, ""])[1]
+            href = (re.search(r'href="((?:https?://[^/"]+)?/urun/[^"]+)"', lc) or [None, ""])[1]
             artist = txt((re.search(r'<p class="lot-title">(.*?)</p>', lc, re.S) or [None, ""])[1])
-            ps = re.findall(r'<a href="/urun/[^"]+">\s*<p>(.*?)</p>', lc, re.S)
+            ps = re.findall(r'<a href="(?:https?://[^/"]+)?/urun/[^"]+">\s*<p>(.*?)</p>', lc, re.S)
             desc = txt(ps[0]) if ps else ""
             cat = txt((re.search(r'class="tag-name">(.*?)<', lc) or [None, ""])[1])
             imgs = list(dict.fromkeys(re.findall(r'p-image-l" data-src="([^"]+)"', blk)))
@@ -51,7 +55,7 @@ def mapp_auction_lots(page, url, site, base, aname, end):
                 artist=artist, description=desc, category=cat, start_price=num(g("data-price")),
                 estimate=num(g("data-estimated-price")), current_bid=num(g("data-offer-price")),
                 bid_count=int(g("data-offer-count") or 0), currency="TL", auction=aname, auction_type="auction",
-                end_date=end, images=json.dumps(imgs), url=base + href))
+                end_date=end, images=json.dumps(imgs), url=urljoin(base + "/", href)))
         if new == 0 or f"/sayfa/{n+1}" not in page: break
         n += 1; time.sleep(0.7); page = get(f"{url}/sayfa/{n}")
     return lots
@@ -60,24 +64,76 @@ def mapp_remaining_ms(page, aid):
     ms = re.search(r'muzayedeappRemaining\(\{\s*auctionId: parseInt\("%s".*?milliseconds: parseInt\("(-?\d+)' % aid, page, re.S)
     return int(ms.group(1)) if ms else None
 
+# Auction links as MüzayedeApp house sites write them: /muzayede/123/slug, /muzayede/123, absolute or
+# relative, in href, data-href or onclick. Some houses only list auctions on an inner page.
+AUC_LINK = re.compile(r"""(?:https?://[^\s"'<>]+)?/(?:muzayede|auction)/(\d{2,7})(?:/([\w\-%.]+))?(?=["'?#\s/<])""", re.I)
+AUC_PAGES = ["/muzayedeler", "/muzayede", "/guncel-muzayedeler", "/aktif-muzayedeler", "/devam-eden-muzayedeler",
+             "/canli-muzayede", "/online-muzayede", "/online-muzayedeler"]
+DEBUG = os.path.join(HERE, "data", "debug")
+
+def find_auctions(page, base):
+    """{auction id: absolute auction url} for every auction link on a page of this house."""
+    out, me = {}, urlparse(base).netloc.replace("www.", "")
+    for m in AUC_LINK.finditer(page):
+        u = urljoin(base + "/", m.group(0))
+        if urlparse(u).netloc.replace("www.", "") != me: continue
+        if re.search(r"\.(jpe?g|png|webp|gif)$", u, re.I): continue
+        aid = m.group(1)
+        if aid not in out or (m.group(2) and out[aid].endswith("/" + aid)):            # prefer the link with a slug
+            out[aid] = u.split("?")[0].split("#")[0].rstrip("/")
+    return out
+
+def house_auctions(host, home=None):
+    """Auction links of a house: home page first, then the usual auction-list pages."""
+    base = "https://" + host
+    home = home if home is not None else get(base + "/")
+    final = LAST_URL[0] or base
+    fb = urlparse(final); base2 = f"{fb.scheme}://{fb.netloc}" if fb.netloc else base
+    found = find_auctions(home, base2)
+    tried = [[final, len(found)]]
+    if not found:
+        for path in AUC_PAGES:
+            try: page = get(base2 + path, tries=1)
+            except Exception as e: tried.append([path, str(e)[:50]]); continue
+            got = find_auctions(page, base2); tried.append([path, len(got)])
+            if got: found.update(got); break
+            time.sleep(0.5)
+    if not found: write_debug(host, home, final, tried)
+    else: clear_debug(host)
+    return found, base2
+
+def write_debug(host, page, final, tried):
+    """Leave a short note on what the page looked like, so the reader can be fixed for this house."""
+    try:
+        os.makedirs(DEBUG, exist_ok=True)
+        hrefs = list(dict.fromkeys(re.findall(r"""(?:href|data-href|data-url)\s*=\s*["']([^"'#]{2,200})["']""", page)))
+        title = txt((re.search(r"<title>(.*?)</title>", page, re.S | re.I) or [None, ""])[1])
+        rec = {"at": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "host": host, "final_url": final, "title": title,
+               "bytes": len(page), "muzayedeapp_markers": [k for k in ("muzayedeapp", "product-item-", "muzayedeappRemaining", "/urun/") if k in page],
+               "tried": tried, "links": [h for h in hrefs if not re.search(r"\.(css|js|png|jpe?g|svg|ico|webp|woff2?)(\?|$)", h, re.I)][:120]}
+        json.dump(rec, open(os.path.join(DEBUG, host.replace("www.", "") + ".json"), "w", encoding="utf8"), ensure_ascii=False, indent=1)
+    except Exception as e:
+        print("debug note failed", host, e)
+
+def clear_debug(host):
+    f = os.path.join(DEBUG, host.replace("www.", "") + ".json")
+    if os.path.exists(f): os.remove(f)
+
 def scrape_muzayedeapp(host):
-    base = "https://" + host; site = host.replace("www.", "")
-    home = get(base + "/")
-    ids = {}
-    for m in re.finditer(r'href="(?:https?://(?:www\.)?[^/"]+)?/muzayede/(\d+)/([^"/?#]+)"', home):
-        ids[m.group(1)] = m.group(2)
+    site = host.replace("www.", "")
+    ids, base = house_auctions(host)
     lots, auctions = [], []
-    for aid, slug in ids.items():
-        url = f"{base}/muzayede/{aid}/{slug}"
+    for aid, url in ids.items():
         page = get(url)
-        ms = re.search(r'muzayedeappRemaining\(\{\s*auctionId: parseInt\("%s".*?milliseconds: parseInt\("(-?\d+)' % aid, page, re.S)
-        remain = int(ms.group(1)) if ms else 0
+        remain = mapp_remaining_ms(page, aid) or 0
         if remain <= 0: auctions.append((site, aid, "ended/not live", 0)); continue
         end = (dt.datetime.now() + dt.timedelta(milliseconds=remain)).strftime("%Y-%m-%d %H:%M")
-        m = re.search(r'auctionName: "([^"]*)"', page); aname = html.unescape(m.group(1)) if m else slug
+        slug = url.rstrip("/").split("/")[-1]
+        m = re.search(r'auctionName: "([^"]*)"', page); aname = html.unescape(m.group(1)) if m else slug.replace("-", " ").title()
         got = mapp_auction_lots(page, url, site, base, aname, end)
         lots += got
         auctions.append((site, aid, aname, len(got)))
+    if not ids: auctions.append((site, "", "no auction links found (see data/debug/%s.json)" % site, 0))
     return lots, auctions
 
 def scrape_artvela():
