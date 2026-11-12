@@ -6,6 +6,8 @@ cd "$(dirname "$0")" && date
 git pull --ff-only --quiet 2>/dev/null || echo "git pull skipped"  # pick up links added by the GitHub Action
 python3 add_sources.py || echo "add_sources failed (continuing)"
 python3 scrape.py
+# Finished MüzayedeApp auctions (these sites refuse GitHub, so history is collected here). Incremental, max ~40 min.
+timeout 45m python3 history_mapp.py --minutes 40 || echo "history_mapp incomplete (continues next run)"
 if [ "$1" = "--lebriz" ] || [ "$(date +%u)" = "1" ]; then timeout 3h python3 lebriz.py || echo "lebriz import incomplete (resumes next run)"; fi
 python3 lebriz_export.py
 python3 export.py

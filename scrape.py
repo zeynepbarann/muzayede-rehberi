@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Scrape ongoing auction lots into auctions.db. Public pages only."""
-import re, html, json, sqlite3, time, sys, datetime as dt, urllib.request, os
+import re, html, json, sqlite3, time, sys, datetime as dt, urllib.request, urllib.error, os
 UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129 Safari/537.36"
 HERE = os.path.dirname(os.path.abspath(__file__)); DB = os.path.join(HERE, "auctions.db")
 MUZAYEDEAPP = ["www.nefsmuzayede.com","www.dedemuzayede.com","www.anatoliamuzayede.com","www.kassanat.com",
@@ -8,12 +8,17 @@ MUZAYEDEAPP = ["www.nefsmuzayede.com","www.dedemuzayede.com","www.anatoliamuzaye
                "www.kalamismuzayede.com","www.aysilmuzayede.com","www.nisartgallery.com"]
 
 def get(url, data=None, tries=3):
+    err = None
     for i in range(tries):
         try:
             h = {"User-Agent": UA, "Accept": "text/html,application/json", "Accept-Language": "tr-TR,tr;q=0.9"}
             if data is not None: h["Content-Type"] = "application/json"; data = json.dumps(data).encode() if not isinstance(data, bytes) else data
             with urllib.request.urlopen(urllib.request.Request(url, data=data, headers=h), timeout=40) as r:
                 return r.read().decode("utf-8", "ignore")
+        except urllib.error.HTTPError as e:
+            err = e
+            if e.code == 403: break                # the site refuses this server: no point retrying
+            time.sleep(2 + i * 3)
         except Exception as e:
             err = e; time.sleep(2 + i * 3)
     raise err
@@ -23,6 +28,37 @@ def num(s):
     s = (s or "").replace(".", "").replace(",", ".").strip()
     try: v = float(s); return v if v > 0 else None
     except: return None
+
+def mapp_auction_lots(page, url, site, base, aname, end):
+    """All lots of one MüzayedeApp auction page (follows /sayfa/N)."""
+    lots, seen, n = [], set(), 1
+    while page:
+        new = 0
+        for blk in re.split(r'(?=<div class="item" id="product-item-)', page)[1:]:
+            g = lambda a: (re.search(a + r'="([^"]*)"', blk) or [None, ""])[1]
+            pid = g("data-id")
+            if not pid or pid in seen: continue
+            seen.add(pid); new += 1
+            lc = blk[blk.find('class="lot-content"'):]
+            href = (re.search(r'href="(/urun/[^"]+)"', lc) or [None, ""])[1]
+            artist = txt((re.search(r'<p class="lot-title">(.*?)</p>', lc, re.S) or [None, ""])[1])
+            ps = re.findall(r'<a href="/urun/[^"]+">\s*<p>(.*?)</p>', lc, re.S)
+            desc = txt(ps[0]) if ps else ""
+            cat = txt((re.search(r'class="tag-name">(.*?)<', lc) or [None, ""])[1])
+            imgs = list(dict.fromkeys(re.findall(r'p-image-l" data-src="([^"]+)"', blk)))
+            if not imgs: imgs = list(dict.fromkeys(re.findall(r'data-src="([^"]+)"', blk)))
+            lots.append(dict(site=site, lot_id=pid, lot_no=g("data-lotno"), title=(artist + " - " + desc).strip(" -"),
+                artist=artist, description=desc, category=cat, start_price=num(g("data-price")),
+                estimate=num(g("data-estimated-price")), current_bid=num(g("data-offer-price")),
+                bid_count=int(g("data-offer-count") or 0), currency="TL", auction=aname, auction_type="auction",
+                end_date=end, images=json.dumps(imgs), url=base + href))
+        if new == 0 or f"/sayfa/{n+1}" not in page: break
+        n += 1; time.sleep(0.7); page = get(f"{url}/sayfa/{n}")
+    return lots
+
+def mapp_remaining_ms(page, aid):
+    ms = re.search(r'muzayedeappRemaining\(\{\s*auctionId: parseInt\("%s".*?milliseconds: parseInt\("(-?\d+)' % aid, page, re.S)
+    return int(ms.group(1)) if ms else None
 
 def scrape_muzayedeapp(host):
     base = "https://" + host; site = host.replace("www.", "")
@@ -39,31 +75,9 @@ def scrape_muzayedeapp(host):
         if remain <= 0: auctions.append((site, aid, "ended/not live", 0)); continue
         end = (dt.datetime.now() + dt.timedelta(milliseconds=remain)).strftime("%Y-%m-%d %H:%M")
         m = re.search(r'auctionName: "([^"]*)"', page); aname = html.unescape(m.group(1)) if m else slug
-        seen, n, cnt = set(), 1, 0
-        while page:
-            new = 0
-            for blk in re.split(r'(?=<div class="item" id="product-item-)', page)[1:]:
-                g = lambda a: (re.search(a + r'="([^"]*)"', blk) or [None, ""])[1]
-                pid = g("data-id")
-                if not pid or pid in seen: continue
-                seen.add(pid); new += 1
-                lc = blk[blk.find('class="lot-content"'):]
-                href = (re.search(r'href="(/urun/[^"]+)"', lc) or [None, ""])[1]
-                artist = txt((re.search(r'<p class="lot-title">(.*?)</p>', lc, re.S) or [None, ""])[1])
-                ps = re.findall(r'<a href="/urun/[^"]+">\s*<p>(.*?)</p>', lc, re.S)
-                desc = txt(ps[0]) if ps else ""
-                cat = txt((re.search(r'class="tag-name">(.*?)<', lc) or [None, ""])[1])
-                imgs = list(dict.fromkeys(re.findall(r'p-image-l" data-src="([^"]+)"', blk)))
-                if not imgs: imgs = list(dict.fromkeys(re.findall(r'data-src="([^"]+)"', blk)))
-                lots.append(dict(site=site, lot_id=pid, lot_no=g("data-lotno"), title=(artist + " - " + desc).strip(" -"),
-                    artist=artist, description=desc, category=cat, start_price=num(g("data-price")),
-                    estimate=num(g("data-estimated-price")), current_bid=num(g("data-offer-price")),
-                    bid_count=int(g("data-offer-count") or 0), currency="TL", auction=aname, auction_type="auction",
-                    end_date=end, images=json.dumps(imgs), url=base + href))
-            cnt += new
-            if new == 0 or f"/sayfa/{n+1}" not in page: break
-            n += 1; time.sleep(0.7); page = get(f"{url}/sayfa/{n}")
-        auctions.append((site, aid, aname, cnt))
+        got = mapp_auction_lots(page, url, site, base, aname, end)
+        lots += got
+        auctions.append((site, aid, aname, len(got)))
     return lots, auctions
 
 def scrape_artvela():

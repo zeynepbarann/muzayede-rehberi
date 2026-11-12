@@ -30,10 +30,16 @@ Tek eser bağlantıları (`kind: "product"`) o evin diğer eserlerinin yerine ge
 
 **Günlük commit'e dahil edilmesi gerekenler:**
 - `index.html`
-- `data/` (`lots.json`, `past.json`, `artists.json`, `sources.json`, `lebriz_*.json`)
+- `data/` (`lots.json`, `past.json`, `artists.json`, `sources.json`, `lebriz_*.json`, `past_archive_mapp.json`, `history_log.json`)
+- yeni dosyalar dahil: `data/` altındaki her şey (`git add data/`)
 - kökteki `sources.json` (yeni bağlantı eklendiyse)
 
 **Commit edilmemesi gerekenler:** `auctions.db` (artık gitignore'da; kutu üzerinde kalır), `*.png`, `*.log`, `lebriz_cache/`, `raw_*.html`.
+
+## Geçmiş müzayedeler
+- `data/past.json`: günlük taramanın canlıyken gördüğü, artık bitmiş eserler (Ekim 2026'dan beri).
+- `data/past_archive.json`: Artam'ın 2024'ten beri biten müzayedeleri (`history.py`, GitHub Action, her ayın 1'i). Artam çekiç fiyatını yalnızca üyelerine gösterdiği için tahmin değeri vardır.
+- `data/past_archive_mapp.json`: MüzayedeApp altyapılı evlerin biten müzayedeleri (`history_mapp.py`, `refresh.sh` içinde her gün en fazla ~40 dk, kaldığı yerden devam eder). Bu siteler GitHub sunucularını engellediği için yalnızca günlük taramanın çalıştığı makinede çalışır. Ne bulduğu `data/history_log.json`'a yazılır.
 
 ## Yerelde çalıştırma
 ```bash
