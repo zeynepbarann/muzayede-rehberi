@@ -1,5 +1,5 @@
 {
- "run": "2026-11-12 16:01",
+ "run": "2026-11-13 06:09",
  "since": "2024-01-01",
  "houses": {
   "nefsmuzayede.com": {
@@ -71,8 +71,8 @@
   },
   "dedemuzayede.com": {
    "auctions_found": 5,
-   "read": 5,
-   "lots": 571,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.dedemuzayede.com/gecmis-muzayedeler",
@@ -138,8 +138,8 @@
   },
   "anatoliamuzayede.com": {
    "auctions_found": 61,
-   "read": 41,
-   "lots": 9382,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.anatoliamuzayede.com/gecmis-muzayedeler",
@@ -205,8 +205,8 @@
   },
   "kassanat.com": {
    "auctions_found": 2,
-   "read": 2,
-   "lots": 169,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.kassanat.com/gecmis-muzayedeler",
@@ -272,8 +272,8 @@
   },
   "turkartproject.com": {
    "auctions_found": 27,
-   "read": 27,
-   "lots": 4613,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.turkartproject.com/gecmis-muzayedeler",
@@ -339,8 +339,8 @@
   },
   "uxmuzayede.com": {
    "auctions_found": 51,
-   "read": 22,
-   "lots": 3838,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.uxmuzayede.com/gecmis-muzayedeler",
@@ -410,8 +410,8 @@
   },
   "ranasartgallery.com": {
    "auctions_found": 7,
-   "read": 7,
-   "lots": 1862,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.ranasartgallery.com/gecmis-muzayedeler",
@@ -477,8 +477,8 @@
   },
   "galeriberlin.com": {
    "auctions_found": 31,
-   "read": 25,
-   "lots": 6024,
+   "read": 2,
+   "lots": 0,
    "tried": [
     [
      "https://www.galeriberlin.com/gecmis-muzayedeler",
@@ -544,8 +544,8 @@
   },
   "kalamismuzayede.com": {
    "auctions_found": 9,
-   "read": 9,
-   "lots": 878,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.kalamismuzayede.com/gecmis-muzayedeler",
@@ -611,8 +611,8 @@
   },
   "aysilmuzayede.com": {
    "auctions_found": 15,
-   "read": 3,
-   "lots": 335,
+   "read": 11,
+   "lots": 1469,
    "tried": [
     [
      "https://www.aysilmuzayede.com/gecmis-muzayedeler",
@@ -674,23 +674,782 @@
      "https://www.aysilmuzayede.com/online-muzayedeler",
      "HTTP Error 404: Not Found"
     ]
-   ],
-   "note": "time budget used; continues next run"
+   ]
   },
   "nisartgallery.com": {
-   "auctions_found": 0,
-   "read": 0,
-   "lots": 0,
-   "note": "time budget used; continues next run"
+   "auctions_found": 50,
+   "read": 17,
+   "lots": 2117,
+   "tried": [
+    [
+     "https://www.nisartgallery.com/gecmis-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nisartgallery.com/gecmis-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nisartgallery.com/muzayedeler/gecmis",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nisartgallery.com/sonuclanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nisartgallery.com/tamamlanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nisartgallery.com/muzayede-arsivi",
+     50
+    ],
+    [
+     "https://www.nisartgallery.com/arsiv",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nisartgallery.com/muzayedeler",
+     6
+    ],
+    [
+     "https://www.nisartgallery.com/muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nisartgallery.com/guncel-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nisartgallery.com/aktif-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nisartgallery.com/devam-eden-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nisartgallery.com/canli-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nisartgallery.com/online-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.nisartgallery.com/online-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ]
+   ]
   },
   "akartgaleri.com": {
+   "auctions_found": 15,
+   "read": 11,
+   "lots": 847,
+   "tried": [
+    [
+     "https://www.akartgaleri.com/gecmis-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.akartgaleri.com/gecmis-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.akartgaleri.com/muzayedeler/gecmis",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.akartgaleri.com/sonuclanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.akartgaleri.com/tamamlanan-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.akartgaleri.com/muzayede-arsivi",
+     14
+    ],
+    [
+     "https://www.akartgaleri.com/arsiv",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.akartgaleri.com/muzayedeler",
+     7
+    ],
+    [
+     "https://www.akartgaleri.com/muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.akartgaleri.com/guncel-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.akartgaleri.com/aktif-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.akartgaleri.com/devam-eden-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.akartgaleri.com/canli-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.akartgaleri.com/online-muzayede",
+     "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.akartgaleri.com/online-muzayedeler",
+     "HTTP Error 404: Not Found"
+    ]
+   ]
+  },
+  "muzayedeapp: ART ROOM": {
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "note": "time budget used; continues next run"
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Afaist": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Agah Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 2,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/agah-muzayede-161"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Anatolia Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/anatolia-muzayede-28"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Art Base Gallery": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Art-ı Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/art-i-muzayede-433"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: ArtPoint Gallery": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Artium Modern": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/artium-modern-33"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Artour Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/artour-muzayede-434"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Artsan Galeri": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/artsan-galeri-303"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Asart Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Best Art Gallery": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Beyond Auction": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Bir Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/bir-muzayede-122"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Cesi Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Cihangir Art Gallery": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/cihangir-art-gallery-388"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Craft Pen": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/craft-pen-364"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Derin Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/derin-muzayede-377"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Dev Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Dünün Dünyası": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 19,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Ece Sanat": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Edition Studio": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Efes Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/efes-muzayede-302"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Eksen Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Enmodern Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 2,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/enmodern-muzayede-408"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Eser Antique": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/eser-antique-146"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Exodia Mezat": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Fetva Osmanlı": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/fetva-osmanli-281"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Galeri ArtGet": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Galeri Arts": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/galeri-arts-133"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Galeri Dali": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/galeri-dali-84"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Galeri Linje": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/galeri-linje-500"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Gallery Valart": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Havza Sanat": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/havza-sanat-191"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Hayatibaa Antika": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Hepsi Antik": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/hepsi-antik-181"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Klasik Gallery": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Kuzey Nümismatik": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 2,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/kuzey-numismatik-504"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Laçin Art Cihangir": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Leo Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Luna Art Gallery": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/luna-art-gallery-499"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Luz Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/luz-muzayede-300"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Magnet Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/magnet-muzayede-121"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Mali Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Müzayede Plus": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Nilart Gallery": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Pingudu Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Puhu Mezat": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Rumeli Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 2,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/rumeli-muzayede-224"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Safi Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/safi-muzayede-480"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Sargon Antik": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 2,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/sargon-antik-416"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Sava Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/sava-muzayede-164"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Sessiz Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/sessiz-muzayede-55"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Soyak Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/soyak-muzayede-92"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Sultan Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/sultan-muzayede-78"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: THE_ONLINE": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/the_online-59"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Tempus Antik": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/tempus-antik-400"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: The Margin Art": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/the-margin-art-505"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Tuval Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/tuval-muzayede-107"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Ulusoy Art": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/ulusoy-art-354"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Yes Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/yes-muzayede-380"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Ziba Art": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/ziba-art-383"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Çetinkaya Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Çukurcuma Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 2,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/cukurcuma-muzayede-72"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Öz Antik Sanat": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: İla Art": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: İmza Sanat": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: İstanbul Antik Sanat": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
   }
  },
  "skip": [
+  [
+   "akartgaleri.com",
+   "15586"
+  ],
+  [
+   "akartgaleri.com",
+   "15934"
+  ],
+  [
+   "akartgaleri.com",
+   "16165"
+  ],
+  [
+   "akartgaleri.com",
+   "18061"
+  ],
   [
    "anatoliamuzayede.com",
    "12824"
@@ -790,6 +1549,138 @@
   [
    "galeriberlin.com",
    "21625"
+  ],
+  [
+   "nisartgallery.com",
+   "10264"
+  ],
+  [
+   "nisartgallery.com",
+   "10708"
+  ],
+  [
+   "nisartgallery.com",
+   "10966"
+  ],
+  [
+   "nisartgallery.com",
+   "11480"
+  ],
+  [
+   "nisartgallery.com",
+   "11821"
+  ],
+  [
+   "nisartgallery.com",
+   "12111"
+  ],
+  [
+   "nisartgallery.com",
+   "12511"
+  ],
+  [
+   "nisartgallery.com",
+   "12967"
+  ],
+  [
+   "nisartgallery.com",
+   "13640"
+  ],
+  [
+   "nisartgallery.com",
+   "14301"
+  ],
+  [
+   "nisartgallery.com",
+   "14988"
+  ],
+  [
+   "nisartgallery.com",
+   "17118"
+  ],
+  [
+   "nisartgallery.com",
+   "18178"
+  ],
+  [
+   "nisartgallery.com",
+   "18522"
+  ],
+  [
+   "nisartgallery.com",
+   "18791"
+  ],
+  [
+   "nisartgallery.com",
+   "19461"
+  ],
+  [
+   "nisartgallery.com",
+   "21661"
+  ],
+  [
+   "nisartgallery.com",
+   "5422"
+  ],
+  [
+   "nisartgallery.com",
+   "5609"
+  ],
+  [
+   "nisartgallery.com",
+   "5739"
+  ],
+  [
+   "nisartgallery.com",
+   "6023"
+  ],
+  [
+   "nisartgallery.com",
+   "6446"
+  ],
+  [
+   "nisartgallery.com",
+   "6823"
+  ],
+  [
+   "nisartgallery.com",
+   "7023"
+  ],
+  [
+   "nisartgallery.com",
+   "7306"
+  ],
+  [
+   "nisartgallery.com",
+   "7581"
+  ],
+  [
+   "nisartgallery.com",
+   "8018"
+  ],
+  [
+   "nisartgallery.com",
+   "8292"
+  ],
+  [
+   "nisartgallery.com",
+   "8541"
+  ],
+  [
+   "nisartgallery.com",
+   "8899"
+  ],
+  [
+   "nisartgallery.com",
+   "9262"
+  ],
+  [
+   "nisartgallery.com",
+   "9404"
+  ],
+  [
+   "nisartgallery.com",
+   "9799"
   ],
   [
    "uxmuzayede.com",
@@ -904,6 +1795,6 @@
    "9760"
   ]
  ],
- "added": 27672,
- "total": 27672
+ "added": 4433,
+ "total": 32105
 }
