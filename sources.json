@@ -8,7 +8,7 @@
       "status": "ok",
       "lots": 0,
       "detail": "muzayedeapp: ended/not live [0 lots]",
-      "last_run": "2026-11-13 05:58",
+      "last_run": "2026-11-14 05:58",
       "method": "muzayedeapp",
       "kind": "house"
     },
@@ -21,7 +21,7 @@
       "status": "ok",
       "lots": 288,
       "detail": "known:artam.com: Artam 409. Müzayede – Modern ve Çağdaş Tablolar [288 lots]",
-      "last_run": "2026-11-13 05:59",
+      "last_run": "2026-11-14 05:58",
       "method": "known:artam.com"
     }
   ]

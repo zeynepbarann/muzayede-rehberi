@@ -1,5 +1,5 @@
 {
- "run": "2026-11-13 06:09",
+ "run": "2026-11-14 06:11",
  "since": "2024-01-01",
  "houses": {
   "nefsmuzayede.com": {
@@ -543,7 +543,7 @@
    ]
   },
   "kalamismuzayede.com": {
-   "auctions_found": 9,
+   "auctions_found": 10,
    "read": 0,
    "lots": 0,
    "tried": [
@@ -577,7 +577,7 @@
     ],
     [
      "https://www.kalamismuzayede.com/muzayedeler",
-     9
+     10
     ],
     [
      "https://www.kalamismuzayede.com/muzayede",
@@ -611,8 +611,8 @@
   },
   "aysilmuzayede.com": {
    "auctions_found": 15,
-   "read": 11,
-   "lots": 1469,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.aysilmuzayede.com/gecmis-muzayedeler",
@@ -678,8 +678,8 @@
   },
   "nisartgallery.com": {
    "auctions_found": 50,
-   "read": 17,
-   "lots": 2117,
+   "read": 2,
+   "lots": 0,
    "tried": [
     [
      "https://www.nisartgallery.com/gecmis-muzayedeler",
@@ -745,8 +745,8 @@
   },
   "akartgaleri.com": {
    "auctions_found": 15,
-   "read": 11,
-   "lots": 847,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.akartgaleri.com/gecmis-muzayedeler",
@@ -886,10 +886,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/artour-muzayede-434"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Artsan Galeri": {
@@ -986,7 +984,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 19,
+   "current_auctions": 17,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
    ],
@@ -1012,10 +1010,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/efes-muzayede-302"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Eksen Müzayede": {
@@ -1266,7 +1262,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 2,
+   "current_auctions": 1,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/sargon-antik-416"
    ],
@@ -1296,10 +1292,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/soyak-muzayede-92"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Sultan Müzayede": {
@@ -1356,7 +1350,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
+   "current_auctions": 2,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/ulusoy-art-354"
    ],
@@ -1795,6 +1789,6 @@
    "9760"
   ]
  ],
- "added": 4433,
+ "added": 0,
  "total": 32105
 }
