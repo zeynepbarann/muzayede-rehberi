@@ -1,5 +1,5 @@
 {
- "run": "2026-11-14 06:11",
+ "run": "2026-11-15 06:28",
  "since": "2024-01-01",
  "houses": {
   "nefsmuzayede.com": {
@@ -339,8 +339,8 @@
   },
   "uxmuzayede.com": {
    "auctions_found": 51,
-   "read": 0,
-   "lots": 0,
+   "read": 1,
+   "lots": 150,
    "tried": [
     [
      "https://www.uxmuzayede.com/gecmis-muzayedeler",
@@ -364,7 +364,7 @@
     ],
     [
      "https://www.uxmuzayede.com/muzayede-arsivi",
-     50
+     1
     ],
     [
      "https://www.uxmuzayede.com/arsiv",
@@ -372,7 +372,7 @@
     ],
     [
      "https://www.uxmuzayede.com/muzayedeler",
-     7
+     6
     ],
     [
      "https://www.uxmuzayede.com/muzayede",
@@ -404,7 +404,7 @@
     ],
     [
      "https://www.uxmuzayede.com/blog?categoryId=263",
-     50
+     51
     ]
    ]
   },
@@ -938,8 +938,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/cesi-muzayede-139"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Cihangir Art Gallery": {
@@ -984,7 +986,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 17,
+   "current_auctions": 18,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
    ],
@@ -1054,7 +1056,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
+   "current_auctions": 2,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/fetva-osmanli-281"
    ],
@@ -1300,10 +1302,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/sultan-muzayede-78"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: THE_ONLINE": {
@@ -1789,6 +1789,6 @@
    "9760"
   ]
  ],
- "added": 0,
- "total": 32105
+ "added": 150,
+ "total": 32255
 }
