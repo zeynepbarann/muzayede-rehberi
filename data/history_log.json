@@ -1,5 +1,5 @@
 {
- "run": "2026-11-15 06:28",
+ "run": "2026-11-16 06:23",
  "since": "2024-01-01",
  "houses": {
   "nefsmuzayede.com": {
@@ -339,8 +339,8 @@
   },
   "uxmuzayede.com": {
    "auctions_found": 51,
-   "read": 1,
-   "lots": 150,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.uxmuzayede.com/gecmis-muzayedeler",
@@ -872,14 +872,22 @@
    "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
-  "muzayedeapp: Artium Modern": {
+  "muzayedeapp: Artimperia Gallery": {
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
    "current_auctions": 1,
    "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/artium-modern-33"
+    "https://www.muzayedeapp.com/muzayede-evi/artimperia-gallery-330"
    ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Artium Modern": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Artour Müzayede": {
@@ -986,7 +994,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 18,
+   "current_auctions": 16,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
    ],
@@ -1038,10 +1046,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/eser-antique-146"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Exodia Mezat": {
@@ -1084,10 +1090,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/galeri-dali-84"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Galeri Linje": {
@@ -1112,10 +1116,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/havza-sanat-191"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Hayatibaa Antika": {
@@ -1194,18 +1196,18 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/magnet-muzayede-121"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Mali Müzayede": {
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/mali-muzayede-335"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Müzayede Plus": {
@@ -1230,6 +1232,16 @@
    "lots": 0,
    "current_auctions": 0,
    "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Polart Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/polart-muzayede-115"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Puhu Mezat": {
@@ -1304,6 +1316,16 @@
    "lots": 0,
    "current_auctions": 0,
    "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: TA Sanat": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/ta-sanat-83"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: THE_ONLINE": {
@@ -1789,6 +1811,6 @@
    "9760"
   ]
  ],
- "added": 150,
+ "added": 0,
  "total": 32255
 }
