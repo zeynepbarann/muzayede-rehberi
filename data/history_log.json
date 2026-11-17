@@ -1,5 +1,5 @@
 {
- "run": "2026-11-16 06:23",
+ "run": "2026-11-17 06:26",
  "since": "2024-01-01",
  "houses": {
   "nefsmuzayede.com": {
@@ -271,7 +271,7 @@
    ]
   },
   "turkartproject.com": {
-   "auctions_found": 27,
+   "auctions_found": 28,
    "read": 0,
    "lots": 0,
    "tried": [
@@ -305,7 +305,7 @@
     ],
     [
      "https://www.turkartproject.com/muzayedeler",
-     6
+     7
     ],
     [
      "https://www.turkartproject.com/muzayede",
@@ -936,10 +936,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/bir-muzayede-122"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Cesi Müzayede": {
@@ -976,10 +974,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/derin-muzayede-377"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Dev Müzayede": {
@@ -1028,8 +1024,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/eksen-muzayede-396"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Enmodern Müzayede": {
@@ -1062,7 +1060,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 2,
+   "current_auctions": 1,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/fetva-osmanli-281"
    ],
@@ -1196,8 +1194,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/magnet-muzayede-121"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Mali Müzayede": {
@@ -1214,8 +1214,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/muzayede-plus-437"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Nilart Gallery": {
@@ -1402,15 +1404,17 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/cetinkaya-muzayede-394"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Çukurcuma Müzayede": {
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 2,
+   "current_auctions": 1,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/cukurcuma-muzayede-72"
    ],
