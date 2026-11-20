@@ -1,5 +1,5 @@
 {
- "run": "2026-11-19 06:32",
+ "run": "2026-11-20 06:27",
  "since": "2024-01-01",
  "houses": {
   "nefsmuzayede.com": {
@@ -998,7 +998,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 12,
+   "current_auctions": 8,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
    ],
@@ -1060,8 +1060,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/exodia-mezat-221"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Fetva Osmanlı": {
@@ -1102,10 +1104,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/galeri-linje-500"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Gallery Valart": {
@@ -1154,7 +1154,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 2,
+   "current_auctions": 1,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/kuzey-numismatik-504"
    ],
@@ -1233,6 +1233,16 @@
    "current_auctions": 1,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/nilart-gallery-456"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Ovoo Art": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/ovoo-art-286"
    ],
    "note": "house page not found (no current auction on the portal?)"
   },
@@ -1370,10 +1380,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/tuval-muzayede-107"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Ulusoy Art": {
@@ -1390,10 +1398,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/yes-muzayede-380"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Ziba Art": {
