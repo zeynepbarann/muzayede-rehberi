@@ -1,5 +1,5 @@
 {
- "run": "2026-11-20 06:27",
+ "run": "2026-11-21 06:26",
  "since": "2024-01-01",
  "houses": {
   "nefsmuzayede.com": {
@@ -204,7 +204,7 @@
    ]
   },
   "kassanat.com": {
-   "auctions_found": 2,
+   "auctions_found": 0,
    "read": 0,
    "lots": 0,
    "tried": [
@@ -238,7 +238,7 @@
     ],
     [
      "https://www.kassanat.com/muzayedeler",
-     2
+     0
     ],
     [
      "https://www.kassanat.com/muzayede",
@@ -745,8 +745,8 @@
   },
   "akartgaleri.com": {
    "auctions_found": 16,
-   "read": 0,
-   "lots": 0,
+   "read": 1,
+   "lots": 67,
    "tried": [
     [
      "https://www.akartgaleri.com/gecmis-muzayedeler",
@@ -998,7 +998,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 8,
+   "current_auctions": 11,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
    ],
@@ -1180,10 +1180,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/luna-art-gallery-499"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Luz Müzayede": {
@@ -1298,10 +1296,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/sargon-antik-416"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Sava Müzayede": {
@@ -1373,6 +1369,16 @@
    "current_auctions": 1,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/the-margin-art-505"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Tunca Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/tunca-muzayede-130"
    ],
    "note": "house page not found (no current auction on the portal?)"
   },
@@ -1827,6 +1833,6 @@
    "9760"
   ]
  ],
- "added": 0,
- "total": 32255
+ "added": 67,
+ "total": 32322
 }
