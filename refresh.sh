@@ -8,6 +8,8 @@ python3 add_sources.py || echo "add_sources failed (continuing)"
 python3 scrape.py
 # Finished MüzayedeApp auctions (these sites refuse GitHub, so history is collected here). Incremental, max ~40 min.
 timeout 45m python3 history_mapp.py --since 2000-01-01 --minutes 40 || echo "history_mapp incomplete (continues next run)"
+# Finished art auctions of the houses listed on muzayede.app, read from their own sites. Only adds what it has not read yet.
+timeout 25m python3 app_houses_pull.py --minutes 20 || echo "app_houses_pull incomplete (continues next run)"
 if [ "$1" = "--lebriz" ] || [ "$(date +%u)" = "1" ]; then timeout 3h python3 lebriz.py || echo "lebriz import incomplete (resumes next run)"; fi
 # Copy new images into the private bucket so they outlive the auction (resumes where it stopped; needs GCS_KEY).
 timeout 35m python3 mirror_images.py --minutes 30 || echo "image mirror incomplete (continues next run)"
