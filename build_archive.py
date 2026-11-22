@@ -4,6 +4,8 @@
 Writes
   data/archive.json       what a grid card needs, one short row per work (loaded when Arşiv opens)
   data/archive_text.json  normalised description text per row, same order (loaded only when someone searches)
+  data/archive_artists.json  one short row per artist name, so the artist lists open without the full index:
+                          [name, works, works with a picture, cover bucket name, cover address when it has no bucket name]
   data/img/<xx>.json      bucket name -> original picture address, split by the first two letters of the name; the page reads
                           one small file only when a picture is not in the bucket yet
 
@@ -63,6 +65,24 @@ def image_name(u):
     name = img_key(u) + ("" if e == "jpg" else "." + e)
     ORIGINALS[name] = u
     return name
+
+
+def write_artists(A, rows, meta):
+    per = {}
+    for row, _ in rows:
+        e = per.setdefault(row[0], [A[row[0]], 0, 0, "", ""])
+        e[1] += 1
+        if row[6]:
+            e[2] += 1
+            if not e[3]:
+                e[3] = row[6]
+                e[4] = row[8] if len(row) > 8 else ""
+    out = {k: meta[k] for k in ("v", "works", "with_images", "past", "live", "lebriz")}
+    out["N"] = [e if e[4] else e[:4] if e[3] else e[:3] for e in per.values() if e[0]]
+    tmp = os.path.join(DATA, "archive_artists.json.tmp")
+    with open(tmp, "w", encoding="utf8") as f:
+        json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
+    os.replace(tmp, os.path.join(DATA, "archive_artists.json"))
 
 
 def write_originals(rows):
@@ -155,6 +175,7 @@ def build():
             json.dump(obj, f, ensure_ascii=False, separators=(",", ":"))
         os.replace(tmp, os.path.join(DATA, name))
     write_originals(rows)
+    write_artists(A, rows, meta)
     print("archive: %d works (%d finished, %d on sale, %d Lebriz), %d with images, %d artists" % (len(rows), src[0], src[1], src[2], meta["with_images"], len(A)))
 
 

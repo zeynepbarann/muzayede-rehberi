@@ -1562,7 +1562,7 @@ const pd=s=>{if(!s)return null;const[d,m,y]=s.split('.');return new Date(+y,m-1,
 const wbLink=(u,sn)=>`https://web.archive.org/web/${sn||'2023'}/${u}`;
 function lbOpenTab(){if(view!='lb'){view='lb';document.body.dataset.view='lb';pushNav(TABHASH.lb);document.querySelectorAll('.nvl button').forEach(b=>b.classList.toggle('on',b.dataset.v=='lb'));document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id=='v-lb'))}
  if(!LB)$('lbres').innerHTML='<div class="alist">'+Array.from({length:9},()=>'<div class="skel" style="height:86px;border-radius:14px"></div>').join('')+'</div>';
- Promise.all([lbLoad(),ready,arLoad()]).then(()=>{const ex=LB.exhibitions,f=x=>x.toLocaleString('tr-TR');$('arTotal').textContent=f(AX.works);$('lbnote').textContent=`${f(AX.live)} satışta · ${f(AX.past)} biten müzayede · ${f(AX.lebriz)} arşiv · ${f(ex.length)} sergi · ${f(LB.galleries.length)} galeri`;
+ Promise.all([lbLoad(),ready,arLite()]).then(()=>{const ex=LB.exhibitions,f=x=>x.toLocaleString('tr-TR');$('arTotal').textContent=f(ARL.works);$('lbnote').textContent=`${f(ARL.live)} satışta · ${f(ARL.past)} biten müzayede · ${f(ARL.lebriz)} arşiv · ${f(ex.length)} sergi · ${f(LB.galleries.length)} galeri`;
   if($('lbcity').options.length<2){[...new Set(ex.map(e=>e.c).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr')).forEach(c=>$('lbcity').add(new Option(c,c)));[...new Set(ex.map(e=>e.g).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr')).forEach(c=>$('lbgal').add(new Option(c,c)))}
   lbRender()}).catch(e=>{$('lbnote').textContent='Arşiv verileri yüklenemedi. Sayfayı web sunucusu üzerinden açın. '+(e&&e.message?'['+e.message+']':'');$('lbres').innerHTML=''})}
 const exYear=e=>((e.s||'').match(/\d{4}$/)||[])[0]||'';
@@ -1593,13 +1593,17 @@ function personName(raw,known){let s=(raw||'').trim();if(known&&known.has(norm(s
  let parts=s.split(/\s+/),w=parts.map(norm);const h=w.findIndex(x=>x.split(' ').some(y=>HARD.has(y)));if(h===0||h===1)return null;const sure=h<0;if(h>1){parts=parts.slice(0,h);w=w.slice(0,h)}
  if(!w.length||w.length>4||/\d/.test(parts.join(' '))||FIRST_NO.has(w[0])||w.every(x=>SOFT.has(x)))return null;
  const dotted=/^\p{L}{1,3}\.\s*\p{L}{2,}/u.test(parts.join(' '));if(w.length<2&&!dotted&&!MONO.has(w[0]))return null;if(!w.join(' ').split(' ').some(x=>x.length>=3))return null;return [parts.join(' '),sure]}
-function arArtists(d){const known=new Set(((LB&&LB.artists)||[]).map(x=>norm(x.n))),rows=new Map();d.R.forEach(r=>{let e=rows.get(r[0]);if(!e)rows.set(r[0],e={c:0,im:0,r:null});e.c++;if(r[6]||r[8]){e.im++;if(!e.r)e.r=r}});
- const P=[];rows.forEach((e,i)=>{const raw=d.A[i],p=raw&&personName(raw,known);if(p)P.push({i,e,raw,n:p[0],sure:p[1],k:akey(p[0])})});const sure=new Set(P.filter(x=>x.sure&&x.k).map(x=>x.k)),m=new Map();
- P.forEach(x=>{if(!x.k||!sure.has(x.k))return;let a=m.get(x.k);if(!a)m.set(x.k,a={n:x.n,top:0,c:0,im:0,r:null,s:'',v:[]});a.c+=x.e.c;a.im+=x.e.im;a.r=a.r||x.e.r;a.s+=' '+d.an[x.i];a.v.push(x.raw);if(x.sure&&x.e.c>a.top){a.top=x.e.c;a.n=x.n}});
+function arArtists(d,E){const known=new Set(((LB&&LB.artists)||[]).map(x=>norm(x.n)));
+ const P=[];E.forEach(e=>{const p=e.raw&&personName(e.raw,known);if(p)P.push({e,raw:e.raw,n:p[0],sure:p[1],k:akey(p[0])})});const sure=new Set(P.filter(x=>x.sure&&x.k).map(x=>x.k)),m=new Map();
+ P.forEach(x=>{if(!x.k||!sure.has(x.k))return;let a=m.get(x.k);if(!a)m.set(x.k,a={n:x.n,top:0,c:0,im:0,r:null,s:'',v:[]});a.c+=x.e.c;a.im+=x.e.im;a.r=a.r||x.e.r;a.s+=' '+x.e.an;a.v.push(x.raw);if(x.sure&&x.e.c>a.top){a.top=x.e.c;a.n=x.n}});
  d.arBy=m;const L=[...m.values()];L.forEach(a=>{a.s=(norm(a.n)+' '+a.s).trim();a.key=arSortKey(a.n);a.low=!a.im||a.c<2||!a.key});return L.sort((x,y)=>(x.low-y.low)||AR_ABC.compare(x.key,y.key))}
 const arATile=a=>{const im=a.r?arFull(a.r):'';return `<button type="button" class="ctl" data-artist="${esc(a.n)}"><span class="ctl-i">${im?`<img loading="lazy" decoding="async" draggable="false" src="${esc(thumb(im))}" data-o="${esc(im)}" alt="" onerror="${thumbErr}">`:''}<em>${esc(a.n.trim().charAt(0))}</em></span><b>${esc(a.n)}</b><i>${a.c.toLocaleString('tr-TR')} eser</i></button>`};
 let arAS=[];
-const arLoad=()=>AX?Promise.resolve(AX):fetch('data/archive.json'+V).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>lbLoad().catch(()=>null).then(()=>d)).then(d=>{d.an=d.A.map(x=>norm(x));d.hn=d.H.map(x=>norm(houseName(x)));d.hs=d.H.map(houseName);d.ar=arArtists(d);return AX=d});
+/* the full index of every work is only fetched for the Eserler tab; artist lists use a small file of their own */
+let arP=null,ARL=null,arlP=null;
+const arLoad=()=>AX?Promise.resolve(AX):arP||(arP=fetch('data/archive.json'+V).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{d.an=d.A.map(x=>norm(x));d.hn=d.H.map(x=>norm(houseName(x)));d.hs=d.H.map(houseName);return AX=d}).catch(e=>{arP=null;throw e}));
+const arFromFull=()=>arLoad().then(d=>{const m=new Map();d.R.forEach(r=>{let e=m.get(r[0]);if(!e)m.set(r[0],e=[d.A[r[0]],0,0,'','']);e[1]++;if(r[6]||r[8]){e[2]++;if(!e[3]&&!e[4]){e[3]=r[6]||'';e[4]=r[8]||''}}});return{works:d.works,live:d.live,past:d.past,lebriz:d.lebriz,N:[...m.values()].filter(e=>e[0])}});
+const arLite=()=>ARL?Promise.resolve(ARL):arlP||(arlP=Promise.all([fetch('data/archive_artists.json'+V).then(r=>{if(!r.ok)throw 0;return r.json()}).catch(arFromFull),lbLoad().catch(()=>null)]).then(([d])=>{const E=d.N.map(x=>{const r=[];r[6]=x[3]||'';if(x[4])r[8]=x[4];return{raw:x[0],an:norm(x[0]),c:x[1],im:x[2],r:x[3]||x[4]?r:null}});const o={works:d.works,live:d.live,past:d.past,lebriz:d.lebriz};o.ar=arArtists(o,E);return ARL=o}).catch(e=>{arlP=null;throw e}));
 const arTextLoad=()=>AT?Promise.resolve(AT):arTP||(arTP=fetch('data/archive_text.json'+V).then(r=>r.ok?r.json():[]).catch(()=>[]).then(d=>{AT=d;return d}));
 const arTags=r=>{const o=['s:'+r[5]];if(r[4]>>2)o.push('t:'+(r[4]>>2));if(r[4]&3)o.push('z:'+(r[4]&3));if(r[2])o.push('y:'+Math.floor(r[2]/100));return o};
 const arLabel=id=>{const[k,v]=id.split(':');return k=='s'?AR_S[v]:k=='t'?AX.T[v-1]:k=='z'?AR_Z[v]:v};
@@ -1620,8 +1624,8 @@ function arDrawTags(cnt,fly){const box=$('arTags'),old=new Map();if(fly&&!RM)box
  if(old.size)box.querySelectorAll('[data-art]').forEach(e=>{const p=old.get(e.dataset.art);if(!p)return;const n=e.getBoundingClientRect(),dx=p.left-n.left,dy=p.top-n.top;if(dx||dy)e.animate([{transform:`translate(${dx}px,${dy}px)`},{transform:'none'}],{duration:520,easing:'cubic-bezier(.16,1,.3,1)'})})}
 function lbRender(){if(!LB)return;const raw=$('lbq').value,q=norm(raw).split(' ').filter(Boolean),M=t=>q.every(w=>norm(t).includes(w)),W=lbSub=='w';
  ['arTags','arBar','arG','arEnd'].forEach(i=>$(i).hidden=!W);$('lbres').hidden=W;$('arClr').hidden=!raw;$('exf').style.display=lbSub=='e'?'flex':'none';let h='';const f=x=>x.toLocaleString('tr-TR');
- const aL=AX?AX.ar.filter(a=>q.every(w=>a.s.includes(w))):[];$('arNa').textContent=f(aL.length);$('arNe').textContent=f(LB.exhibitions.filter(e=>M([e.t,e.g,e.c].join(' '))).length);$('arNg').textContent=f(LB.galleries.filter(g=>M([g.n,g.c,g.a].join(' '))).length);
- if(AX&&!W&&!$('arNw').textContent)$('arNw').textContent=f(AX.works);if(W){if(AX)arApply();return}
+ const aL=ARL?ARL.ar.filter(a=>q.every(w=>a.s.includes(w))):[];$('arNa').textContent=f(aL.length);$('arNe').textContent=f(LB.exhibitions.filter(e=>M([e.t,e.g,e.c].join(' '))).length);$('arNg').textContent=f(LB.galleries.filter(g=>M([g.n,g.c,g.a].join(' '))).length);
+ if(ARL&&!W&&!$('arNw').textContent)$('arNw').textContent=f(ARL.works);if(W){if(AX)arApply();else{if(ARL)$('arNw').textContent=f(ARL.works);$('arG').innerHTML='<div class="skc skel"></div>';arLoad().then(()=>{if(view=='lb'&&lbSub=='w'){$('arG').innerHTML='';arApply()}}).catch(()=>{$('arG').innerHTML='<div class="empty"><div class="big">Eserler yüklenemedi</div>Bağlantınızı kontrol edip sayfayı yenileyin.</div>'})}return}
  if(lbSub=='a'){arAS=aL;h=aL.length?`<div class="shelf" id="arShelf">${aL.slice(0,arAL).map(arATile).join('')}</div>`:'<div class="empty"><div class="big">Sanatçı bulunamadı</div></div>'}
  else if(lbSub=='e'){const c=$('lbcity').value,g=$('lbgal').value,f=$('lbfrom').value?new Date($('lbfrom').value):null,t=$('lbto').value?new Date($('lbto').value):null;
   let r=LB.exhibitions.filter(e=>M([e.t,e.g,e.c].join(' '))&&(!c||e.c==c)&&(!g||e.g==g)&&(!f||(pd(e.s)&&pd(e.s)>=f))&&(!t||(pd(e.s)&&pd(e.s)<=t)));if($('lbsort').value=='old')r=[...r].reverse();
@@ -2041,7 +2045,7 @@ const lbPlate=w=>!!w.i&&w.z!=null&&(w.z===0||w.z>=100);
 async function bkData(name){await ready;try{await lbLoad()}catch(e){}const a=lbMatch(name),k=akey(name);let past=null;
  if(typeof artistPast=='function')past=await artistPast(name).catch(()=>null);   /* per-artist shard when there is one */
  if(!past)past=((await loadPast().catch(()=>[]))||[]).filter(x=>x.artist&&(a?lbMatch(x.artist)===a:akey(x.artist)==k));
- const grp=AX&&AX.arBy&&AX.arBy.get(k),other=grp?grp.v.filter(v=>akey(v)!==k).slice(0,150):[];if(other.length){const more=await Promise.all(other.map(v=>artistPast(v).catch(()=>[])));const seen=new Set(past.map(x=>x.key));more.flat().forEach(x=>{if(!seen.has(x.key)){seen.add(x.key);past=[...past,x]}})}
+ await arLite().catch(()=>{});const grp=ARL&&ARL.arBy&&ARL.arBy.get(k),other=grp?grp.v.filter(v=>akey(v)!==k).slice(0,150):[];if(other.length){const more=await Promise.all(other.map(v=>artistPast(v).catch(()=>[])));const seen=new Set(past.map(x=>x.key));more.flat().forEach(x=>{if(!seen.has(x.key)){seen.add(x.key);past=[...past,x]}})}
  const oset=new Set(other),liveAll=[...artistLots(a,name),...(other.length?D.lots.filter(l=>oset.has(l.artist)):[])];
  const live=[...new Set(liveAll)].filter(l=>l.images[0]).sort((x,y)=>(x._e||9e15)-(y._e||9e15));
  const old=past.filter(x=>x.image).sort((x,y)=>(y.end_date||'').localeCompare(x.end_date||''));
@@ -2100,7 +2104,7 @@ let catLim=36,catT=0,CVL=null,AIX=null;const NOTART=/hizmet|bedelsiz|hemen al|im
 const aixLoad=()=>AIX?Promise.resolve(AIX):fetch('data/artist_index.json'+V).then(r=>r.ok?r.json():{}).then(d=>AIX=(d&&d.artists)||{}).catch(()=>AIX={});
 function catCover(a){if(!CVL){CVL=new Map();D.lots.forEach(l=>{if(l.images[0]&&l.artist){const k=akey(l.artist);if(!CVL.has(k))CVL.set(k,l.images[0])}})}const k=akey(a.n),x=AIX&&AIX['k:'+k];return CVL.get(k)||(Array.isArray(x)&&mir(x[2]))||''}
 let catL=[];const catTile=a=>arATile(a).replace('data-artist=','data-book=');
-function catRender(){arLoad().then(()=>{const q=norm($('catQ').value).split(' ').filter(Boolean);catL=AX.ar.filter(a=>q.every(w=>a.s.includes(w)));$('catN').textContent=catL.length.toLocaleString('tr-TR');$('catClr').hidden=!$('catQ').value;
+function catRender(){arLite().then(()=>{const q=norm($('catQ').value).split(' ').filter(Boolean);catL=ARL.ar.filter(a=>q.every(w=>a.s.includes(w)));$('catN').textContent=catL.length.toLocaleString('tr-TR');$('catClr').hidden=!$('catQ').value;
  $('bkShelf').innerHTML=catL.slice(0,catLim).map(catTile).join('')||emptyBox('Bu adla katalog yok','Sanatçının adını farklı yazmayı deneyin.')}).catch(()=>{})}
 $('catQ').addEventListener('input',()=>{clearTimeout(catT);catT=setTimeout(()=>{catLim=60;catRender()},140)});$('catClr').onclick=()=>{$('catQ').value='';catLim=60;catRender();$('catQ').focus()};$('catSBtn').onclick=()=>{const s=$('catS'),on=!s.classList.contains('on');s.classList.toggle('on',on);$('catSBtn').setAttribute('aria-expanded',on?'true':'false');if(on)$('catQ').focus()};
 $('bkX').onclick=bkDismiss;$('bkPrev').onclick=bkPrev;$('bkNext').onclick=bkNext;
