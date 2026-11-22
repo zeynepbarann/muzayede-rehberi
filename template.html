@@ -811,7 +811,7 @@ main{padding-top:18px}
 /* ===== work page: one page that scrolls, picture first, everything below it ===== */
 #m.wpm{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;display:block}
 #m.wpm .sheet{position:relative;inset:auto;height:auto;min-height:100%;overflow:visible}
-#m.wpm .sheet>.x{position:fixed}
+#m.wpm .sheet>.x{position:sticky;display:flex;align-items:center;justify-content:center;left:0;right:auto;top:calc(10px + env(safe-area-inset-top));margin:calc(10px + env(safe-area-inset-top)) 0 calc(-54px - env(safe-area-inset-top)) 16px;background:#fff;z-index:12}
 .wp{position:relative;inset:auto;display:block;min-height:100%}
 .wp-top{position:sticky;top:0;z-index:10;height:calc(64px + env(safe-area-inset-top));background:rgba(248,247,244,.94)}
 .wp-stage{height:min(58dvh,560px)}
@@ -1802,7 +1802,7 @@ function route(h,boot,keep){h=dec(h);curRoute=h;
  if(h.startsWith('house=')){return openHouse(h.slice(6),true)}
  if(h.startsWith('q=')||h.startsWith('s=')){show('search',true);return ready.then(()=>{$('gq').value=h.slice(2);return lbLoad().catch(()=>{}).finally(()=>{IDX=null;fullResults('all',true)})})}
  if(boot&&(h.startsWith('lot=')||h.startsWith('past=')||h.startsWith('cmp=')||h=='help'||h=='add'||h=='galeri'||h.startsWith('katalog='))){// a shared link to a pop-up: open it over the start page, so back lands on the site
-  history.replaceState({},'',urlFor(''));curRoute='';show(startView(),true);
+  const under=h.startsWith('lot=')?'kesfet':'';history.replaceState({},'',urlFor(under));curRoute=under;show(under?'lots':startView(),true);
   ready.then(()=>{if(h.startsWith('lot='))openLot(h.slice(4));else if(h.startsWith('past='))openPast(h.slice(5));else if(h.startsWith('cmp=')){cmp=h.slice(4).split(',').filter(k=>byKey[k]).slice(0,4);dock();if(cmp.length>1)showCmp()}else if(h=='help')openHelp();else if(h=='galeri')g3Open();else if(h.startsWith('katalog='))openBook(h.slice(8));else openAdd()});return}
  show(startView(),true)}
 addEventListener('popstate',e=>{const st=e.state||{};menuOpen(false);navQuiet=true;
