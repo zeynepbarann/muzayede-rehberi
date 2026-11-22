@@ -809,7 +809,7 @@ main{padding-top:18px}
 @media(prefers-reduced-motion:reduce){.menu,.menu.open{transition:none;transform:none}}
 
 /* ===== work page: one page that scrolls, picture first, everything below it ===== */
-#m.wpm{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;display:block}
+#m.wpm{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}#m.wpm.open{display:block}#m.wpm:not(.open){display:none}
 #m.wpm .sheet{position:relative;inset:auto;height:auto;min-height:100%;overflow:visible}
 #m.wpm .sheet>.x{position:sticky;display:flex;align-items:center;justify-content:center;left:0;right:auto;top:calc(10px + env(safe-area-inset-top));margin:calc(10px + env(safe-area-inset-top)) 0 calc(-54px - env(safe-area-inset-top)) 16px;background:#fff;z-index:12}
 .wp{position:relative;inset:auto;display:block;min-height:100%}
