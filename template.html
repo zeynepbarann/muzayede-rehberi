@@ -720,6 +720,31 @@ h1,h2,h3,.artist,.hm-h,.door b,.ctl b{font-weight:500;letter-spacing:-.012em}
 .wp-cta{height:54px;padding:0 20px;border-radius:0;background:#111110;color:#fff;font:500 10.5px var(--sans);letter-spacing:.16em;text-transform:uppercase}.wp-cta span:last-child{font:500 22px var(--serif);letter-spacing:0;text-transform:none;color:var(--wp-gold)}
 @media(min-width:640px) and (min-aspect-ratio:4/5),(min-width:640px) and (max-height:520px){.wp-sheet{border-top:0;border-left:1px solid var(--line);padding:26px 28px calc(20px + env(safe-area-inset-bottom))}}
 #mc .wp-cta,#mc .wp-cta span:first-child{color:#fff!important}#mc .wp-cta span:last-child{color:var(--wp-gold)!important}.wp-scroll{scrollbar-width:none}.wp-scroll::-webkit-scrollbar{display:none}body:has(#m.open) aside.filters:not(.open){visibility:hidden}
+
+/* ===== catalogues, finishing layer: same black, white and gold as the work page ===== */
+.shelf{gap:38px 22px}.ctl-i{background:#f1f0ec}.ctl-i em{font:italic 400 58px/1 var(--serif);color:#8b8880;opacity:1}
+.ctl b{margin:11px 0 3px;font:500 23px/1.04 var(--serif);letter-spacing:-.012em}.ctl i{font:500 9.5px var(--sans);letter-spacing:.15em;color:#6b6862}
+.bk{--ink:#111110;--muted:#6b6862;--line:rgba(17,17,16,.13);--paper:#fff;--wp-gold:#dcb96a;background:#f8f7f4;color:#111110}
+.bk-top{padding:calc(10px + env(safe-area-inset-top)) 16px 6px 20px}.bk-top .g3-title b{font:500 25px/1.05 var(--serif);letter-spacing:-.012em;color:#111110}.bk-top .g3-title span{display:block;margin-top:3px;font:500 9.5px var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.bk-top .x{width:44px;height:44px;border-radius:50%!important;border:1px solid var(--line);background:transparent;color:#111110}
+.bk .g3-nav{width:44px;height:44px;border-radius:50%!important;border:1px solid var(--line);background:#fff;color:#111110}
+.bk-book::before,.bk-book::after{box-shadow:0 12px 36px rgba(17,17,16,.1),0 0 0 1px rgba(17,17,16,.06)}
+.bk.ax .bk-face.f::before{background:linear-gradient(180deg,rgba(17,17,16,.09),transparent 7%)}.bk.ax .bk-face.b::before{background:linear-gradient(0deg,rgba(17,17,16,.09),transparent 7%)}
+.bk.ay .bk-face.f::before{background:linear-gradient(90deg,rgba(17,17,16,.09),transparent 7%)}.bk.ay .bk-face.b::before{background:linear-gradient(270deg,rgba(17,17,16,.09),transparent 7%)}.bk-face::after{background:rgba(17,17,16,.2)}
+.bk-pg{padding:7cqmin 7cqmin 6cqmin;color:#111110}.bk-pg small{font:500 max(9px,2.5cqmin) var(--sans);letter-spacing:.16em;color:#6b6862}
+.bk-pg.cover{padding:0;background:#111110}.bk-pg.cover .cvt{padding:24cqmin 7cqmin 6cqmin;background:linear-gradient(180deg,transparent,rgba(0,0,0,.72))}.bk-pg.cover small{color:rgba(255,255,255,.86)}.bk-pg.cover b{margin:2cqmin 0 1.5cqmin;font:500 max(36px,15cqmin)/.96 var(--serif);letter-spacing:-.022em}.bk-pg.cover span{font:500 max(9px,2.5cqmin) var(--sans);letter-spacing:.15em;text-transform:uppercase;color:var(--wp-gold);opacity:1}
+.bk-pg.t1 h2{margin-top:2.5cqmin;font:500 max(40px,18cqmin)/.94 var(--serif);letter-spacing:-.025em}
+.bk-pg.t2,.bk-pg.c2,.bk-pg.tx{border-top:0}
+.bk-pg.t2 dl,.bk-pg.tx dl{display:grid;grid-template-columns:auto 1fr;gap:0;margin:0;border-bottom:1px solid var(--line)}.bk-pg.t2 dt,.bk-pg.t2 dd,.bk-pg.tx dt,.bk-pg.tx dd{padding:.62em 0;border-top:1px solid var(--line)}
+.bk-pg dt{padding-right:5cqmin!important;font:500 max(8.5px,2.3cqmin)/1.6 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#6b6862}.bk-pg dd{text-align:right;font:500 max(11px,3cqmin)/1.3 var(--sans);min-width:0}.bk-pg p{font-size:max(10px,2.6cqmin);color:#6b6862}
+.bk-pg.c1 b{margin-top:1cqmin;font:400 max(58px,32cqmin)/.86 var(--serif);letter-spacing:-.035em}.bk-pg.c1.txt b{font:500 max(36px,16cqmin)/.96 var(--serif);letter-spacing:-.022em}
+.bk-th{gap:3px}.bk-th button{background:#f1f0ec}.bk-th span{font:500 max(10px,2.8cqmin) var(--sans);color:#6b6862}
+.bk-pg.im{padding:4cqmin;background:#fbfaf8}.bk-pg.im img{inset:4cqmin;max-width:calc(100% - 8cqmin);max-height:calc(100% - 8cqmin);box-shadow:0 8px 24px rgba(17,17,16,.14)}
+.bk-pg.tx{gap:1.8cqmin}.bk-pg.tx .no{font:500 max(9px,2.5cqmin) var(--sans);letter-spacing:.16em;color:#6b6862}.bk-pg.tx .no::before{content:"Eser "}.bk-pg.tx>b{margin:0 0 1cqmin;font:500 max(18px,6cqmin)/1.05 var(--serif);letter-spacing:-.012em}.bk-pg.tx dd{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-ft{gap:2.5cqmin}.bk-ft u{font:500 max(23px,8cqmin)/1 var(--serif);letter-spacing:-.015em;color:#111110}.bk-ft em{padding:0;background:none;color:#8d6d24;font:600 max(8.5px,2.2cqmin) var(--sans);letter-spacing:.14em}
+.bk-ft button{min-height:38px;border:0;background:#111110;color:#fff;font:500 max(9px,2.4cqmin) var(--sans);letter-spacing:.14em;padding:0 1.5em}
+.bk-bot{padding:0 20px calc(10px + env(safe-area-inset-bottom));font:500 10px var(--sans);letter-spacing:.14em;color:var(--muted)}.bk-bot input{accent-color:#111110}
+@media(max-width:640px){.shelf{gap:30px 14px}.ctl b{font-size:19px}.ctl-i em{font-size:42px}}
 </style></head><body>
 <header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -1810,14 +1835,14 @@ function bkPages(live,old){const P=[{t:'cover'},{t:'t1'},{t:'t2'}];let no=0;
  const by={};old.forEach(o=>{(by[bkYear(o)]=by[bkYear(o)]||[]).push(o)});Object.keys(by).sort().reverse().forEach(y=>chap(y,'Biten müzayedeler',by[y],false));
  if(!no)P.push({t:'c1',h:'Henüz görselli kayıt yok',sub:'16/22',txt:1},{t:'c2',items:[],n:0});return P}
 function bkPage(p){const n=B.name;if(!p)return '<div class="bk-pg"></div>';const all=B.live.length+B.old.length;
- if(p.t=='cover')return `<div class="bk-pg cover">${B.hero?`<img src="${esc(B.hero.images[0])}" alt="" draggable="false" onerror="this.remove()">`:''}<div class="cvt"><small>16/22 · Katalog</small><b>${esc(n)}</b><span>${B.loading?'Derleniyor…':all.toLocaleString('tr-TR')+' eser'}</span></div></div>`;
+ if(p.t=='cover')return `<div class="bk-pg cover">${B.hero?`<img src="${esc(thumb(B.hero.images[0]))}" data-o="${esc(B.hero.images[0])}" alt="" draggable="false" onload="sharp(this)" onerror="${thumbErr}">`:''}<div class="cvt"><small>16/22 · Katalog</small><b>${esc(n)}</b><span>${B.loading?'Derleniyor…':all.toLocaleString('tr-TR')+' eser'}</span></div></div>`;
  if(p.t=='t1')return `<div class="bk-pg t1"><small>Müzayede kataloğu</small><h2>${esc(n)}</h2></div>`;
  if(p.t=='t2'){const A=[...B.live,...B.old],pr=A.map(bkPrice).filter(Boolean),ys=B.old.map(bkYear).filter(y=>/^\d{4}$/.test(y)).sort(),hs=new Set(A.map(x=>x.house));
   return `<div class="bk-pg t2"><dl><dt>Eser</dt><dd>${A.length.toLocaleString('tr-TR')}</dd><dt>Şu an satışta</dt><dd>${B.live.length}</dd><dt>Müzayede evi</dt><dd>${hs.size}</dd>${ys.length?`<dt>Dönem</dt><dd>${ys[0]}${ys[ys.length-1]!=ys[0]?' – '+ys[ys.length-1]:''}</dd>`:''}${pr.length?`<dt>Fiyat aralığı</dt><dd>${TL(Math.min(...pr))} – ${TL(Math.max(...pr))}</dd>`:''}</dl>
   <p>Bu katalog, arşivdeki bütün müzayede kayıtlarından kendiliğinden derlenir. Müzayedesi biten eserler de burada kalır; yeni eserler geldikçe sayfalar eklenir.</p></div>`}
  if(p.t=='c1')return `<div class="bk-pg c1${p.txt?' txt':''}"><small>${esc(p.sub||'')}</small><b>${esc(p.h)}</b></div>`;
  if(p.t=='c2')return `<div class="bk-pg c2"><small>${p.n.toLocaleString('tr-TR')} eser</small><div class="bk-th">${p.items.slice(0,p.items.length>18?17:18).map(x=>`<button type="button" data-bkgo="${x.pi}" aria-label="Esere git"><img loading="lazy" decoding="async" draggable="false" src="${esc(thumb(x.o.images[0]))}" data-o="${esc(x.o.images[0])}" alt="" onerror="${thumbErr}"></button>`).join('')}${p.items.length>18?`<span>+${p.items.length-17}</span>`:''}</div></div>`;
- const o=p.o;if(p.t=='im')return `<div class="bk-pg im" data-bkz="${esc(o.images[0])}"><img decoding="async" draggable="false" src="${esc(o.images[0])}" alt="" onload="this.classList.add('ld')" onerror="this.remove()"></div>`;
+ const o=p.o;if(p.t=='im')return `<div class="bk-pg im" data-bkz="${esc(o.images[0])}"><img decoding="async" draggable="false" src="${esc(thumb(o.images[0]))}" data-o="${esc(o.images[0])}" alt="" onload="this.classList.add('ld');sharp(this)" onerror="${thumbErr}"></div>`;
  const d=o.end_date?o.end_date.slice(0,10).split('-').reverse().join('.'):'',sz=p.live?o.size:sizeOf(o.description).txt;
  return `<div class="bk-pg tx"><div class="no">${p.no}</div><b>${esc(o.description||o.title||'Eser')}</b><dl>${sz?`<dt>Ölçü</dt><dd>${esc(sz)}</dd>`:''}<dt>Müzayede evi</dt><dd>${esc(o.house||'—')}</dd>${o.auction?`<dt>Müzayede</dt><dd>${esc(o.auction)}</dd>`:''}${d?`<dt>${p.live?'Bitiş':'Tarih'}</dt><dd>${d}</dd>`:''}</dl>
  <div class="bk-ft"><u>${p.live?TL(priceOf(o)):pastPrice(o)}</u>${p.live?'<em>Satışta</em>':''}<button type="button" data-${p.live?'open':'past'}="${esc(o.key)}">Eseri aç →</button></div></div>`}
