@@ -763,18 +763,50 @@ h1,h2,h3,.artist,.hm-h,.door b,.ctl b{font-weight:500;letter-spacing:-.012em}
 @media(max-width:640px){.ar-tags{top:var(--hdr);margin:0 -12px;padding:12px 12px 14px}.ar-search{height:52px}.ar-tabs button{font-size:9.5px;letter-spacing:.06em}.ar-tabs i{font-size:17px}}
 @media(max-width:640px){html,body{overflow-x:clip}}
 
-/* ===== floating pill menu ===== */
-:root{--tabbar:calc(94px + env(safe-area-inset-bottom))}body{padding-bottom:var(--tabbar)}
-nav.tabs{position:fixed!important;top:auto!important;left:50%!important;right:auto!important;bottom:calc(14px + env(safe-area-inset-bottom))!important;z-index:45;transform:translateX(-50%);box-sizing:border-box;width:min(358px,calc(100vw - 24px));height:66px;max-width:none;margin:0;padding:6px!important;display:grid;grid-template-columns:1fr 1fr 54px 1fr;gap:2px;align-items:stretch;justify-content:stretch;overflow:visible;border:1px solid rgba(17,17,16,.08)!important;border-radius:40px;background:rgba(255,255,255,.97)!important;box-shadow:0 14px 38px rgba(17,17,16,.2)!important;transition:width .4s cubic-bezier(.16,1,.3,1),height .4s cubic-bezier(.16,1,.3,1)}
-nav.tabs button{display:flex!important;flex-direction:row;align-items:center;justify-content:center;min-width:0;min-height:0!important;height:auto;padding:0!important;border:0!important;border-radius:30px;background:transparent;color:#3a3936!important;opacity:1!important;font:500 12px var(--sans)!important;letter-spacing:0!important;text-transform:none;white-space:nowrap;cursor:pointer;box-shadow:none!important;transition:background .3s,color .3s,font-size .3s}
-nav.tabs button.on{background:#111110;color:#fff!important}nav.tabs .n,nav.tabs .ti{display:none!important}nav.tabs #tSearch{display:none!important}
-nav.tabs #pillS{border-radius:50%;background:#111110;color:#dcb96a!important}
-body.nav-c nav.tabs{width:min(292px,calc(100vw - 24px));height:56px;grid-template-columns:1fr 1fr 44px 1fr}body.nav-c nav.tabs button{font-size:10.5px!important}
+/* ===== simple header and full-page menu ===== */
+:root{--hdr:60px;--tabbar:calc(14px + env(safe-area-inset-bottom));--gut:max(16px,calc(50vw - 380px))}body{padding-bottom:var(--tabbar);font-size:16px}
 .ar-tags{top:var(--hdr)}.ltabs.page{top:var(--hdr)}.fab,body[data-view=lots] .fab{bottom:calc(var(--tabbar) + 4px)!important}
 .toast{bottom:calc(var(--tabbar) + 8px)}.dock{bottom:calc(var(--tabbar) + 8px)}
-.gs-tags{display:none}
-@media(max-width:640px){.iconbtn.gsBtn{display:none!important}.gs.full:has(#gq:placeholder-shown) .gs-tags{display:flex;flex-wrap:wrap;gap:8px;position:fixed;left:12px;right:12px;top:calc(72px + env(safe-area-inset-top))}.gs-tags button{height:38px;padding:0 15px;border:1px solid rgba(17,17,16,.12);border-radius:19px;background:#fff;color:var(--ink);font:500 12.5px var(--sans);box-shadow:0 6px 16px rgba(17,17,16,.1);cursor:pointer}}
-nav.tabs button.on{font-size:12px!important;font-weight:600!important}body.nav-c nav.tabs button.on{font-size:10.5px!important}
+header{background:#fff!important;border-bottom:1px solid #ecebe7!important;box-shadow:none!important}
+.hrow,header .hrow{display:grid!important;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;min-height:var(--hdr);padding:calc(4px + env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) 4px max(8px,env(safe-area-inset-left))!important;flex-wrap:nowrap}
+.logo{grid-column:2;display:block;flex:none;padding:0;font:500 25px/1 var(--serif)!important;letter-spacing:0;color:#111110}.logo .num{display:inline;padding:0!important;border:0!important;font:inherit;font-style:normal;color:inherit}
+#menuBtn{grid-column:1;justify-self:start}.hbtns{grid-column:3;justify-self:end}
+header .iconbtn,.menu .iconbtn,#arSBtn{width:48px;height:48px;min-width:48px;padding:0;border:0!important;border-radius:50%;background:transparent!important;box-shadow:none!important;color:#111110!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+header .iconbtn.gsBtn{display:inline-flex!important}
+.gs{display:none;position:fixed}.gs kbd,.gsX{display:none}
+.gs.full{display:block;position:fixed;inset:0;z-index:70;max-width:none;background:#fff;padding:calc(6px + env(safe-area-inset-top)) var(--gut) 0}
+.gs.full input{width:calc(100% - 56px);height:48px;padding:0 8px 0 34px;border:0;border-bottom:1px solid #111110;font-size:18px;background:#fff}
+.gs.full .ico{left:var(--gut);top:calc(30px + env(safe-area-inset-top));width:21px;height:21px;color:#111110}
+.gs.full .iconbtn.gsX{display:inline-flex!important;position:absolute;right:var(--gut);top:calc(6px + env(safe-area-inset-top))}
+.gs.full .sd{position:fixed;top:calc(66px + env(safe-area-inset-top));left:0;right:0;bottom:0;max-height:none;padding:0 var(--gut);border:0;border-radius:0;box-shadow:none;background:#fff}
+.gs-tags{display:none}.gs.full:has(#gq:placeholder-shown) .gs-tags{display:flex;flex-wrap:wrap;gap:10px;position:fixed;left:var(--gut);right:var(--gut);top:calc(78px + env(safe-area-inset-top))}
+.gs-tags button{height:44px;padding:0 18px;border:1px solid #dddbd5;border-radius:22px;background:#fff;color:#111110;font:400 15px var(--sans);cursor:pointer}
+
+.menu{--ink:#111110;--ink-2:#3a3936;--muted:#6b6963;--line:#ecebe7;--bg:#fff;--surface:#fff;--sheet:#fff;position:fixed;inset:0;top:0;right:0;width:auto;display:block;z-index:90;overflow-y:auto;overscroll-behavior:contain;padding:calc(4px + env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) max(8px,env(safe-area-inset-left));border:0;border-radius:0;background:#fff;color:#111110;box-shadow:none;opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .28s ease,transform .36s cubic-bezier(.16,1,.3,1),visibility 0s .36s}
+.menu.open{display:block;opacity:1;visibility:visible;transform:none;transition:opacity .28s ease,transform .36s cubic-bezier(.16,1,.3,1)}
+.nv-top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;min-height:56px}.nv-logo{grid-column:2;font:500 25px/1 var(--serif)}#menuX{grid-column:3;justify-self:end}
+.nvl,.nv-sub{width:min(560px,100%);margin:0 auto;padding:0 16px}.nvl{margin-top:clamp(14px,5vh,48px)}
+.nvl button{display:flex;align-items:baseline;justify-content:space-between;gap:16px;width:100%;min-height:68px;padding:14px 0;border:0;border-bottom:1px solid #ecebe7;background:none;color:#111110;font:400 clamp(27px,7.4vw,34px)/1.1 var(--serif);text-align:left;cursor:pointer}
+.nvl button.on{font-weight:600}.nvl .n{font:400 14px var(--sans);color:#6b6963;font-variant-numeric:tabular-nums}
+.nv-sub{margin-top:24px}.nv-sub .mi,.nv-set summary{display:flex;align-items:center;width:100%;min-height:48px;padding:0;border:0;background:none;color:#3a3936;font:400 16px var(--sans);text-align:left;cursor:pointer}
+.nv-set summary{list-style:none}.nv-set summary::-webkit-details-marker{display:none}.nv-set summary::after{content:"+";margin-left:auto;font-size:21px;color:#6b6963}.nv-set[open] summary::after{content:"−"}.nv-set .tgl{padding:10px 0;border-top:1px solid #ecebe7}.nv-set .tgl b{font-size:15px;font-weight:500}.nv-set .tgl small{font-size:13px;line-height:1.4}
+
+main{padding-top:18px}
+.vhead,.ar-head{border-top:0!important;padding-top:0!important;margin:0 0 14px!important;align-items:center}
+.vhead h1,.ar-head h1{font:500 26px/1.15 var(--serif)!important;letter-spacing:0!important}
+.vhead p{margin-top:3px;font-size:14px;color:var(--muted)}#v-fav .vhead p,#v-houses .vhead p,#v-cat .vhead p,#lbnote{display:none}
+.ar-head{display:flex;justify-content:flex-start;gap:10px}.ar-total{display:flex;align-items:baseline;gap:4px;text-align:left;margin-right:auto}.ar-total b{display:inline;font:400 15px var(--sans)!important;letter-spacing:0;color:var(--muted)}.ar-total span{font:400 15px var(--sans)!important;letter-spacing:0;text-transform:none;color:var(--muted)}#arSBtn{margin:-8px -10px -8px 0}
+.ar-search{display:none;height:50px!important;padding:0 8px 0 14px;margin-bottom:10px;border-radius:0!important;border:0;border-bottom:1px solid #111110;box-shadow:none!important;background:transparent}.ar-search.on,.ar-search:has(#lbq:not(:placeholder-shown)){display:flex}.ar-search:focus-within{box-shadow:none!important}.ar-search input{font-size:17px!important}
+.doors{margin-top:4px}.door small{display:none}.door{border-top:0;padding-top:0}.door b{font-size:24px}.door span{font-size:15px}
+.hm-sec{border-top:0;padding-top:0;margin-top:30px}.hm-sec h2{font-size:22px}.hm-sec a{font:400 15px var(--sans);letter-spacing:0;text-transform:none}
+:root[data-theme=light]{--bg:#fff}:root[data-theme=light] body{background:#fff!important}
+.door-img{aspect-ratio:auto!important;height:clamp(150px,44vw,280px)!important}
+.lotno{font-size:12.5px!important;letter-spacing:.02em!important;text-transform:none!important}.card .spec{font-size:14px!important;line-height:1.4}.card .price{font-size:16px!important}.card .left{font-size:13px!important}.card .meta{font-size:13px!important;letter-spacing:0!important;text-transform:none!important}.card .body .artist,.card .artist .alink{font-size:19px!important}
+.btn,.chip,.seg button,.fab{font-size:14px!important;font-weight:500!important;letter-spacing:0!important;text-transform:none!important}
+#sort,#arSort{height:44px;border:0!important;background-color:transparent!important;font-size:15px}.sortl{font-size:15px}.ar-bar{min-height:44px}#arCount{font-size:15px}
+.ar-tabs button{font-size:14px!important;font-weight:500!important;letter-spacing:0!important;text-transform:none!important}.ar-tabs i{font:400 13px var(--sans)!important;letter-spacing:0;color:var(--muted)}
+.ar-tags button{font-size:14px!important}
+@media(prefers-reduced-motion:reduce){.menu,.menu.open{transition:none;transform:none}}
 
 /* ===== work page: one page that scrolls, picture first, everything below it ===== */
 #m.wpm{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;display:block}
@@ -792,32 +824,37 @@ nav.tabs button.on{font-size:12px!important;font-weight:600!important}body.nav-c
 @media(horizontal-viewport-segments:2){.wp{grid-template-columns:env(viewport-segment-width 0 0) env(viewport-segment-width 1 0);column-gap:calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0))}}
 @media(vertical-viewport-segments:2){.wp{display:block}.wp-stage{height:calc(env(viewport-segment-bottom 0 0) - 64px - env(safe-area-inset-top))}.wp-sheet{margin-top:calc(env(viewport-segment-top 0 1) - env(viewport-segment-bottom 0 0))}}
 </style></head><body>
-<header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
+<header><div class="hrow"><button type="button" class="iconbtn" id="menuBtn" aria-label="Menü" aria-haspopup="dialog" aria-expanded="false"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18"/></svg></button>
+<div class="logo" id="home" role="link" tabindex="0" aria-label="16/22 Müzayede Rehberi, ana sayfa"><span class="num">16/22</span></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-<input id="gq" type="search" autocomplete="off" placeholder="Her şeyi ara: sanatçı, eser, müzayede evi, sergi, galeri…" aria-label="Genel arama" aria-controls="sd" aria-expanded="false"><kbd>/</kbd><div class="gs-tags" id="gsTags" aria-label="Hızlı arama"><button type="button">Yağlı boya</button><button type="button">Akrilik</button><button type="button">Suluboya</button><button type="button">Baskı</button><button type="button">Heykel</button><button type="button">Portre</button><button type="button">Peyzaj</button><button type="button">Soyut</button></div><div class="sd" id="sd" role="listbox"></div></div>
-<div class="hbtns"><button class="iconbtn gsBtn" id="gsBtn" aria-label="Ara"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button><button class="iconbtn" id="menuBtn" aria-label="Ayarlar ve yardım" aria-haspopup="true" aria-expanded="false" title="Ayarlar ve yardım"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div>
-<div class="menu" id="menu" role="menu" aria-label="Ayarlar ve yardım">
- <h5>Görünüm</h5>
+<input id="gq" type="search" autocomplete="off" placeholder="Sanatçı veya eser ara" aria-label="Genel arama" aria-controls="sd" aria-expanded="false"><kbd>/</kbd><div class="gs-tags" id="gsTags" aria-label="Hızlı arama"><button type="button">Yağlı boya</button><button type="button">Akrilik</button><button type="button">Suluboya</button><button type="button">Baskı</button><button type="button">Heykel</button><button type="button">Portre</button><button type="button">Peyzaj</button><button type="button">Soyut</button></div><div class="sd" id="sd" role="listbox"></div></div>
+<div class="hbtns"><button type="button" class="iconbtn gsBtn" id="gsBtn" aria-label="Ara"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button></div></div>
+</header>
+<div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menü">
+ <div class="nv-top"><span class="nv-logo">16/22</span><button type="button" class="iconbtn" id="menuX" aria-label="Menüyü kapat"><svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
+ <nav class="nvl" aria-label="Ana menü">
+  <button type="button" data-v="lots">Müzayedeler<span class="n" id="nLots"></span></button>
+  <button type="button" data-v="cat">Kataloglar</button>
+  <button type="button" data-v="lb">Arşiv</button>
+  <button type="button" data-v="houses">Müzayede Evleri</button>
+  <button type="button" data-v="fav">Koleksiyonum<span class="n" id="favTabN"></span></button>
+  <button type="button" data-v="search" id="tSearch" style="display:none">Arama</button>
+ </nav>
+ <div class="nv-sub">
+  <button type="button" class="mi" id="mPick">Favori sanatçılar</button>
+  <button type="button" class="mi" id="mAdd">Bağlantı ekle</button>
+  <button type="button" class="mi" id="mHelp">Nasıl çalışır?</button>
+  <details class="nv-set"><summary>Ayarlar</summary>
  <label class="tgl"><span><b>Koyu tema</b><small>Siyah-altın görünüm</small></span><input type="checkbox" id="setDark"><i aria-hidden="true"></i></label>
  <label class="tgl"><span><b>Açılışta Favorilerim</b><small>Site, seçtiğiniz sanatçılarla açılır</small></span><input type="checkbox" id="setStart"><i aria-hidden="true"></i></label>
  <label class="tgl"><span><b>Kartlarda açıklama</b><small>Eserin tam açıklaması kartta da görünsün</small></span><input type="checkbox" id="setDesc"><i aria-hidden="true"></i></label>
  <label class="tgl"><span><b>Lebriz yalnızca Wi-Fi'da</b><small>Mobil veride bekler, Wi-Fi'a bağlanınca kendiliğinden başlar (Android)</small></span><input type="checkbox" id="setWifi"><i aria-hidden="true"></i></label>
- <hr>
- <button type="button" class="mi" data-go="cat">❏ Kataloglar</button>
- <button type="button" class="mi" data-go="houses">⌂ Müzayede evleri</button>
- <hr>
- <button type="button" class="mi" id="mPick">★ Favori sanatçıları düzenle</button>
- <button type="button" class="mi" id="mAdd">＋ Bağlantı ekle</button>
- <button type="button" class="mi" id="mGh">⚡ GitHub bağlantısı <span class="ghstate" id="ghState"></span></button>
- <button type="button" class="mi" id="mHelp">ⓘ Nasıl çalışır?</button>
-</div></div>
-</header>
-<nav class="tabs" aria-label="Ana menü"><button type="button" data-v="lots">Müzayede<span class="n" id="nLots">…</span></button><button type="button" data-v="lb">Arşiv</button><button type="button" id="pillS" aria-label="Her şeyde ara"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button><button type="button" data-v="fav">Koleksiyon<span class="n" id="favTabN"></span></button><button type="button" data-v="search" id="tSearch" style="display:none">Arama</button></nav>
+   <button type="button" class="mi" id="mGh">GitHub bağlantısı <span class="ghstate" id="ghState"></span></button>
+  </details>
+ </div>
+</div>
 <main>
 <section class="view" id="v-home">
- <div class="hm-k">16/22 · Müzayede arşivi</div>
- <h1 class="hm-h">Türkiye'nin sanat müzayedeleri, tek katalogda.</h1>
- <button type="button" class="hm-s" id="hmS"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Sanatçı, eser, müzayede evi ara…</button>
  <div class="doors">
   <a class="door" data-go="lots"><small>I</small><b>Müzayedeler</b><span id="hmA">Şu an satıştaki eserler</span><div id="hmAi"></div></a>
   <a class="door" data-go="cat"><small>II</small><b>Kataloglar</b><span id="hmB">Her sanatçı için kendiliğinden derlenen katalog</span><div id="hmBi"></div></a>
@@ -830,7 +867,7 @@ nav.tabs button.on{font-size:12px!important;font-weight:600!important}body.nav-c
  <div id="favBody"><div class="skc skel"></div></div>
 </section>
 <section class="view" id="v-lots">
- <div class="vhead"><div><h1>Müzayedeler</h1><p class="muted"><span id="stats">Yükleniyor…</span> <span class="tip-wrap" id="statsTip"></span></p></div><button type="button" class="btn" data-go="houses">Müzayede evleri →</button></div>
+ <div class="vhead"><div><h1>Müzayedeler</h1><p class="muted"><span id="stats">Yükleniyor…</span> <span class="tip-wrap" id="statsTip"></span></p></div></div>
  <div class="bar"><button type="button" class="btn fbtn" id="fOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg> Filtrele <span class="badge-n" id="fN"></span></button>
   <label class="sortl">Sırala <select class="fld sm" id="sort"><option value="end">Bitişi en yakın</option><option value="pa">En ucuz</option><option value="pd">En pahalı</option><option value="bids">En çok pey alan</option><option value="artist">Sanatçı (A–Z)</option><option value="ppc">cm² başına en ucuz</option></select></label></div>
  <div class="active-f" id="activeF"></div>
@@ -846,8 +883,8 @@ nav.tabs button.on{font-size:12px!important;font-weight:600!important}body.nav-c
  </div>
 </section>
 <section class="view" id="v-lb">
- <div class="ar-head"><div><h1>Arşiv</h1><p id="lbnote">Arşiv yükleniyor…</p></div><div class="ar-total"><b id="arTotal">—</b><span>eser</span></div></div>
- <div class="ar-search"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="lbq" type="search" autocomplete="off" placeholder="Her şeyde ara: eser, sanatçı, teknik, sergi, galeri…" aria-label="Arşivde ara"><button type="button" id="arClr" aria-label="Aramayı temizle" hidden>×</button></div>
+ <div class="ar-head"><div><h1>Arşiv</h1><p id="lbnote">Arşiv yükleniyor…</p></div><div class="ar-total"><b id="arTotal">—</b><span>eser</span></div><button type="button" class="iconbtn" id="arSBtn" aria-label="Arşivde ara" aria-expanded="false"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button></div>
+ <div class="ar-search"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="lbq" type="search" autocomplete="off" placeholder="Arşivde ara" aria-label="Arşivde ara"><button type="button" id="arClr" aria-label="Aramayı temizle" hidden>×</button></div>
  <div class="ar-tabs" id="lbSeg" role="tablist"><button type="button" data-s="w" class="on">Eserler<i id="arNw"></i></button><button type="button" data-s="a">Sanatçılar<i id="arNa"></i></button><button type="button" data-s="e">Sergiler<i id="arNe"></i></button><button type="button" data-s="g">Galeriler<i id="arNg"></i></button></div>
  <div class="ar-tags" id="arTags" role="group" aria-label="Etiketler"></div>
  <div class="ar-bar" id="arBar"><span id="arCount"></span><select class="fld sm" id="arSort" aria-label="Sırala"><option value="new">En yeni</option><option value="old">En eski</option><option value="pd">En pahalı</option><option value="pa">En ucuz</option><option value="az">Sanatçı (A–Z)</option></select></div>
@@ -1017,7 +1054,7 @@ function pushNav(hash){if(navQuiet)return;curRoute=dec(hash);const st=history.st
  saveSpot();history.pushState({},'',urlFor(hash))}
 function restoreSpot(st,pr){Promise.resolve(pr).then(()=>ready).then(()=>{if(view=='artist'&&st.pt){const b=document.querySelector(`#artistPage [data-pt="${st.pt}"]`);if(b&&!b.classList.contains('on'))b.click()}
  let n=0;const step=()=>{if(view=='lots'&&document.documentElement.scrollHeight<st.y+innerHeight&&shown<curList.length&&n++<80){more();requestAnimationFrame(step);return}scrollTo(0,st.y)};requestAnimationFrame(()=>requestAnimationFrame(step))})}
-function ovIsOpen(n){const id={m:'m',pick:'pickM',add:'addM',help:'helpM',filters:'filters',gh:'ghM',zoom:'zoomV',g3d:'g3d',book:'bk'}[n];if(n=='search')return $('gsWrap').classList.contains('full');return !!id&&$(id).classList.contains('open')}
+function ovIsOpen(n){const id={m:'m',pick:'pickM',add:'addM',help:'helpM',filters:'filters',gh:'ghM',zoom:'zoomV',g3d:'g3d',book:'bk',menu:'menu'}[n];if(n=='search')return $('gsWrap').classList.contains('full');return !!id&&$(id).classList.contains('open')}
 function ovOpen(name,hash){if(navQuiet)return;const st=history.state||{};const url=hash!=null?urlFor(hash):location.href;
  if(st.ov===name&&(hash==null||dec(location.hash.slice(1))===dec(hash))){history.replaceState(st,'',url);return}
  const replace=st.ov&&st.ov!==name&&!ovIsOpen(st.ov);if(!replace)saveSpot();
@@ -1032,15 +1069,16 @@ const saveFavArt=()=>{favKeys=null;LS.set('mr_fav_art',[...favArt]);document.que
 const starBtn=n=>n?`<button type="button" class="star${isFav(n)?' on':''}" data-star="${esc(n)}" title="Favori sanatçı" aria-label="Favori sanatçı">${isFav(n)?'★':'☆'}</button>`:'';
 let toastT=null;function toast(msg,btn,fn){const t=$('toast');if(!t)return;t.innerHTML=`<span>${esc(msg)}</span>${btn?`<button type="button">${esc(btn)}</button>`:''}`;if(btn)t.querySelector('button').onclick=()=>{t.classList.remove('on');fn()};t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),btn?12000:3200)}
 /* ===== settings menu ===== */
-const menuOpen=o=>{$('menu').classList.toggle('open',o);$('menuBtn').setAttribute('aria-expanded',o?'true':'false')};
-$('menuBtn').onclick=e=>{e.stopPropagation();menuOpen(!$('menu').classList.contains('open'))};
-document.addEventListener('click',e=>{if(!e.target.closest('#menu')&&!e.target.closest('#menuBtn'))menuOpen(false)});
+const menuOpen=o=>{const m=$('menu');if(m.classList.contains('open')===!!o)return;m.classList.toggle('open',!!o);$('menuBtn').setAttribute('aria-expanded',o?'true':'false');document.body.style.overflow=o?'hidden':''};
+/* leaving through a menu item: the menu's history step is dropped, so Back returns to the page before it */
+const menuLeave=()=>{if((history.state||{}).ov==='menu')history.replaceState({},'',location.href);menuOpen(false)};
+$('menuBtn').onclick=()=>{menuOpen(true);ovOpen('menu')};$('menuX').onclick=()=>ovClose('menu',()=>menuOpen(false));
 $('setDark').checked=document.documentElement.dataset.theme=='dark';$('setStart').checked=!!SET.start;$('setDesc').checked=!!SET.desc;
 $('setDark').onchange=e=>{const t=e.target.checked?'dark':'light';document.documentElement.dataset.theme=t;try{localStorage.setItem('mr_theme',t)}catch(x){}};
 $('setWifi').checked=!!SET.lbWifi;$('setWifi').onchange=e=>{SET.lbWifi=e.target.checked;saveSet();if(!SET.lbWifi)lbWaitCheck(true)};
 $('setStart').onchange=e=>{SET.start=e.target.checked;saveSet();toast(SET.start?'Site Favorilerim ile açılacak':'Site Keşfet ile açılacak')};
 $('setDesc').onchange=e=>{SET.desc=e.target.checked;saveSet();if(view=='lots')render();else if(view=='fav')renderFav()};
-$('mPick').onclick=()=>{menuOpen(false);openPick()};$('mAdd').onclick=()=>{menuOpen(false);openAdd()};$('mHelp').onclick=()=>{menuOpen(false);openHelp()};
+$('mPick').onclick=()=>{menuLeave();openPick()};$('mAdd').onclick=()=>{menuLeave();openAdd()};$('mHelp').onclick=()=>{menuLeave();openHelp()};
 /* ===== skeleton + data load ===== */
 $('g').innerHTML=Array.from({length:8},()=>'<div class="skc skel"></div>').join('');
 const ready=fetch('data/lots.json'+V).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{D=d;
@@ -1095,7 +1133,7 @@ $('ghSave').onclick=async()=>{const t=$('ghTok').value.trim();if(!/^(github_pat_
  LS.set('mr_gh',t);$('ghMsg').textContent='Deneniyor…';const c=await ghCheck();if(c==200){$('ghTok').value='';ghUI();toast('✓ GitHub bağlandı; düğmeler artık tam otomatik');if(afterGh){const u=afterGh;afterGh='';closeGh();openAdd();$('addUrl').value=u;$('addMsg').textContent='✓ Bağlandı. Şimdi “Ekle”ye basın.'}}else{LS.set('mr_gh','');$('ghMsg').textContent=GHERR[c]||('GitHub hata verdi ('+c+').')}};
 $('ghTest').onclick=async()=>{const c=await ghCheck();toast(c==200?'✓ Bağlantı çalışıyor':(GHERR[c]||'GitHub hata verdi ('+c+')'))};
 $('ghOff').onclick=()=>{LS.set('mr_gh','');ghUI();toast('GitHub bağlantısı kaldırıldı')};
-$('ghX').onclick=dismissGh;$('ghM').onclick=e=>{if(e.target.id=='ghM')dismissGh()};$('mGh').onclick=()=>{menuOpen(false);openGh()};
+$('ghX').onclick=dismissGh;$('ghM').onclick=e=>{if(e.target.id=='ghM')dismissGh()};$('mGh').onclick=()=>{menuLeave();openGh()};
 /* ===== added links: list, pending watcher ===== */
 let SRC=(META&&META.sources)||[];
 const REPO='zeynepbarann/muzayede-rehberi';
@@ -1259,11 +1297,11 @@ const openFilters=()=>{drawer(true);ovOpen('filters')},dismissFilters=()=>ovClos
 $('fOpen').onclick=openFilters;$('fab').onclick=openFilters;$('fClose').onclick=dismissFilters;$('fApply').onclick=()=>{dismissFilters();scrollTo({top:0})};$('scrim').onclick=dismissFilters;
 /* ===== views ===== */
 let favDirty=false;
-function show(v,quiet,keep){if(!navQuiet){g3Close();bkClose()}const prev=view;if(!quiet&&!keep&&TABHASH[v]&&v!==prev)takeSpot();view=v;document.body.dataset.view=v;const pv=v=='cat'?'lb':v=='houses'?'lots':v;document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v==pv));
+function show(v,quiet,keep){if(!navQuiet){g3Close();bkClose()}const prev=view;if(!quiet&&!keep&&TABHASH[v]&&v!==prev)takeSpot();view=v;document.body.dataset.view=v;document.querySelectorAll('.nvl button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));
  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id=='v-'+v));
  if(v=='lots'&&!(keep&&$('g').childElementCount&&!$('g').querySelector('.skc')))ready.then(render);if(v=='fav'&&!(keep&&!favDirty&&$('favBody').childElementCount&&!$('favBody').querySelector('.skc')))ready.then(renderFav);if(v=='lb')lbOpenTab();if(v=='cat')ready.then(catRender);if(v=='home')ready.then(renderHome);if(v=='houses')ready.then(()=>{buildHouses();buildSources()});
  if(TABHASH[v]&&!quiet&&v!==prev)pushNav(TABHASH[v]);if(!keep)window.scrollTo({top:0})}
-document.querySelector('nav.tabs').onclick=e=>{const b=e.target.closest('button');if(b&&b.dataset.v)show(b.dataset.v)};$('home').onclick=()=>{resetF(true);show(startView())};
+document.querySelector('.nvl').onclick=e=>{const b=e.target.closest('button');if(b&&b.dataset.v){menuLeave();show(b.dataset.v)}};$('home').onclick=()=>{resetF(true);show(startView())};
 function filterLots(k,v,quiet){resetF(true);F[k]=v;syncFilterUI();if(view=='lots'&&!quiet)pushNav(TABHASH.lots);show('lots',quiet)}
 let fqT=null;$('favQ').addEventListener('input',()=>{clearTimeout(fqT);fqT=setTimeout(renderFav,150)});
 $('favSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;favTab=b.dataset.f;LS.set('mr_favtab',favTab);renderFav()};
@@ -1409,7 +1447,7 @@ document.addEventListener('click',e=>{document.querySelectorAll('details.tip[ope
  const lc=e.target.closest('[data-lbcancel]');if(lc){e.preventDefault();lbCancel(lc.dataset.lbcancel);return}
  const lp=e.target.closest('[data-lbpull]');if(lp){e.preventDefault();lbPull(lp.dataset.lbpull.split(','));return}
  const lo=e.target.closest('[data-lbopen]');if(lo){e.preventDefault();openCatalog(+lo.dataset.lbopen);return}
- const go=e.target.closest('[data-go]');if(go){e.preventDefault();menuOpen(false);show(go.dataset.go);return}
+ const go=e.target.closest('[data-go]');if(go){e.preventDefault();menuLeave();show(go.dataset.go);return}
  const lt=e.target.closest('[data-lt],[data-pt]');if(lt){const box=lt.closest('#mc,#artistPage'),id=lt.dataset.lt||lt.dataset.pt;box.querySelectorAll('[data-lt],[data-pt]').forEach(b=>b.classList.toggle('on',b==lt));box.querySelectorAll('.lpane').forEach(p=>p.classList.toggle('on',p.dataset.pane==id));return}
  const tg=e.target.closest('[data-tag]');if(tg&&!tg.closest('#sd')){e.preventDefault();e.stopPropagation();toggleTag(tg.dataset.tag,!!tg.closest('#m,#artistPage'));return}
  const ar=e.target.closest('[data-artist]');if(ar&&!ar.closest('#sd')){e.preventDefault();e.stopPropagation();openArtist(ar.dataset.artist);return}
@@ -1478,7 +1516,7 @@ const liveCount=n=>{const a=LB&&LB.byK[n]||LB&&LB.artists.find(x=>x._n==n);retur
 const lbFor=lot=>lbMatch(lot.artist);
 const pd=s=>{if(!s)return null;const[d,m,y]=s.split('.');return new Date(+y,m-1,+d)};
 const wbLink=(u,sn)=>`https://web.archive.org/web/${sn||'2023'}/${u}`;
-function lbOpenTab(){if(view!='lb'){view='lb';document.body.dataset.view='lb';pushNav(TABHASH.lb);document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v=='lb'));document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id=='v-lb'))}
+function lbOpenTab(){if(view!='lb'){view='lb';document.body.dataset.view='lb';pushNav(TABHASH.lb);document.querySelectorAll('.nvl button').forEach(b=>b.classList.toggle('on',b.dataset.v=='lb'));document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id=='v-lb'))}
  if(!LB)$('lbres').innerHTML='<div class="alist">'+Array.from({length:9},()=>'<div class="skel" style="height:86px;border-radius:14px"></div>').join('')+'</div>';
  Promise.all([lbLoad(),ready,arLoad()]).then(()=>{const ex=LB.exhibitions,f=x=>x.toLocaleString('tr-TR');$('arTotal').textContent=f(AX.works);$('lbnote').textContent=`${f(AX.live)} satışta · ${f(AX.past)} biten müzayede · ${f(AX.lebriz)} Lebriz · ${f(ex.length)} sergi · ${f(LB.galleries.length)} galeri`;
   if($('lbcity').options.length<2){[...new Set(ex.map(e=>e.c).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr')).forEach(c=>$('lbcity').add(new Option(c,c)));[...new Set(ex.map(e=>e.g).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr')).forEach(c=>$('lbgal').add(new Option(c,c)))}
@@ -1503,7 +1541,7 @@ function arApply(fly){const q=norm($('lbq').value).split(' ').filter(Boolean),R=
  const groups={};arSel.forEach(id=>(groups[id[0]]=groups[id[0]]||new Set()).add(id));const G=Object.values(groups),cnt=new Map();let L=[];
  for(const i of base){const tg=arTags(R[i]);for(const x of tg)cnt.set(x,(cnt.get(x)||0)+1);if(G.every(g=>tg.some(x=>g.has(x))))L.push(i)}
  const so=$('arSort').value;if(so=='old')L.sort((x,y)=>(!R[x][6]-!R[y][6])||((R[x][2]||9e9)-(R[y][2]||9e9)));else if(so=='pd')L.sort((x,y)=>R[y][3]-R[x][3]);else if(so=='pa')L.sort((x,y)=>(R[x][3]||9e12)-(R[y][3]||9e12));else if(so=='az')L.sort((x,y)=>AX.A[R[x][0]].localeCompare(AX.A[R[y][0]],'tr'));
- arList=L;arN=0;$('arG').innerHTML=L.length?'':`<div class="empty"><div class="big">Bu aramayla eser yok</div>Daha kısa bir kelime deneyin ya da etiketleri kaldırın.</div>`;$('arNw').textContent=L.length.toLocaleString('tr-TR');$('arCount').textContent=L.length.toLocaleString('tr-TR')+' eser'+(arSel.size?` · ${arSel.size} etiket`:'');arMore();arDrawTags(cnt,fly)}
+ arList=L;arN=0;$('arG').innerHTML=L.length?'':`<div class="empty"><div class="big">Bu aramayla eser yok</div>Daha kısa bir kelime deneyin ya da etiketleri kaldırın.</div>`;$('arNw').textContent=L.length.toLocaleString('tr-TR');{const n=L.length.toLocaleString('tr-TR');$('arCount').textContent=n===$('arTotal').textContent&&!arSel.size?'':n+' eser'+(arSel.size?` · ${arSel.size} etiket`:'')}arMore();arDrawTags(cnt,fly)}
 function arDrawTags(cnt,fly){const box=$('arTags'),old=new Map();if(fly&&!RM)box.querySelectorAll('[data-art]').forEach(e=>old.set(e.dataset.art,e.getBoundingClientRect()));
  const rank=x=>'stzy'.indexOf(x[0]),ids=[...new Set([...cnt.keys(),...arSel])].sort((a,b)=>(arSel.has(b)-arSel.has(a))||(rank(a)-rank(b))||(a[0]=='y'?b.localeCompare(a):(cnt.get(b)||0)-(cnt.get(a)||0)));
  box.innerHTML=ids.map((id,i)=>`<button type="button" class="ar-tag${arSel.has(id)?' on':''}${arFirst?' in':''}" style="--d:${Math.min(i,14)}" data-art="${id}" aria-pressed="${arSel.has(id)}">${esc(arLabel(id))}<i>${(cnt.get(id)||0).toLocaleString('tr-TR')}</i></button>`).join('');arFirst=false;
@@ -1607,7 +1645,7 @@ const gsOpen=()=>{$('gsWrap').classList.add('full');$('gq').focus();ovOpen('sear
 const dismissSearch=()=>ovClose('search',gsShut);
 $('gsBtn').onclick=gsOpen;$('gsX').onclick=dismissSearch;
 $('sd').addEventListener('click',()=>setTimeout(()=>{if(!$('sd').classList.contains('open'))$('gsWrap').classList.remove('full')},0));
-document.addEventListener('keydown',e=>{if(e.key=='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();if(innerWidth<=640)gsOpen();$('gq').focus();$('gq').select()}else if(e.key=='Escape'){menuOpen(false);const st=history.state||{};if(st.ov&&ovIsOpen(st.ov)){history.back();return}closeM();closeAdd();closeGh();closePick();if($('helpM').classList.contains('open'))closeHelp();drawer(false);document.body.style.overflow=''}});
+document.addEventListener('keydown',e=>{if(e.key=='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();gsOpen();$('gq').select()}else if(e.key=='Escape'){const st=history.state||{};if(st.ov&&ovIsOpen(st.ov)){history.back();return}closeM();closeAdd();closeGh();closePick();if($('helpM').classList.contains('open'))closeHelp();drawer(false);document.body.style.overflow=''}});
 let FR={g:'all',q:'',lotShown:0};
 function fullResults(g,quiet){if(!quiet&&view!='search')takeSpot();const q=$('gq').value.trim();if(!q)return;const r=lastRes&&FR.q==q?lastRes:gsearch(q);lastRes=r;FR={g,q,r,lotShown:0};sdClose();$('gq').blur();
  $('tSearch').style.display='';show('search');if(!quiet)pushNav('q='+encodeURIComponent(q));else curRoute='q='+q;
@@ -1774,7 +1812,7 @@ addEventListener('popstate',e=>{const st=e.state||{};menuOpen(false);navQuiet=tr
  if(st.ov=='zoom'&&!ovIsOpen('zoom')){history.back();return}
  if(st.ov&&!ovIsOpen(st.ov)){const h=dec(location.hash.slice(1));// forward into a pop-up: reopen it
   if(st.ov=='m')ready.then(()=>{if(h.startsWith('lot='))openLot(h.slice(4));else if(h.startsWith('past='))openPast(h.slice(5));else if(h.startsWith('cmp=')&&cmp.length>1)showCmp()});
-  else if(st.ov=='filters')openFilters();else if(st.ov=='pick')openPick();else if(st.ov=='add')openAdd();else if(st.ov=='gh')openGh();else if(st.ov=='help')openHelp();else if(st.ov=='search')gsOpen();else if(st.ov=='g3d')ready.then(()=>g3Open());else if(st.ov=='book'&&h.startsWith('katalog='))openBook(h.slice(8))}});
+  else if(st.ov=='filters')openFilters();else if(st.ov=='pick')openPick();else if(st.ov=='add')openAdd();else if(st.ov=='gh')openGh();else if(st.ov=='help')openHelp();else if(st.ov=='search')gsOpen();else if(st.ov=='menu')menuOpen(true);else if(st.ov=='g3d')ready.then(()=>g3Open());else if(st.ov=='book'&&h.startsWith('katalog='))openBook(h.slice(8))}});
 /* ===== hung paintings: every work gets a frame; the image's own proportions size it ===== */
 const FRAMES=['gold','ebony','walnut','white','bronze','gold','ebony'];
 const hashS=s=>{let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)};
@@ -2003,7 +2041,6 @@ function renderHome(){if(!D.lots.length)return;const now=Date.now(),L=D.lots.fil
  if(b&&!$('hmBi').firstChild)$('hmBi').innerHTML=`<div class="door-img"><img class="cv" loading="lazy" draggable="false" src="${esc(thumb(b.images[0]))}" alt="" onerror="this.remove()"></div>`;
  if(!$('hmRow').firstChild){$('hmRow').innerHTML=slider(S.slice(0,14));$('hmRow').querySelectorAll('.srow').forEach(slArrows)}
  artLoad().then(()=>{$('hmB').textContent=`${(AR.artists||[]).length.toLocaleString('tr-TR')} sanatçı kataloğu, kendiliğinden derlenir`}).catch(()=>{})}
-$('hmS').onclick=()=>{if(innerWidth<=640)gsOpen();else $('gq').focus()};
 (()=>{const st=$('bkStage'),dOf=(e,g)=>B.ax=='x'?e.clientY-g.y:e.clientX-g.x;
  st.addEventListener('pointerdown',e=>{if(e.button||B.an)return;B.drag={x:e.clientX,y:e.clientY,m:''};B.moved=false});
  addEventListener('pointermove',e=>{const g=B.drag;if(!B.on||!g)return;const d=dOf(e,g);if(!B.moved){if(Math.abs(d)<8)return;B.moved=true;
@@ -2017,9 +2054,8 @@ $('hmS').onclick=()=>{if(innerWidth<=640)gsOpen();else $('gq').focus()};
  document.addEventListener('keydown',e=>{if(!B.on||ovIsOpen('m')||ovIsOpen('zoom'))return;const k=e.key;if(k=='ArrowRight'||k=='ArrowDown'||k==' ')bkNext();else if(k=='ArrowLeft'||k=='ArrowUp')bkPrev();else return;e.preventDefault();e.stopPropagation()},true);
  let rt=0;const re=()=>{clearTimeout(rt);rt=setTimeout(()=>{if(B.on)bkSize(true)},80)};addEventListener('resize',re);
  ['(device-posture: folded)','(horizontal-viewport-segments: 2)','(vertical-viewport-segments: 2)'].forEach(q=>{try{matchMedia(q).addEventListener('change',re)}catch(e){}})})();
-/* ===== floating menu: steps aside while reading, returns when scrolling back ===== */
-(()=>{let ly=scrollY;addEventListener('scroll',()=>{const y=scrollY,d=y-ly;if(Math.abs(d)<6)return;ly=y;const c=d>0&&y>90;if(c!==document.body.classList.contains('nav-c'))document.body.classList.toggle('nav-c',c)},{passive:true});
- $('pillS').onclick=()=>{document.body.classList.remove('nav-c');if(innerWidth<=640)gsOpen();else{scrollTo({top:0,behavior:'smooth'});$('gq').focus();$('gq').select()}};
+/* ===== archive search stays out of the way until asked for ===== */
+(()=>{const s=document.querySelector('.ar-search');$('arSBtn').onclick=()=>{const on=!s.classList.contains('on');s.classList.toggle('on',on);$('arSBtn').setAttribute('aria-expanded',on?'true':'false');if(on)$('lbq').focus()};
  $('gsTags').onclick=e=>{const b=e.target.closest('button');if(!b)return;$('gq').value=b.textContent;$('gq').dispatchEvent(new Event('input',{bubbles:true}));$('gq').focus()}})();
 /* ===== boot ===== */
 ghUI();
