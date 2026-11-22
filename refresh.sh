@@ -15,3 +15,5 @@ python3 lebriz_export.py
 python3 export.py
 # Per-artist shards of finished auctions (data/artist/*.json + data/artist_index.json), so phones never load the whole archive.
 python3 shard_past.py || echo "shard_past failed (site falls back to the full past files)"
+# One light index of every work, for the Arsiv page (data/archive.json, data/archive_text.json).
+python3 build_archive.py || echo "build_archive failed (Arsiv keeps the previous index)"
