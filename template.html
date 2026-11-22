@@ -649,6 +649,27 @@ nav.tabs button{font:600 11.5px var(--sans)!important;letter-spacing:.1em;text-t
 .bk-ft button{margin-left:auto;border:1px solid #151412;background:none;color:#151412;font:600 max(9px,2.6cqmin) var(--sans);letter-spacing:.1em;text-transform:uppercase;padding:.9em 1.2em;cursor:pointer}
 .bk-bot{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:0 20px calc(10px + env(safe-area-inset-bottom));font-size:12px;color:var(--muted)}.bk-bot input{flex:1;min-width:60px;height:28px;accent-color:var(--ink);touch-action:none}.bk-bot span{white-space:nowrap;font-variant-numeric:tabular-nums}
 .bk .g3-nav{top:50%}.bk .g3-next{right:12px}.g3-bot input{accent-color:var(--ink)}
+
+/* ===== plain pictures: no wall, no frame ===== */
+.frame.pl{aspect-ratio:var(--arc,.8);padding:0;border-radius:0;overflow:hidden;background:var(--surface-2);display:block;transition:aspect-ratio .25s}
+.frame.pl img{display:block;width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;box-shadow:none;transform:none!important}
+.frame.pl.noimg{display:flex}.card .body{margin:8px 0 18px;border-top:0}.grid>.card,.srow>.card{animation:none;content-visibility:visible}
+/* ===== lot page: a catalogue entry, not a pop-up ===== */
+#m{background:rgba(0,0,0,.45)}#m .sheet{border-radius:0!important;max-width:1040px}
+#mc .det .big{background:var(--surface-2);border-radius:0;padding:0;min-height:0}#mc .det .big img{max-height:72vh;box-shadow:none;display:block}
+#mc .keyf{gap:0 24px;margin:6px 0 16px}#mc .keyf>div{background:none;border-radius:0;border-top:1px solid var(--ink);padding:10px 0 0}#mc .keyf span{font:600 10px var(--sans);letter-spacing:.14em;text-transform:uppercase}#mc .keyf b{font-size:28px;font-weight:400}
+#mc .det .info .lt{font-weight:400}#mc .thumbs img{border-radius:0}
+.rel{margin-top:28px}.rel h4{font:600 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:26px 0 12px;padding-top:12px;border-top:1px solid var(--line)}
+.rel-cat{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%;padding:14px 0;border:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);background:none;color:var(--ink);cursor:pointer;text-align:left}
+.rel-cat small{display:block;font:600 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}.rel-cat b{display:block;font:400 22px/1.15 var(--serif);margin-top:2px}.rel-cat i{font:600 11px var(--sans);font-style:normal;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap}
+.simrow{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(120px,150px);gap:14px;overflow-x:auto;scrollbar-width:none;padding-bottom:4px;overscroll-behavior-x:contain}.simrow::-webkit-scrollbar{display:none}
+.sim{display:block;text-decoration:none;color:var(--ink);min-width:0}.sim span{display:block;aspect-ratio:1;background:var(--surface-2);overflow:hidden}.sim img{width:100%;height:100%;object-fit:cover;display:block}
+.sim b{display:block;font:400 14px/1.2 var(--serif);margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.sim i{font:600 12px var(--sans);font-style:normal;color:var(--muted)}
+#mc .lpane{display:block;padding:0;margin-top:0;border-top:1px solid var(--line)}#mc .lpane::before{display:flex;justify-content:space-between;padding:14px 0;font:600 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+#mc .lpane[data-pane=eser]{margin-top:28px;border-top-color:var(--ink);padding-bottom:16px}#mc .lpane[data-pane=eser]::before{content:"Eser bilgisi"}
+#mc .lpane[data-pane=deger]::before{content:"Değer  +"}#mc .lpane[data-pane=sanatci]::before{content:"Sanatçı  +"}#mc .lpane[data-pane=arsiv]::before{content:"Arşiv fiyatları  +"}
+#mc .lpane:not([data-pane=eser]){cursor:pointer}#mc .lpane:not([data-pane=eser])>*{display:none}#mc .lpane.op{padding-bottom:16px;cursor:auto}#mc .lpane.op>*{display:revert}#mc .lpane.op::before{color:var(--ink)}
+@media(max-width:640px){.rel-cat b{font-size:19px}.simrow{grid-auto-columns:38vw}#mc .keyf b{font-size:22px}}
 </style></head><body>
 <header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -686,7 +707,7 @@ nav.tabs button{font:600 11.5px var(--sans)!important;letter-spacing:.1em;text-t
 <section class="view" id="v-lots">
  <div class="vhead"><div><h1>Müzayedeler</h1><p class="muted"><span id="stats">Yükleniyor…</span> <span class="tip-wrap" id="statsTip"></span></p></div></div>
  <div class="bar"><button type="button" class="btn fbtn" id="fOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg> Filtrele <span class="badge-n" id="fN"></span></button>
-  <label class="sortl">Sırala <select class="fld sm" id="sort"><option value="end">Bitişi en yakın</option><option value="pa">En ucuz</option><option value="pd">En pahalı</option><option value="bids">En çok pey alan</option><option value="artist">Sanatçı (A–Z)</option><option value="ppc">cm² başına en ucuz</option></select></label><button type="button" class="btn g3btn" data-g3="1">◈ 3B galeride gez</button></div>
+  <label class="sortl">Sırala <select class="fld sm" id="sort"><option value="end">Bitişi en yakın</option><option value="pa">En ucuz</option><option value="pd">En pahalı</option><option value="bids">En çok pey alan</option><option value="artist">Sanatçı (A–Z)</option><option value="ppc">cm² başına en ucuz</option></select></label></div>
  <div class="active-f" id="activeF"></div>
  <div class="grid" id="g"></div><div class="more" id="moreWrap"><button class="btn" id="more" style="display:none">Daha fazla yükle</button></div>
 </section>
@@ -976,6 +997,14 @@ function pollPending(){clearTimeout(pollT);let P=getPend();if(!P.length)return;
   done.forEach(([p,s])=>{if(s.status=='queued')toast(`ℹ️ ${s.host} GitHub'dan taranamıyor; bilgisayarınızdaki günlük taramada eklenecek`);else if(s.status=='ok')toast(`✓ ${s.host}: ${(s.lots||0).toLocaleString('tr-TR')} eser eklendi`,'Göster',()=>freshReload('site='+encodeURIComponent(s.host)));else toast(`✗ ${s.host} taranamadı: ${(s.detail||'').slice(0,90)}`)});
   if(left.length)pollT=setTimeout(pollPending,now-Math.min(...left.map(x=>x[0].at))>2*36e5?3e5:(left.some(x=>x[0].auto)?15e3:3e4))})}
 /* ===== cards & grid ===== */
+/* list pictures: the light copy first, the real proportions once it has loaded */
+const parc=src=>{const a=ARC.get(src);return a?` style="--arc:${clampN(a,.6,1.8)}"`:''};
+function pimg(src,alt){if(!src)return '';const t=thumb(src);return `<img loading="lazy" decoding="async" draggable="false" src="${esc(t)}"${t!=src?` data-o="${esc(src)}"`:''} alt="${esc(alt||'')}" onload="plain(this)" onerror="unplain(this)">`}
+function plain(im){const ar=arOf(im),f=im.parentNode;ARC.set(im.dataset.o||im.getAttribute('src'),ar);im.classList.add('ld');f.classList.remove('ph');f.style.setProperty('--arc',clampN(ar,.6,1.8))}
+function unplain(im){if(im.dataset.o&&im.getAttribute('src')!=im.dataset.o){im.src=im.dataset.o;return}const f=im.parentNode;im.remove();f.classList.remove('ph');f.classList.add('noimg')}
+/* show the light copy at once, then swap in the full picture when it has arrived */
+function sharp(im){const o=im.dataset.o;if(!o||im.dataset.sh||im.getAttribute('src')==o)return;im.dataset.sh=1;const t=new Image();t.onload=()=>{if(im.isConnected)im.src=o};t.src=o}
+const bLink=n=>`<a class="alink" href="#katalog=${encodeURIComponent(n)}" data-book="${esc(n)}" title="${esc(n)} kataloğu">${esc(n)}</a>`;
 function imgTag(src,alt){return src?`<img loading="lazy" decoding="async" src="${esc(src)}" alt="${esc(alt||'')}" onload="this.classList.add('ld');this.parentNode.classList.remove('ph')" onerror="this.remove()">`:''}
 /* ===== Lebriz artist matching ===== */
 const akey=s=>norm((s||'').replace(/\(.*?\)/g,' ').replace(/[`'’ʼ]/g,'')).replace(/\d+/g,' ').replace(/\s+/g,' ').trim();
@@ -1016,10 +1045,10 @@ const specOf=l=>{if(l._spec!=null)return l._spec;const t=(l._tags||[]).find(x=>x
  let tech=raw.length>=6&&raw.length<=46?raw:(t?t.v:'');tech=tech.toLocaleLowerCase('tr');tech=tech.charAt(0).toLocaleUpperCase('tr')+tech.slice(1);return l._spec=[l.size,tech].filter(Boolean).join(' · ')};
 function card(l){const e=l._e,soon=e&&e-Date.now()<864e5&&e>Date.now();const title=l.description||l.title||'';const spec=specOf(l);
  return `<article class="card">
-<div class="frame hung ${l.images[0]?'ph':'noimg'}" data-open="${esc(l.key)}">${hang(l.images[0],l.artist,l.key,(l.description||'')+' '+(l.category||''))}${fav.has(l.key)?'<span class="saved" title="Kaydedildi">♥</span>':''}</div>
+<div class="frame pl ${l.images[0]?'ph':'noimg'}" data-open="${esc(l.key)}"${parc(l.images[0])}>${pimg(l.images[0],l.artist)}${fav.has(l.key)?'<span class="saved" title="Kaydedildi">♥</span>':''}</div>
 <div class="body">
  ${l.lot_no?`<div class="lotno">Lot ${esc(l.lot_no)}</div>`:''}
- <div class="artist">${l.artist?aLink(l.artist)+starBtn(l.artist):`<span data-open="${esc(l.key)}">${esc(l.title||'')}</span>`}</div>
+ <div class="artist">${l.artist?bLink(l.artist)+starBtn(l.artist):`<span data-open="${esc(l.key)}">${esc(l.title||'')}</span>`}</div>
  ${spec?`<div class="spec" data-open="${esc(l.key)}" title="${esc(spec)}">${esc(spec)}</div>`:''}
  ${SET.desc&&title?`<div class="desc" data-open="${esc(l.key)}">${esc(title)}</div>`:''}
  <div class="crow" data-open="${esc(l.key)}"><span class="price" title="${priceLab(l)}">${TL(priceOf(l))}</span><span class="left${soon?' soon':''}">${leftTxt(l)}</span></div>
@@ -1127,8 +1156,8 @@ function buildHouses(){let H=houses();$('hCount').textContent=H.length;const q=n
 let hqT=null;$('hQ').addEventListener('input',()=>{clearTimeout(hqT);hqT=setTimeout(buildHouses,120)});$('hSort').onchange=buildHouses;
 /* ===== house page ===== */
 let HP=null;
-function pastCard(o){const k=esc(o.key);return `<article class="card pastc"><div class="frame hung ${o.image?'ph':'noimg'}" data-past="${k}">${hang(o.image,o.artist,o.key,o.description)}</div><div class="body">
- <div class="artist">${o.artist?aLink(o.artist)+starBtn(o.artist):`<span data-past="${k}">Eser</span>`}</div>${o.description?`<div class="desc" data-past="${k}">${esc(o.description)}</div>`:''}
+function pastCard(o){const k=esc(o.key);return `<article class="card pastc"><div class="frame pl ${o.image?'ph':'noimg'}" data-past="${k}"${parc(o.image)}>${pimg(o.image,o.artist)}</div><div class="body">
+ <div class="artist">${o.artist?bLink(o.artist)+starBtn(o.artist):`<span data-past="${k}">Eser</span>`}</div>${o.description?`<div class="desc" data-past="${k}">${esc(o.description)}</div>`:''}
  <div class="crow" data-past="${k}"><span class="price">${pastPrice(o)}</span><span class="left">${o.end_date?esc(o.end_date.slice(0,10).split('-').reverse().join('.')):'bitti'}</span></div></div></article>`}
 const pastSlider=L=>`<div class="slider"><button type="button" class="sl-btn sl-prev" aria-label="Önceki eserler" hidden>‹</button><div class="srow">${L.map(pastCard).join('')}</div><button type="button" class="sl-btn sl-next" aria-label="Sonraki eserler"${L.length<2?' hidden':''}>›</button></div>`;
 async function openHouse(site,quiet){quiet=quiet||navQuiet;if(!quiet)takeSpot();await ready;closeM();$('gsWrap').classList.remove('full');show('house');if(!quiet)pushNav('house='+encodeURIComponent(site));
@@ -1165,14 +1194,21 @@ function artistPanel(l,past){if(!l._a)return '<div class="panel first"><p class=
  else h+=`<p class="muted">Karşılaştırma için yeterli fiyat verisi yok (bu sanatçıdan veritabanında ${all.length} eser).</p>`;
  if(others.length)h+=`<h4 style="margin:14px 0 8px">Diğer eserleri (${others.length})</h4><div class="mini">${others.slice(0,60).map(o=>`<div ${o.past?`data-past="${esc(o.site+'|'+o.lot_id)}"`:`data-open="${esc(o.site+'|'+o.lot_id)}"`}>${o.images&&o.images[0]?`<img loading="lazy" onerror="this.remove()" src="${esc(o.images[0])}">`:''}<div>${esc(o.description||o.title)}</div><b>${pastPrice(o)}</b><div class="muted">${esc(o.house||houseName(o.site))}${o.past?' · geçmiş':''}</div></div>`).join('')}</div>`;
  return h+'</div>'}
+/* what to look at next: the artist's catalogue, their other works on sale, then the nearest works by technique, size, price and period */
+const simTile=x=>`<a class="sim" href="#lot=${encodeURIComponent(x.key)}" data-open="${esc(x.key)}"><span><img loading="lazy" decoding="async" draggable="false" src="${esc(thumb(x.images[0]))}" data-o="${esc(x.images[0])}" alt="" onerror="${thumbErr}"></span><b>${esc(x.artist||x.title||'')}</b><i>${TL(priceOf(x))}</i></a>`;
+function nearLots(l,skip){const W={tech:3,size:2,price:2,per:1,cat:1},tk=[...(l._tk||[])].map(id=>[id,W[id.split(':')[0]]||0]).filter(x=>x[1]);if(!tk.length)return [];
+ return D.lots.filter(x=>x!==l&&x.images[0]&&x._tk&&!skip.has(x)).map(x=>[x,tk.reduce((s,[id,w])=>s+(x._tk.has(id)?w:0),0)+(x.site==l.site?.5:0)]).filter(p=>p[1]>=4).sort((a,b)=>b[1]-a[1]).slice(0,12).map(p=>p[0])}
+function relBox(l){const same=l._a?D.lots.filter(x=>x!==l&&x._a==l._a&&x.images[0]).slice(0,12):[],near=nearLots(l,new Set(same)),rec=l.artist&&AR&&AR.byN&&AR.byN[l.artist];
+ return `<div class="rel">${l.artist?`<button type="button" class="rel-cat" data-book="${esc(l.artist)}"><span><small>Sanatçı kataloğu</small><b>${esc(l.artist)}</b></span><i>${rec&&rec.c?rec.c.toLocaleString('tr-TR')+' eser ':''}→</i></button>`:''}
+ ${same.length?`<h4>Sanatçının satıştaki diğer eserleri</h4><div class="simrow">${same.map(simTile).join('')}</div>`:''}${near.length?`<h4>Benzer eserler</h4><div class="simrow">${near.map(simTile).join('')}</div>`:''}</div>`}
 function openLot(k){const l=byKey[k];if(!l)return;const hist=(l.history||[]).map(r=>`${fdate(dt(r[0]))}: ${TL(r[1])}, ${r[2]} pey`).join('<br>');
  const pr=priceOf(l),lab=priceLab(l),soon=l._e&&l._e-Date.now()<864e5&&l._e>Date.now();
  const PRICE_TIP='<b>Açılış fiyatı:</b> müzayedenin başladığı fiyat, satış fiyatı değildir. <b>Güncel pey:</b> şu ana kadarki en yüksek teklif. <b>Hemen Al:</b> beklemeden bu fiyata alınabilir.';
- $('mc').innerHTML=`<div class="det"><div><div class="big hungbig"><span class="pf ${frameOf(l.key,(l.description||'')+' '+(l.category||''))}"><span class="pv"><img id="bigI" src="${esc((l.images[0]||'').replace('/400/','/1500/'))}" alt=""></span></span></div><div class="thumbs">${l.images.map(i=>`<img loading="lazy" onerror="this.remove()" src="${esc(i)}" onclick="$('bigI').src=this.src.replace('/400/','/1500/')">`).join('')}</div><p class="muted zoomtip">Büyütmek için görsele dokunun</p></div>
+ $('mc').innerHTML=`<div class="det"><div><div class="big"><img id="bigI" src="${esc(thumb(l.images[0]||''))}" data-o="${esc((l.images[0]||'').replace('/400/','/1500/'))}" onload="sharp(this)" alt=""></div><div class="thumbs">${l.images.map(i=>`<img loading="lazy" decoding="async" onerror="${thumbErr}" src="${esc(thumb(i))}" data-o="${esc(i)}" onload="sharp(this)" onclick="$('bigI').src=this.src.replace('/400/','/1500/')">`).join('')}</div><p class="muted zoomtip">Büyütmek için görsele dokunun</p></div>
  <div class="info"><div class="meta">${esc(l.house)}${l.lot_no?' · Lot '+esc(l.lot_no):''}</div><h2 class="lt">${l.artist?aLink(l.artist)+' '+starBtn(l.artist):esc(l.title)}</h2>${l.description?`<p class="ld">${esc(l.description)}</p>`:''}
  <div class="keyf"><div><span>${lab} ${tip(PRICE_TIP)}</span><b class="price">${TL(pr)}</b>${l.estimate&&l.estimate!=pr?`<small>Tahmini değer ${TL(l.estimate)}</small>`:''}</div><div><span>Bitiş</span><b class="${soon?'soon':''}">${esc(leftTxt(l)||'—')}</b><small>${l._e?fdate(l._e):''}</small></div></div>
- <div class="acts lacts"><a class="btn pri" href="${esc(l.url)}" target="_blank" rel="noopener">Eser sayfasına git ↗</a><button class="ic fav ${fav.has(k)?'on':''}" data-fav="${esc(k)}" title="Kaydettiklerim'e ekle">♥ Kaydet</button><button class="ic ${cmp.includes(k)?'on':''}" data-cmp="${esc(k)}" title="En fazla 4 eseri yan yana karşılaştırın">⇄ Karşılaştır</button>${l.images[0]?`<button class="ic" data-g3k="${esc(k)}" title="Eseri 3B galeride, duvarda asılı görün">◈ Galeride gör</button>`:''}</div></div></div>
- <div class="ltabs" role="tablist"><button data-lt="eser" class="on">Eser</button><button data-lt="deger">Değer</button><button data-lt="sanatci">Sanatçı</button><button data-lt="arsiv">Arşiv</button><span class="lmini">${TL(pr)}</span></div>
+ <div class="acts lacts"><a class="btn pri" href="${esc(l.url)}" target="_blank" rel="noopener">Eser sayfasına git ↗</a><button class="ic fav ${fav.has(k)?'on':''}" data-fav="${esc(k)}" title="Kaydettiklerim'e ekle">♥ Kaydet</button><button class="ic ${cmp.includes(k)?'on':''}" data-cmp="${esc(k)}" title="En fazla 4 eseri yan yana karşılaştırın">⇄ Karşılaştır</button></div></div></div>
+ ${relBox(l)}
  <div class="lpane on" data-pane="eser"><div class="tags" style="margin:0 0 12px">${(l._tags||[]).map(x=>tagChip(x,F.tags.includes(x.id))).join('')}</div><p class="muted" style="font-size:12px;margin:-4px 0 10px">Bir etikete dokunarak benzer eserleri Keşfet'te listeleyin.</p>
  <table class="f"><tr><td>Müzayede</td><td>${esc(l.auction)}</td></tr><tr><td>Kategori</td><td>${esc(l.category)||'—'}</td></tr><tr><td>Teknik</td><td>${esc(l.tech)||'—'}</td></tr><tr><td>Ölçü</td><td>${esc(l.size)||'—'}</td></tr><tr><td>Yıl</td><td>${esc(l.year)||'—'}</td></tr>
  <tr><td>${l.auction_type=='buy-now'?'Hemen Al fiyatı':'Açılış fiyatı'}</td><td><b>${TL(l.start_price)}</b></td></tr><tr><td>Tahmini değer</td><td>${TL(l.estimate)}</td></tr><tr><td>Güncel pey</td><td>${l.current_bid?TL(l.current_bid):'Sitede canlı görünür'}</td></tr>
@@ -1653,8 +1689,6 @@ function g3Hero(f,key){const p=f.querySelector('.pf');if(RM||!document.startView
   vt.finished.finally(()=>{p.style.viewTransitionName='';if(q)q.style.viewTransitionName=''})}catch(e){p.style.viewTransitionName='';if(!G.on)g3Open(null,null,key)}}
 $('g3X').onclick=g3Dismiss;$('g3Tour').onclick=()=>g3Tour(!G.tour);
 $('g3Prev').onclick=()=>{g3Tour(false);g3Go(Math.round(G.tc)-1)};$('g3Next').onclick=()=>{g3Tour(false);g3Go(Math.round(G.tc)+1)};$('g3R').oninput=e=>{g3Tour(false);g3Go(+e.target.value,true)};
-/* tapping a work on the wall walks you into the room, standing in front of it */
-document.addEventListener('click',e=>{const f=e.target.closest?e.target.closest('.frame.hung[data-open]'):null;if(!f||f.closest('#m,#sd'))return;const l=byKey[f.dataset.open];if(!l||!l.images[0])return;e.stopPropagation();e.preventDefault();moAsk();g3Hero(f,l.key)},true);
 document.addEventListener('click',e=>{const h=e.target.closest('[data-g3h]');if(h){g3Up(!$('g3d').classList.contains('up'));return}
  const b=e.target.closest('[data-g3],[data-g3k]');if(!b)return;e.preventDefault();moAsk();const k=b.dataset.g3k;
  if(k&&G.on){const i=G.list.findIndex(l=>l.key==k);dismissM();if(i>=0)g3Go(i,true);return}
@@ -1750,13 +1784,13 @@ function catRender(){Promise.all([artLoad(),aixLoad()]).then(()=>{const q=norm($
 $('catQ').addEventListener('input',()=>{clearTimeout(catT);catT=setTimeout(()=>{catLim=36;catRender()},140)});$('catMore').onclick=()=>{catLim+=36;catRender()};
 $('bkX').onclick=bkDismiss;$('bkPrev').onclick=bkPrev;$('bkNext').onclick=bkNext;
 $('bkR').oninput=e=>{if(B.an)return;B.k=Math.max(0,Math.min(B.kmax,+e.target.value));B.t=0;bkDraw()};
-document.addEventListener('click',e=>{const b=e.target.closest('[data-book]');if(b){e.preventDefault();openBook(b.dataset.book);return}
+document.addEventListener('click',e=>{if(e.target.matches&&e.target.matches('#mc .lpane:not([data-pane=eser])')){e.target.classList.toggle('op');return}const b=e.target.closest('[data-book]');if(b){e.preventDefault();closeM();openBook(b.dataset.book);return}
  const g=e.target.closest('[data-bkgo]');if(g&&B.on&&!B.an){B.k=Math.min(B.kmax,(+g.dataset.bkgo+1)>>1);B.t=0;bkDraw();return}
  const z=e.target.closest('[data-bkz]');if(z&&B.on)zoomOpen([z.dataset.bkz],0)});
 /* home */
 function renderHome(){if(!D.lots.length)return;const now=Date.now(),L=D.lots.filter(l=>l.images[0]&&(!l._e||l._e>now)).sort((x,y)=>(x._e||9e15)-(y._e||9e15)),S=L.length?L:D.lots.filter(l=>l.images[0]),a=S[0],b=S.find(l=>a&&l._a!==a._a&&l.images[0]!==a.images[0])||a;
  $('hmA').textContent=`${D.lots.length.toLocaleString('tr-TR')} eser satışta · ${new Set(D.lots.map(l=>l.site)).size} müzayede evi`;
- if(a&&!$('hmAi').firstChild)$('hmAi').innerHTML=`<div class="door-img frame hung ph">${hang(a.images[0],a.artist,a.key,(a.description||'')+' '+(a.category||''))}</div>`;
+ if(a&&!$('hmAi').firstChild)$('hmAi').innerHTML=`<div class="door-img"><img class="cv" loading="lazy" draggable="false" src="${esc(a.images[0])}" alt="" onerror="this.remove()"></div>`;
  if(b&&!$('hmBi').firstChild)$('hmBi').innerHTML=`<div class="door-img"><img class="cv" loading="lazy" draggable="false" src="${esc(b.images[0])}" alt="" onerror="this.remove()"></div>`;
  if(!$('hmRow').firstChild){$('hmRow').innerHTML=slider(S.slice(0,14));$('hmRow').querySelectorAll('.srow').forEach(slArrows)}
  artLoad().then(()=>{$('hmB').textContent=`${(AR.artists||[]).length.toLocaleString('tr-TR')} sanatçı kataloğu, kendiliğinden derlenir`}).catch(()=>{})}
