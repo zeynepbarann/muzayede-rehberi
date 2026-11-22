@@ -24,7 +24,7 @@ _last = [0.0]
 def net(url, timeout=90):
     err = None
     for i in range(5):
-        wait = 1.2 - (time.time() - _last[0])
+        wait = float(os.environ.get("LEBRIZ_GAP", "1.2")) - (time.time() - _last[0])
         if wait > 0: time.sleep(wait)
         _last[0] = time.time()
         try:
@@ -51,6 +51,11 @@ def snapshots(aid):
                                 ("filter", "statuscode:200"), ("filter", rf"original:(?i).*[?&]artistid={aid}(&.*)?$"),
                                 ("fl", "timestamp,original,length")])
     rows = [l.split(" ") for l in net("https://web.archive.org/cdx/search/cdx?" + q, timeout=300).decode("utf8", "replace").splitlines()]
+    if not rows:   # the filtered search sometimes comes back empty; a plain prefix finds the usual URL form
+        q = urllib.parse.urlencode([("url", f"lebriz.com/pages/artist.aspx?artistID={aid}"), ("matchType", "prefix"),
+                                    ("filter", "statuscode:200"), ("fl", "timestamp,original,length")])
+        rows = [l.split(" ") for l in net("https://web.archive.org/cdx/search/cdx?" + q, timeout=300).decode("utf8", "replace").splitlines()]
+        rows = [r for r in rows if len(r) > 1 and re.search(rf"[?&]artistid={aid}(&|$)", r[1], re.I)]
     best = {}
     for r in rows:
         if len(r) < 3 or not r[2].isdigit(): continue
@@ -107,6 +112,23 @@ def parse_works(h, ts, page_url):
             out.append(clean({"c": code, "t": rest, "i": wbimg(src, ts), "p": f"{WB}{ts}/{page_url}"}))
         if out: break
     return out
+
+
+def page_name(h):
+    """The artist's name from an archived page title ("lebriz.com - Name"); list pages carry a generic title instead."""
+    m = re.search(r"<title[^>]*>\s*lebriz\.com\s*-\s*(.*?)\s*</title>", h, re.I | re.S)
+    n = T(m.group(1)) if m else ""
+    return n if n and n.lower() not in ("sanatçılar", "artists", "sanatçı", "artist", "ana sayfa", "home") else None
+
+
+def find_name(snaps):
+    for s in sorted(snaps, key=lambda s: (param(s[1], "section") != "100", -int(s[2])))[:5]:
+        try:
+            n = page_name(net(f"{WB}{s[0]}id_/{s[1]}").decode("utf8", "replace"))
+        except Exception:
+            continue
+        if n: return n
+    return None
 
 
 def parse_thumbs(h, aid, ts, page_url):
@@ -192,6 +214,7 @@ def pull(aid):
         h = b.decode("utf8", "replace")
         if len(b) < 6000 or "bhawkTest" in h: continue
         read += 1
+        name = name or page_name(h)
         for m in re.finditer(r'class="rmText">([^<]{2,90}?)\s*\((\d+)\)</span>', h):
             nm, c = T(m.group(1)), int(m.group(2))
             if nm == "Bütün Katalog" or nm.lower() == "all catalogue": total = total or c
@@ -204,7 +227,8 @@ def pull(aid):
         if read % 10 == 0: print(f"  {read} pages read, {len(works)} works", flush=True)
         if time.time() - t0 > 40 * 60: print("  time limit reached for this artist", flush=True); break
     works = apply_images(works, aid)
-    rec = {"id": aid, "name": lebriz_name(aid) or name, "total": total, "series": series, "pages_archived": len(cat), "pages_read": read,
+    name = lebriz_name(aid) or name or find_name(snaps)
+    rec = {"id": aid, "name": name, "total": total, "series": series, "pages_archived": len(cat), "pages_read": read,
            "pulled_at": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "with_images": sum(1 for w in works.values() if w.get("i")), "partial": not snaps, "works": list(works.values())}
     return rec
 

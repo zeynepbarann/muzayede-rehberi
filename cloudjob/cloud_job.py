@@ -156,8 +156,10 @@ def publish_paths(message, paths):
 def lebriz_only():
     """Pull every artist's Lebriz catalogue from the Internet Archive. Resumable: finished artists are kept in the bucket,
     and results are published every 20 minutes. An artist the archive could not be reached for is retried next run."""
-    prog = os.path.join(WORK, "lebriz_progress.json")
-    gcs_get("state/lebriz_progress.json", prog)
+    extra = os.environ.get("LEBRIZ_EXTRA") == "1"   # artists with surviving pictures who are missing from the Lebriz list
+    pname = "lebriz_extra_progress.json" if extra else "lebriz_progress.json"
+    prog = os.path.join(WORK, pname)
+    gcs_get("state/" + pname, prog)
     done = set(json.load(open(prog, encoding="utf8"))) if os.path.exists(prog) else set()
     cat = os.path.join(WORK, "data", "lebriz_catalog")
     os.makedirs(cat, exist_ok=True)
@@ -166,6 +168,26 @@ def lebriz_only():
         artists = sorted(json.load(f)["artists"], key=lambda a: -(a.get("w") or 0))
     only = [int(x) for x in os.environ.get("LEBRIZ_IDS", "").split(",") if x.strip()]
     todo = only or [a["id"] for a in artists if a["id"] not in done]
+    known = {a["id"] for a in artists}
+    if extra:
+        sys.path.insert(0, WORK)
+        import lebriz_pull
+        count = {}
+        for k in lebriz_pull.image_map():
+            i = int(k.split(":")[0])
+            count[i] = count.get(i, 0) + 1
+        todo = only or sorted((i for i in count if i not in known and i not in done), key=lambda i: -count[i])
+
+    def write_extra():
+        """data/lebriz_extra.json: the added artists the site should list. Without a name there is nothing to show them under."""
+        out = []
+        for name in os.listdir(cat):
+            with open(os.path.join(cat, name), encoding="utf8") as f:
+                c = json.load(f)
+            if c.get("id") not in known and c.get("name") and c.get("with_images"):
+                out.append({"id": c["id"], "n": c["name"], "w": c.get("total") or len(c.get("works") or [])})
+        with open(os.path.join(WORK, "data", "lebriz_extra.json"), "w", encoding="utf8") as f:
+            json.dump(sorted(out, key=lambda a: a["id"]), f, ensure_ascii=False, separators=(",", ":"))
     deadline = time.time() + float(os.environ.get("LEBRIZ_MINUTES", "1320")) * 60
     log("lebriz: %d artists, %d to pull" % (len(artists), len(todo)))
     last, n = time.time(), 0
@@ -175,8 +197,10 @@ def lebriz_only():
             return
         with open(prog, "w", encoding="utf8") as f:
             json.dump(sorted(done), f)
-        gcs_put("state/lebriz_progress.json", prog)
-        if TOKEN and publish_paths("Lebriz catalogues: %d artists pulled" % len(done), ["data/lebriz_catalog"]):
+        gcs_put("state/" + pname, prog)
+        if extra:
+            write_extra()
+        if TOKEN and publish_paths("Lebriz catalogues: %d %sartists pulled" % (len(done), "added " if extra else ""), ["data/lebriz_catalog"] + (["data/lebriz_extra.json"] if extra else [])):
             log("published, %d artists finished" % len(done))
     for aid in todo:
         if time.time() > deadline:

@@ -12,7 +12,7 @@ For each house it looks for its archive of past auctions (links named "Geçmiş"
 then reads every finished auction with the same lot reader as the daily scan. What it found is
 written to data/history_log.json so the discovery can be checked and tuned.
 
-Usage: python3 history_mapp.py [--since 2024-01-01] [--minutes 40] [--host www.nefsmuzayede.com]
+Usage: python3 history_mapp.py [--since 2000-01-01] [--minutes 40] [--host www.nefsmuzayede.com]
 """
 import os, re, sys, json, time, datetime as dt
 from urllib.parse import urljoin, urlparse
@@ -24,6 +24,7 @@ LOG = os.path.join(HERE, "data", "history_log.json")
 ARCHIVE_PATHS = ["/gecmis-muzayedeler", "/gecmis-muzayede", "/muzayedeler/gecmis", "/sonuclanan-muzayedeler",
                  "/tamamlanan-muzayedeler", "/muzayede-arsivi", "/arsiv", "/muzayedeler"]
 KW = re.compile(r"geçmiş|gecmis|arşiv|arsiv|sonuçlanan|sonuclanan|tamamlanan|biten|past", re.I)
+MAX_RECORDS = 130000
 AUC = re.compile(r'href="(?:https?://[^/"]+)?/muzayede/(\d+)/([^"/?#]+)"')
 
 
@@ -169,8 +170,12 @@ def main():
     only = a[a.index("--host") + 1] if "--host" in a else None
     archive = json.load(open(OUT, encoding="utf8")) if os.path.exists(OUT) else []
     done = {(x["site"], str(x.get("aid"))) for x in archive}
-    skipped = set(tuple(x) for x in (json.load(open(LOG, encoding="utf8")).get("skip") or [])) if os.path.exists(LOG) else set()
+    prev = json.load(open(LOG, encoding="utf8")) if os.path.exists(LOG) else {}
+    # "skip" means "older than the start date": when the start date moves earlier, those auctions are wanted again
+    skipped = set(tuple(x) for x in (prev.get("skip") or [])) if (prev.get("since") or "9999") <= since.strftime("%Y-%m-%d") else set()
     log = {"run": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "since": since.strftime("%Y-%m-%d"), "houses": {}, "skip": sorted(skipped)}
+    if len(archive) >= MAX_RECORDS:   # GitHub refuses files over 100 MB; this keeps the archive file well under it
+        budget = 0; log["note"] = f"archive file full ({len(archive)} records); not adding more"
     added = 0
     for host in houses():
         if only and host != only: continue
