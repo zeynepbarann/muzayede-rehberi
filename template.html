@@ -1331,7 +1331,7 @@ function nearLots(l,skip){const W={tech:3,size:2,price:2,per:1,cat:1},tk=[...(l.
    One screen for live and finished lots: the works turn past in 3D (this one, the artist's others, then the nearest by technique,
    size, price and period), and the panel below follows the one in front. Side by side on wide screens; split on a foldable's hinge. */
 const WP={on:false,list:[],i:0,p:0,tab:'eser',els:new Map(),drag:null,moved:false,tx:0,ty:0,raf:0,hq:0,bg:0};
-const wpHash=x=>x.lebriz?'katalog='+encodeURIComponent(x.artist):(x.past?'past=':'lot=')+encodeURIComponent(x.key);
+const wpHash=x=>x.lebriz?(x.artist?'katalog='+encodeURIComponent(x.artist):'arsiv'):(x.past?'past=':'lot=')+encodeURIComponent(x.key);
 function wpList(x){const same=x._a?D.lots.filter(y=>y.key!==x.key&&y._a==x._a&&y.images[0]).sort((a,b)=>(a._e||9e15)-(b._e||9e15)).slice(0,6):[];return [x,...same,...(x.past?[]:nearLots(x,new Set(same)).slice(0,8))]}
 function wpErr(im){if(im.dataset.o&&im.getAttribute('src')!=im.dataset.o){im.src=im.dataset.o;return}const a=im.parentNode;im.remove();if(a)a.insertAdjacentHTML('afterbegin','<span class="wp-noimg">Görsel yok</span>')}
 function wpSync(){const c=WP.i,a=Math.max(0,c-2),b=Math.min(WP.list.length-1,c+2),st=$('wpStage');if(!st)return;
@@ -1345,11 +1345,14 @@ function wpDraw(){WP.raf=0;const st=$('wpStage');if(!WP.on||!st)return;const W=s
 const wpKick=()=>{if(!WP.raf)WP.raf=requestAnimationFrame(wpDraw)};
 function wpSharp(){clearTimeout(WP.hq);WP.hq=setTimeout(()=>{const e=WP.els.get(WP.i),im=e&&e.querySelector('img'),o=im&&im.dataset.o;if(!o||im.getAttribute('src')==o)return;const t=new Image();t.onload=()=>{if(im.isConnected)im.src=o};t.src=o},320)}
 /* a position in the list: a work, or (from the archive grid) a row of the light index, filled in when it comes to the front */
-const ARI=new Map();
+const ARI=new Map(),LMC={};
+const lbMore=g=>LMC[g]||(LMC[g]=fetch(`data/lebriz_more/${g}.json`,{cache:'no-cache'}).then(r=>r.ok?r.json():[]).catch(()=>[]));
+const lbMoreItem=(w,artist)=>({title:w.t||w.et||'',description:[w.t,w.k].filter(Boolean).join(' · ')||(w.et&&!artist?'':''),size:w.s||'',year:(w.d||'').slice(-4),exh:w.et||'',gallery:w.g||'',city:w.c||'',exDate:w.d||'',url:w.e?exURL(w.e):''});
 function arItem(n){let x=ARI.get(n);if(x)return x;const r=AX.R[n],k=AX.H[r[1]]+'|'+r[7];if(r[5]==1&&byKey[k])x=byKey[k];else if(r[5]==0&&PASTBY[k])x=PASTBY[k];else{const full=arFull(r),name=AX.A[r[0]];x={_lite:true,key:k,site:AX.H[r[1]],lot_id:r[7],past:true,lebriz:r[5]==2,artist:name,_a:AX.an[r[0]],house:AX.hs[r[1]],images:full?[full]:[],image:full,start_price:r[3]||null,end_date:r[2]?String(r[2]).slice(0,4)+'-'+String(r[2]).slice(4,6)+'-01':'',description:''}}ARI.set(n,x);return x}
 const wpAt=i=>{const v=WP.list[i];return typeof v=='number'?arItem(v):v};
 const wpKeyAt=i=>{const v=WP.list[i];return typeof v=='number'?AX.H[AX.R[v][1]]+'|'+AX.R[v][7]:v.key};
 function wpHydrate(x){const pos=WP.i,v=WP.list[pos];if(!x._lite||typeof v!='number')return;x._lite=false;const again=()=>{if(WP.on&&WP.list[WP.i]===v)wpFill()};
+ if(x.lebriz&&x.lot_id.includes('/')){const[g,nm]=x.lot_id.split('/');lbMore(g).then(L=>{const w=L.find(y=>y.n===nm);if(w){Object.assign(x,lbMoreItem(w,x.artist));again()}});return}
  if(x.lebriz){lbLoad().then(()=>{const a=lbMatch(x.artist);return a?lbCat(a.id):null}).then(c=>{const w=c&&(c.works||[]).find(w=>w.c===x.lot_id);if(w){Object.assign(x,{title:w.t||'',description:[w.t,w.k].filter(Boolean).join(' · '),size:w.s||'',year:w.y||'',url:w.p||''});again()}}).catch(()=>{});return}
  if(x.artist)artistPast(x.artist).catch(()=>null).then(()=>{const f=PASTBY[x.key];if(f){ARI.set(v,f);again()}})}
 function wpFill(){const x=wpAt(WP.i),P=!!x.past,L=!!x.lebriz,n=WP.list.length;if(!$('wpBody'))return;if(x._lite)wpHydrate(x);const aKey=x._a||norm(x.artist||'');
@@ -1363,7 +1366,7 @@ function wpFill(){const x=wpAt(WP.i),P=!!x.past,L=!!x.lebriz,n=WP.list.length;if
  $('wpBody').innerHTML=`<div class="wp-head"><div class="wp-meta">${esc(x.house||'')}${x.lot_no?' · Lot '+esc(x.lot_no):''}${L?' · Arşiv kaydı':P?' · Müzayede bitti':''}</div><h2>${x.artist?bLink(x.artist)+starBtn(x.artist):esc(x.title||'Eser')}</h2>${x.description?`<p class="wp-desc">${esc(x.description)}</p>`:''}</div>
  ${price?`<div class="wp-price"><span>${lab}</span><b>${esc(price)}</b>${x.estimate&&x.estimate!=priceOf(x)?`<small>Tahmini değer ${TL(x.estimate)}</small>`:''}</div>`:''}
  ${(x._tags||[]).length?`<div class="tags">${x._tags.filter(t=>t.k!='house').map(t=>tagChip(t,F.tags.includes(t.id))).join('')}</div>`:''}
- <section class="wp-sec"><h3>Eser bilgisi</h3><div class="wp-tiles">${T('Ölçü',size)}${L?'':T(P?'Bitti':'Bitiş',end,soon)}${T('Teknik',x.tech)}${T('Yıl',x.year)}</div><div class="wp-rows">${x.auction?R('Müzayede',esc(x.auction)):''}${x.category?R('Kategori',esc(x.category)):''}${L?'':R('Açılış fiyatı',x.start_price&&lab!='Açılış fiyatı'?TL(x.start_price):'')}${x.bid_count!=null?R('Verilen pey',x.bid_count):''}${R('cm² fiyatı',x.ppc?ppcTxt(x):'')}${hist}</div></section>
+ <section class="wp-sec"><h3>Eser bilgisi</h3><div class="wp-tiles">${T('Ölçü',size)}${L?'':T(P?'Bitti':'Bitiş',end,soon)}${T('Teknik',x.tech)}${T('Yıl',x.year)}</div><div class="wp-rows">${x.exh?R('Sergi',esc(x.exh)):''}${x.gallery?R('Galeri',esc(x.gallery)):''}${x.city?R('Şehir',esc(x.city)):''}${x.exDate?R('Tarih',esc(x.exDate)):''}${x.auction?R('Müzayede',esc(x.auction)):''}${x.category?R('Kategori',esc(x.category)):''}${L?'':R('Açılış fiyatı',x.start_price&&lab!='Açılış fiyatı'?TL(x.start_price):'')}${x.bid_count!=null?R('Verilen pey',x.bid_count):''}${R('cm² fiyatı',x.ppc?ppcTxt(x):'')}${hist}</div></section>
  ${x._a&&!L?`<section class="wp-sec"><h3>Değer</h3><div id="apanel">${P?'':artistPanel(x,null)}</div><div id="lbPrice"></div></section>`:''}
  ${x.artist?`<section class="wp-sec"><h3>Sanatçı</h3><button type="button" class="wp-cat" data-book="${esc(x.artist)}">${cover?`<img loading="lazy" src="${esc(thumb(cover))}" data-o="${esc(cover)}" alt="" onerror="${thumbErr}">`:''}<span><b>Sanatçı kataloğu</b><small>${rec&&rec.c?rec.c.toLocaleString('tr-TR')+' eser arşivde':'Bütün eserleri'}</small></span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button>${same.length?`<h4>Şu an satışta</h4><div class="simrow">${same.map(simTile).join('')}</div>`:''}<div id="lbLot"></div><a class="wp-link" href="#artist=${encodeURIComponent(x.artist)}" data-artist="${esc(x.artist)}">Sanatçı sayfası →</a></section>`:''}
  ${nav}${x.url?`<a class="wp-cta" href="${esc(x.url)}" target="_blank" rel="noopener"><span>${L?'Lebriz kaynağı':P?'Kaynak sayfası':'Müzayedeye git'}</span><span>${esc(price)}</span></a>`:''}`;
@@ -1929,6 +1932,7 @@ async function bkData(name){await ready;try{await lbLoad()}catch(e){}const a=lbM
  const old=past.filter(x=>x.image).sort((x,y)=>(y.end_date||'').localeCompare(x.end_date||''));
  const cat=a?await lbCat(a.id).catch(()=>null):null,lw=(cat&&cat.works)||[];
  const lb=lw.filter(lbPlate).map(w=>{const im=mir(w.i);return{lebriz:1,key:'lb|'+w.c,images:[im],image:im,artist:name,title:w.t||'',description:[w.t,w.k].filter(Boolean).join(' · '),size:w.s||'',year:w.y||'',house:'Lebriz arşivi',url:w.p||''}}).sort((x,y)=>(!!y.title-!!x.title)||(y.year||'').localeCompare(x.year||''));
+ if(a){const nm=u=>((u||'').match(/iName=([^&]+)/i)||[])[1],have=new Set(lw.map(w=>(nm(w.i)||'').toLowerCase()));(await lbMore('a'+a.id)).forEach(w=>{if(have.has(w.n))return;have.add(w.n);const im=mir(w.u);lb.push({lebriz:1,key:'lb|'+w.n,images:[im],image:im,artist:name,house:'Lebriz arşivi',...lbMoreItem(w,name)})})}
  return{live,old,lb,lbRec:lw.length}}
 const bkYear=o=>(o.end_date||'').slice(0,4)||'Tarihsiz';
 /* pages come in pairs after the cover: odd index = first page of a spread (plate / chapter title), even = second (entry / contact sheet) */

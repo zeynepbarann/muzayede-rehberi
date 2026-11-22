@@ -92,6 +92,7 @@ def build():
             names = {a["id"]: a["n"] for a in json.load(f)["artists"]}
     except Exception:
         pass
+    in_catalog = set()
     for p in sorted(glob.glob(os.path.join(DATA, "lebriz_catalog", "*.json"))):
         with open(p, encoding="utf8") as f:
             c = json.load(f)
@@ -99,12 +100,28 @@ def build():
         if not name:
             continue
         for w in c.get("works") or []:
+            m = re.search(r"iName=([^&]+)", w.get("i") or "", re.I)
+            if m:
+                in_catalog.add((c.get("id"), m.group(1).lower()))
             usable = w.get("i") and w.get("z") is not None and (w["z"] == 0 or w["z"] >= 100)
             if not usable and not w.get("t"):
                 continue
             y = re.match(r"\d{4}", w.get("y") or "")
             add(name, "Lebriz", int(y.group(0)) * 100 + 1 if y else 0, 0, " ".join(v for v in (w.get("t"), w.get("k"), w.get("s")) if v), 2,
                 image_name(w["i"]) if usable else "", w.get("c") or "", w["i"] if usable else "")
+    # the other surviving Lebriz pictures: exhibition works, old auction lots, artist works outside the catalogue pages
+    used = set()
+    for p in sorted(glob.glob(os.path.join(DATA, "lebriz_more", "*.json")), key=lambda x: os.path.basename(x)[0] != "e"):
+        g = os.path.basename(p)[:-5]
+        with open(p, encoding="utf8") as f:
+            recs = json.load(f)
+        for w in recs:
+            if w["u"] in used or (w.get("a"), w["n"]) in in_catalog:
+                continue
+            used.add(w["u"])
+            d = re.match(r"\d{2}\.(\d{2})\.(\d{4})", w.get("d") or "")
+            add(w.get("an") or "", w.get("g") or "Lebriz", int(d.group(2)) * 100 + int(d.group(1)) if d else 0, 0,
+                " ".join(v for v in (w.get("t"), w.get("k"), w.get("s"), w.get("et"), w.get("g"), w.get("c")) if v), 2, image_name(w["u"]), g + "/" + w["n"], w["u"])
     rows.sort(key=lambda r: (not r[0][6], -r[0][2], r[0][5] != 1))   # pictures first, newest first
     src = [sum(1 for r in rows if r[0][5] == s) for s in (0, 1, 2)]
     meta = {"v": 1, "works": len(rows), "with_images": sum(1 for r in rows if r[0][6]), "past": src[0], "live": src[1], "lebriz": src[2],

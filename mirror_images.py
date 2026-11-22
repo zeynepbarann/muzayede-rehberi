@@ -73,6 +73,10 @@ def all_urls():
     for name in sorted(os.listdir(cat)) if os.path.isdir(cat) else []:
         for w in (load(os.path.join("lebriz_catalog", name)) or {}).get("works") or []:
             add(w.get("i"))
+    more = os.path.join(HERE, "data", "lebriz_more")
+    for name in sorted(os.listdir(more)) if os.path.isdir(more) else []:
+        for w in load(os.path.join("lebriz_more", name)) or []:
+            add(w.get("u"))
     return out
 
 

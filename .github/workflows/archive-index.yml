@@ -1,0 +1,46 @@
+# Keeps the Arşiv index and its Lebriz count current while catalogues keep arriving from the cloud job.
+# Runs every three hours and commits only when the result changed.
+name: Arşiv dizini
+
+on:
+  schedule:
+    - cron: "20 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+
+concurrency:
+  group: archive-index
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TZ: Europe/Istanbul
+      GH_TOKEN: ${{ github.token }}
+      PYTHONIOENCODING: utf-8
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lebriz görsellerini listele
+        run: python3 lebriz_more.py || echo "archive listing unavailable; keeping the previous list"
+
+      - name: Dizini oluştur
+        run: python3 build_archive.py
+
+      - name: Yayınla
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/archive.json data/archive_text.json data/lebriz_more
+          if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
+          git commit -q -m "Arşiv dizini güncellendi"
+          for i in 1 2 3 4; do
+            git pull -q --rebase origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && break
+            sleep $((i * 8))
+          done
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" >/dev/null 2>&1 || true
