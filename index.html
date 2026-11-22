@@ -1168,7 +1168,11 @@ function pollPending(){clearTimeout(pollT);let P=getPend();if(!P.length)return;
 const parc=src=>{const a=ARC.get(src);return a?` style="--arc:${clampN(a,.6,1.8)}"`:''};
 function pimg(src,alt){if(!src)return '';const t=thumb(src);return `<img loading="lazy" decoding="async" draggable="false" src="${esc(t)}"${t!=src?` data-o="${esc(src)}"`:''} alt="${esc(alt||'')}" onload="plain(this)" onerror="unplain(this)">`}
 function plain(im){const ar=arOf(im),f=im.parentNode;ARC.set(im.dataset.o||im.getAttribute('src'),ar);im.classList.add('ld');f.classList.remove('ph');f.style.setProperty('--arc',clampN(ar,.6,1.8))}
-function unplain(im){if(im.dataset.o&&im.getAttribute('src')!=im.dataset.o){im.src=im.dataset.o;return}const f=im.parentNode;im.remove();f.classList.remove('ph');f.classList.add('noimg')}
+/* a picture not copied to the bucket yet: find where it came from and show the original meanwhile */
+const IMU={},imuLoad=p=>IMU[p]||(IMU[p]=fetch(`data/img/${p}.json`+V).then(r=>r.ok?r.json():{}).catch(()=>({})));
+function imgFix(im){const s=im.getAttribute('src')||'';if(im.dataset.fx||!IMG_BASE||!s.startsWith(IMG_BASE)||s.includes('?u='))return false;const m=s.match(/\/[it]\/([0-9a-f]{16})(\.\w+)?$/);if(!m)return false;im.dataset.fx=1;const name=m[1]+(m[2]&&m[2]!='.jpg'?m[2]:'');
+ imuLoad(m[1].slice(0,2)).then(d=>{if(!im.isConnected)return;const u=d[name];if(u){const f=mir(u);im.dataset.o=f;im.src=thumb(f)}else{im.removeAttribute('data-o');im.src='data:,'}});return true}
+function unplain(im){if(imgFix(im))return;if(im.dataset.o&&im.getAttribute('src')!=im.dataset.o){im.src=im.dataset.o;return}const f=im.parentNode;im.remove();f.classList.remove('ph');f.classList.add('noimg')}
 /* show the light copy at once, then swap in the full picture when it has arrived */
 function sharp(im){const o=im.dataset.o;if(!o||im.dataset.sh||im.getAttribute('src')==o)return;im.dataset.sh=1;const t=new Image();t.onload=()=>{if(im.isConnected)im.src=o};t.src=o}
 const bLink=n=>`<a class="alink" href="#katalog=${encodeURIComponent(n)}" data-book="${esc(n)}" title="${esc(n)} kataloğu">${esc(n)}</a>`;
@@ -1371,7 +1375,7 @@ function nearLots(l,skip){const W={tech:3,size:2,price:2,per:1,cat:1},tk=[...(l.
 const WP={on:false,list:[],i:0,p:0,tab:'eser',els:new Map(),drag:null,moved:false,tx:0,ty:0,raf:0,hq:0,bg:0};
 const wpHash=x=>x.lebriz?(x.artist?'katalog='+encodeURIComponent(x.artist):'arsiv'):(x.past?'past=':'lot=')+encodeURIComponent(x.key);
 function wpList(x){const same=x._a?D.lots.filter(y=>y.key!==x.key&&y._a==x._a&&y.images[0]).sort((a,b)=>(a._e||9e15)-(b._e||9e15)).slice(0,6):[];return [x,...same,...(x.past?[]:nearLots(x,new Set(same)).slice(0,8))]}
-function wpErr(im){if(im.dataset.o&&im.getAttribute('src')!=im.dataset.o){im.src=im.dataset.o;return}const a=im.parentNode;im.remove();if(a)a.insertAdjacentHTML('afterbegin','<span class="wp-noimg">Görsel yok</span>')}
+function wpErr(im){if(imgFix(im))return;if(im.dataset.o&&im.getAttribute('src')!=im.dataset.o){im.src=im.dataset.o;return}const a=im.parentNode;im.remove();if(a)a.insertAdjacentHTML('afterbegin','<span class="wp-noimg">Görsel yok</span>')}
 function wpSync(){const c=WP.i,a=Math.max(0,c-2),b=Math.min(WP.list.length-1,c+2),st=$('wpStage');if(!st)return;
  for(const[n,e]of WP.els)if(n<a||n>b){e.remove();WP.els.delete(n)}
  for(let n=a;n<=b;n++){if(WP.els.has(n))continue;const x=wpAt(n),im=x.images&&x.images[0],e=document.createElement('div');e.className='wp-sl';
@@ -1823,7 +1827,7 @@ function frameOf(key,txt){let f=FRC.get(key);if(f)return f;const s=norm(txt),p=P
 const arOf=im=>clampN(+(im.naturalWidth/im.naturalHeight).toFixed(3)||.8,.3,3.2);
 const arc=ar=>clampN(ar*.94,.74,1.32).toFixed(3);            /* the patch of wall a work takes follows its shape */
 const thumb=u=>IMG_BASE&&u&&u.startsWith(IMG_BASE+'/i/')?IMG_BASE+'/t/'+u.slice(IMG_BASE.length+3):u&&/\/Product\/\d+\/1500\//.test(u)?u.replace('/1500/','/400/'):u;   /* MüzayedeApp's image host keeps a 400px copy, about nine times lighter than the full picture */
-const thumbErr="if(this.dataset.o&&this.getAttribute('src')!=this.dataset.o)this.src=this.dataset.o;else this.remove()";
+const thumbErr="if(imgFix(this))return;if(this.dataset.o&&this.getAttribute('src')!=this.dataset.o)this.src=this.dataset.o;else this.remove()";
 function hang(src,alt,key,txt){if(!src)return '';const ar=ARC.get(src),t=thumb(src);return `<span class="pf ${frameOf(key,txt)}"${ar?` style="--ar:${ar}"`:''}><span class="pv"><img loading="lazy" decoding="async" draggable="false" src="${esc(t)}"${t!=src?` data-o="${esc(src)}"`:''} alt="${esc(alt||'')}" onload="hung(this)" onerror="unhung(this)"></span></span>`}
 function hung(im){const ar=arOf(im);ARC.set(im.dataset.o||im.getAttribute('src'),ar);im.classList.add('ld');const p=im.closest('.pf'),f=im.closest('.frame');if(p)p.style.setProperty('--ar',ar);if(f){f.classList.remove('ph');f.style.setProperty('--arc',arc(ar))}}
 function unhung(im){if(im.dataset.o&&im.getAttribute('src')!=im.dataset.o){im.src=im.dataset.o;return}const f=im.closest('.frame'),p=im.closest('.pf');if(p)p.remove();if(f){f.classList.remove('ph');f.classList.add('noimg')}}

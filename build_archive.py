@@ -4,6 +4,8 @@
 Writes
   data/archive.json       what a grid card needs, one short row per work (loaded when Arşiv opens)
   data/archive_text.json  normalised description text per row, same order (loaded only when someone searches)
+  data/img/<xx>.json      bucket name -> original picture address, split by the first two letters of the name; the page reads
+                          one small file only when a picture is not in the bucket yet
 
 Row: [artist, house, yyyymm, price, tech*4+size, source, image, id, lebriz image URL]
   artist/house/tech are indexes into the "A", "H" and "T" lists; source 0 finished, 1 on sale, 2 Lebriz
@@ -51,11 +53,32 @@ def ym(s):
     return int(m.group(1)) * 100 + int(m.group(2)) if m else 0
 
 
+ORIGINALS = {}
+
+
 def image_name(u):
     if not u:
         return ""
     e = img_ext(u)
-    return img_key(u) + ("" if e == "jpg" else "." + e)
+    name = img_key(u) + ("" if e == "jpg" else "." + e)
+    ORIGINALS[name] = u
+    return name
+
+
+def write_originals(rows):
+    """Where each picture came from, for the ones the page cannot find in the bucket yet."""
+    parts = {}
+    for r, _ in rows:
+        if r[6] and len(r) < 9 and r[6] in ORIGINALS:
+            parts.setdefault(r[6][:2], {})[r[6]] = ORIGINALS[r[6]]
+    folder = os.path.join(DATA, "img")
+    os.makedirs(folder, exist_ok=True)
+    for p in glob.glob(os.path.join(folder, "*.json")):
+        if os.path.basename(p)[:-5] not in parts:
+            os.remove(p)
+    for k, v in parts.items():
+        with open(os.path.join(folder, k + ".json"), "w", encoding="utf8") as f:
+            json.dump(v, f, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
 
 
 def build():
@@ -131,6 +154,7 @@ def build():
         with open(tmp, "w", encoding="utf8") as f:
             json.dump(obj, f, ensure_ascii=False, separators=(",", ":"))
         os.replace(tmp, os.path.join(DATA, name))
+    write_originals(rows)
     print("archive: %d works (%d finished, %d on sale, %d Lebriz), %d with images, %d artists" % (len(rows), src[0], src[1], src[2], meta["with_images"], len(A)))
 
 
