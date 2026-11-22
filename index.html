@@ -762,10 +762,23 @@ h1,h2,h3,.artist,.hm-h,.door b,.ctl b{font-weight:500;letter-spacing:-.012em}
 .sd-ar{display:flex;justify-content:space-between;align-items:center;width:100%;min-height:46px;padding:0 12px;margin-bottom:6px;border:0;background:#111110;color:#fff;font:500 13px var(--sans);text-align:left;cursor:pointer}.sd-ar b{color:#dcb96a}
 @media(max-width:640px){.ar-tags{top:var(--hdr);margin:0 -12px;padding:12px 12px 14px}.ar-search{height:52px}.ar-tabs button{font-size:9.5px;letter-spacing:.06em}.ar-tabs i{font-size:17px}}
 @media(max-width:640px){html,body{overflow-x:clip}}
+
+/* ===== floating pill menu ===== */
+:root{--tabbar:calc(94px + env(safe-area-inset-bottom))}body{padding-bottom:var(--tabbar)}
+nav.tabs{position:fixed!important;top:auto!important;left:50%!important;right:auto!important;bottom:calc(14px + env(safe-area-inset-bottom))!important;z-index:45;transform:translateX(-50%);box-sizing:border-box;width:min(358px,calc(100vw - 24px));height:66px;max-width:none;margin:0;padding:6px!important;display:grid;grid-template-columns:1fr 1fr 54px 1fr;gap:2px;align-items:stretch;justify-content:stretch;overflow:visible;border:1px solid rgba(17,17,16,.08)!important;border-radius:40px;background:rgba(255,255,255,.97)!important;box-shadow:0 14px 38px rgba(17,17,16,.2)!important;transition:width .4s cubic-bezier(.16,1,.3,1),height .4s cubic-bezier(.16,1,.3,1)}
+nav.tabs button{display:flex!important;flex-direction:row;align-items:center;justify-content:center;min-width:0;min-height:0!important;height:auto;padding:0!important;border:0!important;border-radius:30px;background:transparent;color:#3a3936!important;opacity:1!important;font:500 12px var(--sans)!important;letter-spacing:0!important;text-transform:none;white-space:nowrap;cursor:pointer;box-shadow:none!important;transition:background .3s,color .3s,font-size .3s}
+nav.tabs button.on{background:#111110;color:#fff!important}nav.tabs .n,nav.tabs .ti{display:none!important}nav.tabs #tSearch{display:none!important}
+nav.tabs #pillS{border-radius:50%;background:#111110;color:#dcb96a!important}
+body.nav-c nav.tabs{width:min(292px,calc(100vw - 24px));height:56px;grid-template-columns:1fr 1fr 44px 1fr}body.nav-c nav.tabs button{font-size:10.5px!important}
+.ar-tags{top:var(--hdr)}.ltabs.page{top:var(--hdr)}.fab,body[data-view=lots] .fab{bottom:calc(var(--tabbar) + 4px)!important}
+.toast{bottom:calc(var(--tabbar) + 8px)}.dock{bottom:calc(var(--tabbar) + 8px)}
+.gs-tags{display:none}
+@media(max-width:640px){.iconbtn.gsBtn{display:none!important}.gs.full:has(#gq:placeholder-shown) .gs-tags{display:flex;flex-wrap:wrap;gap:8px;position:fixed;left:12px;right:12px;top:calc(72px + env(safe-area-inset-top))}.gs-tags button{height:38px;padding:0 15px;border:1px solid rgba(17,17,16,.12);border-radius:19px;background:#fff;color:var(--ink);font:500 12.5px var(--sans);box-shadow:0 6px 16px rgba(17,17,16,.1);cursor:pointer}}
+nav.tabs button.on{font-size:12px!important;font-weight:600!important}body.nav-c nav.tabs button.on{font-size:10.5px!important}
 </style></head><body>
 <header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-<input id="gq" type="search" autocomplete="off" placeholder="Her şeyi ara: sanatçı, eser, müzayede evi, sergi, galeri…" aria-label="Genel arama" aria-controls="sd" aria-expanded="false"><kbd>/</kbd><div class="sd" id="sd" role="listbox"></div></div>
+<input id="gq" type="search" autocomplete="off" placeholder="Her şeyi ara: sanatçı, eser, müzayede evi, sergi, galeri…" aria-label="Genel arama" aria-controls="sd" aria-expanded="false"><kbd>/</kbd><div class="gs-tags" id="gsTags" aria-label="Hızlı arama"><button type="button">Yağlı boya</button><button type="button">Akrilik</button><button type="button">Suluboya</button><button type="button">Baskı</button><button type="button">Heykel</button><button type="button">Portre</button><button type="button">Peyzaj</button><button type="button">Soyut</button></div><div class="sd" id="sd" role="listbox"></div></div>
 <div class="hbtns"><button class="iconbtn gsBtn" id="gsBtn" aria-label="Ara"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button><button class="iconbtn" id="menuBtn" aria-label="Ayarlar ve yardım" aria-haspopup="true" aria-expanded="false" title="Ayarlar ve yardım"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div>
 <div class="menu" id="menu" role="menu" aria-label="Ayarlar ve yardım">
  <h5>Görünüm</h5>
@@ -774,12 +787,16 @@ h1,h2,h3,.artist,.hm-h,.door b,.ctl b{font-weight:500;letter-spacing:-.012em}
  <label class="tgl"><span><b>Kartlarda açıklama</b><small>Eserin tam açıklaması kartta da görünsün</small></span><input type="checkbox" id="setDesc"><i aria-hidden="true"></i></label>
  <label class="tgl"><span><b>Lebriz yalnızca Wi-Fi'da</b><small>Mobil veride bekler, Wi-Fi'a bağlanınca kendiliğinden başlar (Android)</small></span><input type="checkbox" id="setWifi"><i aria-hidden="true"></i></label>
  <hr>
+ <button type="button" class="mi" data-go="cat">❏ Kataloglar</button>
+ <button type="button" class="mi" data-go="houses">⌂ Müzayede evleri</button>
+ <hr>
  <button type="button" class="mi" id="mPick">★ Favori sanatçıları düzenle</button>
  <button type="button" class="mi" id="mAdd">＋ Bağlantı ekle</button>
  <button type="button" class="mi" id="mGh">⚡ GitHub bağlantısı <span class="ghstate" id="ghState"></span></button>
  <button type="button" class="mi" id="mHelp">ⓘ Nasıl çalışır?</button>
 </div></div>
-<nav class="tabs" role="tablist"><button data-v="lots"><span class="ti" aria-hidden="true">◇</span>Müzayedeler<span class="n" id="nLots">…</span></button><button data-v="cat"><span class="ti" aria-hidden="true">❏</span>Kataloglar</button><button data-v="fav"><span class="ti" aria-hidden="true">★</span>Koleksiyon<span class="n" id="favTabN"></span></button><button data-v="houses"><span class="ti" aria-hidden="true">⌂</span>Evler</button><button data-v="lb"><span class="ti" aria-hidden="true">▤</span>Arşiv</button><button data-v="search" id="tSearch" style="display:none"><span class="ti" aria-hidden="true">⚲</span>Arama</button></nav></header>
+</header>
+<nav class="tabs" aria-label="Ana menü"><button type="button" data-v="lots">Müzayede<span class="n" id="nLots">…</span></button><button type="button" data-v="lb">Arşiv</button><button type="button" id="pillS" aria-label="Her şeyde ara"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button><button type="button" data-v="fav">Koleksiyon<span class="n" id="favTabN"></span></button><button type="button" data-v="search" id="tSearch" style="display:none">Arama</button></nav>
 <main>
 <section class="view" id="v-home">
  <div class="hm-k">16/22 · Müzayede arşivi</div>
@@ -797,7 +814,7 @@ h1,h2,h3,.artist,.hm-h,.door b,.ctl b{font-weight:500;letter-spacing:-.012em}
  <div id="favBody"><div class="skc skel"></div></div>
 </section>
 <section class="view" id="v-lots">
- <div class="vhead"><div><h1>Müzayedeler</h1><p class="muted"><span id="stats">Yükleniyor…</span> <span class="tip-wrap" id="statsTip"></span></p></div></div>
+ <div class="vhead"><div><h1>Müzayedeler</h1><p class="muted"><span id="stats">Yükleniyor…</span> <span class="tip-wrap" id="statsTip"></span></p></div><button type="button" class="btn" data-go="houses">Müzayede evleri →</button></div>
  <div class="bar"><button type="button" class="btn fbtn" id="fOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg> Filtrele <span class="badge-n" id="fN"></span></button>
   <label class="sortl">Sırala <select class="fld sm" id="sort"><option value="end">Bitişi en yakın</option><option value="pa">En ucuz</option><option value="pd">En pahalı</option><option value="bids">En çok pey alan</option><option value="artist">Sanatçı (A–Z)</option><option value="ppc">cm² başına en ucuz</option></select></label></div>
  <div class="active-f" id="activeF"></div>
@@ -1226,7 +1243,7 @@ const openFilters=()=>{drawer(true);ovOpen('filters')},dismissFilters=()=>ovClos
 $('fOpen').onclick=openFilters;$('fab').onclick=openFilters;$('fClose').onclick=dismissFilters;$('fApply').onclick=()=>{dismissFilters();scrollTo({top:0})};$('scrim').onclick=dismissFilters;
 /* ===== views ===== */
 let favDirty=false;
-function show(v,quiet,keep){if(!navQuiet){g3Close();bkClose()}const prev=view;if(!quiet&&!keep&&TABHASH[v]&&v!==prev)takeSpot();view=v;document.body.dataset.view=v;document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));
+function show(v,quiet,keep){if(!navQuiet){g3Close();bkClose()}const prev=view;if(!quiet&&!keep&&TABHASH[v]&&v!==prev)takeSpot();view=v;document.body.dataset.view=v;const pv=v=='cat'?'lb':v=='houses'?'lots':v;document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v==pv));
  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id=='v-'+v));
  if(v=='lots'&&!(keep&&$('g').childElementCount&&!$('g').querySelector('.skc')))ready.then(render);if(v=='fav'&&!(keep&&!favDirty&&$('favBody').childElementCount&&!$('favBody').querySelector('.skc')))ready.then(renderFav);if(v=='lb')lbOpenTab();if(v=='cat')ready.then(catRender);if(v=='home')ready.then(renderHome);if(v=='houses')ready.then(()=>{buildHouses();buildSources()});
  if(TABHASH[v]&&!quiet&&v!==prev)pushNav(TABHASH[v]);if(!keep)window.scrollTo({top:0})}
@@ -1359,7 +1376,7 @@ document.addEventListener('click',e=>{document.querySelectorAll('details.tip[ope
  const lc=e.target.closest('[data-lbcancel]');if(lc){e.preventDefault();lbCancel(lc.dataset.lbcancel);return}
  const lp=e.target.closest('[data-lbpull]');if(lp){e.preventDefault();lbPull(lp.dataset.lbpull.split(','));return}
  const lo=e.target.closest('[data-lbopen]');if(lo){e.preventDefault();openCatalog(+lo.dataset.lbopen);return}
- const go=e.target.closest('[data-go]');if(go){e.preventDefault();show(go.dataset.go);return}
+ const go=e.target.closest('[data-go]');if(go){e.preventDefault();menuOpen(false);show(go.dataset.go);return}
  const lt=e.target.closest('[data-lt],[data-pt]');if(lt){const box=lt.closest('#mc,#artistPage'),id=lt.dataset.lt||lt.dataset.pt;box.querySelectorAll('[data-lt],[data-pt]').forEach(b=>b.classList.toggle('on',b==lt));box.querySelectorAll('.lpane').forEach(p=>p.classList.toggle('on',p.dataset.pane==id));return}
  const tg=e.target.closest('[data-tag]');if(tg&&!tg.closest('#sd')){e.preventDefault();e.stopPropagation();toggleTag(tg.dataset.tag,!!tg.closest('#m,#artistPage'));return}
  const ar=e.target.closest('[data-artist]');if(ar&&!ar.closest('#sd')){e.preventDefault();e.stopPropagation();openArtist(ar.dataset.artist);return}
@@ -1967,6 +1984,10 @@ $('hmS').onclick=()=>{if(innerWidth<=640)gsOpen();else $('gq').focus()};
  document.addEventListener('keydown',e=>{if(!B.on||ovIsOpen('m')||ovIsOpen('zoom'))return;const k=e.key;if(k=='ArrowRight'||k=='ArrowDown'||k==' ')bkNext();else if(k=='ArrowLeft'||k=='ArrowUp')bkPrev();else return;e.preventDefault();e.stopPropagation()},true);
  let rt=0;const re=()=>{clearTimeout(rt);rt=setTimeout(()=>{if(B.on)bkSize(true)},80)};addEventListener('resize',re);
  ['(device-posture: folded)','(horizontal-viewport-segments: 2)','(vertical-viewport-segments: 2)'].forEach(q=>{try{matchMedia(q).addEventListener('change',re)}catch(e){}})})();
+/* ===== floating menu: steps aside while reading, returns when scrolling back ===== */
+(()=>{let ly=scrollY;addEventListener('scroll',()=>{const y=scrollY,d=y-ly;if(Math.abs(d)<6)return;ly=y;const c=d>0&&y>90;if(c!==document.body.classList.contains('nav-c'))document.body.classList.toggle('nav-c',c)},{passive:true});
+ $('pillS').onclick=()=>{document.body.classList.remove('nav-c');if(innerWidth<=640)gsOpen();else{scrollTo({top:0,behavior:'smooth'});$('gq').focus();$('gq').select()}};
+ $('gsTags').onclick=e=>{const b=e.target.closest('button');if(!b)return;$('gq').value=b.textContent;$('gq').dispatchEvent(new Event('input',{bubbles:true}));$('gq').focus()}})();
 /* ===== boot ===== */
 ghUI();
 (()=>{const h=dec(location.hash.slice(1));history.replaceState({},'',location.href);navQuiet=true;try{syncFilterUI();route(h,true)}finally{navQuiet=false}
