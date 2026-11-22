@@ -2,22 +2,26 @@
 """Image door for the private bucket (Cloud Run).
 
 The bucket stays private: nobody can list it or reach it directly. This service is the only reader. The site asks it for
-  GET /i/<hash>.<ext>?u=<original image URL>
-and it streams the object  i/<hash>.<ext>  from the bucket. <hash> is img_key(original URL), the same function the uploader
-(mirror_images.py) and the site use, so no lookup table is needed anywhere.
+  GET /i/<hash>.<ext>?u=<original image URL>   the full picture, object i/<hash>.<ext>
+  GET /t/<hash>.<ext>?u=<original image URL>   a light copy (520px) for lists, made once from the full picture, kept as t/<hash>.jpg
+<hash> is img_key(original URL), the same function the uploader (mirror_images.py) and the site use, so no lookup table exists.
 
 Not mirrored yet? If ?u= really hashes to <hash>, the request is redirected to the original URL, so the site keeps working while
 the backfill runs. A ?u= that does not match is ignored, so this cannot be used to redirect people to arbitrary sites.
 
-Standard library only. Auth comes from the Cloud Run service account through the metadata server; there is no key file."""
-import http.server, json, os, re, time, urllib.error, urllib.parse, urllib.request
+Auth comes from the Cloud Run service account through the metadata server; there is no key file."""
+import http.server, io, json, os, re, threading, time, urllib.error, urllib.parse, urllib.request
+from PIL import Image, ImageOps
 
 BUCKET = os.environ.get("BUCKET", "16-22")
 # Comma-separated hosts allowed to embed images, e.g. "zeynepbarann.github.io,localhost". Empty = no check.
 REFERERS = [h.strip().lower() for h in os.environ.get("ALLOWED_REFERERS", "").split(",") if h.strip()]
-PATH = re.compile(r"^/i/([0-9a-f]{16})\.(jpg|jpeg|png|webp|gif|avif)$")
+PATH = re.compile(r"^/(i|t)/([0-9a-f]{16})\.(jpg|jpeg|png|webp|gif|avif)$")
 META = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
+THUMB = 520
+CACHE = "public, max-age=31536000, immutable"
 _tok = {"v": None, "exp": 0}
+_resize = threading.BoundedSemaphore(2)   # decoding large pictures is the only memory-hungry step
 
 
 def img_key(url):
@@ -40,6 +44,41 @@ def token():
     return _tok["v"]
 
 
+def gcs_open(name):
+    """Open a bucket object; None if it does not exist."""
+    api = "https://storage.googleapis.com/storage/v1/b/%s/o/%s?alt=media" % (BUCKET, urllib.parse.quote(name, safe=""))
+    try:
+        return urllib.request.urlopen(urllib.request.Request(api, headers={"Authorization": "Bearer " + token()}), timeout=20)
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return None
+        raise
+
+
+def gcs_keep(name, data):
+    """Store a generated thumbnail, best effort; a failure only means it is made again next time."""
+    q = urllib.parse.urlencode({"uploadType": "media", "name": name, "ifGenerationMatch": "0"})
+    req = urllib.request.Request("https://storage.googleapis.com/upload/storage/v1/b/%s/o?%s" % (BUCKET, q), data=data, method="POST",
+                                 headers={"Authorization": "Bearer " + token(), "Content-Type": "image/jpeg", "Cache-Control": CACHE})
+    try:
+        urllib.request.urlopen(req, timeout=30).read()
+    except Exception:
+        pass
+
+
+def make_thumb(data):
+    with _resize:
+        im = Image.open(io.BytesIO(data))
+        im.draft("RGB", (THUMB * 2, THUMB * 2))
+        im = ImageOps.exif_transpose(im)
+        im.thumbnail((THUMB, THUMB), Image.LANCZOS)
+        if im.mode != "RGB":
+            im = im.convert("RGB")
+        out = io.BytesIO()
+        im.save(out, "JPEG", quality=82, optimize=True, progressive=True)
+        return out.getvalue()
+
+
 class H(http.server.BaseHTTPRequestHandler):
     protocol_version = "HTTP/1.1"
 
@@ -57,12 +96,30 @@ class H(http.server.BaseHTTPRequestHandler):
         if self.command != "HEAD":
             self.wfile.write(b)
 
+    def image(self, body, ctype):
+        self.send_response(200)
+        self.send_header("Content-Type", ctype or "image/jpeg")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", CACHE)
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.end_headers()
+        if self.command != "HEAD":
+            self.wfile.write(body)
+
     def referer_ok(self):
         ref = self.headers.get("Referer")
         if not REFERERS or not ref:  # browsers may strip the header; only a wrong one is refused
             return True
         host = (urllib.parse.urlsplit(ref).hostname or "").lower()
         return any(host == h or host.endswith("." + h) for h in REFERERS)
+
+    def to_original(self, key, query, small):
+        src = (urllib.parse.parse_qs(query).get("u") or [""])[0]
+        if src.startswith(("http://", "https://")) and img_key(src) == key:
+            if small:  # MüzayedeApp's host keeps its own light copy
+                src = re.sub(r"(/Product/\d+)/1500/", r"\1/400/", src)
+            return self.plain(302, "not mirrored yet", {"Location": src, "Cache-Control": "public, max-age=3600"})
+        return self.plain(404, "not found")
 
     def do_GET(self):
         u = urllib.parse.urlsplit(self.path)
@@ -73,38 +130,35 @@ class H(http.server.BaseHTTPRequestHandler):
             return self.plain(404, "not found")
         if not self.referer_ok():
             return self.plain(403, "forbidden")
-        name = u.path[1:]
-        api = "https://storage.googleapis.com/storage/v1/b/%s/o/%s?alt=media" % (BUCKET, urllib.parse.quote(name, safe=""))
+        kind, key, ext = m.groups()
+        full = "i/%s.%s" % (key, ext)
         try:
-            r = urllib.request.urlopen(urllib.request.Request(api, headers={"Authorization": "Bearer " + token()}), timeout=20)
-        except urllib.error.HTTPError as e:
-            if e.code == 404:
-                src = (urllib.parse.parse_qs(u.query).get("u") or [""])[0]
-                if src.startswith(("http://", "https://")) and img_key(src) == m.group(1):
-                    return self.plain(302, "not mirrored yet", {"Location": src, "Cache-Control": "public, max-age=3600"})
-                return self.plain(404, "not found")
-            return self.plain(502, "storage error %s" % e.code)
+            if kind == "t":
+                tn = "t/%s.jpg" % key
+                r = gcs_open(tn)
+                if r:
+                    with r:
+                        return self.image(r.read(), "image/jpeg")
+                r = gcs_open(full)
+                if not r:
+                    return self.to_original(key, u.query, True)
+                with r:
+                    data = r.read()
+                try:
+                    body = make_thumb(data)
+                except Exception:   # a format Pillow cannot read: the full picture still works
+                    return self.image(data, "image/jpeg")
+                threading.Thread(target=gcs_keep, args=(tn, body), daemon=True).start()
+                return self.image(body, "image/jpeg")
+            r = gcs_open(full)
+            if not r:
+                return self.to_original(key, u.query, False)
+            with r:
+                return self.image(r.read(), r.headers.get("Content-Type"))
+        except (BrokenPipeError, ConnectionResetError):
+            self.close_connection = True
         except Exception:
             return self.plain(502, "storage unreachable")
-        with r:
-            self.send_response(200)
-            self.send_header("Content-Type", r.headers.get("Content-Type") or "image/jpeg")
-            if r.headers.get("Content-Length"):
-                self.send_header("Content-Length", r.headers["Content-Length"])
-            else:
-                self.send_header("Connection", "close")
-                self.close_connection = True
-            # an object never changes once written (its name is a hash of where it came from), so it can be cached for good
-            self.send_header("Cache-Control", "public, max-age=31536000, immutable")
-            self.send_header("X-Content-Type-Options", "nosniff")
-            self.end_headers()
-            if self.command == "HEAD":
-                return
-            while True:
-                chunk = r.read(65536)
-                if not chunk:
-                    break
-                self.wfile.write(chunk)
 
     do_HEAD = do_GET
 

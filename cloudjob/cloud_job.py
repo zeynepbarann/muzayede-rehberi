@@ -15,11 +15,12 @@ Environment:
   BUCKET            private bucket for state and images          (default 16-22)
   REPO              GitHub repository "owner/name"               (default zeynepbarann/muzayede-rehberi)
   GH_TOKEN          GitHub token with Contents read/write on REPO (from Secret Manager); without it nothing is pushed
-  JOB_MODE          "refresh" (default) or "probe" = only check which auction sites answer from here
+  JOB_MODE          "refresh" (default), "probe" = only check which auction sites answer from here,
+                    or "images" = only copy images into the bucket (no scan, no database, no push)
   DRY_RUN=1         run everything but do not push and do not write state back
   HISTORY_MINUTES / MIRROR_MINUTES   time budgets (default 30 / 30)
 Standard library + git. Access to the bucket comes from the job's own service account; there is no key file."""
-import datetime, json, os, shutil, subprocess, sys, time, urllib.error, urllib.parse, urllib.request
+import datetime, json, os, shutil, subprocess, sys, threading, time, urllib.error, urllib.parse, urllib.request
 
 BUCKET = os.environ.get("BUCKET", "16-22")
 REPO = os.environ.get("REPO", "zeynepbarann/muzayede-rehberi")
@@ -110,6 +111,31 @@ def probe():
     return 0
 
 
+def images_only():
+    """Copy images into the bucket and nothing else: no scan, no database, no push. Progress is saved every 5 minutes."""
+    name, path = "mirror_state.json", os.path.join(WORK, "mirror_state.json")
+    log("state %s: %s" % (name, "restored" if gcs_get("state/" + name, path) else "not in the bucket yet"))
+    stop = threading.Event()
+
+    def save():
+        if os.path.exists(path):
+            gcs_put("state/" + name, path)
+
+    def saver():
+        while not stop.wait(300):
+            try:
+                save()
+            except Exception as e:
+                log("progress not saved this time:", e)
+    threading.Thread(target=saver, daemon=True).start()
+    minutes = os.environ.get("MIRROR_MINUTES", "570")
+    ok = run([sys.executable, "mirror_images.py", "--minutes", minutes], timeout=int(float(minutes) * 60) + 300)
+    stop.set()
+    save()
+    log("image copy finished" if ok else "image copy stopped early; the next run resumes")
+    return 0 if ok else 1
+
+
 def main():
     mode = os.environ.get("JOB_MODE", "refresh")
     log("mode=%s repo=%s bucket=%s dry=%s push=%s" % (mode, REPO, BUCKET, DRY, bool(TOKEN)))
@@ -119,6 +145,8 @@ def main():
         subprocess.run(["git", "clone", "--depth", "1", "https://github.com/%s.git" % REPO, WORK], check=True)
     if mode == "probe":
         return probe()
+    if mode == "images":
+        return images_only()
     local = os.environ.get("SKIP_GCS") == "1"   # for trying the steps on a laptop
     if not local:
         for name in STATE:

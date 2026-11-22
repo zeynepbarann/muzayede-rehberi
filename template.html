@@ -1,6 +1,6 @@
 <!doctype html><html lang="tr" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>16/22 Müzayede Rehberi</title><meta name="description" content="Türkiye'deki güncel sanat müzayedelerindeki eserler, sanatçılar ve Lebriz arşivi tek yerde."><meta property="og:title" content="16/22 Müzayede Rehberi"><meta property="og:description" content="Türkiye'deki güncel sanat müzayedelerindeki eserler, sanatçılar ve Lebriz arşivi tek yerde."><meta property="og:type" content="website"><meta property="og:site_name" content="16/22 Müzayede Rehberi"><meta name="twitter:card" content="summary"><meta name="apple-mobile-web-app-title" content="16/22"><meta name="theme-color" content="#0c0b09"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="alternate icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c0b09'/%3E%3Ctext x='32' y='41' font-family='Georgia,serif' font-size='24' font-style='italic' fill='%23d4af37' text-anchor='middle'%3E16/22%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://img-1622-936085250839.europe-west3.run.app"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>(()=>{let t='dark';try{t=localStorage.getItem('mr_theme')||'light'}catch(e){}document.documentElement.dataset.theme=t})()</script>
 <style>
@@ -913,7 +913,7 @@ const esc=s=>(s??'').toString().replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','
    door (imgproxy/, Cloud Run) hands them out. Set IMG_BASE to the door's address to switch it on, e.g. 'https://img-1622-abc.a.run.app'.
    An image's name there is a hash of its original URL (imgKey, identical in mirror_images.py and imgproxy/main.py), so no lookup
    table exists: mir(url) is all the site needs. Not copied yet -> the door redirects to the original; door down -> the listener below does. */
-const IMG_BASE='';
+const IMG_BASE='https://img-1622-936085250839.europe-west3.run.app';
 const imgKey=u=>{const s=unescape(encodeURIComponent(u));let o='';for(const seed of[0x811C9DC5,0x01000193]){let h=seed;for(let i=0;i<s.length;i++)h=Math.imul(h^s.charCodeAt(i),0x01000193)>>>0;o+=h.toString(16).padStart(8,'0')}return o};
 const mir=u=>{if(!IMG_BASE||!u||!/^https?:\/\//.test(u)||u.startsWith(IMG_BASE))return u;const e=((u.split(/[?#]/)[0].split('/').pop().match(/\.([a-z0-9]+)$/i)||[])[1]||'').toLowerCase();return IMG_BASE+'/i/'+imgKey(u)+'.'+(/^(jpg|jpeg|png|webp|gif|avif)$/.test(e)?e:'jpg')+'?u='+encodeURIComponent(u)};
 document.addEventListener('error',e=>{const im=e.target;if(!IMG_BASE||!im||im.tagName!='IMG'||im.dataset.mf||!im.src.startsWith(IMG_BASE))return;const m=im.src.match(/[?&]u=([^&]+)/);if(!m)return;im.dataset.mf=1;e.stopImmediatePropagation();im.src=decodeURIComponent(m[1])},true);
@@ -1683,7 +1683,7 @@ const FRC=new Map(),ARC=new Map(),clampN=(v,a,b)=>Math.max(a,Math.min(b,v));
 function frameOf(key,txt){let f=FRC.get(key);if(f)return f;const s=norm(txt),p=PAPER.test(s);f=/cercevesiz/.test(s)&&!p?'f-float':'f-'+FRAMES[hashS(key||s)%FRAMES.length]+(p?' mat':'');FRC.set(key,f);return f}
 const arOf=im=>clampN(+(im.naturalWidth/im.naturalHeight).toFixed(3)||.8,.3,3.2);
 const arc=ar=>clampN(ar*.94,.74,1.32).toFixed(3);            /* the patch of wall a work takes follows its shape */
-const thumb=u=>u&&/\/Product\/\d+\/1500\//.test(u)?u.replace('/1500/','/400/'):u;   /* MüzayedeApp's image host keeps a 400px copy, about nine times lighter than the full picture */
+const thumb=u=>IMG_BASE&&u&&u.startsWith(IMG_BASE+'/i/')?IMG_BASE+'/t/'+u.slice(IMG_BASE.length+3):u&&/\/Product\/\d+\/1500\//.test(u)?u.replace('/1500/','/400/'):u;   /* MüzayedeApp's image host keeps a 400px copy, about nine times lighter than the full picture */
 const thumbErr="if(this.dataset.o&&this.getAttribute('src')!=this.dataset.o)this.src=this.dataset.o;else this.remove()";
 function hang(src,alt,key,txt){if(!src)return '';const ar=ARC.get(src),t=thumb(src);return `<span class="pf ${frameOf(key,txt)}"${ar?` style="--ar:${ar}"`:''}><span class="pv"><img loading="lazy" decoding="async" draggable="false" src="${esc(t)}"${t!=src?` data-o="${esc(src)}"`:''} alt="${esc(alt||'')}" onload="hung(this)" onerror="unhung(this)"></span></span>`}
 function hung(im){const ar=arOf(im);ARC.set(im.dataset.o||im.getAttribute('src'),ar);im.classList.add('ld');const p=im.closest('.pf'),f=im.closest('.frame');if(p)p.style.setProperty('--ar',ar);if(f){f.classList.remove('ph');f.style.setProperty('--arc',arc(ar))}}
@@ -1889,8 +1889,8 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-book]');if
 /* home */
 function renderHome(){if(!D.lots.length)return;const now=Date.now(),L=D.lots.filter(l=>l.images[0]&&(!l._e||l._e>now)).sort((x,y)=>(x._e||9e15)-(y._e||9e15)),S=L.length?L:D.lots.filter(l=>l.images[0]),a=S[0],b=S.find(l=>a&&l._a!==a._a&&l.images[0]!==a.images[0])||a;
  $('hmA').textContent=`${D.lots.length.toLocaleString('tr-TR')} eser satışta · ${new Set(D.lots.map(l=>l.site)).size} müzayede evi`;
- if(a&&!$('hmAi').firstChild)$('hmAi').innerHTML=`<div class="door-img"><img class="cv" loading="lazy" draggable="false" src="${esc(a.images[0])}" alt="" onerror="this.remove()"></div>`;
- if(b&&!$('hmBi').firstChild)$('hmBi').innerHTML=`<div class="door-img"><img class="cv" loading="lazy" draggable="false" src="${esc(b.images[0])}" alt="" onerror="this.remove()"></div>`;
+ if(a&&!$('hmAi').firstChild)$('hmAi').innerHTML=`<div class="door-img"><img class="cv" loading="lazy" draggable="false" src="${esc(thumb(a.images[0]))}" alt="" onerror="this.remove()"></div>`;
+ if(b&&!$('hmBi').firstChild)$('hmBi').innerHTML=`<div class="door-img"><img class="cv" loading="lazy" draggable="false" src="${esc(thumb(b.images[0]))}" alt="" onerror="this.remove()"></div>`;
  if(!$('hmRow').firstChild){$('hmRow').innerHTML=slider(S.slice(0,14));$('hmRow').querySelectorAll('.srow').forEach(slArrows)}
  artLoad().then(()=>{$('hmB').textContent=`${(AR.artists||[]).length.toLocaleString('tr-TR')} sanatçı kataloğu, kendiliğinden derlenir`}).catch(()=>{})}
 $('hmS').onclick=()=>{if(innerWidth<=640)gsOpen();else $('gq').focus()};
