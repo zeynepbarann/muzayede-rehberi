@@ -1,5 +1,5 @@
 {
- "run": "2026-11-21 06:26",
+ "run": "2026-11-22 06:29",
  "since": "2024-01-01",
  "houses": {
   "nefsmuzayede.com": {
@@ -204,7 +204,7 @@
    ]
   },
   "kassanat.com": {
-   "auctions_found": 0,
+   "auctions_found": 1,
    "read": 0,
    "lots": 0,
    "tried": [
@@ -238,7 +238,7 @@
     ],
     [
      "https://www.kassanat.com/muzayedeler",
-     0
+     1
     ],
     [
      "https://www.kassanat.com/muzayede",
@@ -677,7 +677,7 @@
    ]
   },
   "nisartgallery.com": {
-   "auctions_found": 50,
+   "auctions_found": 51,
    "read": 2,
    "lots": 0,
    "tried": [
@@ -711,7 +711,7 @@
     ],
     [
      "https://www.nisartgallery.com/muzayedeler",
-     6
+     7
     ],
     [
      "https://www.nisartgallery.com/muzayede",
@@ -745,8 +745,8 @@
   },
   "akartgaleri.com": {
    "auctions_found": 16,
-   "read": 1,
-   "lots": 67,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.akartgaleri.com/gecmis-muzayedeler",
@@ -830,10 +830,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/agah-muzayede-161"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Anatolia Müzayede": {
@@ -938,8 +936,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/beyond-auction-517"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Bir Müzayede": {
@@ -998,7 +998,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 11,
+   "current_auctions": 9,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
    ],
@@ -1056,6 +1056,16 @@
    "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
+  "muzayedeapp: Eskiz Sanat": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/eskiz-sanat-109"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
   "muzayedeapp: Exodia Mezat": {
    "auctions_found": 0,
    "read": 0,
@@ -1070,7 +1080,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
+   "current_auctions": 2,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/fetva-osmanli-281"
    ],
@@ -1318,6 +1328,16 @@
    ],
    "note": "house page not found (no current auction on the portal?)"
   },
+  "muzayedeapp: Smart Art": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/smart-art-411"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
   "muzayedeapp: Soyak Müzayede": {
    "auctions_found": 0,
    "read": 0,
@@ -1400,6 +1420,16 @@
    ],
    "note": "house page not found (no current auction on the portal?)"
   },
+  "muzayedeapp: Yeniköy Sanat Galerisi": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/yenikoy-sanat-galerisi-200"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
   "muzayedeapp: Yes Müzayede": {
    "auctions_found": 0,
    "read": 0,
@@ -1432,7 +1462,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
+   "current_auctions": 2,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/cukurcuma-muzayede-72"
    ],
@@ -1833,6 +1863,6 @@
    "9760"
   ]
  ],
- "added": 67,
+ "added": 0,
  "total": 32322
 }
