@@ -472,20 +472,20 @@ body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;ba
 header{background:color-mix(in srgb,var(--wall-1) 94%,transparent)!important}nav.tabs{background:none!important}
 header::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:5px;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(0,0,0,.22))}
 .card,.card:hover{background:none!important;outline:0!important;box-shadow:none!important;border-radius:0;overflow:visible}
-.frame.hung{container-type:size;padding:0;perspective:800px;animation:none;border-radius:0;overflow:visible;aspect-ratio:var(--arc,.8);background:none}
+.frame.hung{container-type:size;padding:0;animation:none;border-radius:0;overflow:visible;aspect-ratio:var(--arc,.8);background:none}
 .grid{align-items:start}
 .card .body{flex:none;align-self:stretch;margin:0 0 12px;padding:2px 6px 6px!important;gap:1px;background:none;text-align:center}
 .card .body .artist{font-size:15px;font-weight:500;letter-spacing:.01em;justify-content:center}.card .body a.alink{text-decoration:none}.card .body .spec{font-size:11.5px;color:var(--muted)}.card .body .crow{justify-content:center;gap:10px}.card .body .crow .price{font-size:14px}.card .body .meta{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);opacity:.8}
-.pf{--m:clamp(7px,5.2cqw,15px);--mt:0px;--pad:calc(5cqw + var(--m) + var(--mt));position:relative;display:block;flex:none;border:var(--m) solid #777;padding:var(--mt);background:#f4efe3;transform-style:preserve-3d;
- transform:rotateX(calc(var(--rx,0deg) + var(--my,0)*-4deg)) rotateY(calc(var(--ry,0deg) + var(--mx,0)*6deg)) translateZ(var(--tz,0px));transition:transform .8s cubic-bezier(.16,1,.3,1);
- box-shadow:0 0 0 .5px rgba(0,0,0,.4),var(--sx,0px) calc(var(--m)*.45) calc(var(--m)*.7) color-mix(in srgb,var(--wall-sh) 75%,transparent),var(--sx,0px) calc(var(--m)*2.2) calc(var(--m)*4.2) color-mix(in srgb,var(--wall-sh) 65%,transparent)}
-.pf.swy{transition:none}
+.pf{--m:clamp(7px,5.2cqw,15px);--mt:0px;--pad:calc(6cqw + var(--m) + var(--mt));position:relative;display:block;flex:none;border:var(--m) solid #777;padding:var(--mt);background:#f4efe3;transition:transform .5s cubic-bezier(.16,1,.3,1);
+ box-shadow:0 0 0 .5px rgba(0,0,0,.4),0 calc(var(--m)*.45) calc(var(--m)*.7) color-mix(in srgb,var(--wall-sh) 75%,transparent),0 calc(var(--m)*1.2) calc(var(--m)*2) color-mix(in srgb,var(--wall-sh) 60%,transparent)}
+/* a frame only becomes a 3D layer while it is actually leaning (mouse over it, or the phone being tilted) */
+.pf.tl{transform:perspective(800px) rotateX(calc(var(--rx,0deg) + var(--my,0)*-4deg)) rotateY(calc(var(--ry,0deg) + var(--mx,0)*6deg)) translateZ(var(--tz,0px))}
 .pf::before{content:"";position:absolute;inset:calc(var(--m)*-.55);border:1px solid rgba(255,255,255,.3);border-right-color:rgba(0,0,0,.22);border-bottom-color:rgba(0,0,0,.34);pointer-events:none}
 .pf.mat{--mt:clamp(6px,6cqw,18px)}
 .pv{display:block;position:relative;overflow:hidden;background:#cfc6b4;width:70%;width:min(100cqw - 2*var(--pad),(100cqh - 2*var(--pad))*var(--ar,.8));aspect-ratio:var(--ar,.8);box-shadow:0 0 0 1px rgba(0,0,0,.55)}
 .pf.mat .pv{box-shadow:0 0 0 1px rgba(0,0,0,.3),0 0 0 2px #fffdf6,0 0 0 3px rgba(0,0,0,.12)}
 .frame.hung .pv img,.g3-p .pv img{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;display:block;transform:none!important}
-.pv::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 2px 5px rgba(0,0,0,.5),inset 0 0 0 1px rgba(0,0,0,.25);background:linear-gradient(112deg,transparent 38%,rgba(255,255,255,.24) 49%,transparent 60%) no-repeat;background-size:260% 100%;background-position:var(--gx,100%) 0}
+.pv::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 2px 5px rgba(0,0,0,.5),inset 0 0 0 1px rgba(0,0,0,.25)}
 .frame.hung.ph .pv{background:linear-gradient(100deg,#cfc6b4 30%,#e6dfd0 50%,#cfc6b4 70%);background-size:200% 100%;animation:sh 1.3s infinite linear}
 @media(hover:hover){.frame.hung:hover .pf{--tz:26px;transition-duration:.16s}}
 /* mouldings: mitred borders lit from above (top, right, bottom, left) */
@@ -495,12 +495,14 @@ header::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:5px
 .pf.f-walnut{border-color:#96623c #6d4529 #46291a #835434}.pf.f-walnut:not(.mat) .pv{box-shadow:0 0 0 1px #24130a,0 0 0 3px #a87148,0 0 0 4px #3a2114}
 .pf.f-white{border-color:#fff #e7e3da #cfcabf #f4f1ea}.pf.f-white::before{border-color:rgba(0,0,0,.06);border-bottom-color:rgba(0,0,0,.16)}.pf.f-white:not(.mat) .pv{box-shadow:0 0 0 1px rgba(0,0,0,.35)}
 .pf.f-float{--m:clamp(2px,1.3cqw,4px);--mt:clamp(2px,1.1cqw,3px);border-color:#4a3a29 #33281c #1d160f #3f3123;background:#0b0a09}.pf.f-float::before{display:none}
-/* the wall rolls past like a drum as you scroll; side-scrolling rows turn like a carousel */
+/* works fade up into place once, as they first scroll into view */
 @supports (animation-timeline:view()){@media(prefers-reduced-motion:no-preference){
- .grid>.card{animation:roll linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
- .srow>.card{animation:rollx linear both;animation-timeline:view(inline);animation-range:cover 0% cover 100%}
- @keyframes roll{0%{transform:perspective(1200px) translate3d(0,34px,-70px) rotateX(-9deg);opacity:0}18%,82%{transform:perspective(1200px) translate3d(0,0,0) rotateX(0);opacity:1}100%{transform:perspective(1200px) translate3d(0,-34px,-70px) rotateX(9deg);opacity:0}}
- @keyframes rollx{0%{transform:perspective(1200px) translate3d(28px,0,-70px) rotateY(12deg);opacity:0}20%,80%{transform:perspective(1200px) translate3d(0,0,0) rotateY(0);opacity:1}100%{transform:perspective(1200px) translate3d(-28px,0,-70px) rotateY(-12deg);opacity:0}}}}
+ .grid>.card{animation:rise linear backwards;animation-timeline:view();animation-range:entry 0% entry 85%}
+ .srow>.card{animation:risex linear backwards;animation-timeline:view(inline);animation-range:entry 0% entry 85%}
+ @keyframes rise{from{opacity:0;transform:translateY(26px)}}
+ @keyframes risex{from{opacity:0;transform:translateX(22px)}}}}
+/* cards far off screen are not laid out or painted at all */
+.grid>.card{content-visibility:auto;contain-intrinsic-size:auto 330px}
 /* the lot page: the work hangs on the same wall */
 .det .big.hungbig{background:radial-gradient(90% 60% at 50% -5%,var(--wall-hi),transparent 70%),linear-gradient(180deg,var(--wall-1),var(--wall-2));padding:40px 28px 52px}
 .det .big .pf{--m:16px;--pad:0px;margin:0;display:inline-block;line-height:0;max-width:100%}.det .big .pf.mat{--mt:22px}.det .big .pf.f-float{--m:4px;--mt:3px}
@@ -532,7 +534,7 @@ header::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:5px
 .g3-p .pv{width:100%;height:100%;aspect-ratio:auto;background:#b9b09e}
 .g3-p .pv::after{background:linear-gradient(180deg,rgba(255,240,210,.12),transparent 38%,rgba(0,0,0,.14));box-shadow:inset 0 3px 7px rgba(0,0,0,.5)}
 .g3-e{position:absolute;top:0;width:14px;height:100%;transform-origin:0 0;transform:rotateY(-90deg);background:linear-gradient(180deg,color-mix(in srgb,var(--ec) 80%,#fff),var(--ec) 30%,color-mix(in srgb,var(--ec) 70%,#000))}.g3-e.l{left:0}.g3-e.r{left:100%}
-.g3-sh{position:absolute;inset:7% -3% -9% -3%;background:var(--g3-shadow);filter:blur(16px);transform:translateZ(1px);pointer-events:none}
+.g3-sh{position:absolute;inset:-2% -9% -20% -9%;background:radial-gradient(closest-side,var(--g3-shadow),transparent);opacity:.8;transform:translateZ(1px);pointer-events:none}
 .g3-pl{position:absolute;left:0;top:calc(100% + 16px);min-width:108px;max-width:100%;padding:7px 9px;background:var(--label);color:#1c1915;font:500 9.5px/1.35 var(--sans);transform:translateZ(3px);box-shadow:0 1px 2px rgba(0,0,0,.5);pointer-events:none}
 .g3-pl b{display:block;font:600 12px/1.15 var(--serif);margin-bottom:2px}.g3-pl i{display:block;font-style:normal;color:#5d564a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .g3-letter{position:absolute;left:10%;right:10%;text-align:center;color:var(--g3-text);font-family:var(--serif);transform:translateY(-50%)}
@@ -1546,35 +1548,33 @@ const FRC=new Map(),ARC=new Map(),clampN=(v,a,b)=>Math.max(a,Math.min(b,v));
 function frameOf(key,txt){let f=FRC.get(key);if(f)return f;const s=norm(txt),p=PAPER.test(s);f=/cercevesiz/.test(s)&&!p?'f-float':'f-'+FRAMES[hashS(key||s)%FRAMES.length]+(p?' mat':'');FRC.set(key,f);return f}
 const arOf=im=>clampN(+(im.naturalWidth/im.naturalHeight).toFixed(3)||.8,.3,3.2);
 const arc=ar=>clampN(ar*.94,.74,1.32).toFixed(3);            /* the patch of wall a work takes follows its shape */
-function hang(src,alt,key,txt){if(!src)return '';const ar=ARC.get(src);return `<span class="pf ${frameOf(key,txt)}"${ar?` style="--ar:${ar}"`:''}><span class="pv"><img loading="lazy" decoding="async" draggable="false" src="${esc(src)}" alt="${esc(alt||'')}" onload="hung(this)" onerror="unhung(this)"></span></span>`}
-function hung(im){const ar=arOf(im);ARC.set(im.getAttribute('src'),ar);im.classList.add('ld');const p=im.closest('.pf'),f=im.closest('.frame');if(p)p.style.setProperty('--ar',ar);if(f){f.classList.remove('ph');f.style.setProperty('--arc',arc(ar))}}
-function unhung(im){const f=im.closest('.frame'),p=im.closest('.pf');if(p)p.remove();if(f){f.classList.remove('ph');f.classList.add('noimg')}}
+const thumb=u=>u&&/\/Product\/\d+\/1500\//.test(u)?u.replace('/1500/','/400/'):u;   /* MüzayedeApp's image host keeps a 400px copy, about nine times lighter than the full picture */
+const thumbErr="if(this.dataset.o&&this.getAttribute('src')!=this.dataset.o)this.src=this.dataset.o;else this.remove()";
+function hang(src,alt,key,txt){if(!src)return '';const ar=ARC.get(src),t=thumb(src);return `<span class="pf ${frameOf(key,txt)}"${ar?` style="--ar:${ar}"`:''}><span class="pv"><img loading="lazy" decoding="async" draggable="false" src="${esc(t)}"${t!=src?` data-o="${esc(src)}"`:''} alt="${esc(alt||'')}" onload="hung(this)" onerror="unhung(this)"></span></span>`}
+function hung(im){const ar=arOf(im);ARC.set(im.dataset.o||im.getAttribute('src'),ar);im.classList.add('ld');const p=im.closest('.pf'),f=im.closest('.frame');if(p)p.style.setProperty('--ar',ar);if(f){f.classList.remove('ph');f.style.setProperty('--arc',arc(ar))}}
+function unhung(im){if(im.dataset.o&&im.getAttribute('src')!=im.dataset.o){im.src=im.dataset.o;return}const f=im.closest('.frame'),p=im.closest('.pf');if(p)p.remove();if(f){f.classList.remove('ph');f.classList.add('noimg')}}
 /* mouse: the frame leans towards the pointer */
-let tiltEl=null;const untilt=f=>{const p=f&&f.querySelector('.pf');if(p)['--rx','--ry'].forEach(k=>p.style.removeProperty(k))};
+let tiltEl=null;const untilt=f=>{const p=f&&f.querySelector('.pf');if(p){p.classList.remove('tl');['--rx','--ry'].forEach(k=>p.style.removeProperty(k))}};
 document.addEventListener('pointermove',e=>{if(e.pointerType!='mouse')return;const f=e.target.closest?e.target.closest('.frame.hung'):null;if(f!==tiltEl){untilt(tiltEl);tiltEl=f}if(!f)return;const p=f.querySelector('.pf');if(!p)return;
- const r=f.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;p.style.setProperty('--ry',(x*18).toFixed(1)+'deg');p.style.setProperty('--rx',(-y*13).toFixed(1)+'deg')},{passive:true});
+ const r=f.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;p.classList.add('tl');p.style.setProperty('--ry',(x*18).toFixed(1)+'deg');p.style.setProperty('--rx',(-y*13).toFixed(1)+'deg')},{passive:true});
 document.addEventListener('pointerleave',()=>{untilt(tiltEl);tiltEl=null});
 
-/* ===== motion: the wall answers the phone, not a cursor =====
-   tilt the phone (gyroscope) or rest a finger on the screen and every frame in view leans and its glass catches the light;
-   scroll and the works sway on their wires. Only the frames on screen are touched, and the loop stops when things settle. */
-const MO={x:0,y:0,tx:0,ty:0,sw:0,sv:0,vis:new Set(),raf:0,gyro:false,bx:null,by:null,ly:0,asked:false,live:false};
-const moIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)MO.vis.add(e.target);else MO.vis.delete(e.target)}),{rootMargin:'120px'});
+/* ===== motion: tilt the phone and the frames in view lean with it =====
+   Gyroscope only. Nothing here runs from touch or while the page is scrolling, and only the frames on screen are touched,
+   so scrolling stays on the fast path. */
+const MO={x:0,y:0,tx:0,ty:0,lx:'',ly:'',sc:0,vis:new Set(),raf:0,gyro:false,bx:null,by:null,asked:false};
+const moIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)MO.vis.add(e.target);else MO.vis.delete(e.target)}),{rootMargin:'60px'});
 new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)if(n.nodeType==1){if(n.matches('.frame.hung'))moIO.observe(n);else if(n.firstElementChild)n.querySelectorAll('.frame.hung').forEach(f=>moIO.observe(f))}}).observe(document.body,{childList:true,subtree:true});
 const moKick=()=>{if(!MO.raf)MO.raf=requestAnimationFrame(moTick)};
-function moTick(){MO.raf=0;MO.x+=(MO.tx-MO.x)*.06;MO.y+=(MO.ty-MO.y)*.06;MO.sv+=-MO.sw*.085-MO.sv*.13;MO.sw+=MO.sv;
- const mx=MO.x.toFixed(3),my=MO.y.toFixed(3),sx=(-MO.x*14).toFixed(1)+'px',gx=(48-62*MO.x).toFixed(0)+'%';
- for(const f of MO.vis){if(!f.isConnected){MO.vis.delete(f);continue}const p=f.firstElementChild;if(!p||!p.classList.contains('pf'))continue;const s=p.style,k=f._k||(f._k=.55+hashS(f.dataset.open||f.dataset.past||'x')%10/11);
-  p.classList.add('swy');s.setProperty('--sw',(MO.sw*k).toFixed(2));if(MO.live){s.setProperty('--mx',mx);s.setProperty('--my',my);s.setProperty('--sx',sx);s.setProperty('--gx',gx)}}
- if(G.on)g3Kick();
- if(Math.abs(MO.tx-MO.x)>.003||Math.abs(MO.ty-MO.y)>.003||Math.abs(MO.sw)>.03||Math.abs(MO.sv)>.03)moKick();else for(const f of MO.vis){const p=f.firstElementChild;if(p)p.classList.remove('swy')}}
-/* no gyroscope (or not allowed): the frames lean towards the finger instead */
-const moTouch=e=>{if(MO.gyro||RM)return;const t=e.touches[0];if(!t)return;MO.live=true;MO.tx=clampN((t.clientX/innerWidth-.5)*1.2,-1,1);MO.ty=clampN((t.clientY/innerHeight-.5)*.9,-1,1);moKick()};
-addEventListener('touchstart',moTouch,{passive:true});addEventListener('touchmove',moTouch,{passive:true});
-['touchend','touchcancel'].forEach(n=>addEventListener(n,()=>{if(!MO.gyro){MO.tx=MO.ty=0;moKick()}},{passive:true}));
+addEventListener('scroll',()=>{MO.sc=performance.now()},{passive:true});
+function moTick(){MO.raf=0;MO.x+=(MO.tx-MO.x)*.08;MO.y+=(MO.ty-MO.y)*.08;const mx=MO.x.toFixed(2),my=MO.y.toFixed(2),on=Math.abs(MO.x)>.02||Math.abs(MO.y)>.02;
+ if((mx!==MO.lx||my!==MO.ly)&&performance.now()-MO.sc>180){MO.lx=mx;MO.ly=my;
+  for(const f of MO.vis){if(!f.isConnected){MO.vis.delete(f);continue}const p=f.firstElementChild;if(!p||!p.classList.contains('pf'))continue;
+   if(on){p.classList.add('tl');p.style.setProperty('--mx',mx);p.style.setProperty('--my',my)}else{p.classList.remove('tl');p.style.removeProperty('--mx');p.style.removeProperty('--my')}}}
+ if(G.on)g3Kick();if(Math.abs(MO.tx-MO.x)>.004||Math.abs(MO.ty-MO.y)>.004||mx!==MO.lx||my!==MO.ly)moKick()}
 function moGyro(e){if(e.gamma==null||e.beta==null||RM)return;let g=e.gamma,b=e.beta;const a=(screen.orientation&&screen.orientation.angle)||0;if(a==90)[g,b]=[b,-g];else if(a==270)[g,b]=[-b,g];
  if(MO.bx==null){MO.bx=g;MO.by=b}MO.bx+=(g-MO.bx)*.012;MO.by+=(b-MO.by)*.012;   /* the resting pose drifts to however the phone is being held */
- const tx=clampN((g-MO.bx)/16,-1,1),ty=clampN((b-MO.by)/16,-1,1);MO.gyro=MO.live=true;if(Math.abs(tx-MO.tx)<.012&&Math.abs(ty-MO.ty)<.012)return;MO.tx=tx;MO.ty=ty;moKick()}
+ const tx=clampN((g-MO.bx)/16,-1,1),ty=clampN((b-MO.by)/16,-1,1);MO.gyro=true;if(Math.abs(tx-MO.tx)<.03&&Math.abs(ty-MO.ty)<.03)return;MO.tx=tx;MO.ty=ty;moKick()}
 /* iOS only hands out orientation after a tap asks for it; elsewhere it just works */
 function moAsk(){if(MO.asked)return;MO.asked=true;const E=window.DeviceOrientationEvent;if(E&&typeof E.requestPermission=='function')E.requestPermission().then(r=>{if(r=='granted')addEventListener('deviceorientation',moGyro)}).catch(()=>{})}
 if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission!='function')addEventListener('deviceorientation',moGyro);
@@ -1609,17 +1609,18 @@ function g3Dim(l){const ar=ARC.get(l.images[0])||.8,fr=frameOf(l.key,(l.descript
  return{b,mt,fr,ow:w+2*(b+mt),oh:h+2*(b+mt)}}
 const g3Pos=d=>`left:${Math.round(G.Wp/2+1-d.ow/2)}px;top:${Math.round(G.top-d.oh/2)}px;width:${d.ow}px;height:${d.oh}px;--b:${d.b}px;--pm:${d.mt}px`;
 function g3Paint(l,i){const d=g3Dim(l);
- return `<div class="g3-p ${d.fr}" data-gi="${i}" style="${g3Pos(d)}"><i class="g3-sh"></i><i class="g3-e l"></i><i class="g3-e r"></i><span class="pf ${d.fr}"><span class="pv"><img decoding="async" draggable="false" src="${esc(l.images[0])}" alt="${esc(l.artist||l.title||'')}" onload="g3Img(this)" onerror="this.remove()"></span></span><div class="g3-pl"><b>${esc(l.artist||l.title||'')}</b><i>${esc(specOf(l))}</i></div></div>`}
-function g3Img(im){const ar=arOf(im),src=im.getAttribute('src'),old=ARC.get(src)||.8;ARC.set(src,ar);if(Math.abs(old-ar)<.02)return;const p=im.closest('.g3-p');if(!p)return;const l=G.list[+p.dataset.gi];if(l)p.style.cssText=g3Pos(g3Dim(l))}
+ return `<div class="g3-p ${d.fr}" data-gi="${i}" style="${g3Pos(d)}"><i class="g3-sh"></i><i class="g3-e l"></i><i class="g3-e r"></i><span class="pf ${d.fr}"><span class="pv"><img decoding="async" draggable="false" src="${esc(thumb(l.images[0]))}" data-o="${esc(l.images[0])}" alt="${esc(l.artist||l.title||'')}" onload="g3Img(this)" onerror="${thumbErr}"></span></span><div class="g3-pl"><b>${esc(l.artist||l.title||'')}</b><i>${esc(specOf(l))}</i></div></div>`}
+function g3Img(im){const ar=arOf(im),src=im.dataset.o||im.getAttribute('src'),old=ARC.get(src)||.8;ARC.set(src,ar);if(Math.abs(old-ar)<.02)return;const p=im.closest('.g3-p');if(!p)return;const l=G.list[+p.dataset.gi];if(l)p.style.cssText=g3Pos(g3Dim(l))}
 function g3Panel(i){const l=G.list[i],n=G.list.length,el=document.createElement('div'),H=G.top+G.fy;el.className='g3-panel';
  el.style.cssText=`left:${-G.Wp/2-1}px;top:${-G.top}px;width:${G.Wp+2}px;height:${H}px;--ly:${(G.top/H*100).toFixed(1)}%;transform:rotateY(${(-(i*G.A)%360).toFixed(3)}deg) translateZ(${-G.P}px)`;
  el.innerHTML=l?g3Paint(l,i):i<0?`<div class="g3-letter" style="top:${G.top}px"><small>16/22 Müzayede Rehberi</small><b>${esc(G.title)}</b><span>${n.toLocaleString('tr-TR')} eser${D.updated?' · '+esc(D.updated.slice(0,10).split('-').reverse().join('.')):''}</span></div>`
   :`<div class="g3-letter" style="top:${G.top}px"><small>16/22 Müzayede Rehberi</small><b>Serginin sonu</b><span>${n.toLocaleString('tr-TR')} eser gezdiniz</span><button type="button" class="btn pri" data-g3top="1">Başa dön</button></div>`;
  return el}
-function g3Sync(){const n=G.list.length,c=clampN(Math.round(G.cur),0,n-1),a=Math.max(-1,c-3),b=Math.min(n,c+3),w=$('g3world');
+function g3Sync(){const n=G.list.length,c=clampN(Math.round(G.cur),0,n-1),a=Math.max(-1,c-2),b=Math.min(n,c+2),w=$('g3world');
  for(const[i,e]of G.pan)if(i<a||i>b){e.remove();G.pan.delete(i)}
  for(let i=a;i<=b;i++){let e=G.pan.get(i);if(!e){e=g3Panel(i);G.pan.set(i,e);w.appendChild(e)}const f=+Math.min(.82,Math.abs(i-G.cur)*.3).toFixed(2);if(e._f!==f){e._f=f;e.style.setProperty('--fog',f)}}
- if(c!==G.idx){G.idx=c;$('g3S').textContent=(c+1).toLocaleString('tr-TR')+' / '+n.toLocaleString('tr-TR');$('g3R').value=c;g3Sheet()}}
+ if(c!==G.idx){G.idx=c;$('g3S').textContent=(c+1).toLocaleString('tr-TR')+' / '+n.toLocaleString('tr-TR');$('g3R').value=c;g3Sheet();clearTimeout(G.hq);G.hq=setTimeout(g3Sharp,450)}}
+function g3Sharp(){if(!G.on)return;const e=G.pan.get(G.idx),im=e&&e.querySelector('.pv img'),o=im&&im.dataset.o;if(!o||im.getAttribute('src')==o)return;const t=new Image();t.onload=()=>{if(im.isConnected)im.src=o};t.src=o}
 function g3Tick(ts){G.raf=0;if(!G.on)return;const dt=clampN((ts-G.t)/1000,.001,.05),n=G.list.length;G.t=ts;
  if(!(G.drag&&G.moved)){G.tc=clampN(G.tc,0,n-1);const pc=G.cur;G.cur+=(G.tc-G.cur)*(RM?1:1-Math.exp(-dt*8));G.vel=(G.cur-pc)/dt}
  G.inn=RM?0:G.inn*Math.exp(-dt*4.5);if(G.inn<.003)G.inn=0;G.dl+=(Math.min(1,Math.abs(G.vel)/5)*90-G.dl)*.12;   /* the camera steps back a little while the room spins */
@@ -1707,7 +1708,7 @@ function bkPage(p){const n=B.name;if(!p)return '<div class="bk-pg"></div>';const
   return `<div class="bk-pg t2"><dl><dt>Eser</dt><dd>${A.length.toLocaleString('tr-TR')}</dd><dt>Şu an satışta</dt><dd>${B.live.length}</dd><dt>Müzayede evi</dt><dd>${hs.size}</dd>${ys.length?`<dt>Dönem</dt><dd>${ys[0]}${ys[ys.length-1]!=ys[0]?' – '+ys[ys.length-1]:''}</dd>`:''}${pr.length?`<dt>Fiyat aralığı</dt><dd>${TL(Math.min(...pr))} – ${TL(Math.max(...pr))}</dd>`:''}</dl>
   <p>Bu katalog, arşivdeki bütün müzayede kayıtlarından kendiliğinden derlenir. Müzayedesi biten eserler de burada kalır; yeni eserler geldikçe sayfalar eklenir.</p></div>`}
  if(p.t=='c1')return `<div class="bk-pg c1${p.txt?' txt':''}"><small>${esc(p.sub||'')}</small><b>${esc(p.h)}</b></div>`;
- if(p.t=='c2')return `<div class="bk-pg c2"><small>${p.n.toLocaleString('tr-TR')} eser</small><div class="bk-th">${p.items.slice(0,p.items.length>18?17:18).map(x=>`<button type="button" data-bkgo="${x.pi}" aria-label="Esere git"><img loading="lazy" draggable="false" src="${esc(x.o.images[0])}" alt="" onerror="this.remove()"></button>`).join('')}${p.items.length>18?`<span>+${p.items.length-17}</span>`:''}</div></div>`;
+ if(p.t=='c2')return `<div class="bk-pg c2"><small>${p.n.toLocaleString('tr-TR')} eser</small><div class="bk-th">${p.items.slice(0,p.items.length>18?17:18).map(x=>`<button type="button" data-bkgo="${x.pi}" aria-label="Esere git"><img loading="lazy" decoding="async" draggable="false" src="${esc(thumb(x.o.images[0]))}" data-o="${esc(x.o.images[0])}" alt="" onerror="${thumbErr}"></button>`).join('')}${p.items.length>18?`<span>+${p.items.length-17}</span>`:''}</div></div>`;
  const o=p.o;if(p.t=='im')return `<div class="bk-pg im" data-bkz="${esc(o.images[0])}"><img decoding="async" draggable="false" src="${esc(o.images[0])}" alt="" onload="this.classList.add('ld')" onerror="this.remove()"></div>`;
  const d=o.end_date?o.end_date.slice(0,10).split('-').reverse().join('.'):'',sz=p.live?o.size:sizeOf(o.description).txt;
  return `<div class="bk-pg tx"><div class="no">${p.no}</div><b>${esc(o.description||o.title||'Eser')}</b><dl>${sz?`<dt>Ölçü</dt><dd>${esc(sz)}</dd>`:''}<dt>Müzayede evi</dt><dd>${esc(o.house||'—')}</dd>${o.auction?`<dt>Müzayede</dt><dd>${esc(o.auction)}</dd>`:''}${d?`<dt>${p.live?'Bitiş':'Tarih'}</dt><dd>${d}</dd>`:''}</dl>
@@ -1745,7 +1746,7 @@ function catCover(a){if(!CVL){CVL=new Map();D.lots.forEach(l=>{if(l.images[0]&&l
 function catRender(){Promise.all([artLoad(),aixLoad()]).then(()=>{const q=norm($('catQ').value).split(' ').filter(Boolean);let L=(AR.artists||[]).filter(a=>a.n&&a.c>0&&!NOTART.test(a._k||(a._k=norm(a.n))));
  if(q.length)L=L.filter(a=>{const s=a._s||(a._s=norm([a.n,...(a.v||[])].join(' ')));return q.every(w=>s.includes(w))});L.sort((x,y)=>y.c-x.c);
  $('catN').textContent=L.length.toLocaleString('tr-TR')+' katalog.';$('catMore').style.display=L.length>catLim?'':'none';
- $('bkShelf').innerHTML=L.slice(0,catLim).map(a=>{const im=catCover(a);return `<button type="button" class="ctl" data-book="${esc(a.n)}"><span class="ctl-i">${im?`<img loading="lazy" draggable="false" src="${esc(im)}" alt="" onerror="this.remove()">`:''}<em>${esc((a.n||'?').trim().charAt(0))}</em></span><b>${esc(a.n)}</b><i>${a.c.toLocaleString('tr-TR')} eser</i></button>`}).join('')||emptyBox('Bu adla katalog yok','Sanatçının adını farklı yazmayı deneyin.')}).catch(()=>{})}
+ $('bkShelf').innerHTML=L.slice(0,catLim).map(a=>{const im=catCover(a);return `<button type="button" class="ctl" data-book="${esc(a.n)}"><span class="ctl-i">${im?`<img loading="lazy" decoding="async" draggable="false" src="${esc(thumb(im))}" data-o="${esc(im)}" alt="" onerror="${thumbErr}">`:''}<em>${esc((a.n||'?').trim().charAt(0))}</em></span><b>${esc(a.n)}</b><i>${a.c.toLocaleString('tr-TR')} eser</i></button>`}).join('')||emptyBox('Bu adla katalog yok','Sanatçının adını farklı yazmayı deneyin.')}).catch(()=>{})}
 $('catQ').addEventListener('input',()=>{clearTimeout(catT);catT=setTimeout(()=>{catLim=36;catRender()},140)});$('catMore').onclick=()=>{catLim+=36;catRender()};
 $('bkX').onclick=bkDismiss;$('bkPrev').onclick=bkPrev;$('bkNext').onclick=bkNext;
 $('bkR').oninput=e=>{if(B.an)return;B.k=Math.max(0,Math.min(B.kmax,+e.target.value));B.t=0;bkDraw()};
