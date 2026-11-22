@@ -771,7 +771,7 @@ header{background:#fff!important;border-bottom:1px solid #ecebe7!important;box-s
 .hrow,header .hrow{display:grid!important;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;min-height:var(--hdr);padding:calc(4px + env(safe-area-inset-top)) max(8px,env(safe-area-inset-right)) 4px max(8px,env(safe-area-inset-left))!important;flex-wrap:nowrap}
 .logo{grid-column:2;display:block;flex:none;padding:0;font:500 25px/1 var(--serif)!important;letter-spacing:0;color:#111110}.logo .num{display:inline;padding:0!important;border:0!important;font:inherit;font-style:normal;color:inherit}
 #menuBtn{grid-column:1;justify-self:start}.hbtns{grid-column:3;justify-self:end}
-header .iconbtn,.menu .iconbtn,#arSBtn{width:48px;height:48px;min-width:48px;padding:0;border:0!important;border-radius:50%;background:transparent!important;box-shadow:none!important;color:#111110!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+header .iconbtn,.menu .iconbtn,#arSBtn,#catSBtn{width:48px;height:48px;min-width:48px;padding:0;border:0!important;border-radius:50%;background:transparent!important;box-shadow:none!important;color:#111110!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 header .iconbtn.gsBtn{display:inline-flex!important}
 .gs{display:none;position:fixed}.gs kbd,.gsX{display:none}
 .gs.full{display:block;position:fixed;inset:0;z-index:70;max-width:none;background:#fff;padding:calc(6px + env(safe-area-inset-top)) var(--gut) 0}
@@ -795,8 +795,8 @@ main{padding-top:18px}
 .vhead,.ar-head{border-top:0!important;padding-top:0!important;margin:0 0 14px!important;align-items:center}
 .vhead h1,.ar-head h1{font:500 26px/1.15 var(--serif)!important;letter-spacing:0!important}
 .vhead p{margin-top:3px;font-size:14px;color:var(--muted)}#v-fav .vhead p,#v-houses .vhead p,#v-cat .vhead p,#lbnote{display:none}
-.ar-head{display:flex;justify-content:flex-start;gap:10px}.ar-total{display:flex;align-items:baseline;gap:4px;text-align:left;margin-right:auto}.ar-total b{display:inline;font:400 15px var(--sans)!important;letter-spacing:0;color:var(--muted)}.ar-total span{font:400 15px var(--sans)!important;letter-spacing:0;text-transform:none;color:var(--muted)}#arSBtn{margin:-8px -10px -8px 0}
-.ar-search{display:none;height:50px!important;padding:0 8px 0 14px;margin-bottom:10px;border-radius:0!important;border:0;border-bottom:1px solid #111110;box-shadow:none!important;background:transparent}.ar-search.on,.ar-search:has(#lbq:not(:placeholder-shown)){display:flex}.ar-search:focus-within{box-shadow:none!important}.ar-search input{font-size:17px!important}
+.ar-head{display:flex;justify-content:flex-start;gap:10px}.ar-total{display:flex;align-items:baseline;gap:4px;text-align:left;margin-right:auto}.ar-total b{display:inline;font:400 15px var(--sans)!important;letter-spacing:0;color:var(--muted)}.ar-total span{font:400 15px var(--sans)!important;letter-spacing:0;text-transform:none;color:var(--muted)}#arSBtn,#catSBtn{margin:-8px -10px -8px 0}
+.ar-search{display:none;height:50px!important;padding:0 8px 0 14px;margin-bottom:10px;border-radius:0!important;border:0;border-bottom:1px solid #111110;box-shadow:none!important;background:transparent}.ar-search.on,.ar-search:has(#lbq:not(:placeholder-shown)),.ar-search:has(#catQ:not(:placeholder-shown)){display:flex}.ar-search:focus-within{box-shadow:none!important}.ar-search input{font-size:17px!important}
 .doors{margin-top:4px}.door small{display:none}.door{border-top:0;padding-top:0}.door b{font-size:24px}.door span{font-size:15px}
 .hm-sec{border-top:0;padding-top:0;margin-top:30px}.hm-sec h2{font-size:22px}.hm-sec a{font:400 15px var(--sans);letter-spacing:0;text-transform:none}
 :root[data-theme=light]{--bg:#fff}:root[data-theme=light] body{background:#fff!important}:root[data-theme=light] body::before{display:none}
@@ -921,9 +921,9 @@ main{padding-top:18px}
  <div id="lbres"></div>
  <details class="tip-block"><summary>ⓘ Bu arşiv nedir?</summary><p>Bu bölümdeki eski sanatçı, sergi ve eser kayıtları, 2023'te kapanan bir sanat rehberinin Internet Archive (Wayback Machine) kopyalarından derlendi. Bu yüzden <b>güncel ya da yaklaşan sergi yoktur</b>.</p></details></section>
 <section class="view" id="v-cat">
- <div class="vhead"><div><h1>Kataloglar</h1><p class="muted">Her sanatçı için, arşivdeki bütün müzayede kayıtlarından kendiliğinden derlenen bir katalog. Birine dokunun, sayfaları parmağınızla çevirin. <span id="catN"></span></p></div></div>
- <div class="bar"><input class="fld grow" id="catQ" type="search" placeholder="Katalog ara: sanatçı adı…" autocomplete="off" aria-label="Katalog ara"></div>
- <div class="shelf" id="bkShelf"></div><div class="more"><button type="button" class="btn" id="catMore" style="display:none">Daha fazla katalog</button></div>
+ <div class="ar-head"><div><h1>Kataloglar</h1></div><div class="ar-total"><b id="catN">—</b><span>katalog</span></div><button type="button" class="iconbtn" id="catSBtn" aria-label="Katalog ara" aria-expanded="false"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button></div>
+ <div class="ar-search" id="catS"><svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="catQ" type="search" autocomplete="off" placeholder="Katalog ara" aria-label="Katalog ara"><button type="button" id="catClr" aria-label="Aramayı temizle" hidden>×</button></div>
+ <div class="shelf" id="bkShelf"></div>
 </section>
 <section class="view" id="v-artist"><div id="artistPage"></div></section>
 <section class="view" id="v-house"><div id="housePage"></div></section>
@@ -1630,7 +1630,7 @@ $('lbSeg').onclick=e=>{const c=e.target.closest('button');if(c)lbSetSub(c.datase
 ['lbcity','lbgal','lbfrom','lbto','lbsort'].forEach(i=>$(i).oninput=lbRender);
 let arT=0;$('lbq').addEventListener('input',()=>{clearTimeout(arT);arT=setTimeout(()=>{arAL=60;lbRender()},170)});$('arClr').onclick=()=>{$('lbq').value='';lbRender();$('lbq').focus()};$('arSort').onchange=()=>{arApply();scrollTo({top:$('arTags').offsetTop-90})};
 new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting))arMore()},{rootMargin:'900px'}).observe($('arEnd'));
-new IntersectionObserver(es=>{if(!es[0].isIntersecting)return;if(view=='lb'&&lbSub=='a'&&arAS.length>arAL){const nx=arAS.slice(arAL,arAL+60);arAL+=60;const s=$('arShelf');if(s)s.insertAdjacentHTML('beforeend',nx.map(arATile).join(''))}else if(view=='artist')apMore()},{rootMargin:'900px'}).observe($('sentinel'));
+new IntersectionObserver(es=>{if(!es[0].isIntersecting)return;if(view=='lb'&&lbSub=='a'&&arAS.length>arAL){const nx=arAS.slice(arAL,arAL+60);arAL+=60;const s=$('arShelf');if(s)s.insertAdjacentHTML('beforeend',nx.map(arATile).join(''))}else if(view=='artist')apMore();else if(view=='cat'&&catL.length>catLim){const nx=catL.slice(catLim,catLim+60);catLim+=60;$('bkShelf').insertAdjacentHTML('beforeend',nx.map(catTile).join(''))}},{rootMargin:'900px'}).observe($('sentinel'));
 document.addEventListener('click',e=>{const tg=e.target.closest('[data-art]');if(tg){const id=tg.dataset.art;arSel.has(id)?arSel.delete(id):arSel.add(id);arApply(true);$('arTags').scrollTo({left:0,behavior:'smooth'});return}
  if(e.target.id=='arAMore'){arAL+=60;lbRender();return}
  const q=e.target.closest('[data-arq]');if(q){const v=$('gq').value.trim();sdClose();gsShut();if((history.state||{}).ov==='search')history.replaceState({},'',urlFor(curRoute));$('gq').blur();$('lbq').value=v;lbSub='w';document.querySelectorAll('#lbSeg button').forEach(x=>x.classList.toggle('on',x.dataset.s=='w'));show('lb');return}
@@ -2076,13 +2076,10 @@ const bkDismiss=()=>ovClose('book',bkClose);
 let catLim=36,catT=0,CVL=null,AIX=null;const NOTART=/hizmet|bedelsiz|hemen al|imza|okunamadi|anonim|bilinmeyen|resim|tablo|avrupa|osmanli|ekol|yuzyil|adet|lot |\d{3}/;   /* listing text that ended up in the artist field */
 const aixLoad=()=>AIX?Promise.resolve(AIX):fetch('data/artist_index.json'+V).then(r=>r.ok?r.json():{}).then(d=>AIX=(d&&d.artists)||{}).catch(()=>AIX={});
 function catCover(a){if(!CVL){CVL=new Map();D.lots.forEach(l=>{if(l.images[0]&&l.artist){const k=akey(l.artist);if(!CVL.has(k))CVL.set(k,l.images[0])}})}const k=akey(a.n),x=AIX&&AIX['k:'+k];return CVL.get(k)||(Array.isArray(x)&&mir(x[2]))||''}
-function catRender(){Promise.all([artLoad(),aixLoad(),lbLoad().catch(()=>null)]).then(()=>{const q=norm($('catQ').value).split(' ').filter(Boolean);let L=(AR.artists||[]).filter(a=>a.n&&a.c>0&&!NOTART.test(a._k||(a._k=norm(a.n))));
- const known=new Set(L.map(a=>akey(a.n)));L=L.concat(((LB&&LB.artists)||[]).filter(x=>x.n&&x.w>0&&!known.has(akey(x.n))).map(x=>({n:x.n,c:0,lbw:x.w,lbid:x.id})));
- if(q.length)L=L.filter(a=>{const s=a._s||(a._s=norm([a.n,...(a.v||[])].join(' ')));return q.every(w=>s.includes(w))});L.sort((x,y)=>(y.c-x.c)||((y.lbw||0)-(x.lbw||0)));
- $('catN').textContent=L.length.toLocaleString('tr-TR')+' katalog.';$('catMore').style.display=L.length>catLim?'':'none';
- $('bkShelf').innerHTML=L.slice(0,catLim).map(a=>{const im=catCover(a);return `<button type="button" class="ctl" data-book="${esc(a.n)}"><span class="ctl-i">${im?`<img loading="lazy" decoding="async" draggable="false" src="${esc(thumb(im))}" data-o="${esc(im)}" alt="" onerror="${thumbErr}">`:''}<em>${esc((a.n||'?').trim().charAt(0))}</em></span><b>${esc(a.n)}</b><i>${a.c?a.c.toLocaleString('tr-TR')+' eser':'Arşiv'}</i></button>`}).join('')||emptyBox('Bu adla katalog yok','Sanatçının adını farklı yazmayı deneyin.');
- L.slice(0,catLim).filter(a=>a.lbid).forEach(a=>lbCat(a.lbid).then(c=>{const w=c&&(c.works||[]).find(lbPlate),b=w&&$('bkShelf').querySelector(`[data-book="${CSS.escape(a.n)}"] .ctl-i`);if(b&&!b.querySelector('img'))b.insertAdjacentHTML('afterbegin',`<img loading="lazy" decoding="async" draggable="false" src="${esc(thumb(mir(w.i)))}" data-o="${esc(mir(w.i))}" alt="" onerror="${thumbErr}">`)}))}).catch(()=>{})}
-$('catQ').addEventListener('input',()=>{clearTimeout(catT);catT=setTimeout(()=>{catLim=36;catRender()},140)});$('catMore').onclick=()=>{catLim+=36;catRender()};
+let catL=[];const catTile=a=>arATile(a).replace('data-artist=','data-book=');
+function catRender(){arLoad().then(()=>{const q=norm($('catQ').value).split(' ').filter(Boolean);catL=AX.ar.filter(a=>q.every(w=>a.s.includes(w)));$('catN').textContent=catL.length.toLocaleString('tr-TR');$('catClr').hidden=!$('catQ').value;
+ $('bkShelf').innerHTML=catL.slice(0,catLim).map(catTile).join('')||emptyBox('Bu adla katalog yok','Sanatçının adını farklı yazmayı deneyin.')}).catch(()=>{})}
+$('catQ').addEventListener('input',()=>{clearTimeout(catT);catT=setTimeout(()=>{catLim=60;catRender()},140)});$('catClr').onclick=()=>{$('catQ').value='';catLim=60;catRender();$('catQ').focus()};$('catSBtn').onclick=()=>{const s=$('catS'),on=!s.classList.contains('on');s.classList.toggle('on',on);$('catSBtn').setAttribute('aria-expanded',on?'true':'false');if(on)$('catQ').focus()};
 $('bkX').onclick=bkDismiss;$('bkPrev').onclick=bkPrev;$('bkNext').onclick=bkNext;
 $('bkR').oninput=e=>{if(B.an)return;B.k=Math.max(0,Math.min(B.kmax,+e.target.value));B.t=0;bkDraw()};
 document.addEventListener('click',e=>{const b=e.target.closest('[data-book]');if(b){e.preventDefault();closeM();openBook(b.dataset.book);return}
