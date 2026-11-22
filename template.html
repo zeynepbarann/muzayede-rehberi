@@ -745,6 +745,8 @@ h1,h2,h3,.artist,.hm-h,.door b,.ctl b{font-weight:500;letter-spacing:-.012em}
 .bk-ft button{min-height:38px;border:0;background:#111110;color:#fff;font:500 max(9px,2.4cqmin) var(--sans);letter-spacing:.14em;padding:0 1.5em}
 .bk-bot{padding:0 20px calc(10px + env(safe-area-inset-bottom));font:500 10px var(--sans);letter-spacing:.14em;color:var(--muted)}.bk-bot input{accent-color:#111110}
 @media(max-width:640px){.shelf{gap:30px 14px}.ctl b{font-size:19px}.ctl-i em{font-size:42px}}
+.bk-ft a{margin-left:auto;display:inline-flex;align-items:center;min-height:38px;padding:0 1.5em;background:#111110;color:#fff;font:500 max(9px,2.4cqmin) var(--sans);letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+.bk-pg.im:not(:has(img))::before{content:"Görsel arşivde korunmamış";margin:auto;font:500 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#6b6862}
 </style></head><body>
 <header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -1822,30 +1824,36 @@ document.addEventListener('click',e=>{const h=e.target.closest('[data-g3h]');if(
    Upright screens bind it along the top (leaves turn upwards); wide screens and book-style folds bind it at the side. */
 const B={on:false,name:'',loading:false,P:[],L:0,kmax:0,k:0,t:0,ax:'x',pw:0,ph:0,raf:0,an:false,drag:null,moved:false,leaves:new Map(),live:[],old:[],hero:null};
 const bkPrice=x=>x.last_bid||x.current_bid||x.start_price||0;
+/* a Lebriz work gets a plate if a picture survives at a size worth showing (the archive also kept 45px thumbnails) */
+const lbPlate=w=>!!w.i&&w.z!=null&&(w.z===0||w.z>=100);
 async function bkData(name){await ready;try{await lbLoad()}catch(e){}const a=lbMatch(name),k=akey(name);let past=null;
  if(typeof artistPast=='function')past=await artistPast(name).catch(()=>null);   /* per-artist shard when there is one */
  if(!past)past=((await loadPast().catch(()=>[]))||[]).filter(x=>x.artist&&(a?lbMatch(x.artist)===a:akey(x.artist)==k));
  const live=artistLots(a,name).filter(l=>l.images[0]).sort((x,y)=>(x._e||9e15)-(y._e||9e15));
- const old=past.filter(x=>x.image).sort((x,y)=>(y.end_date||'').localeCompare(x.end_date||''));return{live,old}}
+ const old=past.filter(x=>x.image).sort((x,y)=>(y.end_date||'').localeCompare(x.end_date||''));
+ const cat=a?await lbCat(a.id).catch(()=>null):null,lw=(cat&&cat.works)||[];
+ const lb=lw.filter(lbPlate).map(w=>{const im=mir(w.i);return{lebriz:1,key:'lb|'+w.c,images:[im],image:im,artist:name,title:w.t||'',description:[w.t,w.k].filter(Boolean).join(' · '),size:w.s||'',year:w.y||'',house:'Lebriz arşivi',url:w.p||''}}).sort((x,y)=>(!!y.title-!!x.title)||(y.year||'').localeCompare(x.year||''));
+ return{live,old,lb,lbRec:lw.length}}
 const bkYear=o=>(o.end_date||'').slice(0,4)||'Tarihsiz';
 /* pages come in pairs after the cover: odd index = first page of a spread (plate / chapter title), even = second (entry / contact sheet) */
-function bkPages(live,old){const P=[{t:'cover'},{t:'t1'},{t:'t2'}];let no=0;
+function bkPages(live,old,lb){const P=[{t:'cover'},{t:'t1'},{t:'t2'}];let no=0;
  const chap=(h,sub,list,isLive)=>{const c2={t:'c2',items:[],n:list.length};P.push({t:'c1',h,sub,txt:!/^\d{4}$/.test(h)},c2);list.forEach(o=>{no++;c2.items.push({o,pi:P.length});P.push({t:'im',o},{t:'tx',o,live:isLive,no})})};
  if(live.length)chap('Şu an satışta','Güncel müzayedeler',live,true);
  const by={};old.forEach(o=>{(by[bkYear(o)]=by[bkYear(o)]||[]).push(o)});Object.keys(by).sort().reverse().forEach(y=>chap(y,'Biten müzayedeler',by[y],false));
+ if(lb&&lb.length)chap('Lebriz arşivi','2023’e kadarki katalog',lb,false);
  if(!no)P.push({t:'c1',h:'Henüz görselli kayıt yok',sub:'16/22',txt:1},{t:'c2',items:[],n:0});return P}
-function bkPage(p){const n=B.name;if(!p)return '<div class="bk-pg"></div>';const all=B.live.length+B.old.length;
+function bkPage(p){const n=B.name;if(!p)return '<div class="bk-pg"></div>';const all=B.live.length+B.old.length+(B.lb||[]).length;
  if(p.t=='cover')return `<div class="bk-pg cover">${B.hero?`<img src="${esc(thumb(B.hero.images[0]))}" data-o="${esc(B.hero.images[0])}" alt="" draggable="false" onload="sharp(this)" onerror="${thumbErr}">`:''}<div class="cvt"><small>16/22 · Katalog</small><b>${esc(n)}</b><span>${B.loading?'Derleniyor…':all.toLocaleString('tr-TR')+' eser'}</span></div></div>`;
- if(p.t=='t1')return `<div class="bk-pg t1"><small>Müzayede kataloğu</small><h2>${esc(n)}</h2></div>`;
+ if(p.t=='t1')return `<div class="bk-pg t1"><small>Sanatçı kataloğu</small><h2>${esc(n)}</h2></div>`;
  if(p.t=='t2'){const A=[...B.live,...B.old],pr=A.map(bkPrice).filter(Boolean),ys=B.old.map(bkYear).filter(y=>/^\d{4}$/.test(y)).sort(),hs=new Set(A.map(x=>x.house));
-  return `<div class="bk-pg t2"><dl><dt>Eser</dt><dd>${A.length.toLocaleString('tr-TR')}</dd><dt>Şu an satışta</dt><dd>${B.live.length}</dd><dt>Müzayede evi</dt><dd>${hs.size}</dd>${ys.length?`<dt>Dönem</dt><dd>${ys[0]}${ys[ys.length-1]!=ys[0]?' – '+ys[ys.length-1]:''}</dd>`:''}${pr.length?`<dt>Fiyat aralığı</dt><dd>${TL(Math.min(...pr))} – ${TL(Math.max(...pr))}</dd>`:''}</dl>
-  <p>Bu katalog, arşivdeki bütün müzayede kayıtlarından kendiliğinden derlenir. Müzayedesi biten eserler de burada kalır; yeni eserler geldikçe sayfalar eklenir.</p></div>`}
+  return `<div class="bk-pg t2"><dl><dt>Eser</dt><dd>${all.toLocaleString('tr-TR')}</dd><dt>Şu an satışta</dt><dd>${B.live.length}</dd><dt>Biten müzayede</dt><dd>${B.old.length.toLocaleString('tr-TR')}</dd>${B.lb&&B.lb.length?`<dt>Lebriz arşivi</dt><dd>${B.lb.length.toLocaleString('tr-TR')}</dd>`:''}${hs.size?`<dt>Müzayede evi</dt><dd>${hs.size}</dd>`:''}${ys.length?`<dt>Dönem</dt><dd>${ys[0]}${ys[ys.length-1]!=ys[0]?' – '+ys[ys.length-1]:''}</dd>`:''}${pr.length?`<dt>Fiyat aralığı</dt><dd>${TL(Math.min(...pr))} – ${TL(Math.max(...pr))}</dd>`:''}</dl>
+  <p>Bu katalog; güncel ve biten müzayedelerden ve Lebriz arşivinden kendiliğinden derlenir. Yeni eserler geldikçe sayfalar eklenir.</p></div>`}
  if(p.t=='c1')return `<div class="bk-pg c1${p.txt?' txt':''}"><small>${esc(p.sub||'')}</small><b>${esc(p.h)}</b></div>`;
  if(p.t=='c2')return `<div class="bk-pg c2"><small>${p.n.toLocaleString('tr-TR')} eser</small><div class="bk-th">${p.items.slice(0,p.items.length>18?17:18).map(x=>`<button type="button" data-bkgo="${x.pi}" aria-label="Esere git"><img loading="lazy" decoding="async" draggable="false" src="${esc(thumb(x.o.images[0]))}" data-o="${esc(x.o.images[0])}" alt="" onerror="${thumbErr}"></button>`).join('')}${p.items.length>18?`<span>+${p.items.length-17}</span>`:''}</div></div>`;
  const o=p.o;if(p.t=='im')return `<div class="bk-pg im" data-bkz="${esc(o.images[0])}"><img decoding="async" draggable="false" src="${esc(thumb(o.images[0]))}" data-o="${esc(o.images[0])}" alt="" onload="this.classList.add('ld');sharp(this)" onerror="${thumbErr}"></div>`;
- const d=o.end_date?o.end_date.slice(0,10).split('-').reverse().join('.'):'',sz=p.live?o.size:sizeOf(o.description).txt;
- return `<div class="bk-pg tx"><div class="no">${p.no}</div><b>${esc(o.description||o.title||'Eser')}</b><dl>${sz?`<dt>Ölçü</dt><dd>${esc(sz)}</dd>`:''}<dt>Müzayede evi</dt><dd>${esc(o.house||'—')}</dd>${o.auction?`<dt>Müzayede</dt><dd>${esc(o.auction)}</dd>`:''}${d?`<dt>${p.live?'Bitiş':'Tarih'}</dt><dd>${d}</dd>`:''}</dl>
- <div class="bk-ft"><u>${p.live?TL(priceOf(o)):pastPrice(o)}</u>${p.live?'<em>Satışta</em>':''}<button type="button" data-${p.live?'open':'past'}="${esc(o.key)}">Eseri aç →</button></div></div>`}
+ const d=o.end_date?o.end_date.slice(0,10).split('-').reverse().join('.'):'',sz=p.live||o.lebriz?o.size:sizeOf(o.description).txt;
+ return `<div class="bk-pg tx"><div class="no">${p.no}</div><b>${esc(o.description||o.title||(o.lebriz?'Lebriz kaydı':'Eser'))}</b><dl>${sz?`<dt>Ölçü</dt><dd>${esc(sz)}</dd>`:''}<dt>${o.lebriz?'Kaynak':'Müzayede evi'}</dt><dd>${esc(o.house||'—')}</dd>${o.lebriz&&o.year?`<dt>Yıl</dt><dd>${esc(o.year)}</dd>`:''}${o.auction?`<dt>Müzayede</dt><dd>${esc(o.auction)}</dd>`:''}${d?`<dt>${p.live?'Bitiş':'Tarih'}</dt><dd>${d}</dd>`:''}</dl>
+ <div class="bk-ft">${o.lebriz?`<em>Arşiv kaydı</em>${o.url?`<a href="${esc(o.url)}" target="_blank" rel="noopener">Kaynak ↗</a>`:''}`:`<u>${p.live?TL(priceOf(o)):pastPrice(o)}</u>${p.live?'<em>Satışta</em>':''}<button type="button" data-${p.live?'open':'past'}="${esc(o.key)}">Eseri aç →</button>`}</div></div>`}
 function bkDraw(){const bk=$('bkBook'),k=B.k,X=B.ax=='x',need=new Set();for(let j=Math.max(0,k-2);j<=Math.min(B.L-1,k+1);j++)need.add(j);
  for(const[j,e]of B.leaves)if(!need.has(j)){e.remove();B.leaves.delete(j)}
  for(const j of need){let e=B.leaves.get(j);if(!e){e=document.createElement('div');e.className='bk-leaf';e.innerHTML=`<div class="bk-face f">${bkPage(B.P[2*j])}</div><div class="bk-face b">${bkPage(B.P[2*j+1])}</div>`;B.leaves.set(j,e);bk.appendChild(e)}
@@ -1866,20 +1874,22 @@ const bkFwd=()=>{B.k++;B.t=0};
 const bkNext=()=>{if(!B.on||B.an||B.k>=B.kmax)return;bkAnim(1,900,bkFwd)},bkPrev=()=>{if(!B.on||B.an||B.k<=0)return;B.k--;B.t=1;bkAnim(0,900)};
 async function openBook(name,quiet){if(!name)return;await ready;const rec=AR&&AR.byN&&AR.byN[name];if(rec&&rec.n)name=rec.n;
  cancelAnimationFrame(B.raf);const lv=artistLots(lbMatch(name),name).filter(l=>l.images[0]);
- Object.assign(B,{on:true,name,loading:true,live:[],old:[],hero:lv[0]||null,P:[{t:'cover'}],k:0,t:0,an:false,drag:null});
+ Object.assign(B,{on:true,name,loading:true,live:[],old:[],lb:[],hero:lv[0]||null,P:[{t:'cover'}],k:0,t:0,an:false,drag:null});
  $('bk').classList.add('open');document.body.style.overflow='hidden';$('bkT').textContent=name;$('bkS').textContent='Katalog derleniyor…';bkSize();if(!quiet)ovOpen('book','katalog='+encodeURIComponent(name));
- const d=await bkData(name);if(!B.on||B.name!==name)return;const A=[...d.live,...d.old];B.loading=false;B.live=d.live;B.old=d.old;B.hero=A.reduce((m,x)=>!m||bkPrice(x)>bkPrice(m)?x:m,null);B.P=bkPages(d.live,d.old);
- $('bkS').textContent=A.length.toLocaleString('tr-TR')+' eser'+(d.live.length?' · '+d.live.length+' satışta':'');bkSize();setTimeout(()=>{if(B.on&&B.name===name&&B.k==0)bkNext()},650)}
+ const d=await bkData(name);if(!B.on||B.name!==name)return;const A=[...d.live,...d.old];B.loading=false;B.live=d.live;B.old=d.old;B.lb=d.lb;B.hero=A.reduce((m,x)=>!m||bkPrice(x)>bkPrice(m)?x:m,null)||d.lb[0]||null;B.P=bkPages(d.live,d.old,d.lb);
+ $('bkS').textContent=(A.length+d.lb.length).toLocaleString('tr-TR')+' eser'+(d.live.length?' · '+d.live.length+' satışta':'')+(d.lb.length?' · '+d.lb.length+' Lebriz':'');bkSize();setTimeout(()=>{if(B.on&&B.name===name&&B.k==0)bkNext()},650)}
 function bkClose(){if(!B.on)return;B.on=false;cancelAnimationFrame(B.raf);B.an=false;$('bk').classList.remove('open');B.leaves.forEach(e=>e.remove());B.leaves.clear();if(!$('m').classList.contains('open')&&!G.on)document.body.style.overflow=''}
 const bkDismiss=()=>ovClose('book',bkClose);
 /* the shelf: a landscape cover per artist, carrying one of their works when the archive can name one cheaply */
 let catLim=36,catT=0,CVL=null,AIX=null;const NOTART=/hizmet|bedelsiz|hemen al|imza|okunamadi|anonim|bilinmeyen|resim|tablo|avrupa|osmanli|ekol|yuzyil|adet|lot |\d{3}/;   /* listing text that ended up in the artist field */
 const aixLoad=()=>AIX?Promise.resolve(AIX):fetch('data/artist_index.json'+V).then(r=>r.ok?r.json():{}).then(d=>AIX=(d&&d.artists)||{}).catch(()=>AIX={});
 function catCover(a){if(!CVL){CVL=new Map();D.lots.forEach(l=>{if(l.images[0]&&l.artist){const k=akey(l.artist);if(!CVL.has(k))CVL.set(k,l.images[0])}})}const k=akey(a.n),x=AIX&&AIX['k:'+k];return CVL.get(k)||(Array.isArray(x)&&mir(x[2]))||''}
-function catRender(){Promise.all([artLoad(),aixLoad()]).then(()=>{const q=norm($('catQ').value).split(' ').filter(Boolean);let L=(AR.artists||[]).filter(a=>a.n&&a.c>0&&!NOTART.test(a._k||(a._k=norm(a.n))));
- if(q.length)L=L.filter(a=>{const s=a._s||(a._s=norm([a.n,...(a.v||[])].join(' ')));return q.every(w=>s.includes(w))});L.sort((x,y)=>y.c-x.c);
+function catRender(){Promise.all([artLoad(),aixLoad(),lbLoad().catch(()=>null)]).then(()=>{const q=norm($('catQ').value).split(' ').filter(Boolean);let L=(AR.artists||[]).filter(a=>a.n&&a.c>0&&!NOTART.test(a._k||(a._k=norm(a.n))));
+ const known=new Set(L.map(a=>akey(a.n)));L=L.concat(((LB&&LB.artists)||[]).filter(x=>x.n&&x.w>0&&!known.has(akey(x.n))).map(x=>({n:x.n,c:0,lbw:x.w,lbid:x.id})));
+ if(q.length)L=L.filter(a=>{const s=a._s||(a._s=norm([a.n,...(a.v||[])].join(' ')));return q.every(w=>s.includes(w))});L.sort((x,y)=>(y.c-x.c)||((y.lbw||0)-(x.lbw||0)));
  $('catN').textContent=L.length.toLocaleString('tr-TR')+' katalog.';$('catMore').style.display=L.length>catLim?'':'none';
- $('bkShelf').innerHTML=L.slice(0,catLim).map(a=>{const im=catCover(a);return `<button type="button" class="ctl" data-book="${esc(a.n)}"><span class="ctl-i">${im?`<img loading="lazy" decoding="async" draggable="false" src="${esc(thumb(im))}" data-o="${esc(im)}" alt="" onerror="${thumbErr}">`:''}<em>${esc((a.n||'?').trim().charAt(0))}</em></span><b>${esc(a.n)}</b><i>${a.c.toLocaleString('tr-TR')} eser</i></button>`}).join('')||emptyBox('Bu adla katalog yok','Sanatçının adını farklı yazmayı deneyin.')}).catch(()=>{})}
+ $('bkShelf').innerHTML=L.slice(0,catLim).map(a=>{const im=catCover(a);return `<button type="button" class="ctl" data-book="${esc(a.n)}"><span class="ctl-i">${im?`<img loading="lazy" decoding="async" draggable="false" src="${esc(thumb(im))}" data-o="${esc(im)}" alt="" onerror="${thumbErr}">`:''}<em>${esc((a.n||'?').trim().charAt(0))}</em></span><b>${esc(a.n)}</b><i>${a.c?a.c.toLocaleString('tr-TR')+' eser':'Lebriz arşivi'}</i></button>`}).join('')||emptyBox('Bu adla katalog yok','Sanatçının adını farklı yazmayı deneyin.');
+ L.slice(0,catLim).filter(a=>a.lbid).forEach(a=>lbCat(a.lbid).then(c=>{const w=c&&(c.works||[]).find(lbPlate),b=w&&$('bkShelf').querySelector(`[data-book="${CSS.escape(a.n)}"] .ctl-i`);if(b&&!b.querySelector('img'))b.insertAdjacentHTML('afterbegin',`<img loading="lazy" decoding="async" draggable="false" src="${esc(thumb(mir(w.i)))}" data-o="${esc(mir(w.i))}" alt="" onerror="${thumbErr}">`)}))}).catch(()=>{})}
 $('catQ').addEventListener('input',()=>{clearTimeout(catT);catT=setTimeout(()=>{catLim=36;catRender()},140)});$('catMore').onclick=()=>{catLim+=36;catRender()};
 $('bkX').onclick=bkDismiss;$('bkPrev').onclick=bkPrev;$('bkNext').onclick=bkNext;
 $('bkR').oninput=e=>{if(B.an)return;B.k=Math.max(0,Math.min(B.kmax,+e.target.value));B.t=0;bkDraw()};
