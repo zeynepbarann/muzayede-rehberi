@@ -1,8 +1,8 @@
-<!doctype html><html lang="tr" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!doctype html><html lang="tr" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>16/22 Müzayede Rehberi</title><meta name="description" content="Türkiye'deki güncel sanat müzayedelerindeki eserler, sanatçılar ve Lebriz arşivi tek yerde."><meta property="og:title" content="16/22 Müzayede Rehberi"><meta property="og:description" content="Türkiye'deki güncel sanat müzayedelerindeki eserler, sanatçılar ve Lebriz arşivi tek yerde."><meta property="og:type" content="website"><meta property="og:site_name" content="16/22 Müzayede Rehberi"><meta name="twitter:card" content="summary"><meta name="apple-mobile-web-app-title" content="16/22"><meta name="theme-color" content="#0c0b09"><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="alternate icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230c0b09'/%3E%3Ctext x='32' y='41' font-family='Georgia,serif' font-size='24' font-style='italic' fill='%23d4af37' text-anchor='middle'%3E16/22%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,400..600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-<script>(()=>{let t='dark';try{t=localStorage.getItem('mr_theme')||'dark'}catch(e){}document.documentElement.dataset.theme=t})()</script>
+<script>(()=>{let t='dark';try{t=localStorage.getItem('mr_theme')||'light'}catch(e){}document.documentElement.dataset.theme=t})()</script>
 <style>
 /* ===== design tokens ===== */
 :root{--bg:#f6f2e9;--surface:#fffdf8;--surface-2:#efe8d8;--sheet:#fffdf8;--glass:rgba(255,253,248,.94);--ink:#141210;--ink-2:#3d3830;--muted:#756d5e;--line:rgba(20,18,16,.11);--accent:#8a6812;--accent-ink:#fffdf8;--gold:#b8901f;--gold-grad:linear-gradient(135deg,#d9b54a,#a67f16);--sec:#8a6812;--danger:#a3242f;--ok:#2f6b3a;--bgimg:none;--shadow:0 1px 2px #0000000d,0 8px 24px #0000000f;--shadow-lg:0 18px 50px #00000026;
@@ -464,6 +464,189 @@ nav.tabs .ti{display:none}
 .sl-btn[hidden]{display:none}.sl-prev{left:-6px}.sl-next{right:-6px}.sl-btn:hover{border-color:var(--gold);color:var(--accent)}
 #favQ{max-width:420px}
 @media(max-width:640px){.srow{grid-auto-columns:46vw;gap:10px}.sl-btn{width:38px;height:38px;font-size:24px;top:calc(50% - 56px)}.sl-prev{left:-4px}.sl-next{right:-4px}#favQ{max-width:none;flex-basis:100%}}
+/* ===== the app is a gallery: one continuous wall, works hung on it, a label under each ===== */
+:root{--wall-1:#f6f3ed;--wall-2:#ebe6dc;--wall-hi:rgba(255,255,255,.85);--wall-sh:rgba(50,38,20,.3);--label:#fdfaf3;--label-ink:#1c1915;--label-mut:#6a6254;--label-gold:#7a5c10;--floor-1:#c3a074;--floor-2:#a17f56;--floor-ink:#2a1d10;--skirt:#f7f3ea}
+[data-theme=dark]{--wall-1:#1e1c19;--wall-2:#100f0d;--wall-hi:rgba(255,236,205,.07);--wall-sh:rgba(0,0,0,.62);--label:#e9e2d2;--floor-1:#3a2a1c;--floor-2:#1c130b;--floor-ink:#eadfc8;--skirt:#0d0b09}
+body{background:var(--wall-2)!important}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.1'/%3E%3C/svg%3E"),radial-gradient(120% 50% at 50% 0,var(--wall-hi),transparent 72%),radial-gradient(140% 60% at 50% 108%,rgba(0,0,0,.16),transparent 70%),linear-gradient(180deg,var(--wall-1),var(--wall-2))}
+header{background:color-mix(in srgb,var(--wall-1) 94%,transparent)!important}nav.tabs{background:none!important}
+header::after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:5px;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(0,0,0,.22))}
+.card,.card:hover{background:none!important;outline:0!important;box-shadow:none!important;border-radius:0;overflow:visible}
+.frame.hung{container-type:size;padding:0;perspective:800px;animation:none;border-radius:0;overflow:visible;aspect-ratio:var(--arc,.8);background:none}
+.grid{align-items:start}
+.card .body{flex:none;align-self:stretch;margin:0 0 12px;padding:2px 6px 6px!important;gap:1px;background:none;text-align:center}
+.card .body .artist{font-size:15px;font-weight:500;letter-spacing:.01em;justify-content:center}.card .body a.alink{text-decoration:none}.card .body .spec{font-size:11.5px;color:var(--muted)}.card .body .crow{justify-content:center;gap:10px}.card .body .crow .price{font-size:14px}.card .body .meta{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);opacity:.8}
+.pf{--m:clamp(7px,5.2cqw,15px);--mt:0px;--pad:calc(5cqw + var(--m) + var(--mt));position:relative;display:block;flex:none;border:var(--m) solid #777;padding:var(--mt);background:#f4efe3;transform-style:preserve-3d;
+ transform:rotateX(calc(var(--rx,0deg) + var(--my,0)*-4deg)) rotateY(calc(var(--ry,0deg) + var(--mx,0)*6deg)) translateZ(var(--tz,0px));transition:transform .8s cubic-bezier(.16,1,.3,1);
+ box-shadow:0 0 0 .5px rgba(0,0,0,.4),var(--sx,0px) calc(var(--m)*.45) calc(var(--m)*.7) color-mix(in srgb,var(--wall-sh) 75%,transparent),var(--sx,0px) calc(var(--m)*2.2) calc(var(--m)*4.2) color-mix(in srgb,var(--wall-sh) 65%,transparent)}
+.pf.swy{transition:none}
+.pf::before{content:"";position:absolute;inset:calc(var(--m)*-.55);border:1px solid rgba(255,255,255,.3);border-right-color:rgba(0,0,0,.22);border-bottom-color:rgba(0,0,0,.34);pointer-events:none}
+.pf.mat{--mt:clamp(6px,6cqw,18px)}
+.pv{display:block;position:relative;overflow:hidden;background:#cfc6b4;width:70%;width:min(100cqw - 2*var(--pad),(100cqh - 2*var(--pad))*var(--ar,.8));aspect-ratio:var(--ar,.8);box-shadow:0 0 0 1px rgba(0,0,0,.55)}
+.pf.mat .pv{box-shadow:0 0 0 1px rgba(0,0,0,.3),0 0 0 2px #fffdf6,0 0 0 3px rgba(0,0,0,.12)}
+.frame.hung .pv img,.g3-p .pv img{position:absolute;inset:0;width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;display:block;transform:none!important}
+.pv::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 2px 5px rgba(0,0,0,.5),inset 0 0 0 1px rgba(0,0,0,.25);background:linear-gradient(112deg,transparent 38%,rgba(255,255,255,.24) 49%,transparent 60%) no-repeat;background-size:260% 100%;background-position:var(--gx,100%) 0}
+.frame.hung.ph .pv{background:linear-gradient(100deg,#cfc6b4 30%,#e6dfd0 50%,#cfc6b4 70%);background-size:200% 100%;animation:sh 1.3s infinite linear}
+@media(hover:hover){.frame.hung:hover .pf{--tz:26px;transition-duration:.16s}}
+/* mouldings: mitred borders lit from above (top, right, bottom, left) */
+.pf.f-gold{border-color:#ecd384 #b9952f #7c5f18 #d2b252}.pf.f-gold:not(.mat) .pv{box-shadow:0 0 0 1px #4d3a0c,0 0 0 3px #f1dd9b,0 0 0 4px #6b5214}
+.pf.f-bronze{border-color:#b08d4a #7f6430 #4f3d1a #96783c}.pf.f-bronze:not(.mat) .pv{box-shadow:0 0 0 1px #2e2209,0 0 0 3px #caa962,0 0 0 4px #4a3815}
+.pf.f-ebony{border-color:#45423e #1f1d1b #0a0909 #2f2d2a}.pf.f-ebony:not(.mat) .pv{box-shadow:0 0 0 1px #000,0 0 0 2.5px #c9a545,0 0 0 3.5px #000}
+.pf.f-walnut{border-color:#96623c #6d4529 #46291a #835434}.pf.f-walnut:not(.mat) .pv{box-shadow:0 0 0 1px #24130a,0 0 0 3px #a87148,0 0 0 4px #3a2114}
+.pf.f-white{border-color:#fff #e7e3da #cfcabf #f4f1ea}.pf.f-white::before{border-color:rgba(0,0,0,.06);border-bottom-color:rgba(0,0,0,.16)}.pf.f-white:not(.mat) .pv{box-shadow:0 0 0 1px rgba(0,0,0,.35)}
+.pf.f-float{--m:clamp(2px,1.3cqw,4px);--mt:clamp(2px,1.1cqw,3px);border-color:#4a3a29 #33281c #1d160f #3f3123;background:#0b0a09}.pf.f-float::before{display:none}
+/* the wall rolls past like a drum as you scroll; side-scrolling rows turn like a carousel */
+@supports (animation-timeline:view()){@media(prefers-reduced-motion:no-preference){
+ .grid>.card{animation:roll linear both;animation-timeline:view();animation-range:cover 0% cover 100%}
+ .srow>.card{animation:rollx linear both;animation-timeline:view(inline);animation-range:cover 0% cover 100%}
+ @keyframes roll{0%{transform:perspective(1200px) translate3d(0,34px,-70px) rotateX(-9deg);opacity:0}18%,82%{transform:perspective(1200px) translate3d(0,0,0) rotateX(0);opacity:1}100%{transform:perspective(1200px) translate3d(0,-34px,-70px) rotateX(9deg);opacity:0}}
+ @keyframes rollx{0%{transform:perspective(1200px) translate3d(28px,0,-70px) rotateY(12deg);opacity:0}20%,80%{transform:perspective(1200px) translate3d(0,0,0) rotateY(0);opacity:1}100%{transform:perspective(1200px) translate3d(-28px,0,-70px) rotateY(-12deg);opacity:0}}}}
+/* the lot page: the work hangs on the same wall */
+.det .big.hungbig{background:radial-gradient(90% 60% at 50% -5%,var(--wall-hi),transparent 70%),linear-gradient(180deg,var(--wall-1),var(--wall-2));padding:40px 28px 52px}
+.det .big .pf{--m:16px;--pad:0px;margin:0;display:inline-block;line-height:0;max-width:100%}.det .big .pf.mat{--mt:22px}.det .big .pf.f-float{--m:4px;--mt:3px}
+.det .big .pv{width:auto;aspect-ratio:auto}.det .big .pv img{max-width:100%;max-height:62vh;display:block;box-shadow:none}
+.g3tab{color:var(--gold)!important}.g3btn{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;font-weight:600;border-color:color-mix(in srgb,var(--gold) 55%,var(--line));color:var(--accent)}
+@media(min-width:641px){nav.tabs .g3tab{margin-left:auto}}
+/* phone: the tab bar is the gallery floor, the skirting board sits on top of it */
+@media(max-width:640px){.g3btn{flex:1 1 100%;justify-content:center;order:5}
+ nav.tabs{background:linear-gradient(180deg,var(--floor-1),var(--floor-2))!important;border-top:6px solid var(--skirt)!important;box-shadow:0 -12px 26px rgba(0,0,0,.3)}
+ nav.tabs button,nav.tabs button.on,nav.tabs .g3tab{color:var(--floor-ink)!important;opacity:.72}nav.tabs button.on{opacity:1;border-top-color:transparent!important}nav.tabs button.on .ti,nav.tabs .ti{color:var(--floor-ink)}
+ nav.tabs .n{background:rgba(0,0,0,.22);color:var(--floor-ink)}
+ #g.grid{gap:6px 12px}#g.grid>.card:nth-child(even){margin-top:34px}.card .body .artist{font-size:13.5px;line-height:1.2}.card .body .spec{font-size:11px}.card .body .crow .price{font-size:13px}.card .body .left{font-size:11px}.card .body .star{min-width:22px!important;min-height:22px!important;font-size:13px!important}}
+
+/* ===== 3D room: a rotunda. You stand in the middle; the works hang on a ring of wall panels that turns under your finger ===== */
+.g3d{position:fixed;inset:0;z-index:55;display:none;background:var(--g3-fog);color:var(--ink);overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;--peek:148px;
+ --g3-fog:#e9e3d6;--g3-dim:#a39b8a;--g3-wall:#f4f0e8;--g3-wall2:#ddd6c7;--g3-spot:rgba(255,255,255,.95);--g3-floor:#c09d70;--g3-floor2:#8f6f49;--g3-ceil:#efeae0;--g3-base:#cfc7b6;--g3-text:#2a2620;--g3-shadow:rgba(60,45,20,.42)}
+[data-theme=dark] .g3d{--g3-fog:#050403;--g3-dim:#050403;--g3-wall:#302b25;--g3-wall2:#171411;--g3-spot:rgba(255,220,165,.4);--g3-floor:#3a2818;--g3-floor2:#150e08;--g3-ceil:#0e0d0b;--g3-base:#0f0d0a;--g3-text:#e9dfc8;--g3-shadow:rgba(0,0,0,.78)}
+.g3d.open{display:block}
+.g3-vp{position:absolute;inset:0 var(--vr,0px) var(--vb,0px) 0;overflow:hidden;perspective:var(--P,600px);perspective-origin:50% var(--PO,45%);cursor:grab}.g3-vp:active{cursor:grabbing}
+.g3-world{position:absolute;left:50%;top:var(--PO,45%);width:0;height:0;transform-style:preserve-3d;will-change:transform}
+.g3-panel{position:absolute;transform-style:preserve-3d;background:linear-gradient(180deg,transparent calc(100% - 22px),var(--g3-base) calc(100% - 22px)),linear-gradient(90deg,rgba(0,0,0,.22),transparent 8%,transparent 92%,rgba(0,0,0,.22)),radial-gradient(ellipse 66% 40% at 50% var(--ly,60%),var(--g3-spot),transparent 72%),radial-gradient(ellipse 38% 66% at 50% 0,var(--g3-spot),transparent 76%),linear-gradient(180deg,var(--g3-wall2),var(--g3-wall) 34%,var(--g3-wall) 82%,var(--g3-wall2))}
+.g3-floor,.g3-ceil{position:absolute;border-radius:50%}
+.g3-floor{transform:rotateX(90deg);background:repeating-conic-gradient(from 0deg,rgba(0,0,0,.3) 0 .3deg,transparent .3deg 7.37deg),radial-gradient(circle,var(--g3-floor2) 0,var(--g3-floor) 52%,color-mix(in srgb,var(--g3-floor) 62%,var(--g3-spot)) 93%,var(--g3-floor2) 100%)}
+.g3-ceil{transform:rotateX(-90deg);background:radial-gradient(circle,var(--g3-ceil) 0 74%,var(--g3-spot) 90%,var(--g3-ceil) 100%)}
+.g3-panel::after,.g3-p::after{content:"";position:absolute;inset:0;background:var(--g3-dim);opacity:var(--fog,0);pointer-events:none}
+.g3-p{position:absolute;cursor:pointer;transform-style:preserve-3d;--ec:#3a2c12}.g3-p::after{inset:-1px;transform:translateZ(15px)}
+.g3-p.f-gold{--ec:#7c5f18}.g3-p.f-bronze{--ec:#4f3d1a}.g3-p.f-ebony{--ec:#0d0c0b}.g3-p.f-walnut{--ec:#46291a}.g3-p.f-white{--ec:#cfcabf}.g3-p.f-float{--ec:#1d160f}
+.g3-p .pf{position:absolute;inset:0;margin:0;--m:var(--b);--mt:var(--pm,0px);transform:translateZ(14px);transform-origin:50% 50%;transition:none;box-shadow:0 0 0 1px rgba(0,0,0,.4)}
+.g3-p .pv{width:100%;height:100%;aspect-ratio:auto;background:#b9b09e}
+.g3-p .pv::after{background:linear-gradient(180deg,rgba(255,240,210,.12),transparent 38%,rgba(0,0,0,.14));box-shadow:inset 0 3px 7px rgba(0,0,0,.5)}
+.g3-e{position:absolute;top:0;width:14px;height:100%;transform-origin:0 0;transform:rotateY(-90deg);background:linear-gradient(180deg,color-mix(in srgb,var(--ec) 80%,#fff),var(--ec) 30%,color-mix(in srgb,var(--ec) 70%,#000))}.g3-e.l{left:0}.g3-e.r{left:100%}
+.g3-sh{position:absolute;inset:7% -3% -9% -3%;background:var(--g3-shadow);filter:blur(16px);transform:translateZ(1px);pointer-events:none}
+.g3-pl{position:absolute;left:0;top:calc(100% + 16px);min-width:108px;max-width:100%;padding:7px 9px;background:var(--label);color:#1c1915;font:500 9.5px/1.35 var(--sans);transform:translateZ(3px);box-shadow:0 1px 2px rgba(0,0,0,.5);pointer-events:none}
+.g3-pl b{display:block;font:600 12px/1.15 var(--serif);margin-bottom:2px}.g3-pl i{display:block;font-style:normal;color:#5d564a;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g3-letter{position:absolute;left:10%;right:10%;text-align:center;color:var(--g3-text);font-family:var(--serif);transform:translateY(-50%)}
+.g3-letter small{display:block;font:600 11px var(--sans);letter-spacing:.24em;text-transform:uppercase;opacity:.7}.g3-letter b{display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden;font-size:34px;line-height:1.08;font-weight:500;margin:12px 0 12px}.g3-letter span{display:block;font:500 13px var(--sans);opacity:.75}.g3-letter .btn{margin-top:16px}
+/* room controls */
+.g3-top{position:absolute;top:0;left:0;right:var(--vr,0px);display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top)) 12px 24px 16px;pointer-events:none;background:linear-gradient(180deg,color-mix(in srgb,var(--g3-fog) 80%,transparent),transparent)}
+.g3-top button{pointer-events:auto}.g3-title{flex:1;min-width:0}.g3-title b{display:block;font:600 18px/1.2 var(--serif);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.g3-title span{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.g3-btn{height:40px;border-radius:999px;border:1px solid var(--line);background:var(--glass);padding:0 14px;cursor:pointer;font-weight:600;font-size:13px;white-space:nowrap}.g3-btn.on{background:var(--gold-grad);color:#0c0b09;border-color:transparent}
+.g3-top .x{position:static;flex:none}
+.g3-nav{position:absolute;top:var(--PO,45%);transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1px solid var(--line);background:var(--glass);font-size:26px;line-height:1;cursor:pointer;padding:0 0 4px;display:none}.g3-prev{left:12px}.g3-next{right:calc(var(--vr,0px) + 12px)}
+@media(hover:hover){.g3-nav{display:block}.g3-nav:hover,.g3-btn:hover{border-color:var(--gold)}}
+.g3-bot{position:absolute;left:0;right:var(--vr,0px);bottom:calc(var(--vb,0px) + var(--peek) + env(safe-area-inset-bottom));display:flex;align-items:center;padding:0 22px 6px;transition:opacity .25s}
+.g3-bot input{flex:1;min-width:60px;height:28px;accent-color:var(--gold);touch-action:none}.g3d.up:not(.split) .g3-bot{opacity:0;pointer-events:none}
+/* the label sheet: peeks from the floor on a phone, pulls up for the details; on a fold or a wide screen it takes the other half */
+.g3-sheet{position:absolute;left:0;right:0;bottom:0;max-height:66%;display:flex;flex-direction:column;background:var(--sheet);border-top:1px solid var(--line);border-radius:22px 22px 0 0;box-shadow:0 -14px 40px rgba(0,0,0,.35);transform:translateY(calc(100% - var(--peek) - env(safe-area-inset-bottom)));transition:transform .38s cubic-bezier(.2,.85,.2,1);user-select:text;-webkit-user-select:text}
+.g3d.up .g3-sheet{transform:none}
+.g3-h{flex:none;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer}.g3-h i{width:42px;height:4px;border-radius:4px;background:color-mix(in srgb,var(--ink) 30%,transparent)}
+.g3-sb{padding:0 18px calc(18px + env(safe-area-inset-bottom));overflow:hidden;min-height:0}.g3d.up .g3-sb,.g3d.split .g3-sb{overflow-y:auto;touch-action:pan-y;overscroll-behavior:contain}
+.g3-sb h3{font-size:22px;margin:1px 0 2px;display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden}.g3-sb h3 a{overflow:hidden;text-overflow:ellipsis}.g3-sb .sp{font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g3-sb .rw{display:flex;align-items:baseline;gap:10px;margin:6px 0 14px}.g3-sb .rw .price{margin:0;font-size:22px}.g3-sb .rw small{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}.g3-sb .rw .left{margin-left:auto}
+.g3-sb .acts{margin:0 0 14px;flex-wrap:wrap;gap:8px}.g3-sb .acts .btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;height:44px;flex:1 1 auto}.g3-sb .acts a{margin-left:0;font-size:inherit;color:inherit}.g3-sb .acts .ic{height:44px;padding:0 16px;font-size:14px}
+.g3-sb .ld{color:var(--ink-2);margin:0 0 12px;font-size:14px}.g3-sb table.f{width:100%;font-size:13px}.g3-sb .tags{margin:12px 0 0}
+.g3d.split .g3-sheet{left:var(--sl,0px);top:var(--st,0px);max-height:none;transform:none;border-radius:0;box-shadow:none;border-top:0;transition:none}.g3d.split .g3-h{display:none}.g3d.split .g3-sb{padding-top:calc(22px + env(safe-area-inset-top))}
+.g3d.split{--peek:0px}.g3d.split .g3-sb h3{font-size:28px;white-space:normal}.g3d.split .g3-sb .sp{white-space:normal}
+.g3d.sp-h{--vr:42%;--sl:58%}.g3d.sp-v{--vb:48%;--st:52%}
+.g3d.seg-h{--vr:calc(100% - env(viewport-segment-right 0 0,50%));--sl:env(viewport-segment-left 1 0,50%)}
+.g3d.seg-v{--vb:calc(100% - env(viewport-segment-bottom 0 0,50%));--st:env(viewport-segment-top 0 1,50%)}
+.g3d.sp-h .g3-sheet,.g3d.seg-h .g3-sheet{border-left:1px solid var(--line)}.g3d.sp-v .g3-sheet,.g3d.seg-v .g3-sheet{border-top:6px solid var(--skirt)}
+/* ===== quiet transitions ===== */
+@media(prefers-reduced-motion:no-preference){.view.on{animation:vin .6s cubic-bezier(.16,1,.3,1)}@keyframes vin{from{opacity:0;transform:translateY(14px)}}}
+.frame.hung .pv img{transition:opacity .9s cubic-bezier(.16,1,.3,1)}
+::view-transition-group(hero){animation-duration:.75s;animation-timing-function:cubic-bezier(.16,1,.3,1)}::view-transition-old(root),::view-transition-new(root){animation-duration:.45s}
+
+/* ===== catalogue look: the site reads like a printed auction catalogue — paper, ink, hairlines, numbered entries ===== */
+:root{--bg:#faf9f6;--surface:#fff;--surface-2:#f1efea;--sheet:#fdfcfa;--glass:rgba(250,249,246,.96);--ink:#111110;--ink-2:#34322e;--muted:#7a766d;--line:rgba(17,17,16,.16);--accent:#111110;--accent-ink:#faf9f6;--gold:#111110;--gold-grad:linear-gradient(#111110,#111110);--sec:#111110;--danger:#b3261e;--shadow:none;--shadow-lg:0 20px 60px rgba(0,0,0,.18);--r-sm:2px;--r:2px;--r-lg:3px;
+ --wall-1:#faf9f6;--wall-2:#f4f2ed;--wall-hi:rgba(255,255,255,.9);--wall-sh:rgba(30,25,15,.28);--skirt:#111110;--paper:#fbfaf7}
+[data-theme=dark]{--bg:#121211;--surface:#1a1a18;--surface-2:#232321;--sheet:#161615;--glass:rgba(18,18,17,.96);--ink:#f2f0ea;--ink-2:#d2cfc6;--muted:#8f8b82;--line:rgba(242,240,234,.18);--accent:#f2f0ea;--accent-ink:#121211;--gold:#f2f0ea;--gold-grad:linear-gradient(#f2f0ea,#f2f0ea);--sec:#f2f0ea;--danger:#ff8a7a;--shadow:none;--shadow-lg:0 20px 60px rgba(0,0,0,.6);
+ --wall-1:#161615;--wall-2:#0f0f0e;--wall-hi:rgba(255,255,255,.04);--wall-sh:rgba(0,0,0,.6);--skirt:#f2f0ea}
+body{background:var(--wall-1)!important}body::before{background:linear-gradient(180deg,var(--wall-1),var(--wall-2))}
+.dock button,.chip.on,.btn.pri,.tag.on,.seg button.on.gold,.ic.fav.on,.live,.toast button,.badge-n,.howto .num,.how3 .num,.fab,body[data-view=lots] .fab,.g3-btn.on{color:var(--accent-ink)!important}
+.logo span:not(.num){background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--ink)}.logo{font-weight:400}
+.btn,.iconbtn,.chip,.tag,.ic,.seg,.seg button,.g3-btn,.fab,.toast,.toast button,.sd,.menu,.sheet,.x,.g3-nav,.empty,.ap-hero,.tip-block,.note{border-radius:2px!important}
+.btn,.chip,.seg button,.g3-btn,.ic,.fab{font:600 11.5px/1 var(--sans);letter-spacing:.09em;text-transform:uppercase}
+.fld,.gs input{background:transparent;border:0;border-bottom:1px solid var(--ink);border-radius:0!important;box-shadow:none!important}
+h1,h2,h3{font-weight:400;letter-spacing:-.015em}
+.vhead{border-top:1px solid var(--ink);padding-top:16px;margin-top:6px}.vhead h1{font-size:clamp(36px,7vw,60px);font-weight:400;letter-spacing:-.025em}
+header{background:var(--bg)!important;border-bottom:1px solid var(--ink)!important}header::after{display:none}
+nav.tabs button{font:600 11.5px var(--sans)!important;letter-spacing:.1em;text-transform:uppercase}nav.tabs button.on{border-color:var(--ink)!important}nav.tabs .n{background:none!important;border:1px solid var(--line);font-weight:500;letter-spacing:0}
+.toast,.dock{border-color:transparent!important}.saved{background:var(--ink);color:var(--bg);border:0;border-radius:0}.empty{border-style:solid}.g3btn{color:var(--ink);border-color:var(--ink)}
+/* a lot on the wall: the framed work, then its entry */
+.card .body{text-align:left;border-top:1px solid var(--line);margin:8px 6px 16px;padding:8px 0 0!important;gap:2px}
+.card .body .artist{justify-content:flex-start;font-size:16px;font-weight:400}.card .body .crow{justify-content:space-between}.card .body .crow .price{font:600 13px var(--sans);color:var(--ink)}
+.lotno{font:600 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.g3-sheet{border-radius:0;border-top:1px solid var(--ink);box-shadow:0 -20px 50px rgba(0,0,0,.14)}
+@media(max-width:640px){nav.tabs{background:var(--bg)!important;border-top:1px solid var(--ink)!important;box-shadow:none}
+ nav.tabs button,nav.tabs button.on,nav.tabs .g3tab{color:var(--ink)!important;opacity:.45;font-size:9.5px!important;letter-spacing:.05em}nav.tabs button.on{opacity:1}nav.tabs .ti,nav.tabs button.on .ti{color:var(--ink)}nav.tabs .n{display:none}
+ #g.grid>.card:nth-child(even){margin-top:0}#g.grid{gap:4px 14px}.card .body .artist{font-size:14px}}
+
+/* ===== home: two doors ===== */
+.hm-k{font:600 11px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+.hm-h{font:400 clamp(36px,8.4vw,80px)/1.02 var(--serif);letter-spacing:-.03em;margin:14px 0 20px;max-width:13ch}
+.hm-s{display:flex;align-items:center;gap:10px;width:100%;max-width:640px;height:52px;padding:0;border:0;border-bottom:1px solid var(--ink);background:none;color:var(--muted);font-size:15px;cursor:pointer;text-align:left}
+.doors{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:36px 0 8px}
+.door{display:block;cursor:pointer;border-top:1px solid var(--ink);padding-top:12px;text-decoration:none}
+.door small{font:600 11px var(--sans);letter-spacing:.18em;color:var(--muted)}.door b{display:block;font:400 clamp(30px,5vw,52px)/1.04 var(--serif);letter-spacing:-.02em;margin:4px 0 6px}.door>span{font-size:13px;color:var(--muted)}
+.door-img{aspect-ratio:3/2;margin-top:14px;background:var(--surface-2);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center}.door-img.frame.hung{aspect-ratio:3/2!important;overflow:hidden}
+.door-img img.cv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.16,1,.3,1)}.door:active img.cv{transform:scale(1.04)}@media(hover:hover){.door:hover img.cv{transform:scale(1.04)}}
+.hm-sec{display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid var(--ink);padding-top:12px;margin:40px 0 16px}.hm-sec h2{font-size:24px}.hm-sec a{font:600 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+@media(max-width:640px){.doors{grid-template-columns:1fr;gap:28px}}
+
+/* ===== Kataloglar: landscape covers carrying the artist's own work ===== */
+.shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:34px 24px;padding:4px 0 10px}
+.ctl{display:block;border:0;background:none;padding:0;text-align:left;cursor:pointer;color:var(--ink)}
+.ctl-i{display:flex;align-items:center;justify-content:center;aspect-ratio:3/2;overflow:hidden;position:relative;background:var(--surface-2)}
+.ctl-i img{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover;transition:transform 1.4s cubic-bezier(.16,1,.3,1)}.ctl:active .ctl-i img{transform:scale(1.04)}@media(hover:hover){.ctl:hover .ctl-i img{transform:scale(1.04)}}
+.ctl-i em{font:400 64px/1 var(--serif);font-style:italic;color:var(--muted);opacity:.55}
+.ctl b{display:block;font:400 19px/1.15 var(--serif);margin:10px 0 2px;overflow-wrap:anywhere}.ctl i{font:600 10px var(--sans);font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.bkopen{margin:10px 0 6px;display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px}
+@media(max-width:640px){.shelf{grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 14px}.ctl b{font-size:15px}.ctl-i em{font-size:44px}}
+
+/* ===== the catalogue itself: a landscape album. Each spread is one work — the plate on one page, its entry on the other.
+   Upright (phone, flip phone) it is bound along the top and the leaves turn upwards; on a wide screen or a book-style fold it is
+   bound at the side. Either way the binding sits on the hinge of a foldable, one page per half. ===== */
+.bk{position:fixed;inset:0;z-index:56;display:none;overflow:hidden;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;background:var(--wall-2)}
+.bk.open{display:block}@media(prefers-reduced-motion:no-preference){.bk.open{animation:vin .5s cubic-bezier(.16,1,.3,1)}}
+.bk-top{position:absolute;top:0;left:0;right:0;z-index:2;display:flex;align-items:center;gap:8px;padding:calc(10px + env(safe-area-inset-top)) 12px 6px 16px}.bk-top .x{position:static;flex:none}
+.bk-stage{position:absolute;inset:calc(60px + env(safe-area-inset-top)) 0 calc(48px + env(safe-area-inset-bottom)) 0;perspective:2400px;cursor:grab}.bk.fold .bk-stage{inset:54px 0 54px 0}
+.bk-book{position:absolute;transform-style:preserve-3d}
+.bk-book::before,.bk-book::after{content:"";position:absolute;inset:0;transform:translateZ(-5px);background:var(--paper);pointer-events:none;transition:opacity .4s;box-shadow:0 24px 60px rgba(0,0,0,.28)}
+.bk-book::before{opacity:var(--ro,1)}.bk-book::after{opacity:var(--lo,0)}.bk.ax .bk-book::after{top:auto;bottom:100%;height:100%}.bk.ay .bk-book::after{left:auto;right:100%;width:100%}
+.bk-leaf{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}.bk.ax .bk-leaf{transform-origin:50% 0}.bk.ay .bk-leaf{transform-origin:0 50%}
+.bk-face{position:absolute;inset:0;overflow:hidden;container-type:size;background:var(--paper);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.bk.ax .bk-face.b{transform:rotateX(180deg)}.bk.ay .bk-face.b{transform:rotateY(180deg)}
+.bk-face::before,.bk-face::after{content:"";position:absolute;inset:0;z-index:3;pointer-events:none}
+.bk.ax .bk-face.f::before{background:linear-gradient(180deg,rgba(0,0,0,.2),rgba(0,0,0,.04) 5%,transparent 12%)}.bk.ax .bk-face.b::before{background:linear-gradient(0deg,rgba(0,0,0,.2),rgba(0,0,0,.04) 5%,transparent 12%)}
+.bk.ay .bk-face.f::before{background:linear-gradient(90deg,rgba(0,0,0,.2),rgba(0,0,0,.04) 5%,transparent 12%)}.bk.ay .bk-face.b::before{background:linear-gradient(270deg,rgba(0,0,0,.2),rgba(0,0,0,.04) 5%,transparent 12%)}
+.bk-face::after{opacity:var(--sh,0);background:rgba(0,0,0,.34)}
+.bk-pg{position:absolute;inset:0;padding:6cqmin 7cqmin;display:flex;flex-direction:column;color:#151412;font-family:var(--sans)}
+.bk-pg small{font:600 max(9px,2.6cqmin) var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#7a766d}
+.bk-pg.cover{padding:0;background:#151412;color:#fff;justify-content:flex-end}.bk-pg.cover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bk-pg.cover .cvt{position:relative;padding:22cqmin 7cqmin 7cqmin;background:linear-gradient(180deg,transparent,rgba(0,0,0,.78))}.bk-pg.cover small{color:rgba(255,255,255,.8)}
+.bk-pg.cover b{display:block;font:400 max(22px,13cqmin)/1.02 var(--serif);letter-spacing:-.02em;margin:2cqmin 0;overflow-wrap:anywhere}.bk-pg.cover span{font:500 max(10px,3cqmin) var(--sans);opacity:.85}
+.bk-pg.t1{justify-content:flex-end}.bk-pg.t1 h2{font:400 max(26px,15cqmin)/1 var(--serif);letter-spacing:-.03em;margin:3cqmin 0 0;overflow-wrap:anywhere}
+.bk-pg.t2{justify-content:flex-start;border-top:1px solid #151412}.bk-pg dl{margin:0 0 4cqmin;display:grid;grid-template-columns:auto 1fr;gap:1.6cqmin 5cqmin;font-size:max(11px,3.4cqmin)}.bk-pg dt{color:#7a766d}.bk-pg dd{margin:0;font-weight:600}.bk-pg p{margin:auto 0 0;font-size:max(10px,2.8cqmin);line-height:1.5;color:#7a766d;max-width:52ch}
+.bk-pg.c1{justify-content:flex-end}.bk-pg.c1 b{font:400 max(40px,30cqmin)/.9 var(--serif);letter-spacing:-.04em}.bk-pg.c1.txt b{font-size:max(26px,14cqmin);line-height:1}
+.bk-pg.c2{border-top:1px solid #151412;gap:3cqmin}.bk-th{display:grid;grid-template-columns:repeat(6,1fr);gap:1.6cqmin;align-content:start;flex:1;min-height:0;overflow:hidden}
+.bk-th button{aspect-ratio:1;border:0;padding:0;background:#ebe8e1;cursor:pointer;overflow:hidden}.bk-th img{width:100%;height:100%;object-fit:cover;display:block}.bk-th span{display:flex;align-items:center;justify-content:center;aspect-ratio:1;font:600 max(10px,3cqmin) var(--sans);color:#7a766d}
+.bk-pg.im{padding:5cqmin;cursor:zoom-in}.bk-pg.im img{position:absolute;inset:5cqmin;margin:auto;max-width:calc(100% - 10cqmin);max-height:calc(100% - 10cqmin);box-shadow:0 1px 2px rgba(0,0,0,.3),0 12px 30px rgba(0,0,0,.16);opacity:0;transition:opacity .8s}.bk-pg.im img.ld{opacity:1}
+.bk-pg.tx{border-top:1px solid #151412;gap:1.4cqmin}.bk-pg.tx .no{font:400 max(26px,12cqmin)/1 var(--serif);letter-spacing:-.03em}.bk-pg.tx>b{font:400 max(14px,4.6cqmin)/1.2 var(--serif);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:1cqmin}
+.bk-pg.tx dl{font-size:max(10px,3cqmin);gap:.9cqmin 4cqmin;margin:0}.bk-pg.tx dd{font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-ft{margin-top:auto;display:flex;align-items:center;gap:3cqmin}.bk-ft u{text-decoration:none;font:600 max(13px,4.4cqmin) var(--sans)}.bk-ft em{font:600 max(8px,2.3cqmin) var(--sans);font-style:normal;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:#b3261e;padding:.5em .8em}
+.bk-ft button{margin-left:auto;border:1px solid #151412;background:none;color:#151412;font:600 max(9px,2.6cqmin) var(--sans);letter-spacing:.1em;text-transform:uppercase;padding:.9em 1.2em;cursor:pointer}
+.bk-bot{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:0 20px calc(10px + env(safe-area-inset-bottom));font-size:12px;color:var(--muted)}.bk-bot input{flex:1;min-width:60px;height:28px;accent-color:var(--ink);touch-action:none}.bk-bot span{white-space:nowrap;font-variant-numeric:tabular-nums}
+.bk .g3-nav{top:50%}.bk .g3-next{right:12px}.g3-bot input{accent-color:var(--ink)}
 </style></head><body>
 <header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -481,17 +664,27 @@ nav.tabs .ti{display:none}
  <button type="button" class="mi" id="mGh">⚡ GitHub bağlantısı <span class="ghstate" id="ghState"></span></button>
  <button type="button" class="mi" id="mHelp">ⓘ Nasıl çalışır?</button>
 </div></div>
-<nav class="tabs" role="tablist"><button data-v="fav"><span class="ti" aria-hidden="true">★</span>Favorilerim<span class="n" id="favTabN"></span></button><button data-v="lots"><span class="ti" aria-hidden="true">◇</span>Keşfet<span class="n" id="nLots">…</span></button><button data-v="houses"><span class="ti" aria-hidden="true">⌂</span>Müzayede Evleri</button><button data-v="lb"><span class="ti" aria-hidden="true">▤</span>Arşiv</button><button data-v="search" id="tSearch" style="display:none"><span class="ti" aria-hidden="true">⚲</span>Arama</button></nav></header>
+<nav class="tabs" role="tablist"><button data-v="lots"><span class="ti" aria-hidden="true">◇</span>Müzayedeler<span class="n" id="nLots">…</span></button><button data-v="cat"><span class="ti" aria-hidden="true">❏</span>Kataloglar</button><button data-v="fav"><span class="ti" aria-hidden="true">★</span>Koleksiyon<span class="n" id="favTabN"></span></button><button data-v="houses"><span class="ti" aria-hidden="true">⌂</span>Evler</button><button data-v="lb"><span class="ti" aria-hidden="true">▤</span>Arşiv</button><button data-v="search" id="tSearch" style="display:none"><span class="ti" aria-hidden="true">⚲</span>Arama</button></nav></header>
 <main>
+<section class="view" id="v-home">
+ <div class="hm-k">16/22 · Müzayede arşivi</div>
+ <h1 class="hm-h">Türkiye'nin sanat müzayedeleri, tek katalogda.</h1>
+ <button type="button" class="hm-s" id="hmS"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Sanatçı, eser, müzayede evi ara…</button>
+ <div class="doors">
+  <a class="door" data-go="lots"><small>I</small><b>Müzayedeler</b><span id="hmA">Şu an satıştaki eserler</span><div id="hmAi"></div></a>
+  <a class="door" data-go="cat"><small>II</small><b>Kataloglar</b><span id="hmB">Her sanatçı için kendiliğinden derlenen katalog</span><div id="hmBi"></div></a>
+ </div>
+ <div class="hm-sec"><h2>Yakında bitiyor</h2><a data-go="lots">Tümü →</a></div><div id="hmRow"></div>
+</section>
 <section class="view" id="v-fav">
- <div class="vhead"><div><h1>Favorilerim</h1><p class="muted" id="favSub">Takip ettiğiniz sanatçıların şu an satıştaki eserleri ve kaydettiğiniz eserler.</p></div></div>
+ <div class="vhead"><div><h1>Koleksiyonum</h1><p class="muted" id="favSub">Takip ettiğiniz sanatçıların şu an satıştaki eserleri ve kaydettiğiniz eserler.</p></div></div>
  <div class="bar"><div class="seg" id="favSeg" role="tablist"><button type="button" data-f="art" class="on">Sanatçılarım <span class="sn" id="favArtN"></span></button><button type="button" data-f="saved">Kaydettiklerim <span class="sn" id="favSavedN"></span></button><button type="button" data-f="lb">Lebriz</button></div><button type="button" class="btn" id="pickOpen">★ Sanatçıları düzenle</button><input class="fld grow" id="favQ" type="search" placeholder="Favorilerimde ara: sanatçı, eser, teknik…" autocomplete="off"></div>
  <div id="favBody"><div class="skc skel"></div></div>
 </section>
 <section class="view" id="v-lots">
- <div class="vhead"><div><h1>Keşfet</h1><p class="muted"><span id="stats">Yükleniyor…</span> <span class="tip-wrap" id="statsTip"></span></p></div></div>
+ <div class="vhead"><div><h1>Müzayedeler</h1><p class="muted"><span id="stats">Yükleniyor…</span> <span class="tip-wrap" id="statsTip"></span></p></div></div>
  <div class="bar"><button type="button" class="btn fbtn" id="fOpen"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg> Filtrele <span class="badge-n" id="fN"></span></button>
-  <label class="sortl">Sırala <select class="fld sm" id="sort"><option value="end">Bitişi en yakın</option><option value="pa">En ucuz</option><option value="pd">En pahalı</option><option value="bids">En çok pey alan</option><option value="artist">Sanatçı (A–Z)</option><option value="ppc">cm² başına en ucuz</option></select></label></div>
+  <label class="sortl">Sırala <select class="fld sm" id="sort"><option value="end">Bitişi en yakın</option><option value="pa">En ucuz</option><option value="pd">En pahalı</option><option value="bids">En çok pey alan</option><option value="artist">Sanatçı (A–Z)</option><option value="ppc">cm² başına en ucuz</option></select></label><button type="button" class="btn g3btn" data-g3="1">◈ 3B galeride gez</button></div>
  <div class="active-f" id="activeF"></div>
  <div class="grid" id="g"></div><div class="more" id="moreWrap"><button class="btn" id="more" style="display:none">Daha fazla yükle</button></div>
 </section>
@@ -511,6 +704,11 @@ nav.tabs .ti{display:none}
  <div class="lbf" id="exf" style="display:none"><select class="fld" id="lbcity"><option value="">Tüm şehirler</option></select><select class="fld" id="lbgal"><option value="">Tüm galeriler</option></select><input class="fld" id="lbfrom" type="date" title="Başlangıç (en erken)"><input class="fld" id="lbto" type="date" title="Başlangıç (en geç)"><select class="fld" id="lbsort"><option value="new">En yeni</option><option value="old">En eski</option></select></div>
  <div id="arf"><label class="tgl"><span><b>Yalnızca şu an satışta eseri olanlar</b><small>Keşfet’te eseri bulunan arşiv sanatçıları</small></span><input type="checkbox" id="lblive"><i aria-hidden="true"></i></label></div>
  <div id="lbres"></div></section>
+<section class="view" id="v-cat">
+ <div class="vhead"><div><h1>Kataloglar</h1><p class="muted">Her sanatçı için, arşivdeki bütün müzayede kayıtlarından kendiliğinden derlenen bir katalog. Birine dokunun, sayfaları parmağınızla çevirin. <span id="catN"></span></p></div></div>
+ <div class="bar"><input class="fld grow" id="catQ" type="search" placeholder="Katalog ara: sanatçı adı…" autocomplete="off" aria-label="Katalog ara"></div>
+ <div class="shelf" id="bkShelf"></div><div class="more"><button type="button" class="btn" id="catMore" style="display:none">Daha fazla katalog</button></div>
+</section>
 <section class="view" id="v-artist"><div id="artistPage"></div></section>
 <section class="view" id="v-house"><div id="housePage"></div></section>
 <section class="view" id="v-search"><div id="sres"></div></section>
@@ -594,11 +792,33 @@ nav.tabs .ti{display:none}
  <details class="faq"><summary>Bağlantı eklemek neden GitHub sayfası açıyor?</summary><p>Site GitHub üzerinde çalışır; tarayıcıyı başlatmak için GitHub izni gerekir. ⚙ → <b>GitHub bağlantısı</b> ile her cihazda bir kez anahtar eklerseniz <b>Ekle</b> ve <b>Lebriz'den çek</b> düğmeleri işi doğrudan başlatır.</p></details>
  <details class="faq"><summary>Favorilerim nerede saklanıyor?</summary><p>Yalnızca bu tarayıcıda. Hesap gerekmez ama başka bir cihazda görünmez.</p></details>
 </div></div>
+<div class="g3d" id="g3d" role="dialog" aria-modal="true" aria-label="3B Galeri">
+ <div class="g3-vp" id="g3vp"><div class="g3-world" id="g3world"></div></div>
+ <div class="g3-top"><div class="g3-title"><b id="g3T"></b><span id="g3S"></span></div><button type="button" class="g3-btn" id="g3Tour">▶ Tur</button><button type="button" class="x" id="g3X" aria-label="Galeriyi kapat">×</button></div>
+ <button type="button" class="g3-nav g3-prev" id="g3Prev" aria-label="Önceki eser">‹</button><button type="button" class="g3-nav g3-next" id="g3Next" aria-label="Sonraki eser">›</button>
+ <div class="g3-bot"><input type="range" id="g3R" min="0" max="0" step="1" value="0" aria-label="Eserler arasında gez"></div>
+ <div class="g3-sheet" id="g3card"></div>
+</div>
+<div class="bk" id="bk" role="dialog" aria-modal="true" aria-label="Sanatçı kataloğu">
+ <div class="bk-top"><div class="g3-title"><b id="bkT"></b><span id="bkS"></span></div><button type="button" class="x" id="bkX" aria-label="Kataloğu kapat">×</button></div>
+ <div class="bk-stage" id="bkStage"><div class="bk-book" id="bkBook"></div></div>
+ <button type="button" class="g3-nav g3-prev" id="bkPrev" aria-label="Önceki sayfa">‹</button><button type="button" class="g3-nav g3-next" id="bkNext" aria-label="Sonraki sayfa">›</button>
+ <div class="bk-bot"><input type="range" id="bkR" min="0" max="0" step="1" value="0" aria-label="Sayfalar"><span id="bkN"></span></div>
+</div>
 <div class="modal" id="m" role="dialog" aria-modal="true"><div class="sheet"><button class="x" onclick="dismissM()" aria-label="Kapat">×</button><div id="mc"></div></div></div>
 <script>
 const META=/*META*/null;const $=id=>document.getElementById(id);const V=META&&META.v?'?v='+encodeURIComponent(META.v):'';
 const norm=s=>(s||'').toLocaleLowerCase('tr').replace(/ı/g,'i').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^\p{L}\p{N}\s]/gu,' ').replace(/\s+/g,' ').trim();
 const esc=s=>(s??'').toString().replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* ===== images from our own storage =====
+   Auction houses delete pictures when a sale is over, so mirror_images.py copies each one into a private bucket and the image
+   door (imgproxy/, Cloud Run) hands them out. Set IMG_BASE to the door's address to switch it on, e.g. 'https://img-1622-abc.a.run.app'.
+   An image's name there is a hash of its original URL (imgKey, identical in mirror_images.py and imgproxy/main.py), so no lookup
+   table exists: mir(url) is all the site needs. Not copied yet -> the door redirects to the original; door down -> the listener below does. */
+const IMG_BASE='';
+const imgKey=u=>{const s=unescape(encodeURIComponent(u));let o='';for(const seed of[0x811C9DC5,0x01000193]){let h=seed;for(let i=0;i<s.length;i++)h=Math.imul(h^s.charCodeAt(i),0x01000193)>>>0;o+=h.toString(16).padStart(8,'0')}return o};
+const mir=u=>{if(!IMG_BASE||!u||!/^https?:\/\//.test(u)||u.startsWith(IMG_BASE))return u;const e=((u.split(/[?#]/)[0].split('/').pop().match(/\.([a-z0-9]+)$/i)||[])[1]||'').toLowerCase();return IMG_BASE+'/i/'+imgKey(u)+'.'+(/^(jpg|jpeg|png|webp|gif|avif)$/.test(e)?e:'jpg')+'?u='+encodeURIComponent(u)};
+document.addEventListener('error',e=>{const im=e.target;if(!IMG_BASE||!im||im.tagName!='IMG'||im.dataset.mf||!im.src.startsWith(IMG_BASE))return;const m=im.src.match(/[?&]u=([^&]+)/);if(!m)return;im.dataset.mf=1;e.stopImmediatePropagation();im.src=decodeURIComponent(m[1])},true);
 const TL=n=>n?Math.round(n).toLocaleString('tr-TR')+' TL':'—';const dt=s=>s?new Date(s.replace(' ','T')):null;
 const fdate=d=>d?d.toLocaleString('tr-TR',{day:'numeric',month:'long',year:'numeric',weekday:'short',hour:'2-digit',minute:'2-digit'}):'—';
 const fshort=d=>d?d.toLocaleString('tr-TR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'';
@@ -627,13 +847,13 @@ const fav=new Set(LS.get('mr_fav',[]));let cmp=[];let view='';
 const F0={q:'',site:'',artist:'',pmin:0,pmax:Infinity,ending:0,type:'',sort:'end',tags:[],tech:'',fav:false,lb:false};
 const F={...F0,tags:[]};let PAGE=60,shown=0,curList=[];
 const favArt=new Set(LS.get('mr_fav_art',[]));let AR=null;
-const SET=Object.assign({start:true,desc:false,lbWifi:true},LS.get('mr_set',{}));const saveSet=()=>LS.set('mr_set',SET);
+const SET=Object.assign({start:false,desc:false,lbWifi:true},LS.get('mr_set',{}));const saveSet=()=>LS.set('mr_set',SET);
 let favTab=LS.get('mr_favtab','art');
 const tip=t=>`<details class="tip"><summary aria-label="Açıklama" title="Açıklama">ⓘ</summary><span>${t}</span></details>`;
-const startView=()=>SET.start?'fav':'lots';
+const startView=()=>SET.start?'fav':'home';
 /* ===== history: back closes what is open, then walks back through pages ===== */
 let curRoute='',navQuiet=false;try{history.scrollRestoration='manual'}catch(e){}
-const TABHASH={fav:'favorilerim',lots:'kesfet',houses:'evler',lb:'arsiv'},HASHTAB={favorilerim:'fav',kesfet:'lots',evler:'houses',arsiv:'lb',lebriz:'lb'};
+const TABHASH={fav:'favorilerim',lots:'kesfet',houses:'evler',lb:'arsiv',cat:'kataloglar',home:'ana'},HASHTAB={kataloglar:'cat',ana:'home',favorilerim:'fav',kesfet:'lots',evler:'houses',arsiv:'lb',lebriz:'lb'};
 const dec=x=>{try{return decodeURIComponent(x||'')}catch(e){return x||''}};
 const urlFor=h=>location.pathname+location.search+(h?'#'+h:'');
 let spot=null;
@@ -645,7 +865,7 @@ function pushNav(hash){if(navQuiet)return;curRoute=dec(hash);const st=history.st
  saveSpot();history.pushState({},'',urlFor(hash))}
 function restoreSpot(st,pr){Promise.resolve(pr).then(()=>ready).then(()=>{if(view=='artist'&&st.pt){const b=document.querySelector(`#artistPage [data-pt="${st.pt}"]`);if(b&&!b.classList.contains('on'))b.click()}
  let n=0;const step=()=>{if(view=='lots'&&document.documentElement.scrollHeight<st.y+innerHeight&&shown<curList.length&&n++<80){more();requestAnimationFrame(step);return}scrollTo(0,st.y)};requestAnimationFrame(()=>requestAnimationFrame(step))})}
-function ovIsOpen(n){const id={m:'m',pick:'pickM',add:'addM',help:'helpM',filters:'filters',gh:'ghM',zoom:'zoomV'}[n];if(n=='search')return $('gsWrap').classList.contains('full');return !!id&&$(id).classList.contains('open')}
+function ovIsOpen(n){const id={m:'m',pick:'pickM',add:'addM',help:'helpM',filters:'filters',gh:'ghM',zoom:'zoomV',g3d:'g3d',book:'bk'}[n];if(n=='search')return $('gsWrap').classList.contains('full');return !!id&&$(id).classList.contains('open')}
 function ovOpen(name,hash){if(navQuiet)return;const st=history.state||{};const url=hash!=null?urlFor(hash):location.href;
  if(st.ov===name&&(hash==null||dec(location.hash.slice(1))===dec(hash))){history.replaceState(st,'',url);return}
  const replace=st.ov&&st.ov!==name&&!ovIsOpen(st.ov);if(!replace)saveSpot();
@@ -672,13 +892,26 @@ $('mPick').onclick=()=>{menuOpen(false);openPick()};$('mAdd').onclick=()=>{menuO
 /* ===== skeleton + data load ===== */
 $('g').innerHTML=Array.from({length:8},()=>'<div class="skc skel"></div>').join('');
 const ready=fetch('data/lots.json'+V).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()}).then(d=>{D=d;
- D.lots.forEach(l=>{l.title=l.title||[l.artist,l.description].filter(Boolean).join(' - ');parse(l);l.key=l.site+'|'+l.lot_id;l.house=houseName(l.site);l._a=norm(l.artist);l._s=norm([l.title,l.artist,l.description,l.auction,l.house,l.category].join(' '));l._e=dt(l.end_date);mkTags(l)});
+ D.lots.forEach(l=>{l.images=(l.images||[]).map(mir);l.title=l.title||[l.artist,l.description].filter(Boolean).join(' - ');parse(l);l.key=l.site+'|'+l.lot_id;l.house=houseName(l.site);l._a=norm(l.artist);l._s=norm([l.title,l.artist,l.description,l.auction,l.house,l.category].join(' '));l._e=dt(l.end_date);mkTags(l)});
  byKey=Object.fromEntries(D.lots.map(l=>[l.key,l]));initFilters();saveFav();render();updateFavBadge();buildHouses();buildTagCloud();loadSources().then(()=>{buildSources();pollPending()});
  artLoad().then(()=>lbLoad()).then(()=>{D.lots.forEach(l=>{l._lb=lbMatch(l.artist)||(l.lb_id&&LB&&LB.artists.find(x=>x.id==l.lb_id))||null;mkTags(l)});IDX=null;const sh=shown;fillTech();render();if(sh>24&&view=='lots')more(sh-24);buildTagCloud();updateFavBadge();const n=D.lots.filter(l=>l._lb).length;console.info('Lebriz eşleşmesi:',n,'/',D.lots.length)}).catch(()=>{});return D})
  .catch(e=>{$('g').innerHTML=`<div class="empty"><div class="big">Veriler yüklenemedi</div>data/lots.json okunamadı (${esc(e.message)}). Sayfayı bir web sunucusu (server.py veya GitHub Pages) üzerinden açın.</div>`;$('stats').textContent='';$('favBody').innerHTML=''});
 const getJ=u=>fetch(u).then(r=>r.ok?r.json():[]).catch(()=>[]);
-const loadPast=()=>PAST?Promise.resolve(PAST):Promise.all([getJ('data/past.json'+V),getJ('data/past_archive.json'+V),getJ('data/past_archive_mapp.json'+V)]).then(([a,...more])=>{const seen=new Set(a.map(x=>x.site+'|'+x.lot_id));more.forEach(b=>(b||[]).forEach(x=>{const k=x.site+'|'+x.lot_id;if(!seen.has(k)){seen.add(k);a.push(x)}}));return a}).then(p=>{p.forEach(x=>{x._a=norm(x.artist);x.past=true;x.images=x.image?[x.image]:[];x.house=houseName(x.site);x.key=x.site+'|'+x.lot_id;PASTBY[x.key]=x});return PAST=p}).catch(()=>PAST=[]);
+const loadPast=()=>PAST?Promise.resolve(PAST):Promise.all([getJ('data/past.json'+V),getJ('data/past_archive.json'+V),getJ('data/past_archive_mapp.json'+V)]).then(([a,...more])=>{const seen=new Set(a.map(x=>x.site+'|'+x.lot_id));more.forEach(b=>(b||[]).forEach(x=>{const k=x.site+'|'+x.lot_id;if(!seen.has(k)){seen.add(k);a.push(x)}}));return a}).then(p=>{p.forEach(x=>{x._a=norm(x.artist);x.past=true;x.image=mir(x.image);x.images=x.image?[x.image]:[];x.house=houseName(x.site);x.key=x.site+'|'+x.lot_id;PASTBY[x.key]=x});return PAST=p}).catch(()=>PAST=[]);
 let PASTBY={};
+/* Finished auctions per artist: data/artist_index.json + data/artist/<slug>.json (shard_past.py). Falls back to loadPast() when the index or a shard is missing. */
+let PIDX,PSH={},HSUM=null,HSP;
+const houseSum=()=>HSP||(HSP=fetch('data/house_index.json'+V).then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>HSUM=d&&d.houses||null).catch(()=>null));
+const pastDeco=x=>{const k=x.site+'|'+x.lot_id;if(PASTBY[k])return PASTBY[k];x._a=norm(x.artist);x.past=true;x.image=mir(x.image);x.images=x.image?[x.image]:[];x.house=houseName(x.site);x.key=k;return PASTBY[k]=x};
+const pastIdx=()=>PIDX||(PIDX=fetch('data/artist_index.json'+V).then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>d&&d.artists?d:null).catch(()=>null));
+const pastShard=f=>PSH[f]||(PSH[f]=fetch('data/artist/'+f+'.json'+V).then(r=>{if(!r.ok)throw 0;return r.json()}).then(a=>a.map(pastDeco)).catch(e=>{delete PSH[f];throw e}));
+/* artistPast(name): only this artist's finished-auction records (the same set the artist page shows); used by the catalogue (bkData) */
+async function artistPast(name){await ready;await artLoad();try{await lbLoad()}catch(e){}const a=lbMatch(name),k=akey(name);return ((await pastFor(name,a))||[]).filter(x=>x.artist&&(a?lbMatch(x.artist)===a:akey(x.artist)==k))}
+const pastKey=(name,a)=>a?'lb:'+a.id:'k:'+akey(name);
+async function pastFor(name,a,wide){if(PAST)return PAST;await artLoad();try{await lbLoad()}catch(e){}const ix=await pastIdx();if(!ix||!LB)return loadPast();
+ if(a===undefined)a=lbMatch(name);const ks=new Set([pastKey(name,a)]);if(wide){const c=norm(name);ks.add(pastKey(c,lbMatch(c)));(ix.alson&&ix.alson[c]||[]).forEach(k=>ks.add(k))}
+ const fs=[...ks].map(k=>ix.artists[k]).filter(Boolean).map(e=>e[0]);
+ try{const parts=await Promise.all(fs.map(pastShard));return parts.length==1?parts[0]:[...new Set(parts.flat())]}catch(e){return loadPast()}}
 const estTxt=o=>o.estimate_min?(o.estimate_max&&o.estimate_max!=o.estimate_min?TL(o.estimate_min).replace(' TL','')+' – '+TL(o.estimate_max):TL(o.estimate_min)):'';
 const pastPrice=o=>o.last_bid?'Son pey '+TL(o.last_bid):o.start_price?TL(o.start_price):o.estimate_min?'Tahmini '+estTxt(o):'—';
 function initFilters(){$('nLots').textContent=D.lots.length.toLocaleString('tr-TR');
@@ -781,8 +1014,9 @@ const specOf=l=>{if(l._spec!=null)return l._spec;const t=(l._tags||[]).find(x=>x
  let tech=raw.length>=6&&raw.length<=46?raw:(t?t.v:'');tech=tech.toLocaleLowerCase('tr');tech=tech.charAt(0).toLocaleUpperCase('tr')+tech.slice(1);return l._spec=[l.size,tech].filter(Boolean).join(' · ')};
 function card(l){const e=l._e,soon=e&&e-Date.now()<864e5&&e>Date.now();const title=l.description||l.title||'';const spec=specOf(l);
  return `<article class="card">
-<div class="frame ${l.images[0]?'ph':'noimg'}" data-open="${esc(l.key)}">${imgTag(l.images[0],l.artist)}${fav.has(l.key)?'<span class="saved" title="Kaydedildi">♥</span>':''}</div>
+<div class="frame hung ${l.images[0]?'ph':'noimg'}" data-open="${esc(l.key)}">${hang(l.images[0],l.artist,l.key,(l.description||'')+' '+(l.category||''))}${fav.has(l.key)?'<span class="saved" title="Kaydedildi">♥</span>':''}</div>
 <div class="body">
+ ${l.lot_no?`<div class="lotno">Lot ${esc(l.lot_no)}</div>`:''}
  <div class="artist">${l.artist?aLink(l.artist)+starBtn(l.artist):`<span data-open="${esc(l.key)}">${esc(l.title||'')}</span>`}</div>
  ${spec?`<div class="spec" data-open="${esc(l.key)}" title="${esc(spec)}">${esc(spec)}</div>`:''}
  ${SET.desc&&title?`<div class="desc" data-open="${esc(l.key)}">${esc(title)}</div>`:''}
@@ -865,11 +1099,11 @@ const openFilters=()=>{drawer(true);ovOpen('filters')},dismissFilters=()=>ovClos
 $('fOpen').onclick=openFilters;$('fab').onclick=openFilters;$('fClose').onclick=dismissFilters;$('fApply').onclick=()=>{dismissFilters();scrollTo({top:0})};$('scrim').onclick=dismissFilters;
 /* ===== views ===== */
 let favDirty=false;
-function show(v,quiet,keep){const prev=view;if(!quiet&&!keep&&TABHASH[v]&&v!==prev)takeSpot();view=v;document.body.dataset.view=v;document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));
+function show(v,quiet,keep){if(!navQuiet){g3Close();bkClose()}const prev=view;if(!quiet&&!keep&&TABHASH[v]&&v!==prev)takeSpot();view=v;document.body.dataset.view=v;document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.v==v));
  document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id=='v-'+v));
- if(v=='lots'&&!(keep&&$('g').childElementCount&&!$('g').querySelector('.skc')))ready.then(render);if(v=='fav'&&!(keep&&!favDirty&&$('favBody').childElementCount&&!$('favBody').querySelector('.skc')))ready.then(renderFav);if(v=='lb')lbOpenTab();if(v=='houses')ready.then(()=>{buildHouses();buildSources()});
+ if(v=='lots'&&!(keep&&$('g').childElementCount&&!$('g').querySelector('.skc')))ready.then(render);if(v=='fav'&&!(keep&&!favDirty&&$('favBody').childElementCount&&!$('favBody').querySelector('.skc')))ready.then(renderFav);if(v=='lb')lbOpenTab();if(v=='cat')ready.then(catRender);if(v=='home')ready.then(renderHome);if(v=='houses')ready.then(()=>{buildHouses();buildSources()});
  if(TABHASH[v]&&!quiet&&v!==prev)pushNav(TABHASH[v]);if(!keep)window.scrollTo({top:0})}
-document.querySelector('nav.tabs').onclick=e=>{const b=e.target.closest('button');if(b)show(b.dataset.v)};$('home').onclick=()=>{resetF(true);show(startView())};
+document.querySelector('nav.tabs').onclick=e=>{const b=e.target.closest('button');if(b&&b.dataset.v)show(b.dataset.v)};$('home').onclick=()=>{resetF(true);show(startView())};
 function filterLots(k,v,quiet){resetF(true);F[k]=v;syncFilterUI();if(view=='lots'&&!quiet)pushNav(TABHASH.lots);show('lots',quiet)}
 let fqT=null;$('favQ').addEventListener('input',()=>{clearTimeout(fqT);fqT=setTimeout(renderFav,150)});
 $('favSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;favTab=b.dataset.f;LS.set('mr_favtab',favTab);renderFav()};
@@ -879,18 +1113,19 @@ function houseTab(t){$('hSeg').querySelectorAll('button').forEach(x=>x.classList
 function houses(){const m={},H=s=>m[s]||(m[s]={site:s,n:houseName(s),c:0,p:0,img:null,auctions:new Set(),pa:new Set(),end:null,last:''});
  D.lots.forEach(l=>{const h=H(l.site);h.c++;h.auctions.add(l.auction);if(!h.img&&l.images[0])h.img=l.images[0];if(l._e&&(!h.end||l._e<h.end))h.end=l._e});
  (PAST||[]).forEach(x=>{const h=H(x.site);h.p++;if(x.auction)h.pa.add(x.auction);if(!h.img&&x.image)h.img=x.image;if((x.end_date||'')>h.last)h.last=x.end_date||''});
+ if(!PAST&&HSUM)Object.entries(HSUM).forEach(([s,v])=>{const h=H(s);h.p=v.p;(v.pa||[]).forEach(a=>h.pa.add(a));if(!h.img&&v.img)h.img=v.img;h.last=v.last||''});
  return Object.values(m).sort((a,b)=>b.c-a.c||b.p-a.p)}
 const houseMeta=h=>[h.c?h.c.toLocaleString('tr-TR')+' güncel eser':'şu an müzayedesi yok',h.p?h.p.toLocaleString('tr-TR')+' geçmiş eser':'',h.pa.size?h.pa.size+' geçmiş müzayede':'',h.end?'ilk bitiş '+fshort(h.end):''].filter(Boolean).join(' · ');
 function buildHouses(){let H=houses();$('hCount').textContent=H.length;const q=norm($('hQ').value).split(' ').filter(Boolean),srt=$('hSort').value;
  if(q.length)H=H.filter(h=>{const t=norm(h.n+' '+h.site+' '+[...h.auctions,...h.pa].join(' '));return q.every(w=>t.includes(w))});
  if(srt=='az')H.sort((a,b)=>a.n.localeCompare(b.n,'tr'));else if(srt=='new')H.sort((a,b)=>(b.end?1:0)-(a.end?1:0)||(b.last||'').localeCompare(a.last||''));
- $('hNote').textContent=PAST?(q.length?H.length+' ev bulundu':'Bir eve dokunun: güncel eserleri ve geçmiş müzayedeleri açılır.'):'Geçmiş müzayedeler yükleniyor…';
+ $('hNote').textContent=PAST||HSUM?(q.length?H.length+' ev bulundu':'Bir eve dokunun: güncel eserleri ve geçmiş müzayedeleri açılır.'):'Geçmiş müzayedeler yükleniyor…';
  $('hList').innerHTML=H.length?H.map(h=>`<div class="arow" data-house="${esc(h.site)}" style="display:flex;gap:12px;align-items:center"><div class="si" style="padding:0"><div class="th" style="width:64px;height:64px">${h.img?`<img loading="lazy" onerror="this.remove()" src="${esc(h.img)}" alt="">`:esc(h.n[0])}</div></div><div><div class="nm">${esc(h.n)}</div><div class="mt">${houseMeta(h)}</div></div></div>`).join(''):emptyBox('Bu adla bir ev bulunamadı','Yazımı değiştirin ya da evi <b>＋ Bağlantı ekle</b> ile ekleyin.','');
- if(!PAST)loadPast().then(()=>{IDX=null;if(view=='houses')buildHouses()})}
+ if(!PAST&&!HSUM)houseSum().then(h=>h||loadPast()).then(()=>{IDX=null;if(view=='houses')buildHouses()})}
 let hqT=null;$('hQ').addEventListener('input',()=>{clearTimeout(hqT);hqT=setTimeout(buildHouses,120)});$('hSort').onchange=buildHouses;
 /* ===== house page ===== */
 let HP=null;
-function pastCard(o){const k=esc(o.key);return `<article class="card pastc"><div class="frame ${o.image?'ph':'noimg'}" data-past="${k}">${imgTag(o.image,o.artist)}</div><div class="body">
+function pastCard(o){const k=esc(o.key);return `<article class="card pastc"><div class="frame hung ${o.image?'ph':'noimg'}" data-past="${k}">${hang(o.image,o.artist,o.key,o.description)}</div><div class="body">
  <div class="artist">${o.artist?aLink(o.artist)+starBtn(o.artist):`<span data-past="${k}">Eser</span>`}</div>${o.description?`<div class="desc" data-past="${k}">${esc(o.description)}</div>`:''}
  <div class="crow" data-past="${k}"><span class="price">${pastPrice(o)}</span><span class="left">${o.end_date?esc(o.end_date.slice(0,10).split('-').reverse().join('.')):'bitti'}</span></div></div></article>`}
 const pastSlider=L=>`<div class="slider"><button type="button" class="sl-btn sl-prev" aria-label="Önceki eserler" hidden>‹</button><div class="srow">${L.map(pastCard).join('')}</div><button type="button" class="sl-btn sl-next" aria-label="Sonraki eserler"${L.length<2?' hidden':''}>›</button></div>`;
@@ -931,10 +1166,10 @@ function artistPanel(l,past){if(!l._a)return '<div class="panel first"><p class=
 function openLot(k){const l=byKey[k];if(!l)return;const hist=(l.history||[]).map(r=>`${fdate(dt(r[0]))}: ${TL(r[1])}, ${r[2]} pey`).join('<br>');
  const pr=priceOf(l),lab=priceLab(l),soon=l._e&&l._e-Date.now()<864e5&&l._e>Date.now();
  const PRICE_TIP='<b>Açılış fiyatı:</b> müzayedenin başladığı fiyat, satış fiyatı değildir. <b>Güncel pey:</b> şu ana kadarki en yüksek teklif. <b>Hemen Al:</b> beklemeden bu fiyata alınabilir.';
- $('mc').innerHTML=`<div class="det"><div><div class="big"><img id="bigI" src="${esc((l.images[0]||'').replace('/400/','/1500/'))}" alt=""></div><div class="thumbs">${l.images.map(i=>`<img loading="lazy" onerror="this.remove()" src="${esc(i)}" onclick="$('bigI').src=this.src.replace('/400/','/1500/')">`).join('')}</div><p class="muted zoomtip">Büyütmek için görsele dokunun</p></div>
+ $('mc').innerHTML=`<div class="det"><div><div class="big hungbig"><span class="pf ${frameOf(l.key,(l.description||'')+' '+(l.category||''))}"><span class="pv"><img id="bigI" src="${esc((l.images[0]||'').replace('/400/','/1500/'))}" alt=""></span></span></div><div class="thumbs">${l.images.map(i=>`<img loading="lazy" onerror="this.remove()" src="${esc(i)}" onclick="$('bigI').src=this.src.replace('/400/','/1500/')">`).join('')}</div><p class="muted zoomtip">Büyütmek için görsele dokunun</p></div>
  <div class="info"><div class="meta">${esc(l.house)}${l.lot_no?' · Lot '+esc(l.lot_no):''}</div><h2 class="lt">${l.artist?aLink(l.artist)+' '+starBtn(l.artist):esc(l.title)}</h2>${l.description?`<p class="ld">${esc(l.description)}</p>`:''}
  <div class="keyf"><div><span>${lab} ${tip(PRICE_TIP)}</span><b class="price">${TL(pr)}</b>${l.estimate&&l.estimate!=pr?`<small>Tahmini değer ${TL(l.estimate)}</small>`:''}</div><div><span>Bitiş</span><b class="${soon?'soon':''}">${esc(leftTxt(l)||'—')}</b><small>${l._e?fdate(l._e):''}</small></div></div>
- <div class="acts lacts"><a class="btn pri" href="${esc(l.url)}" target="_blank" rel="noopener">Eser sayfasına git ↗</a><button class="ic fav ${fav.has(k)?'on':''}" data-fav="${esc(k)}" title="Kaydettiklerim'e ekle">♥ Kaydet</button><button class="ic ${cmp.includes(k)?'on':''}" data-cmp="${esc(k)}" title="En fazla 4 eseri yan yana karşılaştırın">⇄ Karşılaştır</button></div></div></div>
+ <div class="acts lacts"><a class="btn pri" href="${esc(l.url)}" target="_blank" rel="noopener">Eser sayfasına git ↗</a><button class="ic fav ${fav.has(k)?'on':''}" data-fav="${esc(k)}" title="Kaydettiklerim'e ekle">♥ Kaydet</button><button class="ic ${cmp.includes(k)?'on':''}" data-cmp="${esc(k)}" title="En fazla 4 eseri yan yana karşılaştırın">⇄ Karşılaştır</button>${l.images[0]?`<button class="ic" data-g3k="${esc(k)}" title="Eseri 3B galeride, duvarda asılı görün">◈ Galeride gör</button>`:''}</div></div></div>
  <div class="ltabs" role="tablist"><button data-lt="eser" class="on">Eser</button><button data-lt="deger">Değer</button><button data-lt="sanatci">Sanatçı</button><button data-lt="arsiv">Arşiv</button><span class="lmini">${TL(pr)}</span></div>
  <div class="lpane on" data-pane="eser"><div class="tags" style="margin:0 0 12px">${(l._tags||[]).map(x=>tagChip(x,F.tags.includes(x.id))).join('')}</div><p class="muted" style="font-size:12px;margin:-4px 0 10px">Bir etikete dokunarak benzer eserleri Keşfet'te listeleyin.</p>
  <table class="f"><tr><td>Müzayede</td><td>${esc(l.auction)}</td></tr><tr><td>Kategori</td><td>${esc(l.category)||'—'}</td></tr><tr><td>Teknik</td><td>${esc(l.tech)||'—'}</td></tr><tr><td>Ölçü</td><td>${esc(l.size)||'—'}</td></tr><tr><td>Yıl</td><td>${esc(l.year)||'—'}</td></tr>
@@ -943,7 +1178,7 @@ function openLot(k){const l=byKey[k];if(!l)return;const hist=(l.history||[]).map
  <div class="lpane" data-pane="deger"><div id="apanel">${artistPanel(l,null)}</div></div>
  <div class="lpane" data-pane="sanatci">${l.artist?`<div class="lsart"><div><b class="serif" style="font-size:22px">${esc(l.artist)}</b><div class="muted" style="font-size:13px">${D.lots.filter(x=>x._a==l._a).length} eseri şu an satışta</div></div><div class="acts"><button type="button" class="btn favbtn${isFav(l.artist)?' on':''}" data-star="${esc(l.artist)}"></button><a class="btn" href="#artist=${encodeURIComponent(l.artist)}" data-artist="${esc(l.artist)}">Sanatçı sayfası →</a></div></div>`:''}<div id="lbLot"><p class="muted">Arşivde bu sanatçının biyografisi bulunamadı.</p></div></div>
  <div class="lpane" data-pane="arsiv"><p class="muted" style="font-size:13px;margin-top:0">Lebriz arşivindeki (2023'te kapanan sanat rehberi) eski müzayede fiyatları. ${tip('Fiyatlar 2008–2013 arası kataloglardan alınmıştır ve o dönemin TL/YTL\'sidir; bugünkü fiyatlarla doğrudan kıyaslanamaz.')}</p><div id="lbPrice"><p class="muted">Bu sanatçı için arşivde eski fiyat kaydı yok.</p></div></div>`;
- openM();ovOpen('m','lot='+encodeURIComponent(k));loadPast().then(p=>{if($('apanel'))$('apanel').innerHTML=artistPanel(l,p)});lbLotBlock(l);lbPriceBlock(l)}
+ openM();ovOpen('m','lot='+encodeURIComponent(k));(l.artist?pastFor(l.artist,undefined,true):Promise.resolve([])).then(p=>{if($('apanel'))$('apanel').innerHTML=artistPanel(l,p)});lbLotBlock(l);lbPriceBlock(l)}
 function openPast(k){const o=PASTBY[k];if(!o){loadPast().then(()=>PASTBY[k]&&openPast(k));return}
  const live=o.artist?D.lots.filter(l=>l._a&&l._a==o._a).length:0;
  const imgs=(o.images&&o.images.length?o.images:(o.image?[o.image]:[]));
@@ -1154,12 +1389,12 @@ $('sres').addEventListener('click',e=>{if(e.target.closest('[data-star]'))return
 new IntersectionObserver(es=>{if(es[0].isIntersecting&&view=='search'&&FR.r&&$('srLots')&&FR.lotShown<Math.min(FR.lim,FR.r.lot.length))srMore()},{rootMargin:'800px'}).observe($('sentinel'));
 /* ===== artist page ===== */
 function artistLots(a,name){const k=akey(name);return D.lots.filter(l=>l.artist&&(a?l._lb===a:akey(l.artist)==k))}
-async function openArtist(name,lbId,quiet){quiet=quiet||navQuiet;if(!quiet)takeSpot();await ready;try{await lbLoad()}catch(e){}
+async function openArtist(name,lbId,quiet){quiet=quiet||navQuiet;if(!quiet)takeSpot();await ready;await artLoad();try{await lbLoad()}catch(e){}
  const a=lbId?(LB&&LB.artists.find(x=>x.id==lbId))||null:lbMatch(name);if(!name&&a)name=a.n;if(!name)return;
  closeM();closePick();sdClose&&sdClose();$('gsWrap').classList.remove('full');show('artist');const ah='artist='+(a?'lb:'+a.id:encodeURIComponent(name));if(!quiet)pushNav(ah);
  const el=$('artistPage');el.innerHTML='<div class="skc skel"></div>';
- const [past,P]=await Promise.all([loadPast().catch(()=>[]),lbPrices().catch(()=>({}))]);if(a)await lbDet().catch(()=>{});
- const d=a&&LBA?LBA[a.id]||{}:{},k=akey(name),live=artistLots(a,name).sort((x,y)=>(x._e||9e15)-(y._e||9e15));
+ const [past,P]=await Promise.all([pastFor(name,a).catch(()=>[]),lbPrices().catch(()=>({}))]);if(a)await lbDet().catch(()=>{});
+ const d=a&&LBA?LBA[a.id]||{}:{},k=akey(name),live=artistLots(a,name).sort((x,y)=>(x._e||9e15)-(y._e||9e15));G.ctxA={name,list:live};
  const pastL=(past||[]).filter(x=>x.artist&&(a?lbMatch(x.artist)===a:akey(x.artist)==k));
  const names=[...new Set([...live,...pastL].map(x=>x.artist).filter(Boolean))];
  const pr=[...live.map(l=>l._p),...pastL.map(x=>x.start_price)].filter(Boolean);
@@ -1187,7 +1422,7 @@ async function openArtist(name,lbId,quiet){quiet=quiet||navQuiet;if(!quiet)takeS
  if(a)tab.katalog=`<div id="lbCatBox" data-id="${a.id}"><p class="muted">Yükleniyor…</p></div>`;
  const T=[['satis','Şu an satışta',live.length],['deger','Değer',null],['bio','Biyografi',null],['sergi','Sergiler',exAll.length||null],...(a?[['katalog','Lebriz kataloğu',a.w?a.w.toLocaleString('tr-TR'):null]]:[])];
  const nm=a?a.n:name;
- el.innerHTML=`<div class="ap-hero"><div><div class="meta">Sanatçı${a?' · Lebriz arşivinde':''}</div><h1>${esc(nm)}</h1><div class="muted">${[a&&a.y,live.length?live.length+' eser şu an satışta':'şu an satışta eseri yok',houses.length?houses.length+' müzayede evinde':''].filter(Boolean).map(esc).join(' · ')}</div></div>
+ el.innerHTML=`<div class="ap-hero"><div><div class="meta">Sanatçı${a?' · Lebriz arşivinde':''}</div><h1>${esc(nm)}</h1><button type="button" class="btn bkopen" data-book="${esc(name)}">❏ Kataloğunu aç</button><div class="muted">${[a&&a.y,live.length?live.length+' eser şu an satışta':'şu an satışta eseri yok',houses.length?houses.length+' müzayede evinde':''].filter(Boolean).map(esc).join(' · ')}</div></div>
  <div class="acts" style="flex-wrap:wrap"><button type="button" class="btn pri favbtn${isFav(nm)?' on':''}" data-star="${esc(nm)}"></button><button class="btn" onclick="navigator.clipboard&&navigator.clipboard.writeText(location.href).then(()=>toast('Bağlantı kopyalandı'))">Bağlantıyı kopyala</button></div></div>
  <div class="ltabs page" role="tablist">${T.map(([id,t,n],i)=>`<button data-pt="${id}" class="${i?'':'on'}">${t}${n?` <span class="sn">${n}</span>`:''}</button>`).join('')}</div>
  ${T.map(([id],i)=>`<div class="lpane${i?'':' on'}" data-pane="${id}">${tab[id]}</div>`).join('')}`;
@@ -1290,18 +1525,254 @@ function route(h,boot,keep){h=dec(h);curRoute=h;
  if(h.startsWith('site=')){showSite(h.slice(5),true);return}
  if(h.startsWith('house=')){return openHouse(h.slice(6),true)}
  if(h.startsWith('q=')||h.startsWith('s=')){show('search',true);return ready.then(()=>{$('gq').value=h.slice(2);return lbLoad().catch(()=>{}).finally(()=>{IDX=null;fullResults('all',true)})})}
- if(boot&&(h.startsWith('lot=')||h.startsWith('past=')||h.startsWith('cmp=')||h=='help'||h=='add')){// a shared link to a pop-up: open it over the start page, so back lands on the site
+ if(boot&&(h.startsWith('lot=')||h.startsWith('past=')||h.startsWith('cmp=')||h=='help'||h=='add'||h=='galeri'||h.startsWith('katalog='))){// a shared link to a pop-up: open it over the start page, so back lands on the site
   history.replaceState({},'',urlFor(''));curRoute='';show(startView(),true);
-  ready.then(()=>{if(h.startsWith('lot='))openLot(h.slice(4));else if(h.startsWith('past='))openPast(h.slice(5));else if(h.startsWith('cmp=')){cmp=h.slice(4).split(',').filter(k=>byKey[k]).slice(0,4);dock();if(cmp.length>1)showCmp()}else if(h=='help')openHelp();else openAdd()});return}
+  ready.then(()=>{if(h.startsWith('lot='))openLot(h.slice(4));else if(h.startsWith('past='))openPast(h.slice(5));else if(h.startsWith('cmp=')){cmp=h.slice(4).split(',').filter(k=>byKey[k]).slice(0,4);dock();if(cmp.length>1)showCmp()}else if(h=='help')openHelp();else if(h=='galeri')g3Open();else if(h.startsWith('katalog='))openBook(h.slice(8));else openAdd()});return}
  show(startView(),true)}
 addEventListener('popstate',e=>{const st=e.state||{};menuOpen(false);navQuiet=true;
- try{if(st.ov!=='zoom')zClose();if(st.ov!=='m'&&st.ov!=='zoom')closeM();if(st.ov!=='filters')drawer(false);if(st.ov!=='pick')closePick();if(st.ov!=='add')closeAdd();if(st.ov!=='gh')closeGh();if(st.ov!=='help'&&$('helpM').classList.contains('open'))closeHelp();if(st.ov!=='search')gsShut();
+ try{if(st.ov!=='g3d'&&st.ov!=='m'&&st.ov!=='zoom')g3Close();if(st.ov!=='book'&&st.ov!=='m'&&st.ov!=='zoom')bkClose();if(st.ov!=='zoom')zClose();if(st.ov!=='m'&&st.ov!=='zoom')closeM();if(st.ov!=='filters')drawer(false);if(st.ov!=='pick')closePick();if(st.ov!=='add')closeAdd();if(st.ov!=='gh')closeGh();if(st.ov!=='help'&&$('helpM').classList.contains('open'))closeHelp();if(st.ov!=='search')gsShut();
   const base=st.ov?(st.base||''):dec(location.hash.slice(1));let pr=null;if(base!==curRoute)pr=route(base,e.state==null,true);if(st.y!=null)restoreSpot(st,pr);
   document.body.style.overflow=st.ov&&st.ov!=='search'&&st.ov!=='filters'?'hidden':''}finally{navQuiet=false}
  if(st.ov=='zoom'&&!ovIsOpen('zoom')){history.back();return}
  if(st.ov&&!ovIsOpen(st.ov)){const h=dec(location.hash.slice(1));// forward into a pop-up: reopen it
   if(st.ov=='m')ready.then(()=>{if(h.startsWith('lot='))openLot(h.slice(4));else if(h.startsWith('past='))openPast(h.slice(5));else if(h.startsWith('cmp=')&&cmp.length>1)showCmp()});
-  else if(st.ov=='filters')openFilters();else if(st.ov=='pick')openPick();else if(st.ov=='add')openAdd();else if(st.ov=='gh')openGh();else if(st.ov=='help')openHelp();else if(st.ov=='search')gsOpen()}});
+  else if(st.ov=='filters')openFilters();else if(st.ov=='pick')openPick();else if(st.ov=='add')openAdd();else if(st.ov=='gh')openGh();else if(st.ov=='help')openHelp();else if(st.ov=='search')gsOpen();else if(st.ov=='g3d')ready.then(()=>g3Open());else if(st.ov=='book'&&h.startsWith('katalog='))openBook(h.slice(8))}});
+/* ===== hung paintings: every work gets a frame; the image's own proportions size it ===== */
+const FRAMES=['gold','ebony','walnut','white','bronze','gold','ebony'];
+const hashS=s=>{let h=0;for(let i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))|0;return Math.abs(h)};
+const PAPER=/kagit|baski|serigraf|litograf|gravur|suluboya|guaj|karakalem|fotograf|desen|murekkep|pastel|ofset|afis/;
+const FRC=new Map(),ARC=new Map(),clampN=(v,a,b)=>Math.max(a,Math.min(b,v));
+/* works on paper get a mount, works sold unframed a thin float frame, the rest a moulding picked from the lot's key */
+function frameOf(key,txt){let f=FRC.get(key);if(f)return f;const s=norm(txt),p=PAPER.test(s);f=/cercevesiz/.test(s)&&!p?'f-float':'f-'+FRAMES[hashS(key||s)%FRAMES.length]+(p?' mat':'');FRC.set(key,f);return f}
+const arOf=im=>clampN(+(im.naturalWidth/im.naturalHeight).toFixed(3)||.8,.3,3.2);
+const arc=ar=>clampN(ar*.94,.74,1.32).toFixed(3);            /* the patch of wall a work takes follows its shape */
+function hang(src,alt,key,txt){if(!src)return '';const ar=ARC.get(src);return `<span class="pf ${frameOf(key,txt)}"${ar?` style="--ar:${ar}"`:''}><span class="pv"><img loading="lazy" decoding="async" draggable="false" src="${esc(src)}" alt="${esc(alt||'')}" onload="hung(this)" onerror="unhung(this)"></span></span>`}
+function hung(im){const ar=arOf(im);ARC.set(im.getAttribute('src'),ar);im.classList.add('ld');const p=im.closest('.pf'),f=im.closest('.frame');if(p)p.style.setProperty('--ar',ar);if(f){f.classList.remove('ph');f.style.setProperty('--arc',arc(ar))}}
+function unhung(im){const f=im.closest('.frame'),p=im.closest('.pf');if(p)p.remove();if(f){f.classList.remove('ph');f.classList.add('noimg')}}
+/* mouse: the frame leans towards the pointer */
+let tiltEl=null;const untilt=f=>{const p=f&&f.querySelector('.pf');if(p)['--rx','--ry'].forEach(k=>p.style.removeProperty(k))};
+document.addEventListener('pointermove',e=>{if(e.pointerType!='mouse')return;const f=e.target.closest?e.target.closest('.frame.hung'):null;if(f!==tiltEl){untilt(tiltEl);tiltEl=f}if(!f)return;const p=f.querySelector('.pf');if(!p)return;
+ const r=f.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;p.style.setProperty('--ry',(x*18).toFixed(1)+'deg');p.style.setProperty('--rx',(-y*13).toFixed(1)+'deg')},{passive:true});
+document.addEventListener('pointerleave',()=>{untilt(tiltEl);tiltEl=null});
+
+/* ===== motion: the wall answers the phone, not a cursor =====
+   tilt the phone (gyroscope) or rest a finger on the screen and every frame in view leans and its glass catches the light;
+   scroll and the works sway on their wires. Only the frames on screen are touched, and the loop stops when things settle. */
+const MO={x:0,y:0,tx:0,ty:0,sw:0,sv:0,vis:new Set(),raf:0,gyro:false,bx:null,by:null,ly:0,asked:false,live:false};
+const moIO=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)MO.vis.add(e.target);else MO.vis.delete(e.target)}),{rootMargin:'120px'});
+new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)if(n.nodeType==1){if(n.matches('.frame.hung'))moIO.observe(n);else if(n.firstElementChild)n.querySelectorAll('.frame.hung').forEach(f=>moIO.observe(f))}}).observe(document.body,{childList:true,subtree:true});
+const moKick=()=>{if(!MO.raf)MO.raf=requestAnimationFrame(moTick)};
+function moTick(){MO.raf=0;MO.x+=(MO.tx-MO.x)*.06;MO.y+=(MO.ty-MO.y)*.06;MO.sv+=-MO.sw*.085-MO.sv*.13;MO.sw+=MO.sv;
+ const mx=MO.x.toFixed(3),my=MO.y.toFixed(3),sx=(-MO.x*14).toFixed(1)+'px',gx=(48-62*MO.x).toFixed(0)+'%';
+ for(const f of MO.vis){if(!f.isConnected){MO.vis.delete(f);continue}const p=f.firstElementChild;if(!p||!p.classList.contains('pf'))continue;const s=p.style,k=f._k||(f._k=.55+hashS(f.dataset.open||f.dataset.past||'x')%10/11);
+  p.classList.add('swy');s.setProperty('--sw',(MO.sw*k).toFixed(2));if(MO.live){s.setProperty('--mx',mx);s.setProperty('--my',my);s.setProperty('--sx',sx);s.setProperty('--gx',gx)}}
+ if(G.on)g3Kick();
+ if(Math.abs(MO.tx-MO.x)>.003||Math.abs(MO.ty-MO.y)>.003||Math.abs(MO.sw)>.03||Math.abs(MO.sv)>.03)moKick();else for(const f of MO.vis){const p=f.firstElementChild;if(p)p.classList.remove('swy')}}
+/* no gyroscope (or not allowed): the frames lean towards the finger instead */
+const moTouch=e=>{if(MO.gyro||RM)return;const t=e.touches[0];if(!t)return;MO.live=true;MO.tx=clampN((t.clientX/innerWidth-.5)*1.2,-1,1);MO.ty=clampN((t.clientY/innerHeight-.5)*.9,-1,1);moKick()};
+addEventListener('touchstart',moTouch,{passive:true});addEventListener('touchmove',moTouch,{passive:true});
+['touchend','touchcancel'].forEach(n=>addEventListener(n,()=>{if(!MO.gyro){MO.tx=MO.ty=0;moKick()}},{passive:true}));
+function moGyro(e){if(e.gamma==null||e.beta==null||RM)return;let g=e.gamma,b=e.beta;const a=(screen.orientation&&screen.orientation.angle)||0;if(a==90)[g,b]=[b,-g];else if(a==270)[g,b]=[-b,g];
+ if(MO.bx==null){MO.bx=g;MO.by=b}MO.bx+=(g-MO.bx)*.012;MO.by+=(b-MO.by)*.012;   /* the resting pose drifts to however the phone is being held */
+ const tx=clampN((g-MO.bx)/16,-1,1),ty=clampN((b-MO.by)/16,-1,1);MO.gyro=MO.live=true;if(Math.abs(tx-MO.tx)<.012&&Math.abs(ty-MO.ty)<.012)return;MO.tx=tx;MO.ty=ty;moKick()}
+/* iOS only hands out orientation after a tap asks for it; elsewhere it just works */
+function moAsk(){if(MO.asked)return;MO.asked=true;const E=window.DeviceOrientationEvent;if(E&&typeof E.requestPermission=='function')E.requestPermission().then(r=>{if(r=='granted')addEventListener('deviceorientation',moGyro)}).catch(()=>{})}
+if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission!='function')addEventListener('deviceorientation',moGyro);
+
+/* ===== 3D room =====
+   A rotunda of CSS 3D planes (no WebGL: nothing guarantees the auction houses' image hosts allow it). The camera stands in the
+   middle; work i hangs on wall panel i of a ring, and dragging turns the ring. Only the panels around the one in front exist. */
+const G={on:false,list:[],title:'',ctxA:null,cur:0,tc:0,idx:-9,vel:0,dl:0,inn:0,P:600,Wp:300,A:29.5,vw:0,vh:0,top:0,fy:0,maxW:0,maxH:0,mode:'',pan:new Map(),raf:0,t:0,tour:0,drag:null,moved:false,wt:0};
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function g3Ctx(){const byEnd=(x,y)=>(x._e||9e15)-(y._e||9e15);let list=null,title='';
+ if(view=='lots'){list=curList;const a=activeList();title='Keşfet'+(a.length?' · '+a.map(x=>x[1]).join(', '):'')}
+ else if(view=='fav'){if(favTab=='saved'){list=D.lots.filter(l=>fav.has(l.key)).sort(byEnd);title='Kaydettiklerim'}else{list=D.lots.filter(l=>favOf(l)).sort(byEnd);title='Favori sanatçılarım'}}
+ else if(view=='artist'&&G.ctxA){list=G.ctxA.list;title=G.ctxA.name}
+ else if(view=='house'&&HP){list=HP.live;title=houseName(HP.site)}
+ else if(view=='search'&&FR.r){list=FR.r.lot.map(x=>x.o);title='“'+FR.q+'”'}
+ if(!list||!list.some(l=>l.images[0])){list=[...D.lots].sort(byEnd);title='Tüm eserler'}
+ return{list,title}}
+/* where the label sheet goes: under the wall on a phone; on a foldable it takes the other screen half (the browser reports the
+   hinge as viewport segments, or at least a half-folded posture); on any wide screen it sits beside the wall */
+function g3Mode(){const mq=q=>matchMedia(q).matches,w=innerWidth,h=innerHeight;
+ return mq('(horizontal-viewport-segments: 2)')?'seg-h':mq('(vertical-viewport-segments: 2)')?'seg-v':mq('(device-posture: folded)')?(w/h>.7?'sp-h':'sp-v'):w>=640&&w/h>.7?'sp-h':''}
+function g3Size(){const d=$('g3d'),m=g3Mode(),vp=$('g3vp'),wd=$('g3world');G.mode=m;d.classList.remove('sp-h','sp-v','seg-h','seg-v');if(m)d.classList.add(m);d.classList.toggle('split',!!m);
+ const w=G.vw=vp.clientWidth,h=G.vh=vp.clientHeight,ph=!m;G.Wp=Math.round(Math.min(w*(w<520?.9:.62),h*.72));G.P=Math.round(G.Wp*1.9);G.A=2*Math.atan(.5/1.9)*180/Math.PI;
+ G.top=Math.round(h*.8);G.fy=Math.round(h*(ph?.33:.4));G.maxW=G.Wp*.82;G.maxH=h*(ph?.46:.6);
+ d.style.setProperty('--P',G.P+'px');d.style.setProperty('--PO',(ph?42:46)+'%');
+ wd.innerHTML='';G.pan.clear();G.idx=-9;const R=Math.round(G.P/Math.cos(G.A*Math.PI/360)*1.03);
+ wd.insertAdjacentHTML('beforeend',`<div class="g3-floor" style="left:${-R}px;top:${G.fy-R}px;width:${2*R}px;height:${2*R}px"></div><div class="g3-ceil" style="left:${-R}px;top:${-G.top-R}px;width:${2*R}px;height:${2*R}px"></div>`)}
+/* a work's size on the wall follows its real size where the listing gives one, within what fits the screen */
+function g3Dim(l){const ar=ARC.get(l.images[0])||.8,fr=frameOf(l.key,(l.description||'')+' '+(l.category||'')),fl=fr=='f-float';
+ const m=(l.size||'').match(/([\d.,]+)×([\d.,]+)/)||(l.size||'').match(/Ø ([\d.,]+)/),L=m?Math.max(num(m[1]),num(m[2]||m[1])):0,f=L?clampN(.6+L/240,.62,1):.86;
+ const bw=G.maxW*f,bh=G.maxH*f,s=Math.min(bw,bh),b=fl?4:Math.round(clampN(s*.062,9,22)),mt=fl?3:fr.includes('mat')?Math.round(s*.07):0,iw=bw-2*(b+mt),ih=bh-2*(b+mt),w=Math.round(Math.min(iw,ih*ar)),h=Math.round(w/ar);
+ return{b,mt,fr,ow:w+2*(b+mt),oh:h+2*(b+mt)}}
+const g3Pos=d=>`left:${Math.round(G.Wp/2+1-d.ow/2)}px;top:${Math.round(G.top-d.oh/2)}px;width:${d.ow}px;height:${d.oh}px;--b:${d.b}px;--pm:${d.mt}px`;
+function g3Paint(l,i){const d=g3Dim(l);
+ return `<div class="g3-p ${d.fr}" data-gi="${i}" style="${g3Pos(d)}"><i class="g3-sh"></i><i class="g3-e l"></i><i class="g3-e r"></i><span class="pf ${d.fr}"><span class="pv"><img decoding="async" draggable="false" src="${esc(l.images[0])}" alt="${esc(l.artist||l.title||'')}" onload="g3Img(this)" onerror="this.remove()"></span></span><div class="g3-pl"><b>${esc(l.artist||l.title||'')}</b><i>${esc(specOf(l))}</i></div></div>`}
+function g3Img(im){const ar=arOf(im),src=im.getAttribute('src'),old=ARC.get(src)||.8;ARC.set(src,ar);if(Math.abs(old-ar)<.02)return;const p=im.closest('.g3-p');if(!p)return;const l=G.list[+p.dataset.gi];if(l)p.style.cssText=g3Pos(g3Dim(l))}
+function g3Panel(i){const l=G.list[i],n=G.list.length,el=document.createElement('div'),H=G.top+G.fy;el.className='g3-panel';
+ el.style.cssText=`left:${-G.Wp/2-1}px;top:${-G.top}px;width:${G.Wp+2}px;height:${H}px;--ly:${(G.top/H*100).toFixed(1)}%;transform:rotateY(${(-(i*G.A)%360).toFixed(3)}deg) translateZ(${-G.P}px)`;
+ el.innerHTML=l?g3Paint(l,i):i<0?`<div class="g3-letter" style="top:${G.top}px"><small>16/22 Müzayede Rehberi</small><b>${esc(G.title)}</b><span>${n.toLocaleString('tr-TR')} eser${D.updated?' · '+esc(D.updated.slice(0,10).split('-').reverse().join('.')):''}</span></div>`
+  :`<div class="g3-letter" style="top:${G.top}px"><small>16/22 Müzayede Rehberi</small><b>Serginin sonu</b><span>${n.toLocaleString('tr-TR')} eser gezdiniz</span><button type="button" class="btn pri" data-g3top="1">Başa dön</button></div>`;
+ return el}
+function g3Sync(){const n=G.list.length,c=clampN(Math.round(G.cur),0,n-1),a=Math.max(-1,c-3),b=Math.min(n,c+3),w=$('g3world');
+ for(const[i,e]of G.pan)if(i<a||i>b){e.remove();G.pan.delete(i)}
+ for(let i=a;i<=b;i++){let e=G.pan.get(i);if(!e){e=g3Panel(i);G.pan.set(i,e);w.appendChild(e)}const f=+Math.min(.82,Math.abs(i-G.cur)*.3).toFixed(2);if(e._f!==f){e._f=f;e.style.setProperty('--fog',f)}}
+ if(c!==G.idx){G.idx=c;$('g3S').textContent=(c+1).toLocaleString('tr-TR')+' / '+n.toLocaleString('tr-TR');$('g3R').value=c;g3Sheet()}}
+function g3Tick(ts){G.raf=0;if(!G.on)return;const dt=clampN((ts-G.t)/1000,.001,.05),n=G.list.length;G.t=ts;
+ if(!(G.drag&&G.moved)){G.tc=clampN(G.tc,0,n-1);const pc=G.cur;G.cur+=(G.tc-G.cur)*(RM?1:1-Math.exp(-dt*8));G.vel=(G.cur-pc)/dt}
+ G.inn=RM?0:G.inn*Math.exp(-dt*4.5);if(G.inn<.003)G.inn=0;G.dl+=(Math.min(1,Math.abs(G.vel)/5)*90-G.dl)*.12;   /* the camera steps back a little while the room spins */
+ $('g3world').style.transform=`translateZ(${(G.P-G.inn*560-G.dl).toFixed(1)}px) rotateX(${(-MO.y*3.5).toFixed(2)}deg) rotateY(${((G.cur*G.A)%360+MO.x*5).toFixed(3)}deg)`;
+ g3Sync();if(G.drag||G.inn||G.dl>.6||Math.abs(G.tc-G.cur)>.0015)g3Kick()}
+const g3Kick=()=>{if(G.on&&!G.raf){G.t=performance.now()-16;G.raf=requestAnimationFrame(g3Tick)}};
+function g3Go(i,far){const n=G.list.length;i=clampN(i,0,n-1);if(far&&Math.abs(i-G.cur)>5)G.cur=i-Math.sign(i-G.cur)*3;G.tc=i;g3Kick()}
+const g3Up=on=>{$('g3d').classList.toggle('up',!!on&&!G.mode)};
+function g3Sheet(){const c=$('g3card'),l=G.list[G.idx];if(!l){c.innerHTML='';return}const k=esc(l.key),soon=l._e&&l._e-Date.now()<864e5&&l._e>Date.now(),sb=c.querySelector('.g3-sb');
+ c.innerHTML=`<div class="g3-h" data-g3h="1" role="button" aria-label="Ayrıntıları aç ya da kapat"><i></i></div><div class="g3-sb"><div class="meta">${esc(l.house)}${l.lot_no?' · Lot '+esc(l.lot_no):''}</div>
+ <h3>${l.artist?aLink(l.artist)+starBtn(l.artist):esc(l.title||'')}</h3><div class="sp">${esc(specOf(l)||l.description||'')}</div>
+ <div class="rw"><span class="price">${TL(priceOf(l))}</span><small>${priceLab(l)}</small><span class="left${soon?' soon':''}">${esc(leftTxt(l))}</span></div>
+ <div class="acts"><button type="button" class="btn pri" data-open="${k}">Eseri incele</button><button type="button" class="ic fav${fav.has(l.key)?' on':''}" data-fav="${k}">♥ Kaydet</button><a class="btn" href="${esc(l.url)}" target="_blank" rel="noopener">Müzayede sayfası ↗</a></div>
+ ${l.description?`<p class="ld">${esc(l.description)}</p>`:''}
+ <table class="f"><tr><td>Müzayede</td><td>${esc(l.auction)||'—'}</td></tr><tr><td>Teknik</td><td>${esc(l.tech)||'—'}</td></tr><tr><td>Ölçü</td><td>${esc(l.size)||'—'}</td></tr><tr><td>Yıl</td><td>${esc(l.year)||'—'}</td></tr><tr><td>Pey sayısı</td><td>${l.bid_count||0}</td></tr><tr><td>Bitiş</td><td>${fdate(l._e)}</td></tr></table>
+ <div class="tags">${(l._tags||[]).map(x=>tagChip(x,false)).join('')}</div></div>`;if(sb)c.querySelector('.g3-sb').scrollTop=0}
+function g3Tour(on){clearInterval(G.tour);G.tour=0;if(on){g3Go(Math.round(G.tc)+1);G.tour=setInterval(()=>{if(ovIsOpen('m')||ovIsOpen('zoom'))return;if(G.tc>=G.list.length-1){g3Tour(false);return}g3Go(Math.round(G.tc)+1)},4600)}
+ const b=$('g3Tour');b.classList.toggle('on',!!on);b.textContent=on?'❚❚ Durdur':'▶ Tur'}
+function g3Open(list,title,key){if(!D.lots.length){toast('Eserler yükleniyor…');return}if(!list){const c=g3Ctx();list=c.list;title=c.title}
+ list=list.filter(l=>l.images&&l.images[0]);const kl=key&&byKey[key];if(kl&&kl.images[0]&&!list.includes(kl))list=[kl,...list];
+ if(!list.length){toast('Galeriye asılacak görselli eser yok');return}
+ G.list=list;G.title=title||'Galeri';G.on=true;G.drag=null;G.vel=G.dl=0;g3Tour(false);menuOpen(false);
+ $('g3d').classList.add('open');g3Up(false);document.body.style.overflow='hidden';$('g3T').textContent=G.title;$('g3R').max=list.length-1;
+ g3Size();G.cur=G.tc=kl?list.indexOf(kl):0;G.inn=1;g3Kick();ovOpen('g3d','galeri')}
+function g3Close(){if(!G.on)return;G.on=false;g3Tour(false);cancelAnimationFrame(G.raf);G.raf=0;$('g3d').classList.remove('open','up');$('g3world').innerHTML='';G.pan.clear();
+ if(!$('m').classList.contains('open'))document.body.style.overflow=''}
+const g3Dismiss=()=>ovClose('g3d',g3Close);
+function g3Hero(f,key){const p=f.querySelector('.pf');if(RM||!document.startViewTransition||!p){g3Open(null,null,key);return}let q=null;p.style.viewTransitionName='hero';
+ try{const vt=document.startViewTransition(()=>{p.style.viewTransitionName='';g3Open(null,null,key);if(!G.on)return;G.inn=0;cancelAnimationFrame(G.raf);G.raf=0;g3Tick(performance.now());const e=G.pan.get(G.idx);q=e&&e.querySelector('.pf');if(q)q.style.viewTransitionName='hero'});
+  vt.finished.finally(()=>{p.style.viewTransitionName='';if(q)q.style.viewTransitionName=''})}catch(e){p.style.viewTransitionName='';if(!G.on)g3Open(null,null,key)}}
+$('g3X').onclick=g3Dismiss;$('g3Tour').onclick=()=>g3Tour(!G.tour);
+$('g3Prev').onclick=()=>{g3Tour(false);g3Go(Math.round(G.tc)-1)};$('g3Next').onclick=()=>{g3Tour(false);g3Go(Math.round(G.tc)+1)};$('g3R').oninput=e=>{g3Tour(false);g3Go(+e.target.value,true)};
+/* tapping a work on the wall walks you into the room, standing in front of it */
+document.addEventListener('click',e=>{const f=e.target.closest?e.target.closest('.frame.hung[data-open]'):null;if(!f||f.closest('#m,#sd'))return;const l=byKey[f.dataset.open];if(!l||!l.images[0])return;e.stopPropagation();e.preventDefault();moAsk();g3Hero(f,l.key)},true);
+document.addEventListener('click',e=>{const h=e.target.closest('[data-g3h]');if(h){g3Up(!$('g3d').classList.contains('up'));return}
+ const b=e.target.closest('[data-g3],[data-g3k]');if(!b)return;e.preventDefault();moAsk();const k=b.dataset.g3k;
+ if(k&&G.on){const i=G.list.findIndex(l=>l.key==k);dismissM();if(i>=0)g3Go(i,true);return}
+ if(k)closeM();ready.then(()=>g3Open(null,null,k))});
+(()=>{const vp=$('g3vp'),sh=$('g3card'),now=()=>performance.now();
+ const down=e=>{if(e.button)return;G.drag={x:e.clientX,y:e.clientY,c:G.cur,lx:e.clientX,lt:now(),v:0,ax:'',el:e.currentTarget};G.moved=false;g3Kick()};
+ vp.addEventListener('pointerdown',down);sh.addEventListener('pointerdown',e=>{if(!G.mode&&!e.target.closest('button,a,.tag,.star'))down(e)});
+ addEventListener('pointermove',e=>{const g=G.drag;if(!G.on||!g)return;const dx=e.clientX-g.x,dy=e.clientY-g.y;
+  if(!G.moved){if(Math.abs(dx)+Math.abs(dy)<8)return;G.moved=true;g.ax=g.el==sh||Math.abs(dy)>Math.abs(dx)*1.2?'y':'x';g3Tour(false)}
+  if(g.ax!='x')return;const t=now(),n=G.list.length;let c=g.c-dx/G.Wp;if(c<0)c*=.35;else if(c>n-1)c=n-1+(c-n+1)*.35;   /* rubber band at the ends */
+  if(t>g.lt){g.v=g.v*.6-(e.clientX-g.lx)/(t-g.lt)/G.Wp*400;g.lx=e.clientX;g.lt=t}G.vel=g.v;G.cur=G.tc=c});
+ const up=e=>{const g=G.drag;if(!g)return;G.drag=null;if(!G.moved||!G.on)return;const dx=e.clientX-g.x,dy=e.clientY-g.y;
+  if(g.ax=='x'){const idle=now()-g.lt>90,from=Math.round(g.c);let t=Math.round(G.cur+(idle?0:clampN(g.v*.11,-2,2)));if(t==from&&Math.abs(dx)>42)t=from+(dx<0?1:-1);g3Go(t)}
+  else if(!G.mode){if(dy<-36)g3Up(true);else if(dy>36&&$('g3card').querySelector('.g3-sb').scrollTop<=0)g3Up(false)}g3Kick()};
+ addEventListener('pointerup',up);addEventListener('pointercancel',()=>{if(G.drag){G.drag=null;if(G.on)g3Go(Math.round(G.cur))}});
+ vp.addEventListener('wheel',e=>{e.preventDefault();g3Tour(false);const d=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY;G.tc=clampN(G.tc+d*(e.deltaMode?.12:.0035),-.3,G.list.length-.7);clearTimeout(G.wt);G.wt=setTimeout(()=>g3Go(Math.round(G.tc)),130);g3Kick()},{passive:false});
+ vp.addEventListener('click',e=>{if(G.moved){G.moved=false;return}g3Tour(false);if(e.target.closest('[data-g3top]')){g3Go(0,true);return}
+  const p=e.target.closest('.g3-p');if(!p){g3Up(false);return}const i=+p.dataset.gi,l=G.list[i];if(i!=Math.round(G.cur)){g3Go(i);return}if(l)zoomOpen(l.images,0)});   /* the work in front of you: look closer */
+ document.addEventListener('keydown',e=>{if(!G.on||ovIsOpen('m')||ovIsOpen('zoom'))return;const k=e.key.length==1?e.key.toLowerCase():e.key,l=G.list[G.idx],up=$('g3d').classList.contains('up');
+  if(k=='Escape'){if(!up)return;g3Up(false)}
+  else if(k=='ArrowRight'||k=='d'){g3Tour(false);g3Go(Math.round(G.tc)+1)}else if(k=='ArrowLeft'||k=='a'){g3Tour(false);g3Go(Math.round(G.tc)-1)}
+  else if(k=='ArrowUp'||k=='w')g3Up(true);else if(k=='ArrowDown'||k=='s')g3Up(false)
+  else if((k=='Enter'||k==' ')&&l&&!e.target.closest('button,a,input'))openLot(l.key)
+  else if(k!='/')return;
+  e.preventDefault();e.stopPropagation()},true);
+ let rt=0;const re=()=>{clearTimeout(rt);rt=setTimeout(()=>{if(G.on){g3Size();g3Kick()}},60)};addEventListener('resize',re);
+ ['(device-posture: folded)','(horizontal-viewport-segments: 2)','(vertical-viewport-segments: 2)'].forEach(q=>{try{matchMedia(q).addEventListener('change',re)}catch(e){}})})();
+/* ===== artist catalogues =====
+   One catalogue per artist, compiled on the spot from every record the archive holds for them: what is on sale now, then every
+   finished auction, newest first, a chapter per year. Nothing is curated by hand, so a catalogue grows as the archive does.
+   It is a landscape album of leaves that turn in 3D. Every spread is one work: its plate on one page, its entry on the other.
+   Upright screens bind it along the top (leaves turn upwards); wide screens and book-style folds bind it at the side. */
+const B={on:false,name:'',loading:false,P:[],L:0,kmax:0,k:0,t:0,ax:'x',pw:0,ph:0,raf:0,an:false,drag:null,moved:false,leaves:new Map(),live:[],old:[],hero:null};
+const bkPrice=x=>x.last_bid||x.current_bid||x.start_price||0;
+async function bkData(name){await ready;try{await lbLoad()}catch(e){}const a=lbMatch(name),k=akey(name);let past=null;
+ if(typeof artistPast=='function')past=await artistPast(name).catch(()=>null);   /* per-artist shard when there is one */
+ if(!past)past=((await loadPast().catch(()=>[]))||[]).filter(x=>x.artist&&(a?lbMatch(x.artist)===a:akey(x.artist)==k));
+ const live=artistLots(a,name).filter(l=>l.images[0]).sort((x,y)=>(x._e||9e15)-(y._e||9e15));
+ const old=past.filter(x=>x.image).sort((x,y)=>(y.end_date||'').localeCompare(x.end_date||''));return{live,old}}
+const bkYear=o=>(o.end_date||'').slice(0,4)||'Tarihsiz';
+/* pages come in pairs after the cover: odd index = first page of a spread (plate / chapter title), even = second (entry / contact sheet) */
+function bkPages(live,old){const P=[{t:'cover'},{t:'t1'},{t:'t2'}];let no=0;
+ const chap=(h,sub,list,isLive)=>{const c2={t:'c2',items:[],n:list.length};P.push({t:'c1',h,sub,txt:!/^\d{4}$/.test(h)},c2);list.forEach(o=>{no++;c2.items.push({o,pi:P.length});P.push({t:'im',o},{t:'tx',o,live:isLive,no})})};
+ if(live.length)chap('Şu an satışta','Güncel müzayedeler',live,true);
+ const by={};old.forEach(o=>{(by[bkYear(o)]=by[bkYear(o)]||[]).push(o)});Object.keys(by).sort().reverse().forEach(y=>chap(y,'Biten müzayedeler',by[y],false));
+ if(!no)P.push({t:'c1',h:'Henüz görselli kayıt yok',sub:'16/22',txt:1},{t:'c2',items:[],n:0});return P}
+function bkPage(p){const n=B.name;if(!p)return '<div class="bk-pg"></div>';const all=B.live.length+B.old.length;
+ if(p.t=='cover')return `<div class="bk-pg cover">${B.hero?`<img src="${esc(B.hero.images[0])}" alt="" draggable="false" onerror="this.remove()">`:''}<div class="cvt"><small>16/22 · Katalog</small><b>${esc(n)}</b><span>${B.loading?'Derleniyor…':all.toLocaleString('tr-TR')+' eser'}</span></div></div>`;
+ if(p.t=='t1')return `<div class="bk-pg t1"><small>Müzayede kataloğu</small><h2>${esc(n)}</h2></div>`;
+ if(p.t=='t2'){const A=[...B.live,...B.old],pr=A.map(bkPrice).filter(Boolean),ys=B.old.map(bkYear).filter(y=>/^\d{4}$/.test(y)).sort(),hs=new Set(A.map(x=>x.house));
+  return `<div class="bk-pg t2"><dl><dt>Eser</dt><dd>${A.length.toLocaleString('tr-TR')}</dd><dt>Şu an satışta</dt><dd>${B.live.length}</dd><dt>Müzayede evi</dt><dd>${hs.size}</dd>${ys.length?`<dt>Dönem</dt><dd>${ys[0]}${ys[ys.length-1]!=ys[0]?' – '+ys[ys.length-1]:''}</dd>`:''}${pr.length?`<dt>Fiyat aralığı</dt><dd>${TL(Math.min(...pr))} – ${TL(Math.max(...pr))}</dd>`:''}</dl>
+  <p>Bu katalog, arşivdeki bütün müzayede kayıtlarından kendiliğinden derlenir. Müzayedesi biten eserler de burada kalır; yeni eserler geldikçe sayfalar eklenir.</p></div>`}
+ if(p.t=='c1')return `<div class="bk-pg c1${p.txt?' txt':''}"><small>${esc(p.sub||'')}</small><b>${esc(p.h)}</b></div>`;
+ if(p.t=='c2')return `<div class="bk-pg c2"><small>${p.n.toLocaleString('tr-TR')} eser</small><div class="bk-th">${p.items.slice(0,p.items.length>18?17:18).map(x=>`<button type="button" data-bkgo="${x.pi}" aria-label="Esere git"><img loading="lazy" draggable="false" src="${esc(x.o.images[0])}" alt="" onerror="this.remove()"></button>`).join('')}${p.items.length>18?`<span>+${p.items.length-17}</span>`:''}</div></div>`;
+ const o=p.o;if(p.t=='im')return `<div class="bk-pg im" data-bkz="${esc(o.images[0])}"><img decoding="async" draggable="false" src="${esc(o.images[0])}" alt="" onload="this.classList.add('ld')" onerror="this.remove()"></div>`;
+ const d=o.end_date?o.end_date.slice(0,10).split('-').reverse().join('.'):'',sz=p.live?o.size:sizeOf(o.description).txt;
+ return `<div class="bk-pg tx"><div class="no">${p.no}</div><b>${esc(o.description||o.title||'Eser')}</b><dl>${sz?`<dt>Ölçü</dt><dd>${esc(sz)}</dd>`:''}<dt>Müzayede evi</dt><dd>${esc(o.house||'—')}</dd>${o.auction?`<dt>Müzayede</dt><dd>${esc(o.auction)}</dd>`:''}${d?`<dt>${p.live?'Bitiş':'Tarih'}</dt><dd>${d}</dd>`:''}</dl>
+ <div class="bk-ft"><u>${p.live?TL(priceOf(o)):pastPrice(o)}</u>${p.live?'<em>Satışta</em>':''}<button type="button" data-${p.live?'open':'past'}="${esc(o.key)}">Eseri aç →</button></div></div>`}
+function bkDraw(){const bk=$('bkBook'),k=B.k,X=B.ax=='x',need=new Set();for(let j=Math.max(0,k-2);j<=Math.min(B.L-1,k+1);j++)need.add(j);
+ for(const[j,e]of B.leaves)if(!need.has(j)){e.remove();B.leaves.delete(j)}
+ for(const j of need){let e=B.leaves.get(j);if(!e){e=document.createElement('div');e.className='bk-leaf';e.innerHTML=`<div class="bk-face f">${bkPage(B.P[2*j])}</div><div class="bk-face b">${bkPage(B.P[2*j+1])}</div>`;B.leaves.set(j,e);bk.appendChild(e)}
+  const act=j==k&&B.t>0&&B.t<1,a=j<k?180:j>k?0:180*B.t,z=act?4:j<k?-(k-1-j)*.7:-(j-k)*.7;
+  e.style.transform=`translateZ(${z}px) rotate${X?'X':'Y'}(${(X?a:-a).toFixed(2)}deg)`;e.style.setProperty('--sh',act?Math.sin(Math.PI*B.t).toFixed(3):0)}
+ const open=Math.min(1,k+B.t),sh=((open-1)*(X?B.ph:B.pw)/2).toFixed(1);   /* a closed album sits in the middle and slides over as the cover opens */
+ bk.style.transform=X?`translateY(${sh}px)`:`translateX(${sh}px)`;bk.style.setProperty('--lo',k+B.t>=.5?1:0);
+ $('bkN').textContent=k?k+' / '+B.kmax:'Kapak';if(!B.an&&!B.drag)$('bkR').value=k}
+function bkSize(keep){const st=$('bkStage'),m=g3Mode(),el=$('bk'),fold=m=='seg-h'||m=='seg-v'||matchMedia('(device-posture: folded)').matches;el.classList.toggle('fold',fold);
+ const w=st.clientWidth,h=st.clientHeight;B.ax=m=='seg-h'||(m!='seg-v'&&w/h>1.15)?'y':'x';el.classList.toggle('ax',B.ax=='x');el.classList.toggle('ay',B.ax=='y');
+ if(B.ax=='x'){if(fold){B.pw=w;B.ph=Math.floor(h/2)}else{B.pw=Math.floor(Math.min(w-24,(h/2-8)*1.6));B.ph=Math.floor(Math.min(h/2-8,B.pw/1.2))}}
+ else if(fold){B.pw=Math.floor(w/2);B.ph=h}else{B.ph=Math.floor(Math.min(h-16,(w/2-20)/1.15));B.pw=Math.floor(Math.min(w/2-20,B.ph*1.5))}
+ const bk=$('bkBook');bk.style.width=B.pw+'px';bk.style.height=B.ph+'px';bk.style.left=(B.ax=='x'?(w-B.pw)/2:w/2)+'px';bk.style.top=(B.ax=='x'?h/2:(h-B.ph)/2)+'px';
+ B.L=Math.ceil(B.P.length/2);B.kmax=Math.max(0,B.L-1);B.k=keep?Math.min(B.k,B.kmax):0;B.t=0;$('bkR').max=B.kmax;B.leaves.forEach(e=>e.remove());B.leaves.clear();bkDraw()}
+function bkAnim(to,ms,then){cancelAnimationFrame(B.raf);const from=B.t,t0=performance.now();ms=RM?1:ms*Math.max(.3,Math.abs(to-from));B.an=true;
+ const step=now=>{const u=Math.min(1,(now-t0)/ms),e=u<.5?4*u*u*u:1-Math.pow(-2*u+2,3)/2;B.t=from+(to-from)*e;if(u>=1){B.an=false;if(then)then()}bkDraw();if(u<1)B.raf=requestAnimationFrame(step)};B.raf=requestAnimationFrame(step)}
+const bkFwd=()=>{B.k++;B.t=0};
+const bkNext=()=>{if(!B.on||B.an||B.k>=B.kmax)return;bkAnim(1,900,bkFwd)},bkPrev=()=>{if(!B.on||B.an||B.k<=0)return;B.k--;B.t=1;bkAnim(0,900)};
+async function openBook(name,quiet){if(!name)return;await ready;const rec=AR&&AR.byN&&AR.byN[name];if(rec&&rec.n)name=rec.n;
+ cancelAnimationFrame(B.raf);const lv=artistLots(lbMatch(name),name).filter(l=>l.images[0]);
+ Object.assign(B,{on:true,name,loading:true,live:[],old:[],hero:lv[0]||null,P:[{t:'cover'}],k:0,t:0,an:false,drag:null});
+ $('bk').classList.add('open');document.body.style.overflow='hidden';$('bkT').textContent=name;$('bkS').textContent='Katalog derleniyor…';bkSize();if(!quiet)ovOpen('book','katalog='+encodeURIComponent(name));
+ const d=await bkData(name);if(!B.on||B.name!==name)return;const A=[...d.live,...d.old];B.loading=false;B.live=d.live;B.old=d.old;B.hero=A.reduce((m,x)=>!m||bkPrice(x)>bkPrice(m)?x:m,null);B.P=bkPages(d.live,d.old);
+ $('bkS').textContent=A.length.toLocaleString('tr-TR')+' eser'+(d.live.length?' · '+d.live.length+' satışta':'');bkSize();setTimeout(()=>{if(B.on&&B.name===name&&B.k==0)bkNext()},650)}
+function bkClose(){if(!B.on)return;B.on=false;cancelAnimationFrame(B.raf);B.an=false;$('bk').classList.remove('open');B.leaves.forEach(e=>e.remove());B.leaves.clear();if(!$('m').classList.contains('open')&&!G.on)document.body.style.overflow=''}
+const bkDismiss=()=>ovClose('book',bkClose);
+/* the shelf: a landscape cover per artist, carrying one of their works when the archive can name one cheaply */
+let catLim=36,catT=0,CVL=null,AIX=null;const NOTART=/hizmet|bedelsiz|hemen al|imza|okunamadi|anonim|bilinmeyen|resim|tablo|avrupa|osmanli|ekol|yuzyil|adet|lot |\d{3}/;   /* listing text that ended up in the artist field */
+const aixLoad=()=>AIX?Promise.resolve(AIX):fetch('data/artist_index.json'+V).then(r=>r.ok?r.json():{}).then(d=>AIX=(d&&d.artists)||{}).catch(()=>AIX={});
+function catCover(a){if(!CVL){CVL=new Map();D.lots.forEach(l=>{if(l.images[0]&&l.artist){const k=akey(l.artist);if(!CVL.has(k))CVL.set(k,l.images[0])}})}const k=akey(a.n),x=AIX&&AIX['k:'+k];return CVL.get(k)||(Array.isArray(x)&&mir(x[2]))||''}
+function catRender(){Promise.all([artLoad(),aixLoad()]).then(()=>{const q=norm($('catQ').value).split(' ').filter(Boolean);let L=(AR.artists||[]).filter(a=>a.n&&a.c>0&&!NOTART.test(a._k||(a._k=norm(a.n))));
+ if(q.length)L=L.filter(a=>{const s=a._s||(a._s=norm([a.n,...(a.v||[])].join(' ')));return q.every(w=>s.includes(w))});L.sort((x,y)=>y.c-x.c);
+ $('catN').textContent=L.length.toLocaleString('tr-TR')+' katalog.';$('catMore').style.display=L.length>catLim?'':'none';
+ $('bkShelf').innerHTML=L.slice(0,catLim).map(a=>{const im=catCover(a);return `<button type="button" class="ctl" data-book="${esc(a.n)}"><span class="ctl-i">${im?`<img loading="lazy" draggable="false" src="${esc(im)}" alt="" onerror="this.remove()">`:''}<em>${esc((a.n||'?').trim().charAt(0))}</em></span><b>${esc(a.n)}</b><i>${a.c.toLocaleString('tr-TR')} eser</i></button>`}).join('')||emptyBox('Bu adla katalog yok','Sanatçının adını farklı yazmayı deneyin.')}).catch(()=>{})}
+$('catQ').addEventListener('input',()=>{clearTimeout(catT);catT=setTimeout(()=>{catLim=36;catRender()},140)});$('catMore').onclick=()=>{catLim+=36;catRender()};
+$('bkX').onclick=bkDismiss;$('bkPrev').onclick=bkPrev;$('bkNext').onclick=bkNext;
+$('bkR').oninput=e=>{if(B.an)return;B.k=Math.max(0,Math.min(B.kmax,+e.target.value));B.t=0;bkDraw()};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-book]');if(b){e.preventDefault();openBook(b.dataset.book);return}
+ const g=e.target.closest('[data-bkgo]');if(g&&B.on&&!B.an){B.k=Math.min(B.kmax,(+g.dataset.bkgo+1)>>1);B.t=0;bkDraw();return}
+ const z=e.target.closest('[data-bkz]');if(z&&B.on)zoomOpen([z.dataset.bkz],0)});
+/* home */
+function renderHome(){if(!D.lots.length)return;const now=Date.now(),L=D.lots.filter(l=>l.images[0]&&(!l._e||l._e>now)).sort((x,y)=>(x._e||9e15)-(y._e||9e15)),S=L.length?L:D.lots.filter(l=>l.images[0]),a=S[0],b=S.find(l=>a&&l._a!==a._a&&l.images[0]!==a.images[0])||a;
+ $('hmA').textContent=`${D.lots.length.toLocaleString('tr-TR')} eser satışta · ${new Set(D.lots.map(l=>l.site)).size} müzayede evi`;
+ if(a&&!$('hmAi').firstChild)$('hmAi').innerHTML=`<div class="door-img frame hung ph">${hang(a.images[0],a.artist,a.key,(a.description||'')+' '+(a.category||''))}</div>`;
+ if(b&&!$('hmBi').firstChild)$('hmBi').innerHTML=`<div class="door-img"><img class="cv" loading="lazy" draggable="false" src="${esc(b.images[0])}" alt="" onerror="this.remove()"></div>`;
+ if(!$('hmRow').firstChild){$('hmRow').innerHTML=slider(S.slice(0,14));$('hmRow').querySelectorAll('.srow').forEach(slArrows)}
+ artLoad().then(()=>{$('hmB').textContent=`${(AR.artists||[]).length.toLocaleString('tr-TR')} sanatçı kataloğu, kendiliğinden derlenir`}).catch(()=>{})}
+$('hmS').onclick=()=>{if(innerWidth<=640)gsOpen();else $('gq').focus()};
+(()=>{const st=$('bkStage'),dOf=(e,g)=>B.ax=='x'?e.clientY-g.y:e.clientX-g.x;
+ st.addEventListener('pointerdown',e=>{if(e.button||B.an)return;B.drag={x:e.clientX,y:e.clientY,m:''};B.moved=false});
+ addEventListener('pointermove',e=>{const g=B.drag;if(!B.on||!g)return;const d=dOf(e,g);if(!B.moved){if(Math.abs(d)<8)return;B.moved=true;
+   if(d<0)g.m=B.k<B.kmax?'f':'x';else if(B.k>0){g.m='b';B.k--;B.t=1}else g.m='x'}
+  const W=(B.ax=='x'?B.ph:B.pw)*1.6;if(g.m=='f')B.t=clampN(-d/W,0,.999);else if(g.m=='b')B.t=clampN(1-d/W,.001,1);else return;bkDraw()});   /* the leaf follows the finger */
+ const up=()=>{const g=B.drag;if(!g)return;B.drag=null;if(!B.moved||!B.on)return;setTimeout(()=>{B.moved=false},60);if(g.m=='f'){B.t>.22?bkAnim(1,900,bkFwd):bkAnim(0,900)}else if(g.m=='b'){B.t<.78?bkAnim(0,900):bkAnim(1,900,bkFwd)}};
+ addEventListener('pointerup',up);addEventListener('pointercancel',up);
+ $('bk').addEventListener('click',e=>{if(B.moved){B.moved=false;e.stopPropagation();e.preventDefault();return}if(!e.target.closest('#bkStage')||e.target.closest('[data-bkgo],[data-bkz],button,a'))return;
+  const r=st.getBoundingClientRect();((B.ax=='x'?e.clientY-r.top>r.height/2:e.clientX-r.left>r.width/2)?bkNext:bkPrev)()},true);
+ st.addEventListener('wheel',e=>{e.preventDefault();const d=Math.abs(e.deltaX)>Math.abs(e.deltaY)?e.deltaX:e.deltaY;if(Math.abs(d)>12)(d>0?bkNext:bkPrev)()},{passive:false});
+ document.addEventListener('keydown',e=>{if(!B.on||ovIsOpen('m')||ovIsOpen('zoom'))return;const k=e.key;if(k=='ArrowRight'||k=='ArrowDown'||k==' ')bkNext();else if(k=='ArrowLeft'||k=='ArrowUp')bkPrev();else return;e.preventDefault();e.stopPropagation()},true);
+ let rt=0;const re=()=>{clearTimeout(rt);rt=setTimeout(()=>{if(B.on)bkSize(true)},80)};addEventListener('resize',re);
+ ['(device-posture: folded)','(horizontal-viewport-segments: 2)','(vertical-viewport-segments: 2)'].forEach(q=>{try{matchMedia(q).addEventListener('change',re)}catch(e){}})})();
 /* ===== boot ===== */
 ghUI();
 (()=>{const h=dec(location.hash.slice(1));history.replaceState({},'',location.href);navQuiet=true;try{syncFilterUI();route(h,true)}finally{navQuiet=false}

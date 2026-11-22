@@ -14,3 +14,5 @@ lebriz_cache/
 lebriz*.log
 auctions.db
 sources.json.tmp
+mirror_state.json
+mirror_state.json.tmp

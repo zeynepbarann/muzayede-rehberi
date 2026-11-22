@@ -9,5 +9,9 @@ python3 scrape.py
 # Finished MüzayedeApp auctions (these sites refuse GitHub, so history is collected here). Incremental, max ~40 min.
 timeout 45m python3 history_mapp.py --minutes 40 || echo "history_mapp incomplete (continues next run)"
 if [ "$1" = "--lebriz" ] || [ "$(date +%u)" = "1" ]; then timeout 3h python3 lebriz.py || echo "lebriz import incomplete (resumes next run)"; fi
+# Copy new images into the private bucket so they outlive the auction (resumes where it stopped; needs GCS_KEY).
+timeout 35m python3 mirror_images.py --minutes 30 || echo "image mirror incomplete (continues next run)"
 python3 lebriz_export.py
 python3 export.py
+# Per-artist shards of finished auctions (data/artist/*.json + data/artist_index.json), so phones never load the whole archive.
+python3 shard_past.py || echo "shard_past failed (site falls back to the full past files)"
