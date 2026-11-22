@@ -775,6 +775,22 @@ body.nav-c nav.tabs{width:min(292px,calc(100vw - 24px));height:56px;grid-templat
 .gs-tags{display:none}
 @media(max-width:640px){.iconbtn.gsBtn{display:none!important}.gs.full:has(#gq:placeholder-shown) .gs-tags{display:flex;flex-wrap:wrap;gap:8px;position:fixed;left:12px;right:12px;top:calc(72px + env(safe-area-inset-top))}.gs-tags button{height:38px;padding:0 15px;border:1px solid rgba(17,17,16,.12);border-radius:19px;background:#fff;color:var(--ink);font:500 12.5px var(--sans);box-shadow:0 6px 16px rgba(17,17,16,.1);cursor:pointer}}
 nav.tabs button.on{font-size:12px!important;font-weight:600!important}body.nav-c nav.tabs button.on{font-size:10.5px!important}
+
+/* ===== work page: one page that scrolls, picture first, everything below it ===== */
+#m.wpm{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;display:block}
+#m.wpm .sheet{position:relative;inset:auto;height:auto;min-height:100%;overflow:visible}
+#m.wpm .sheet>.x{position:fixed}
+.wp{position:relative;inset:auto;display:block;min-height:100%}
+.wp-top{position:sticky;top:0;z-index:10;height:calc(64px + env(safe-area-inset-top));background:rgba(248,247,244,.94)}
+.wp-stage{height:min(58dvh,560px)}
+.wp-sheet{display:block;min-height:0;padding:22px 20px calc(18px + env(safe-area-inset-bottom))}.wp-sheet>*+*{margin-top:18px}
+.wp-sec{padding-top:18px;border-top:1px solid var(--line);margin-top:24px!important}.wp-sec>h3{margin:0 0 12px;font:500 10px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}.wp-sec>*+*{margin-top:12px}
+.wp-head h2{margin-bottom:0}.wp-desc{margin-top:10px}.wp-price{padding:0}.wp .tags{margin:0}
+.wp-next{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:26px!important;padding-top:6px}.wp-next button{min-height:44px;padding:0;border:0;background:none;color:#111110;font:500 22px var(--serif);cursor:pointer}.wp-next button[data-wn="-1"]{font-size:17px;color:var(--muted)}
+.wp-cta{position:sticky;bottom:calc(10px + env(safe-area-inset-bottom));z-index:6;margin-top:18px!important;box-shadow:0 10px 26px rgba(17,17,16,.22)}
+@media(min-width:640px) and (min-aspect-ratio:4/5),(min-width:640px) and (max-height:520px){.wp{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(340px,.85fr);grid-template-rows:auto 1fr;grid-template-areas:"top sheet" "stage sheet"}.wp-top{grid-area:top;position:sticky;top:0}.wp-stage{grid-area:stage;position:sticky;top:calc(64px + env(safe-area-inset-top));height:calc(100dvh - 64px - env(safe-area-inset-top));align-self:start}.wp-sheet{grid-area:sheet;min-height:100dvh;padding:26px 28px calc(20px + env(safe-area-inset-bottom))}}
+@media(horizontal-viewport-segments:2){.wp{grid-template-columns:env(viewport-segment-width 0 0) env(viewport-segment-width 1 0);column-gap:calc(env(viewport-segment-left 1 0) - env(viewport-segment-right 0 0))}}
+@media(vertical-viewport-segments:2){.wp{display:block}.wp-stage{height:calc(env(viewport-segment-bottom 0 0) - 64px - env(safe-area-inset-top))}.wp-sheet{margin-top:calc(env(viewport-segment-top 0 1) - env(viewport-segment-bottom 0 0))}}
 </style></head><body>
 <header><div class="hrow"><div class="logo" id="home" aria-label="16/22 Müzayede Rehberi"><span class="num">16/22</span><div>Müzayede <span>Rehberi</span></div></div>
 <div class="gs" id="gsWrap" role="search"><button class="iconbtn gsX" id="gsX" aria-label="Aramayı kapat">✕</button><svg class="ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -1315,12 +1331,12 @@ function nearLots(l,skip){const W={tech:3,size:2,price:2,per:1,cat:1},tk=[...(l.
    One screen for live and finished lots: the works turn past in 3D (this one, the artist's others, then the nearest by technique,
    size, price and period), and the panel below follows the one in front. Side by side on wide screens; split on a foldable's hinge. */
 const WP={on:false,list:[],i:0,p:0,tab:'eser',els:new Map(),drag:null,moved:false,tx:0,ty:0,raf:0,hq:0,bg:0};
-const wpHash=x=>(x.past?'past=':'lot=')+encodeURIComponent(x.key);
+const wpHash=x=>x.lebriz?'katalog='+encodeURIComponent(x.artist):(x.past?'past=':'lot=')+encodeURIComponent(x.key);
 function wpList(x){const same=x._a?D.lots.filter(y=>y.key!==x.key&&y._a==x._a&&y.images[0]).sort((a,b)=>(a._e||9e15)-(b._e||9e15)).slice(0,6):[];return [x,...same,...(x.past?[]:nearLots(x,new Set(same)).slice(0,8))]}
 function wpErr(im){if(im.dataset.o&&im.getAttribute('src')!=im.dataset.o){im.src=im.dataset.o;return}const a=im.parentNode;im.remove();if(a)a.insertAdjacentHTML('afterbegin','<span class="wp-noimg">Görsel yok</span>')}
 function wpSync(){const c=WP.i,a=Math.max(0,c-2),b=Math.min(WP.list.length-1,c+2),st=$('wpStage');if(!st)return;
  for(const[n,e]of WP.els)if(n<a||n>b){e.remove();WP.els.delete(n)}
- for(let n=a;n<=b;n++){if(WP.els.has(n))continue;const x=WP.list[n],im=x.images&&x.images[0],e=document.createElement('div');e.className='wp-sl';
+ for(let n=a;n<=b;n++){if(WP.els.has(n))continue;const x=wpAt(n),im=x.images&&x.images[0],e=document.createElement('div');e.className='wp-sl';
   e.innerHTML=`<button type="button" class="wp-art" data-wi="${n}" aria-label="${esc(x.artist||x.title||'Eser')}">${im?`<img draggable="false" decoding="async" src="${esc(thumb(im))}" data-o="${esc(im)}" alt="" onerror="wpErr(this)">`:'<span class="wp-noimg">Görsel yok</span>'}${x.images&&x.images.length>1?`<i class="wp-n">${x.images.length} görsel</i>`:''}</button>`;
   WP.els.set(n,e);st.appendChild(e)}}
 function wpDraw(){WP.raf=0;const st=$('wpStage');if(!WP.on||!st)return;const W=st.clientWidth;
@@ -1328,27 +1344,41 @@ function wpDraw(){WP.raf=0;const st=$('wpStage');if(!WP.on||!st)return;const W=s
   const art=e.firstElementChild,f=n==WP.i;art.style.transform=f?`rotateX(${(-WP.ty*7-MO.y*5).toFixed(2)}deg) rotateY(${(WP.tx*9+MO.x*7).toFixed(2)}deg)`:''}}
 const wpKick=()=>{if(!WP.raf)WP.raf=requestAnimationFrame(wpDraw)};
 function wpSharp(){clearTimeout(WP.hq);WP.hq=setTimeout(()=>{const e=WP.els.get(WP.i),im=e&&e.querySelector('img'),o=im&&im.dataset.o;if(!o||im.getAttribute('src')==o)return;const t=new Image();t.onload=()=>{if(im.isConnected)im.src=o};t.src=o},320)}
-function wpFill(){const x=WP.list[WP.i],P=!!x.past,k=esc(x.key),n=WP.list.length;if(!$('wpBody'))return;
- const price=P?(x.last_bid?TL(x.last_bid):x.start_price?TL(x.start_price):estTxt(x)||'—'):TL(priceOf(x)),lab=P?(x.last_bid?'Son pey':x.start_price?'Son görülen fiyat':'Tahmini değer'):priceLab(x);
- const size=P?sizeOf(x.description).txt:x.size,soon=!P&&x._e&&x._e-Date.now()<864e5&&x._e>Date.now(),end=P?(x.end_date?fshort(dt(x.end_date)):''):(x._e?fshort(x._e):leftTxt(x));
- const T=(a,b,c)=>b?`<div class="wp-tile"><span>${a}</span><b${c?' class="soon"':''}>${esc(b)}</b></div>`:'',R=(a,b)=>b?`<div class="wp-row"><span>${a}</span><b>${b}</b></div>`:'';
- const rec=x.artist&&AR&&AR.byN&&AR.byN[x.artist],same=x._a?D.lots.filter(y=>y.key!==x.key&&y._a==x._a&&y.images[0]).slice(0,6):[],cover=(x.images&&x.images[0])||'',hist=(x.history||[]).slice(-8).reverse().map(r=>R(esc(fshort(dt(r[0]))),`${TL(r[1])} · ${r[2]} pey`)).join('');
- const pane=(id,h)=>`<div class="lpane${WP.tab==id?' on':''}" data-pane="${id}">${h}</div>`;
- $('wpPos').textContent=n>1?`${WP.i+1} / ${n}`:'';
- const fb=$('wpFav');fb.dataset.fav=x.key;fb.classList.toggle('on',fav.has(x.key));const cb=$('wpCmp');cb.hidden=P;cb.dataset.cmp=x.key;cb.classList.toggle('on',cmp.includes(x.key));
- $('wpBody').innerHTML=`<div class="wp-head"><div class="wp-meta">${esc(x.house||'')}${x.lot_no?' · Lot '+esc(x.lot_no):''}${P?' · Müzayede bitti':''}</div><h2>${x.artist?bLink(x.artist)+starBtn(x.artist):esc(x.title||'Eser')}</h2></div>
- <div class="wp-tabs" role="tablist" aria-label="Eser bölümleri">${[['eser','Eser'],['fiyat','Fiyat'],['sanatci','Sanatçı']].map(([id,t])=>`<button type="button" role="tab" data-lt="${id}"${WP.tab==id?' class="on"':''}>${t}</button>`).join('')}</div>
- <div class="wp-scroll" id="wpScroll">
- ${pane('eser',`${x.description?`<p class="wp-desc">${esc(x.description)}</p>`:''}${(x._tags||[]).length?`<div class="tags">${x._tags.filter(t=>t.k!='house').map(t=>tagChip(t,F.tags.includes(t.id))).join('')}</div>`:''}<div class="wp-tiles">${T('Ölçü',size)}${T(P?'Bitti':'Bitiş',end,soon)}${T('Teknik',x.tech)}${T('Yıl',x.year)}</div>${x.auction?`<div class="wp-rows">${R('Müzayede',esc(x.auction))}${x.category?R('Kategori',esc(x.category)):''}</div>`:''}`)}
- ${pane('fiyat',`<div class="wp-price"><span>${lab}</span><b>${esc(price)}</b>${x.estimate&&x.estimate!=priceOf(x)?`<small>Tahmini değer ${TL(x.estimate)}</small>`:''}</div><div class="wp-rows">${R('Açılış fiyatı',x.start_price&&lab!='Açılış fiyatı'?TL(x.start_price):'')}${R('Verilen pey',x.bid_count!=null?x.bid_count:'')}${R('cm² fiyatı',x.ppc?ppcTxt(x):'')}${hist}</div>${x._a?`<div id="apanel">${P?'':artistPanel(x,null)}</div>`:''}<div id="lbPrice"></div>`)}
- ${pane('sanatci',x.artist?`<button type="button" class="wp-cat" data-book="${esc(x.artist)}">${cover?`<img loading="lazy" src="${esc(thumb(cover))}" data-o="${esc(cover)}" alt="" onerror="${thumbErr}">`:''}<span><b>Sanatçı kataloğu</b><small>${rec&&rec.c?rec.c.toLocaleString('tr-TR')+' eser arşivde':'Bütün eserleri'}</small></span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button>${same.length?`<h4>Şu an satışta</h4><div class="simrow">${same.map(simTile).join('')}</div>`:''}<div id="lbLot"></div><a class="wp-link" href="#artist=${encodeURIComponent(x.artist)}" data-artist="${esc(x.artist)}">Sanatçı sayfası →</a>`:'<p class="muted">Bu eserde sanatçı bilgisi yok.</p>')}
- </div>${x.url?`<a class="wp-cta" href="${esc(x.url)}" target="_blank" rel="noopener"><span>${P?'Kaynak sayfası':'Müzayedeye git'}</span><span>${esc(price)}</span></a>`:''}`;
- clearTimeout(WP.bg);WP.bg=setTimeout(()=>{if(!WP.on||WP.list[WP.i]!==x)return;if(x.artist&&x._a)pastFor(x.artist,undefined,true).then(p=>{if(WP.on&&WP.list[WP.i]===x&&$('apanel'))$('apanel').innerHTML=artistPanel(x,p)}).catch(()=>{});lbLotBlock(x);lbPriceBlock(x)},240)}
-function wpGo(i){i=clampN(i,0,WP.list.length-1);const ch=i!==WP.i;WP.i=i;WP.p=i;if(ch){wpSync();wpFill();wpSharp();try{history.replaceState(history.state,'',urlFor(wpHash(WP.list[i])))}catch(e){}curRoute=(history.state||{}).base??curRoute}wpKick()}
-function wpOpen(x){if(WP.on&&$('m').classList.contains('open')){const n=WP.list.findIndex(y=>y.key===x.key);if(n>=0){wpGo(n);return}}
- WP.list=wpList(x);WP.i=WP.p=0;WP.tx=WP.ty=0;WP.tab='eser';WP.drag=null;WP.els.clear();WP.on=true;
+/* a position in the list: a work, or (from the archive grid) a row of the light index, filled in when it comes to the front */
+const ARI=new Map();
+function arItem(n){let x=ARI.get(n);if(x)return x;const r=AX.R[n],k=AX.H[r[1]]+'|'+r[7];if(r[5]==1&&byKey[k])x=byKey[k];else if(r[5]==0&&PASTBY[k])x=PASTBY[k];else{const full=arFull(r),name=AX.A[r[0]];x={_lite:true,key:k,site:AX.H[r[1]],lot_id:r[7],past:true,lebriz:r[5]==2,artist:name,_a:AX.an[r[0]],house:AX.hs[r[1]],images:full?[full]:[],image:full,start_price:r[3]||null,end_date:r[2]?String(r[2]).slice(0,4)+'-'+String(r[2]).slice(4,6)+'-01':'',description:''}}ARI.set(n,x);return x}
+const wpAt=i=>{const v=WP.list[i];return typeof v=='number'?arItem(v):v};
+const wpKeyAt=i=>{const v=WP.list[i];return typeof v=='number'?AX.H[AX.R[v][1]]+'|'+AX.R[v][7]:v.key};
+function wpHydrate(x){const pos=WP.i,v=WP.list[pos];if(!x._lite||typeof v!='number')return;x._lite=false;const again=()=>{if(WP.on&&WP.list[WP.i]===v)wpFill()};
+ if(x.lebriz){lbLoad().then(()=>{const a=lbMatch(x.artist);return a?lbCat(a.id):null}).then(c=>{const w=c&&(c.works||[]).find(w=>w.c===x.lot_id);if(w){Object.assign(x,{title:w.t||'',description:[w.t,w.k].filter(Boolean).join(' · '),size:w.s||'',year:w.y||'',url:w.p||''});again()}}).catch(()=>{});return}
+ if(x.artist)artistPast(x.artist).catch(()=>null).then(()=>{const f=PASTBY[x.key];if(f){ARI.set(v,f);again()}})}
+function wpFill(){const x=wpAt(WP.i),P=!!x.past,L=!!x.lebriz,n=WP.list.length;if(!$('wpBody'))return;if(x._lite)wpHydrate(x);const aKey=x._a||norm(x.artist||'');
+ const price=L?'':P?(x.last_bid?TL(x.last_bid):x.start_price?TL(x.start_price):estTxt(x)||''):TL(priceOf(x)),lab=P?(x.last_bid?'Son pey':x.start_price?'Son görülen fiyat':'Tahmini değer'):priceLab(x);
+ const size=x.size||(P?sizeOf(x.description).txt:''),soon=!P&&x._e&&x._e-Date.now()<864e5&&x._e>Date.now(),end=L?'':P?(x.end_date?(x._lite?x.end_date.slice(5,7)+'.'+x.end_date.slice(0,4):fshort(dt(x.end_date))):''):(x._e?fshort(x._e):leftTxt(x));
+ const T=(a,b,c)=>b?`<div class="wp-tile"><span>${a}</span><b${c?' class="soon"':''}>${esc(b)}</b></div>`:'',R=(a,b)=>b||b===0?`<div class="wp-row"><span>${a}</span><b>${b}</b></div>`:'';
+ const rec=x.artist&&AR&&AR.byN&&AR.byN[x.artist],same=aKey?D.lots.filter(y=>y.key!==x.key&&y._a==aKey&&y.images[0]).slice(0,8):[],cover=(x.images&&x.images[0])||'',hist=(x.history||[]).slice(-8).reverse().map(r=>R(esc(fshort(dt(r[0]))),`${TL(r[1])} · ${r[2]} pey`)).join('');
+ $('wpPos').textContent=n>1?`${(WP.i+1).toLocaleString('tr-TR')} / ${n.toLocaleString('tr-TR')}`:'';
+ const fb=$('wpFav');fb.hidden=L;fb.dataset.fav=x.key;fb.classList.toggle('on',fav.has(x.key));const cb=$('wpCmp');cb.hidden=P;cb.dataset.cmp=x.key;cb.classList.toggle('on',cmp.includes(x.key));
+ const nav=n>1?`<div class="wp-next">${WP.i>0?'<button type="button" data-wn="-1">← Önceki</button>':'<span></span>'}${WP.i<n-1?'<button type="button" data-wn="1">Sonraki eser →</button>':''}</div>`:'';
+ $('wpBody').innerHTML=`<div class="wp-head"><div class="wp-meta">${esc(x.house||'')}${x.lot_no?' · Lot '+esc(x.lot_no):''}${L?' · Arşiv kaydı':P?' · Müzayede bitti':''}</div><h2>${x.artist?bLink(x.artist)+starBtn(x.artist):esc(x.title||'Eser')}</h2>${x.description?`<p class="wp-desc">${esc(x.description)}</p>`:''}</div>
+ ${price?`<div class="wp-price"><span>${lab}</span><b>${esc(price)}</b>${x.estimate&&x.estimate!=priceOf(x)?`<small>Tahmini değer ${TL(x.estimate)}</small>`:''}</div>`:''}
+ ${(x._tags||[]).length?`<div class="tags">${x._tags.filter(t=>t.k!='house').map(t=>tagChip(t,F.tags.includes(t.id))).join('')}</div>`:''}
+ <section class="wp-sec"><h3>Eser bilgisi</h3><div class="wp-tiles">${T('Ölçü',size)}${L?'':T(P?'Bitti':'Bitiş',end,soon)}${T('Teknik',x.tech)}${T('Yıl',x.year)}</div><div class="wp-rows">${x.auction?R('Müzayede',esc(x.auction)):''}${x.category?R('Kategori',esc(x.category)):''}${L?'':R('Açılış fiyatı',x.start_price&&lab!='Açılış fiyatı'?TL(x.start_price):'')}${x.bid_count!=null?R('Verilen pey',x.bid_count):''}${R('cm² fiyatı',x.ppc?ppcTxt(x):'')}${hist}</div></section>
+ ${x._a&&!L?`<section class="wp-sec"><h3>Değer</h3><div id="apanel">${P?'':artistPanel(x,null)}</div><div id="lbPrice"></div></section>`:''}
+ ${x.artist?`<section class="wp-sec"><h3>Sanatçı</h3><button type="button" class="wp-cat" data-book="${esc(x.artist)}">${cover?`<img loading="lazy" src="${esc(thumb(cover))}" data-o="${esc(cover)}" alt="" onerror="${thumbErr}">`:''}<span><b>Sanatçı kataloğu</b><small>${rec&&rec.c?rec.c.toLocaleString('tr-TR')+' eser arşivde':'Bütün eserleri'}</small></span><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button>${same.length?`<h4>Şu an satışta</h4><div class="simrow">${same.map(simTile).join('')}</div>`:''}<div id="lbLot"></div><a class="wp-link" href="#artist=${encodeURIComponent(x.artist)}" data-artist="${esc(x.artist)}">Sanatçı sayfası →</a></section>`:''}
+ ${nav}${x.url?`<a class="wp-cta" href="${esc(x.url)}" target="_blank" rel="noopener"><span>${L?'Lebriz kaynağı':P?'Kaynak sayfası':'Müzayedeye git'}</span><span>${esc(price)}</span></a>`:''}`;
+ clearTimeout(WP.bg);const at=WP.list[WP.i];WP.bg=setTimeout(()=>{if(!WP.on||WP.list[WP.i]!==at||L)return;if(x.artist&&x._a)pastFor(x.artist,undefined,true).then(p=>{if(WP.on&&WP.list[WP.i]===at&&$('apanel'))$('apanel').innerHTML=artistPanel(x,p)}).catch(()=>{});lbLotBlock(x);lbPriceBlock(x)},240)}
+function wpGo(i){i=clampN(i,0,WP.list.length-1);const ch=i!==WP.i;WP.i=i;WP.p=i;if(ch){wpSync();wpFill();wpSharp();try{history.replaceState(history.state,'',urlFor(wpHash(wpAt(i))))}catch(e){}curRoute=(history.state||{}).base??curRoute}wpKick()}
+/* what "next" means depends on where you came from: the album, the archive grid, the auctions grid, or the artist */
+function wpContext(x){if(B.on){const L=[...B.live,...B.old,...B.lb],i=L.findIndex(y=>y.key===x.key);if(i>=0)return{list:L,i}}
+ if(view=='lots'){const i=curList.indexOf(x);if(i>=0)return{list:curList,i}}
+ if(view=='artist'&&x.artist){const L=[x,...D.lots.filter(y=>y.key!==x.key&&y._a==x._a&&y.images[0])];artistPast(x.artist).then(p=>{if(WP.on&&WP.list===L){const s=new Set(L.map(y=>y.key));(p||[]).forEach(y=>{if(y.image&&!s.has(y.key))L.push(y)});wpFill()}}).catch(()=>{});return{list:L,i:0}}
+ return{list:wpList(x),i:0}}
+function wpStart(list,i,x){WP.list=list;WP.i=WP.p=i;WP.tx=WP.ty=0;WP.drag=null;WP.els.clear();WP.on=true;
  $('mc').innerHTML=`<div class="wp"><div class="wp-top"><span id="wpPos"></span><span class="wp-btns"><button type="button" class="wp-ic" id="wpCmp" aria-label="Karşılaştır" title="Karşılaştır"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4L3 8l4 4M3 8h14M17 12l4 4-4 4M21 16H7"/></svg></button><button type="button" class="wp-ic" id="wpFav" aria-label="Kaydet" title="Kaydet"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-8-5.2-8-11.2A4.6 4.6 0 0 1 12 7a4.6 4.6 0 0 1 8 2.8C20 15.8 12 21 12 21z"/></svg></button></span></div><div class="wp-stage" id="wpStage"></div><section class="wp-sheet" id="wpBody"></section></div>`;
  openM();wpSync();wpFill();wpDraw();wpSharp();ovOpen('m',wpHash(x))}
+function wpOpen(x){if(WP.on&&$('m').classList.contains('open')){for(let n=0;n<WP.list.length;n++)if(wpKeyAt(n)===x.key){wpGo(n);$('m').scrollTo({top:0,behavior:'smooth'});return}}const c=wpContext(x);wpStart(c.list,c.i,x)}
+function wpOpenAr(n){const i=arList.indexOf(n);if(i<0)return;wpStart(arList,i,arItem(n))}
 function openLot(k){const l=byKey[k];if(l)wpOpen(l)}
 function openPast(k){const o=PASTBY[k];if(!o){loadPast().then(()=>PASTBY[k]&&openPast(k));return}wpOpen(o)}
 (()=>{const mc=$('mc');
@@ -1359,8 +1389,8 @@ function openPast(k){const o=PASTBY[k];if(!o){loadPast().then(()=>PASTBY[k]&&ope
   if(g.ax!='x')return;g.dx=dx;let p=WP.i-dx/(st.clientWidth*.95);const m=WP.list.length-1;if(p<0)p*=.3;else if(p>m)p=m+(p-m)*.3;WP.p=p;wpKick()});
  const end=(commit)=>{const g=WP.drag;if(!g)return;WP.drag=null;WP.tx=WP.ty=0;const st=$('wpStage');if(st)st.classList.remove('drag');moAsk();if(!WP.on)return;wpGo(WP.i+(commit&&g.ax=='x'?(g.dx<-48?1:g.dx>48?-1:0):0))};
  addEventListener('pointerup',()=>end(true));addEventListener('pointercancel',()=>end(false));
- mc.addEventListener('click',e=>{const tb=e.target.closest('[data-lt]');if(tb&&WP.on){WP.tab=tb.dataset.lt;const s=$('wpScroll');if(s)s.scrollTop=0;return}
-  if(!WP.on||!e.target.closest('#wpStage'))return;if(WP.moved){WP.moved=false;return}const a=e.target.closest('[data-wi]');if(!a)return;const n=+a.dataset.wi;if(n!=WP.i)wpGo(n);else{const x=WP.list[n];if(x.images&&x.images[0])zoomOpen(x.images,0)}});
+ mc.addEventListener('click',e=>{const wn=e.target.closest('[data-wn]');if(wn&&WP.on){wpGo(WP.i+ +wn.dataset.wn);$('m').scrollTo({top:0,behavior:'smooth'});return}const tb=e.target.closest('[data-lt]');if(tb&&WP.on){WP.tab=tb.dataset.lt;const s=$('wpScroll');if(s)s.scrollTop=0;return}
+  if(!WP.on||!e.target.closest('#wpStage'))return;if(WP.moved){WP.moved=false;return}const a=e.target.closest('[data-wi]');if(!a)return;const n=+a.dataset.wi;if(n!=WP.i)wpGo(n);else{const x=wpAt(n);if(x.images&&x.images[0])zoomOpen(x.images,0)}});
  document.addEventListener('keydown',e=>{if(!WP.on||!$('m').classList.contains('open')||ovIsOpen('zoom')||/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))return;if(e.key=='ArrowRight')wpGo(WP.i+1);else if(e.key=='ArrowLeft')wpGo(WP.i-1);else return;e.preventDefault()});
  addEventListener('resize',()=>{if(WP.on)wpKick()})})();
 function openM(){$('m').classList.toggle('wpm',!!$('mc').querySelector('.wp'));$('m').classList.add('open');$('m').scrollTop=0;document.body.style.overflow='hidden'}
@@ -1511,8 +1541,7 @@ new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting))arMore()},{rootMar
 document.addEventListener('click',e=>{const tg=e.target.closest('[data-art]');if(tg){const id=tg.dataset.art;arSel.has(id)?arSel.delete(id):arSel.add(id);arApply(true);$('arTags').scrollTo({left:0,behavior:'smooth'});return}
  if(e.target.id=='arAMore'){arAL+=60;lbRender();return}
  const q=e.target.closest('[data-arq]');if(q){const v=$('gq').value.trim();sdClose();gsShut();if((history.state||{}).ov==='search')history.replaceState({},'',urlFor(curRoute));$('gq').blur();$('lbq').value=v;lbSub='w';document.querySelectorAll('#lbSeg button').forEach(x=>x.classList.toggle('on',x.dataset.s=='w'));show('lb');return}
- const c=e.target.closest('[data-ar]');if(!c)return;const r=AX.R[+c.dataset.ar],name=AX.A[r[0]],k=AX.H[r[1]]+'|'+r[7];if(r[5]==2){openBook(name);return}if(r[5]==1&&byKey[k]){openLot(k);return}
- (name?artistPast(name).catch(()=>null):Promise.resolve()).then(()=>openPast(k))});
+ const c=e.target.closest('[data-ar]');if(c)wpOpenAr(+c.dataset.ar)});
 $('lbres').addEventListener('click',e=>{const tg=e.target.closest('[data-lbt]');if(tg){lbTag(tg.dataset.lbt,tg.dataset.v);return}const g=e.target.closest('[data-lbg]');if(g){$('lbgal').value=g.dataset.lbg;lbSetSub('e')}});
 function lbPriceBlock(l){const el=$('lbPrice');if(!el||!l._a)return;lbPrices().then(P=>{const r=P[norm((l.artist||'').replace(/\(.*?\)/g,''))];if(!r||!r.length||!$('lbPrice')){return}
  $('lbPrice').innerHTML=`<div class="panel first"><h4 style="margin:0 0 6px">${r.length} eski müzayede kaydı</h4><table class="f">${r.slice(0,15).map(x=>`<tr><td>${x[0].toLocaleString('tr-TR')} ${esc(x[1])}</td><td>${esc((x[2]||'').replace(/\s*\d{1,2} \S+ \d{4}.*$/,''))} · Lot ${x[3]}<br><span class="muted">${esc(((x[2]||'').match(/\d{1,2} \S+ \d{4}/)||[''])[0])}</span></td></tr>`).join('')}</table></div>`})}
