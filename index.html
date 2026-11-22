@@ -799,7 +799,7 @@ main{padding-top:18px}
 .ar-search{display:none;height:50px!important;padding:0 8px 0 14px;margin-bottom:10px;border-radius:0!important;border:0;border-bottom:1px solid #111110;box-shadow:none!important;background:transparent}.ar-search.on,.ar-search:has(#lbq:not(:placeholder-shown)){display:flex}.ar-search:focus-within{box-shadow:none!important}.ar-search input{font-size:17px!important}
 .doors{margin-top:4px}.door small{display:none}.door{border-top:0;padding-top:0}.door b{font-size:24px}.door span{font-size:15px}
 .hm-sec{border-top:0;padding-top:0;margin-top:30px}.hm-sec h2{font-size:22px}.hm-sec a{font:400 15px var(--sans);letter-spacing:0;text-transform:none}
-:root[data-theme=light]{--bg:#fff}:root[data-theme=light] body{background:#fff!important}
+:root[data-theme=light]{--bg:#fff}:root[data-theme=light] body{background:#fff!important}:root[data-theme=light] body::before{display:none}
 .door-img{aspect-ratio:auto!important;height:clamp(150px,44vw,280px)!important}
 .lotno{font-size:12.5px!important;letter-spacing:.02em!important;text-transform:none!important}.card .spec{font-size:14px!important;line-height:1.4}.card .price{font-size:16px!important}.card .left{font-size:13px!important}.card .meta{font-size:13px!important;letter-spacing:0!important;text-transform:none!important}.card .body .artist,.card .artist .alink{font-size:19px!important}
 .btn,.chip,.seg button,.fab{font-size:14px!important;font-weight:500!important;letter-spacing:0!important;text-transform:none!important}
@@ -807,6 +807,19 @@ main{padding-top:18px}
 .ar-tabs button{font-size:14px!important;font-weight:500!important;letter-spacing:0!important;text-transform:none!important}.ar-tabs i{font:400 13px var(--sans)!important;letter-spacing:0;color:var(--muted)}
 .ar-tags button{font-size:14px!important}
 @media(prefers-reduced-motion:reduce){.menu,.menu.open{transition:none;transform:none}}
+
+/* ===== auctions page: one quiet row per house ===== */
+.hs-list{display:block}.hs{padding:18px 0 22px;border-top:1px solid #ecebe7}.hs:first-child{border-top:0;padding-top:4px}
+.hs-h{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;min-height:48px;padding:0;margin-bottom:8px;border:0;background:none;color:var(--ink);text-align:left;cursor:pointer}
+.hs-h span{display:flex;align-items:baseline;gap:9px;min-width:0}.hs-h b{overflow:hidden;font:500 15px var(--sans);white-space:nowrap;text-overflow:ellipsis}.hs-h small{flex:none;font-size:13.5px;color:var(--muted)}.hs-h em{flex:none;font:400 14px var(--sans);color:var(--muted)}
+.hs-r{--n:2;display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - (var(--n) - 1)*12px)/var(--n));gap:12px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}.hs-r::-webkit-scrollbar{display:none}
+.hs-t,.hs-more{min-width:0;padding:0;border:0;background:none;color:var(--ink);text-align:left;scroll-snap-align:start;cursor:pointer}
+.hs-t .frame{display:flex;align-items:center;justify-content:center;width:100%;height:auto;aspect-ratio:4/5!important;padding:0!important;margin:0 0 9px;overflow:hidden;background:transparent;border:0!important;box-shadow:none!important}
+.hs-t .frame img{position:static;display:block;width:100%;height:100%;object-fit:contain;transform:none!important}
+.hs-t b{display:block;overflow:hidden;font:500 17px/1.25 var(--serif);white-space:nowrap;text-overflow:ellipsis}.hs-t i{display:block;margin-top:2px;font:400 14px var(--sans);color:var(--muted);font-variant-numeric:tabular-nums}
+.hs-more{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;aspect-ratio:4/5;background:#f6f5f2;scroll-snap-align:start}.hs-more b{font:500 24px var(--serif)}.hs-more span{font-size:14px;color:var(--muted)}
+@media(min-width:700px){.hs-r{--n:3}}@media(min-width:1100px){.hs-r{--n:4}}
+:root[data-theme=dark] .hs{border-color:var(--line)}:root[data-theme=dark] .hs-t .frame,:root[data-theme=dark] .hs-more{background:var(--surface-2)}
 
 /* ===== work page: one page that scrolls, picture first, everything below it ===== */
 #m.wpm{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}#m.wpm.open{display:block}#m.wpm:not(.open){display:none}
@@ -1011,7 +1024,8 @@ document.addEventListener('error',e=>{const im=e.target;if(!IMG_BASE||!im||im.ta
 const TL=n=>n?Math.round(n).toLocaleString('tr-TR')+' TL':'—';const dt=s=>s?new Date(s.replace(' ','T')):null;
 const fdate=d=>d?d.toLocaleString('tr-TR',{day:'numeric',month:'long',year:'numeric',weekday:'short',hour:'2-digit',minute:'2-digit'}):'—';
 const fshort=d=>d?d.toLocaleString('tr-TR',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}):'';
-const houseName=s=>/^lebriz(\.com)?$/i.test(s||'')?'Arşiv':(s||'').replace(/^muzayedeapp:\s*/,'').replace(/^www\./,'');
+const HOUSE_NAMES={'nefsmuzayede.com':'Nefs Müzayede','aysilmuzayede.com':'Aysil Müzayede','anatoliamuzayede.com':'Anatolia Müzayede','kalamismuzayede.com':'Kalamış Müzayede','turkartproject.com':'Turk Art Project','nisartgallery.com':'Nisart Gallery','kassanat.com':'Kas Sanat','sanatsalmuzayede.com':'Sanatsal Müzayede','artam.com':'Artam','galeriberlin.com':'Galeri Berlin','uxmuzayede.com':'UX Müzayede','ranasartgallery.com':'Ranas Art Gallery','akartgaleri.com':'Akart Galeri','dedemuzayede.com':'Dede Müzayede','galamuzayede.com':'Gala Müzayede','kuzgun.art':'Kuzgun Art','artmezat.com':'Art Mezat','muzayede.app':'Müzayede App'};
+const houseName=s=>{const h=(s||'').replace(/^muzayedeapp:\s*/,'').replace(/^www\./,'');return /^lebriz(\.com)?$/i.test(h)?'Arşiv':HOUSE_NAMES[h.toLowerCase()]||h};
 const TECH=/üzeri|boya|serigrafi|baskı|teknik|litografi|gravür|heykel|bronz|fotoğraf|kolaj|guaj|akrilik|karakalem|suluboya|pastel|mürekkep|yazma|tuyb|kuyb|seramik|halı|kilim|hat|ebru|kitap/i;
 function parse(l){const d=l.description||'';const parts=d.split(/\s*[,·]\s*/).filter(Boolean);
  const S=sizeOf(d);
@@ -1240,7 +1254,18 @@ function render(){if(view=='fav'){renderFav();return}if(!D.lots.length)return;
  $('fN').textContent=act.length||'';$('fabN').textContent=act.length||'';
  $('activeF').innerHTML=act.length?act.map(([k,t])=>`<span class="chip" data-rmf="${esc(k)}" title="Kaldır">${esc(t)} ✕</span>`).join('')+(act.length>1?'<span class="chip ghost" data-act="reset">Hepsini temizle</span>':''):'';
  if(!n){$('g').innerHTML=`<div class="empty"><div class="big">Bu seçimlerle eser yok</div>Filtreleri azaltmayı ya da üstteki genel aramayı deneyin.<div class="acts"><button type="button" class="btn pri" data-act="reset">Filtreleri temizle</button></div></div>`;$('more').style.display='none';return}
+ if(!act.length&&F.sort=='end'){renderHouses();return}
  more(24)}
+/* the untouched auctions page: one quiet row per house, two works from different artists, swipe for more */
+const HS_ROW=8;
+function houseRows(){const m=new Map(),now=Date.now();curList.forEach(l=>{if(!m.has(l.site))m.set(l.site,[]);m.get(l.site).push(l)});
+ const rows=[...m].map(([site,L])=>{const seen=new Set(),first=[],rest=[];L.forEach(l=>{const a=l._a||norm(l.artist||'')||l.key;if(l.images[0]&&!seen.has(a)){seen.add(a);first.push(l)}else rest.push(l)});
+  const order=[...first,...rest],open=L.map(l=>l._e).filter(e=>e&&e>now);return{site,house:L[0].house,n:L.length,order,tiles:order.filter(l=>l.images[0]).slice(0,HS_ROW),next:open.length?Math.min(...open):0,last:Math.max(0,...L.map(l=>l._e||0))}});
+ return rows.sort((x,y)=>(!!y.next-!!x.next)||(x.next&&y.next?x.next-y.next:y.last-x.last))}
+const hsTile=l=>`<button type="button" class="hs-t" data-open="${esc(l.key)}"><span class="frame pl ph">${pimg(l.images[0],l.artist)}</span><b>${esc(l.artist||l.title||'Eser')}</b><i>${TL(priceOf(l))}</i></button>`;
+function renderHouses(){const R=houseRows();curList=R.flatMap(r=>r.order);shown=curList.length;$('more').style.display='none';$('g').className='hs-list';
+ $('stats').textContent=`${R.length.toLocaleString('tr-TR')} müzayede evi · ${curList.length.toLocaleString('tr-TR')} eser`;
+ $('g').innerHTML=R.map(r=>`<section class="hs"><button type="button" class="hs-h" data-hsite="${esc(r.site)}"><span><b>${esc(r.house)}</b><small>${r.n.toLocaleString('tr-TR')} eser</small></span><em>Tümünü gör</em></button><div class="hs-r">${r.tiles.map(hsTile).join('')}${r.n>r.tiles.length?`<button type="button" class="hs-more" data-hsite="${esc(r.site)}"><b>+${(r.n-r.tiles.length).toLocaleString('tr-TR')}</b><span>Tümünü gör</span></button>`:''}</div></section>`).join('')}
 function more(n){if(view!='lots')return;const next=curList.slice(shown,shown+(+n||PAGE));$('g').insertAdjacentHTML('beforeend',next.map(card).join(''));shown+=next.length;const left=curList.length-shown;$('more').style.display=left>0?'':'none';$('more').textContent=`Daha fazla yükle (${left.toLocaleString('tr-TR')} kaldı)`}
 const slider=L=>`<div class="slider"><button type="button" class="sl-btn sl-prev" aria-label="Önceki eserler" hidden>‹</button><div class="srow">${L.map(card).join('')}</div><button type="button" class="sl-btn sl-next" aria-label="Sonraki eserler"${L.length<2?' hidden':''}>›</button></div>`;
 function slArrows(row){const b=row.parentNode;if(!b)return;const max=row.scrollWidth-row.clientWidth-4;b.querySelector('.sl-prev').hidden=row.scrollLeft<=4;b.querySelector('.sl-next').hidden=row.scrollLeft>=max}
@@ -1276,7 +1301,7 @@ function renderFav(){const el=$('favBody');if(!D.lots.length)return;favDirty=fal
  el.innerHTML=(names.length?'':emptyBox('Şu an satışta eser yok','Takip ettiğiniz sanatçıların eseri müzayedeye çıktığında burada görünür. Bu arada başka sanatçılar ekleyebilirsiniz.','<button type="button" class="btn pri" data-act="pick">★ Sanatçı ekle</button>'))+
   names.map(n=>{const L=by[n];return `<section class="agrp"><h3>${aLink(n)}${starBtn(n)}<span class="n">${L.length} eser</span><a class="more" href="#artist=${encodeURIComponent(n)}" data-artist="${esc(n)}">Sanatçı sayfası →</a></h3>${slider(L)}</section>`}).join('')+
   (none.length&&names.length?`<div class="nolive"><h4>Şu an satışta eseri olmayanlar</h4><p class="muted">Eserleri müzayedeye çıkınca yukarıda görünür.</p><div class="tags">${none.map(n=>`<a class="tag" href="#artist=${encodeURIComponent(n)}" data-artist="${esc(n)}">${esc(n)}</a>`).join('')}</div></div>`:'');requestAnimationFrame(renderFavDone)}
-$('more').onclick=()=>more();new IntersectionObserver(es=>{if(es[0].isIntersecting&&view=='lots'&&shown<curList.length)more()},{rootMargin:'800px'}).observe($('sentinel'));
+$('g').addEventListener('click',e=>{const h=e.target.closest('[data-hsite]');if(h)openHouse(h.dataset.hsite)});$('more').onclick=()=>more();new IntersectionObserver(es=>{if(es[0].isIntersecting&&view=='lots'&&shown<curList.length)more()},{rootMargin:'800px'}).observe($('sentinel'));
 /* filters wiring */
 const setF=(k,v)=>{F[k]=v;syncFilterUI();render()};
 function syncFilterUI(){$('q').value=F.q;$('sort').value=F.sort;$('site').value=F.site;$('artist').value=F.artist;$('tech').value=F.tech||'';
