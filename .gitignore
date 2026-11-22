@@ -16,3 +16,5 @@ auctions.db
 sources.json.tmp
 mirror_state.json
 mirror_state.json.tmp
+.lebriz_images.json
+.lebriz_images.json.tmp

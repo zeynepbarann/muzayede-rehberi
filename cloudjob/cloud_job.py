@@ -16,7 +16,8 @@ Environment:
   REPO              GitHub repository "owner/name"               (default zeynepbarann/muzayede-rehberi)
   GH_TOKEN          GitHub token with Contents read/write on REPO (from Secret Manager); without it nothing is pushed
   JOB_MODE          "refresh" (default), "probe" = only check which auction sites answer from here,
-                    or "images" = only copy images into the bucket (no scan, no database, no push)
+                    "images" = only copy images into the bucket (no scan, no database, no push),
+                    or "lebriz" = pull every artist's Lebriz catalogue from the Internet Archive and publish it
   DRY_RUN=1         run everything but do not push and do not write state back
   HISTORY_MINUTES / MIRROR_MINUTES   time budgets (default 30 / 30)
 Standard library + git. Access to the bucket comes from the job's own service account; there is no key file."""
@@ -136,6 +137,69 @@ def images_only():
     return 0 if ok else 1
 
 
+def publish_paths(message, paths):
+    """Commit the given paths and push, replaying on top of anything pushed meanwhile (the daily refresh does)."""
+    git = lambda *a, **k: run(["git", "-c", "user.name=16/22 archive", "-c", "user.email=archive@users.noreply.github.com"] + list(a), quiet=True, **k)
+    git("add", "-A", *paths)
+    if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=WORK).returncode == 0:
+        return False
+    git("commit", "-q", "-m", message, check=True)
+    url = "https://x-access-token:%s@github.com/%s.git" % (TOKEN, REPO)
+    for i in range(5):
+        if git("fetch", "-q", "--depth", "50", url, "main") and git("rebase", "-q", "FETCH_HEAD") and git("push", "-q", url, "HEAD:main"):
+            return True
+        run(["git", "rebase", "--abort"], quiet=True)
+        time.sleep(10 * (i + 1))
+    raise SystemExit("could not push the Lebriz catalogues")
+
+
+def lebriz_only():
+    """Pull every artist's Lebriz catalogue from the Internet Archive. Resumable: finished artists are kept in the bucket,
+    and results are published every 20 minutes. An artist the archive could not be reached for is retried next run."""
+    prog = os.path.join(WORK, "lebriz_progress.json")
+    gcs_get("state/lebriz_progress.json", prog)
+    done = set(json.load(open(prog, encoding="utf8"))) if os.path.exists(prog) else set()
+    cat = os.path.join(WORK, "data", "lebriz_catalog")
+    os.makedirs(cat, exist_ok=True)
+    have = lambda i: os.path.exists(os.path.join(cat, "%d.json" % i))
+    with open(os.path.join(WORK, "data", "lebriz_index.json"), encoding="utf8") as f:
+        artists = sorted(json.load(f)["artists"], key=lambda a: -(a.get("w") or 0))
+    only = [int(x) for x in os.environ.get("LEBRIZ_IDS", "").split(",") if x.strip()]
+    todo = only or [a["id"] for a in artists if a["id"] not in done]
+    deadline = time.time() + float(os.environ.get("LEBRIZ_MINUTES", "1320")) * 60
+    log("lebriz: %d artists, %d to pull" % (len(artists), len(todo)))
+    last, n = time.time(), 0
+
+    def checkpoint():
+        if DRY:
+            return
+        with open(prog, "w", encoding="utf8") as f:
+            json.dump(sorted(done), f)
+        gcs_put("state/lebriz_progress.json", prog)
+        if TOKEN and publish_paths("Lebriz catalogues: %d artists pulled" % len(done), ["data/lebriz_catalog"]):
+            log("published, %d artists finished" % len(done))
+    for aid in todo:
+        if time.time() > deadline:
+            log("time budget reached; the next run resumes")
+            break
+        run([sys.executable, "lebriz_pull.py", "--ids", str(aid)], timeout=3000)
+        n += 1
+        if have(aid):
+            with open(os.path.join(cat, "%d.json" % aid), encoding="utf8") as f:
+                if not json.load(f).get("partial"):   # the archive gave no page list: try this artist again next run
+                    done.add(aid)
+        if time.time() - last > 1200:
+            checkpoint()
+            last = time.time()
+    checkpoint()
+    works = 0
+    for name in os.listdir(cat):
+        with open(os.path.join(cat, name), encoding="utf8") as f:
+            works += len(json.load(f).get("works") or [])
+    log("lebriz finished this run: %d tried, %d catalogue files, %d works" % (n, len(os.listdir(cat)), works))
+    return 0
+
+
 def main():
     mode = os.environ.get("JOB_MODE", "refresh")
     log("mode=%s repo=%s bucket=%s dry=%s push=%s" % (mode, REPO, BUCKET, DRY, bool(TOKEN)))
@@ -147,6 +211,8 @@ def main():
         return probe()
     if mode == "images":
         return images_only()
+    if mode == "lebriz":
+        return lebriz_only()
     local = os.environ.get("SKIP_GCS") == "1"   # for trying the steps on a laptop
     if not local:
         for name in STATE:

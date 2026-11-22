@@ -109,9 +109,76 @@ def parse_works(h, ts, page_url):
     return out
 
 
+def parse_thumbs(h, aid, ts, page_url):
+    """Cover pages list a work only as a small picture with no label: keep it as a work known by its id."""
+    out = {}
+    for m in re.finditer(r'src="([^"]*imageHandler[^"]*)"', h, re.I):
+        src = html.unescape(m.group(1))
+        wt, wid, path = [re.search(rx, src, re.I) for rx in (r"wType=(\d+)", r"wID=(\d+)", r"iPath=/?artst/(\d+)")]
+        if wt and wid and path and wt.group(1) == "1" and int(path.group(1)) == aid:
+            code = f"a{aid:04d}-{wid.group(1)}"
+            out[code] = {"c": code, "t": "", "k": "", "s": "", "y": "", "i": wbimg(src, ts), "p": f"{WB}{ts}/{page_url}"}
+    return list(out.values())
+
+
+IMG_CACHE = os.environ.get("LEBRIZ_IMG_CACHE") or os.path.join(HERE, ".lebriz_images.json")
+_images = [None]
+
+
+def image_map():
+    """Every artwork picture the archive kept, largest copy per work: {"artist:work": [timestamp, url, size]}.
+    Two listing requests for all of Lebriz, cached for a day, instead of searching artist by artist."""
+    if _images[0] is not None:
+        return _images[0]
+    if os.path.exists(IMG_CACHE) and time.time() - os.path.getmtime(IMG_CACHE) < 86400:
+        _images[0] = json.load(open(IMG_CACHE, encoding="utf8"))
+        return _images[0]
+    best = {}
+    for host in ("lebrizimages.com", "lebrizimages.net"):
+        q = urllib.parse.urlencode([("url", host + "/imageHandler"), ("matchType", "prefix"), ("filter", "statuscode:200"),
+                                    ("filter", "mimetype:image/.*"), ("fl", "timestamp,original")])
+        for line in net("https://web.archive.org/cdx/search/cdx?" + q, timeout=300).decode("utf8", "replace").splitlines():
+            r = line.split(" ")
+            if len(r) < 2: continue
+            o = html.unescape(r[1])
+            wt, wid, path, amt = [re.search(rx, o, re.I) for rx in (r"wType=(\d+)", r"wID=(\d+)", r"iPath=/?artst/(\d+)", r"iResizeAmount=(\d+)")]
+            if not (wid and path and amt) or (wt and wt.group(1) != "1"): continue
+            k, z = f"{int(path.group(1))}:{wid.group(1)}", int(amt.group(1)) or 9999
+            if k not in best or (z, r[0]) > (best[k][2], best[k][0]): best[k] = [r[0], r[1], z]
+    tmp = IMG_CACHE + ".tmp"
+    json.dump(best, open(tmp, "w", encoding="utf8"))
+    os.replace(tmp, IMG_CACHE)
+    _images[0] = best
+    return best
+
+
+def apply_images(works, aid):
+    """Use the best surviving copy of each picture, add works known only from their picture, drop works with nothing left."""
+    try:
+        imgs = image_map()
+    except Exception as e:
+        print("  image list unavailable:", e, flush=True)
+        return works
+    pre = f"{aid}:"
+    for k, (ts, url, z) in imgs.items():
+        if not k.startswith(pre): continue
+        code = f"a{aid:04d}-{k[len(pre):]}"
+        w = works.setdefault(code, {"c": code, "t": "", "k": "", "s": "", "y": "", "p": ""})
+        w["i"], w["z"] = f"{WB}{ts}im_/{url}", (0 if z == 9999 else z)
+    for code in list(works):
+        w = works[code]
+        if "z" not in w: w["i"] = ""
+        if not w.get("i") and not w.get("t"): del works[code]
+    return works
+
+
 def pull(aid):
     t0 = time.time()
     snaps = snapshots(aid)
+    for wait in (20, 60):   # the archive sometimes answers a listing with nothing when it is busy
+        if snaps: break
+        time.sleep(wait)
+        snaps = snapshots(aid)
     cat = [s for s in snaps if param(s[1], "section") == "130"]
     name, total, series = None, None, {}
     pages = sorted(cat, key=lambda s: ("lang=tr" in s[1].lower(), -int(param(s[1], "pageNo") or 0)), reverse=True)[:MAX_PAGES]
@@ -130,19 +197,15 @@ def pull(aid):
             if nm == "Bütün Katalog" or nm.lower() == "all catalogue": total = total or c
             elif not nm.startswith(("Online", "Galeri", "Müzayede")): series[nm] = c
         found = parse_works(h, s[0], s[1])
-        if not found:
-            empty += 1
-            if empty <= 2:  # help debugging new page layouts
-                tags = re.findall(r'<(?:img|input)[^>]{0,300}>', h, re.I)[:6]
-                print("  no works parsed on", s[1], "| sample tags:", [t[:160] for t in tags], flush=True)
         per = param(s[1], "periodID")
-        for w in found:
+        for w in found + parse_thumbs(h, aid, s[0], s[1]):
             if per and per != "-1" and "series" not in w: w["sr"] = per
-            works.setdefault(w["c"], w)
+            if w["c"] not in works or (w.get("t") and not works[w["c"]].get("t")): works[w["c"]] = w
         if read % 10 == 0: print(f"  {read} pages read, {len(works)} works", flush=True)
         if time.time() - t0 > 40 * 60: print("  time limit reached for this artist", flush=True); break
+    works = apply_images(works, aid)
     rec = {"id": aid, "name": lebriz_name(aid) or name, "total": total, "series": series, "pages_archived": len(cat), "pages_read": read,
-           "pulled_at": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "works": list(works.values())}
+           "pulled_at": dt.datetime.now().strftime("%Y-%m-%d %H:%M"), "with_images": sum(1 for w in works.values() if w.get("i")), "partial": not snaps, "works": list(works.values())}
     return rec
 
 

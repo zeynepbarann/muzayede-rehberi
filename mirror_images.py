@@ -68,6 +68,11 @@ def all_urls():
     for name in ("past.json", "past_archive.json", "past_archive_mapp.json"):
         for x in load(name) or []:
             add(x.get("image"))
+    # Lebriz closed in 2023: its catalogue pictures survive only in the Internet Archive, so keep our own copy
+    cat = os.path.join(HERE, "data", "lebriz_catalog")
+    for name in sorted(os.listdir(cat)) if os.path.isdir(cat) else []:
+        for w in (load(os.path.join("lebriz_catalog", name)) or {}).get("works") or []:
+            add(w.get("i"))
     return out
 
 
@@ -170,8 +175,9 @@ def main(argv):
             if time.time() > exp - 300:
                 tok, exp = access_token()
             host = urllib.parse.urlsplit(u).netloc
-            if host == last_host and time.time() - last_at < 0.25:  # be gentle with each auction house's server
-                time.sleep(0.25)
+            gap = 1.2 if "archive.org" in host else 0.25
+            if host == last_host and time.time() - last_at < gap:  # be gentle with each source's server
+                time.sleep(gap)
             last_host, last_at, k = host, time.time(), img_key(u)
             n += 1
             try:
