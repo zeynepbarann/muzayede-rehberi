@@ -36,7 +36,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/archive.json data/archive_artists.json data/archive_text.json data/lebriz_more data/img
+          git add data/archive.json data/archive_artists.json data/archive_text.json data/lebriz_more data/img data/books
           if git diff --cached --quiet; then echo "Değişiklik yok"; exit 0; fi
           git commit -q -m "Arşiv dizini güncellendi"
           for i in 1 2 3 4; do

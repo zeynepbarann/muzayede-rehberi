@@ -17,6 +17,7 @@ BUCKET = os.environ.get("BUCKET", "16-22")
 # Comma-separated hosts allowed to embed images, e.g. "zeynepbarann.github.io,localhost". Empty = no check.
 REFERERS = [h.strip().lower() for h in os.environ.get("ALLOWED_REFERERS", "").split(",") if h.strip()]
 PATH = re.compile(r"^/(i|t)/([0-9a-f]{16})\.(jpg|jpeg|png|webp|gif|avif)$")
+BOOK = re.compile(r"^/b/([a-z0-9-]{3,60})\.pdf$")
 META = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
 THUMB = 520
 CACHE = "public, max-age=31536000, immutable"
@@ -126,6 +127,35 @@ class H(http.server.BaseHTTPRequestHandler):
             return self.plain(302, "not mirrored yet", {"Location": src, "Cache-Control": "public, max-age=3600"})
         return self.plain(404, "not found")
 
+    def book(self, name):
+        """A catalogue PDF from books/ in the bucket, opened in the browser's own reader."""
+        if not self.referer_ok():
+            return self.plain(403, "forbidden")
+        try:
+            r = gcs_open("books/%s.pdf" % name)
+            if not r:
+                return self.plain(404, "not found")
+            with r:
+                size = r.headers.get("Content-Length")
+                self.send_response(200)
+                self.send_header("Content-Type", "application/pdf")
+                self.send_header("Content-Disposition", 'inline; filename="%s.pdf"' % name)
+                self.send_header("Cache-Control", "public, max-age=86400")
+                self.send_header("X-Content-Type-Options", "nosniff")
+                if size:
+                    self.send_header("Content-Length", size)
+                self.end_headers()
+                if self.command != "HEAD":
+                    while True:
+                        chunk = r.read(1 << 18)
+                        if not chunk:
+                            break
+                        self.wfile.write(chunk)
+        except (BrokenPipeError, ConnectionResetError):
+            self.close_connection = True
+        except Exception:
+            self.close_connection = True
+
     def fingerprints(self):
         """The image search index (hashjob/): only the site itself may read it."""
         origin = self.headers.get("Origin") or ""
@@ -157,6 +187,9 @@ class H(http.server.BaseHTTPRequestHandler):
             return self.plain(200, "ok")
         if u.path == "/f/fingerprints.bin":
             return self.fingerprints()
+        b = BOOK.match(u.path)
+        if b:
+            return self.book(b.group(1))
         m = PATH.match(u.path)
         if not m:
             return self.plain(404, "not found")

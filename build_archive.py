@@ -165,6 +165,23 @@ def build():
             d = re.match(r"\d{2}\.(\d{2})\.(\d{4})", w.get("d") or "")
             add(w.get("an") or "", w.get("g") or "Lebriz", int(d.group(2)) * 100 + int(d.group(1)) if d else 0, 0,
                 " ".join(v for v in (w.get("t"), w.get("k"), w.get("s"), w.get("et"), w.get("g"), w.get("c")) if v), 2, image_name(w["u"]), g + "/" + w["n"], w["u"])
+    # works cut from printed exhibition catalogues (data/books): the picture is already in the bucket under its own key
+    book_index = {}
+    for p in sorted(glob.glob(os.path.join(DATA, "books", "*.json"))):
+        if os.path.basename(p) == "index.json":
+            continue
+        with open(p, encoding="utf8") as f:
+            bk = json.load(f)
+        book_index[S.akey(bk["artist"])] = os.path.basename(p)[:-5]
+        by = {b["id"]: b for b in bk["books"]}
+        for w in bk["works"]:
+            b = by[w["b"]]
+            y = re.match(r"\d{4}", w.get("y") or b.get("y") or "")
+            add(bk["artist"], "Katalog: " + b["t"] + " (" + b["y"] + ")", int(y.group(0)) * 100 + 1 if y else 0, 0,
+                " ".join(v for v in (w.get("k"), w.get("s"), b["t"], b.get("pub")) if v), 2, w["i"], "bk:" + w["id"])
+    if book_index:
+        with open(os.path.join(DATA, "books", "index.json"), "w", encoding="utf8") as f:
+            json.dump(book_index, f, ensure_ascii=False, separators=(",", ":"))
     rows.sort(key=lambda r: (not r[0][6], -r[0][2], r[0][5] != 1))   # pictures first, newest first
     src = [sum(1 for r in rows if r[0][5] == s) for s in (0, 1, 2)]
     meta = {"v": 1, "works": len(rows), "with_images": sum(1 for r in rows if r[0][6]), "past": src[0], "live": src[1], "lebriz": src[2],
