@@ -1,11 +1,11 @@
 {
- "run": "2026-11-22 06:29",
+ "run": "2026-11-23 06:27",
  "since": "2024-01-01",
  "houses": {
   "nefsmuzayede.com": {
    "auctions_found": 1,
-   "read": 0,
-   "lots": 0,
+   "read": 1,
+   "lots": 195,
    "tried": [
     [
      "https://www.nefsmuzayede.com/gecmis-muzayedeler",
@@ -138,8 +138,8 @@
   },
   "anatoliamuzayede.com": {
    "auctions_found": 61,
-   "read": 0,
-   "lots": 0,
+   "read": 1,
+   "lots": 203,
    "tried": [
     [
      "https://www.anatoliamuzayede.com/gecmis-muzayedeler",
@@ -163,7 +163,7 @@
     ],
     [
      "https://www.anatoliamuzayede.com/muzayede-arsivi",
-     4
+     5
     ],
     [
      "https://www.anatoliamuzayede.com/arsiv",
@@ -171,7 +171,7 @@
     ],
     [
      "https://www.anatoliamuzayede.com/muzayedeler",
-     7
+     6
     ],
     [
      "https://www.anatoliamuzayede.com/muzayede",
@@ -611,8 +611,8 @@
   },
   "aysilmuzayede.com": {
    "auctions_found": 15,
-   "read": 0,
-   "lots": 0,
+   "read": 1,
+   "lots": 283,
    "tried": [
     [
      "https://www.aysilmuzayede.com/gecmis-muzayedeler",
@@ -838,18 +838,18 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/anatolia-muzayede-28"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Art Base Gallery": {
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/art-base-gallery-358"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Art-ı Müzayede": {
@@ -972,10 +972,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/craft-pen-364"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Derin Müzayede": {
@@ -998,7 +996,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 9,
+   "current_auctions": 7,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
    ],
@@ -1286,7 +1284,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 2,
+   "current_auctions": 1,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/rumeli-muzayede-224"
    ],
@@ -1863,6 +1861,6 @@
    "9760"
   ]
  ],
- "added": 0,
- "total": 32322
+ "added": 681,
+ "total": 34620
 }
