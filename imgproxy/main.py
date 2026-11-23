@@ -127,7 +127,7 @@ class H(http.server.BaseHTTPRequestHandler):
             return self.plain(302, "not mirrored yet", {"Location": src, "Cache-Control": "public, max-age=3600"})
         return self.plain(404, "not found")
 
-    def book(self, name):
+    def book(self, name, download=False):
         """A catalogue PDF from books/ in the bucket, opened in the browser's own reader."""
         if not self.referer_ok():
             return self.plain(403, "forbidden")
@@ -139,7 +139,7 @@ class H(http.server.BaseHTTPRequestHandler):
                 size = r.headers.get("Content-Length")
                 self.send_response(200)
                 self.send_header("Content-Type", "application/pdf")
-                self.send_header("Content-Disposition", 'inline; filename="%s.pdf"' % name)
+                self.send_header("Content-Disposition", '%s; filename="%s.pdf"' % ("attachment" if download else "inline", name))
                 self.send_header("Cache-Control", "public, max-age=86400")
                 self.send_header("X-Content-Type-Options", "nosniff")
                 if size:
@@ -189,7 +189,7 @@ class H(http.server.BaseHTTPRequestHandler):
             return self.fingerprints()
         b = BOOK.match(u.path)
         if b:
-            return self.book(b.group(1))
+            return self.book(b.group(1), "dl=1" in u.query)
         m = PATH.match(u.path)
         if not m:
             return self.plain(404, "not found")

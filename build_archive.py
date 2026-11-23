@@ -15,7 +15,7 @@ Row: [artist, house, yyyymm, price, tech*4+size, source, image, id, lebriz image
 
 Standard library only. Run after shard_past.py:  python3 build_archive.py
 """
-import glob, json, os, re, sys
+import datetime, glob, json, os, re, sys
 import shard_past as S
 from mirror_images import img_key, img_ext
 
@@ -79,10 +79,51 @@ def write_artists(A, rows, meta):
                 e[4] = row[8] if len(row) > 8 else ""
     out = {k: meta[k] for k in ("v", "works", "with_images", "past", "live", "lebriz")}
     out["N"] = [e if e[4] else e[:4] if e[3] else e[:3] for e in per.values() if e[0]]
+    arc = {}   # the same list counting only the Arşiv section: the old art guide and printed books
+    for row, _ in rows:
+        if row[5] != 2:
+            continue
+        e = arc.setdefault(row[0], [A[row[0]], 0, 0, "", ""])
+        e[1] += 1
+        if row[6]:
+            e[2] += 1
+            if not e[3]:
+                e[3] = row[6]
+                e[4] = row[8] if len(row) > 8 else ""
+    out["L"] = [e if e[4] else e[:4] if e[3] else e[:3] for e in arc.values() if e[0]]
     tmp = os.path.join(DATA, "archive_artists.json.tmp")
     with open(tmp, "w", encoding="utf8") as f:
         json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
     os.replace(tmp, os.path.join(DATA, "archive_artists.json"))
+
+
+def write_past_houses(H, rows):
+    """The Geçmiş Müzayedeler page: one short row per house, with a few works by different artists."""
+    info, per, not_ended = {}, {}, set()
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+    for x in S.merged_past():
+        i = info.setdefault(x.get("site"), {"e": "", "a": ""})
+        e = x.get("end_date") or ""
+        if e > now:   # still running at its house, so it does not belong among finished auctions
+            not_ended.add((x.get("site"), str(x.get("lot_id"))))
+            continue
+        if e > i["e"]:
+            i.update(e=e, a=x.get("auction") or "")
+    for row, _ in rows:
+        if row[5] != 0:
+            continue
+        site = H[row[1]]
+        if (site, str(row[7])) in not_ended:
+            continue
+        h = per.setdefault(site, {"s": site, "n": 0, "e": info.get(site, {}).get("e", ""), "a": info.get(site, {}).get("a", ""), "t": [], "_seen": set()})
+        h["n"] += 1
+        if row[6] and len(h["t"]) < 8 and row[0] not in h["_seen"]:
+            h["_seen"].add(row[0])
+            h["t"].append([row[0], row[6], row[3], row[7]])
+    out = sorted(per.values(), key=lambda h: h["e"], reverse=True)
+    for h in out:
+        del h["_seen"]
+    return out
 
 
 def write_originals(rows):
@@ -193,6 +234,13 @@ def build():
         os.replace(tmp, os.path.join(DATA, name))
     write_originals(rows)
     write_artists(A, rows, meta)
+    houses = write_past_houses(H, rows)
+    for h in houses:
+        h["t"] = [[A[t[0]], t[1], t[2], t[3]] for t in h["t"]]
+    tmp = os.path.join(DATA, "past_houses.json.tmp")
+    with open(tmp, "w", encoding="utf8") as f:
+        json.dump(houses, f, ensure_ascii=False, separators=(",", ":"))
+    os.replace(tmp, os.path.join(DATA, "past_houses.json"))
     print("archive: %d works (%d finished, %d on sale, %d Lebriz), %d with images, %d artists" % (len(rows), src[0], src[1], src[2], meta["with_images"], len(A)))
 
 
