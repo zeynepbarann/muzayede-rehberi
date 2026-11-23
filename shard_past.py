@@ -139,15 +139,16 @@ def load(name, default):
     if not os.path.exists(p): return default
     with open(p, encoding="utf8") as f: return json.load(f)
 
-def merged_past():
-    """Same merge as loadPast(): past.json first, then the archives, first key wins."""
+def merged_past(art_only=True):
+    """Same merge as loadPast(): past.json first, then the archives, first key wins. Accessories are left out unless art_only=False."""
+    from art_filter import listing_is_art
     out, seen = [], set()
     for i, name in enumerate(SOURCES):
         for x in load(name, []) or []:
             k = js_str(x.get("site")) + "|" + js_str(x.get("lot_id"))
             if i and k in seen: continue      # past.json itself is taken whole, like the page does
             seen.add(k); out.append(x)
-    return out
+    return [x for x in out if listing_is_art(x)] if art_only else out
 
 def house_summary(past):
     """What houses() in template.html derives from the full past list, per site, in first-seen order."""
