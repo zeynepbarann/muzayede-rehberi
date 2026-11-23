@@ -102,6 +102,11 @@ class H(http.server.BaseHTTPRequestHandler):
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", CACHE)
         self.send_header("X-Content-Type-Options", "nosniff")
+        origin = self.headers.get("Origin") or ""
+        host = (urllib.parse.urlsplit(origin).hostname or "").lower()
+        if origin and (not REFERERS or any(host == h or host.endswith("." + h) for h in REFERERS)):   # the image search compares pixels
+            self.send_header("Access-Control-Allow-Origin", origin)
+            self.send_header("Vary", "Origin")
         self.end_headers()
         if self.command != "HEAD":
             self.wfile.write(body)
@@ -121,10 +126,37 @@ class H(http.server.BaseHTTPRequestHandler):
             return self.plain(302, "not mirrored yet", {"Location": src, "Cache-Control": "public, max-age=3600"})
         return self.plain(404, "not found")
 
+    def fingerprints(self):
+        """The image search index (hashjob/): only the site itself may read it."""
+        origin = self.headers.get("Origin") or ""
+        host = (urllib.parse.urlsplit(origin).hostname or "").lower()
+        if not self.referer_ok() or (REFERERS and origin and not any(host == h or host.endswith("." + h) for h in REFERERS)):
+            return self.plain(403, "forbidden")
+        try:
+            r = gcs_open("state/fingerprints.bin")
+            if not r:
+                return self.plain(404, "not ready")
+            with r:
+                body = r.read()
+        except Exception:
+            return self.plain(502, "storage unreachable")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/octet-stream")
+        self.send_header("Content-Length", str(len(body)))
+        self.send_header("Cache-Control", "public, max-age=600")
+        if origin:
+            self.send_header("Access-Control-Allow-Origin", origin)
+            self.send_header("Vary", "Origin")
+        self.end_headers()
+        if self.command != "HEAD":
+            self.wfile.write(body)
+
     def do_GET(self):
         u = urllib.parse.urlsplit(self.path)
         if u.path in ("/", "/healthz"):
             return self.plain(200, "ok")
+        if u.path == "/f/fingerprints.bin":
+            return self.fingerprints()
         m = PATH.match(u.path)
         if not m:
             return self.plain(404, "not found")
