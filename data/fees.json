@@ -98,6 +98,9 @@
 "src": "NOT: Müzayedemizde komisyon alınmamaktadır. KDV oranı ise %20'dir."
 }
 },
+"cur": {
+"turkartproject.com|28. Online Müzayede": "USD"
+},
 "houses": {
 "kalamismuzayede.com": {
 "at": "2026-11-24",

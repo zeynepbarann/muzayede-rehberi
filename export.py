@@ -8,7 +8,7 @@
 Lebriz files (data/lebriz_*.json) are written by lebriz_export.py."""
 import sqlite3, json, os, artists, fees
 HERE = os.path.dirname(os.path.abspath(__file__)); OUT = os.path.join(HERE, "data")
-KEEP = ["site","lot_id","lot_no","artist","description","category","start_price","estimate","current_bid","bid_count","auction","auction_type","end_date","images","url"]
+KEEP = ["site","lot_id","lot_no","artist","description","category","start_price","estimate","current_bid","bid_count","currency","auction","auction_type","end_date","images","url"]
 OPTIONAL = ["title","artist_raw","lb_id","history"]
 def dump(name, obj):
     os.makedirs(OUT, exist_ok=True); tmp = os.path.join(OUT, name + ".tmp")

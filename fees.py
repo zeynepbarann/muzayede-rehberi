@@ -2,7 +2,8 @@
 """Buyer's commission and KDV, read from the auction and lot pages scrape.py already downloads.
 
 data/fees.json (export.py copies it into data/lots.json as "fees"):
-  {"v": 1, "kdv": 20, "houses": {"<site>": FEE}, "auctions": {"<site>|<auction name>": FEE}}
+  {"v": 1, "kdv": 20, "houses": {"<site>": FEE}, "auctions": {"<site>|<auction name>": FEE}, "cur": {"<site>|<auction name>": "USD"}}
+  "cur" lists the auctions priced in another currency than TL; finished records keep their auction name, so their prices are read in it too.
   FEE = {"c": 15, "k": "all"|"fee"|"in"|"", "src": "<the house's own words>", "at": "YYYY-MM-DD"}
 c = commission in percent. k says how KDV is charged:
   "all"  on hammer price + commission (what the house's own "Toplam Maliyet" shows)
@@ -86,15 +87,26 @@ def load():
             return d
     except Exception:
         pass
-    return {"v": 1, "kdv": KDV, "houses": {}, "auctions": {}}
+    return {"v": 1, "kdv": KDV, "houses": {}, "auctions": {}, "cur": {}}
 
 
-def save(found_houses, found_auctions):
+def currency(site, auction, d=None):
+    """The currency an auction is priced in; TL unless the house said otherwise."""
+    return ((d or load()).get("cur") or {}).get("%s|%s" % (site, (auction or "").strip()), "TL")
+
+
+def save(found_houses, found_auctions, found_cur=None):
     """Merge this run's findings; what a house said before stays until it says something new."""
     d = load()
     d["kdv"] = KDV
     d["houses"].update({k: v for k, v in found_houses.items() if v})
     d["auctions"].update({k: v for k, v in found_auctions.items() if v})
+    cur = d.setdefault("cur", {})
+    for k, v in (found_cur or {}).items():
+        if v and v != "TL":
+            cur[k] = v
+        else:
+            cur.pop(k, None)
     tmp = PATH + ".tmp"
     with open(tmp, "w", encoding="utf8") as f:
         json.dump(d, f, ensure_ascii=False, indent=0, sort_keys=True)

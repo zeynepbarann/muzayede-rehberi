@@ -18,6 +18,7 @@ Standard library only. Run after shard_past.py:  python3 build_archive.py
 import datetime, glob, json, os, re, sys
 import shard_past as S
 from art_filter import listing_is_art
+import fees
 from mirror_images import img_key, img_ext
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -153,8 +154,12 @@ def build():
             lst.append(v)
         return idx[v]
 
-    def add(artist, site, date, price, text, source, image, rid, lb_url=""):
+    FEES = fees.load()
+
+    def add(artist, site, date, price, text, source, image, rid, lb_url="", auction=""):
         n = S.norm(text)
+        if price and fees.currency(site, auction, FEES) != "TL":
+            price = 0
         rows.append(([ix(A, Ai, artist), ix(H, Hi, site), date, int(price or 0), tech_of(" " + n + " ") * 4 + size_of(text), source, image, rid] + ([lb_url] if lb_url else []), n))
 
     seen, hidden = set(), set()
@@ -166,7 +171,7 @@ def build():
                 continue
             im = (l.get("images") or [""])[0]
             add(l.get("artist") or "", l["site"], ym(l.get("end_date")), l.get("current_bid") or l.get("start_price") or l.get("estimate"),
-                " ".join(x for x in (l.get("description"), l.get("title") if not l.get("description") else "", l.get("auction"), l.get("category")) if x), 1, image_name(im), str(l["lot_id"]))
+                " ".join(x for x in (l.get("description"), l.get("title") if not l.get("description") else "", l.get("auction"), l.get("category")) if x), 1, image_name(im), str(l["lot_id"]), auction=l.get("auction") or "")
     for x in S.merged_past(art_only=False):
         k = (x.get("site"), str(x.get("lot_id")))
         if k in seen:
@@ -176,7 +181,7 @@ def build():
             hidden.add("%s|%s" % k)
             continue
         add(x.get("artist") or "", x.get("site"), ym(x.get("end_date")), x.get("last_bid") or x.get("start_price") or x.get("estimate_min"),
-            " ".join(v for v in (x.get("description"), x.get("auction")) if v), 0, image_name(x.get("image")), str(x.get("lot_id")))
+            " ".join(v for v in (x.get("description"), x.get("auction")) if v), 0, image_name(x.get("image")), str(x.get("lot_id")), auction=x.get("auction") or "")
     names = {}
     try:
         with open(os.path.join(DATA, "lebriz_index.json"), encoding="utf8") as f:

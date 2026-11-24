@@ -10,7 +10,7 @@ MUZAYEDEAPP = ["www.nefsmuzayede.com","www.dedemuzayede.com","www.anatoliamuzaye
 
 LAST_URL = [""]
 import fees
-FEE_H, FEE_A = {}, {}   # commission per house and per auction, read from pages fetched anyway (fees.py)
+FEE_H, FEE_A, FEE_CUR = {}, {}, {}   # commission per house and per auction, read from pages fetched anyway (fees.py)
 
 def get(url, data=None, tries=3):
     err = None
@@ -35,7 +35,7 @@ def num(s):
     try: v = float(s); return v if v > 0 else None
     except: return None
 
-def mapp_auction_lots(page, url, site, base, aname, end):
+def mapp_auction_lots(page, url, site, base, aname, end, cur="TL"):
     """All lots of one MüzayedeApp auction page (follows /sayfa/N)."""
     lots, seen, n = [], set(), 1
     while page:
@@ -56,7 +56,7 @@ def mapp_auction_lots(page, url, site, base, aname, end):
             lots.append(dict(site=site, lot_id=pid, lot_no=g("data-lotno"), title=(artist + " - " + desc).strip(" -"),
                 artist=artist, description=desc, category=cat, start_price=num(g("data-price")),
                 estimate=num(g("data-estimated-price")), current_bid=num(g("data-offer-price")),
-                bid_count=int(g("data-offer-count") or 0), currency="TL", auction=aname, auction_type="auction",
+                bid_count=int(g("data-offer-count") or 0), currency=cur, auction=aname, auction_type="auction",
                 end_date=end, images=json.dumps(imgs), url=urljoin(base + "/", href)))
         if new == 0 or f"/sayfa/{n+1}" not in page: break
         n += 1; time.sleep(0.7); page = get(f"{url}/sayfa/{n}")
@@ -132,7 +132,10 @@ def scrape_muzayedeapp(host):
         end = (dt.datetime.now() + dt.timedelta(milliseconds=remain)).strftime("%Y-%m-%d %H:%M")
         slug = url.rstrip("/").split("/")[-1]
         m = re.search(r'auctionName: "([^"]*)"', page); aname = html.unescape(m.group(1)) if m else slug.replace("-", " ").title()
-        got = mapp_auction_lots(page, url, site, base, aname, end)
+        m = re.search(r'currency:\s*"([A-Z]{3})"', page); cur = m.group(1) if m else "TL"   # e.g. Türk Art Project prices some auctions in USD
+        if cur in ("TRY", "TRL"): cur = "TL"
+        FEE_CUR[site + "|" + aname.strip()] = cur
+        got = mapp_auction_lots(page, url, site, base, aname, end, cur)
         f = fees.auction_terms(page)
         if f: FEE_A[site + "|" + aname] = f; FEE_H.setdefault(site, f)
         if got and site not in FEE_H:   # the lot page states "Komisyon: 15%" and the KDV: one page per house
@@ -354,7 +357,7 @@ def main():
     db.commit()
     db.execute("INSERT INTO lots_fts(lots_fts) VALUES('rebuild')"); db.commit()
     try:
-        d = fees.save(FEE_H, FEE_A)
+        d = fees.save(FEE_H, FEE_A, FEE_CUR)
         print(f"fees: {len(FEE_H)} houses and {len(FEE_A)} auctions stated a commission this run ({len(d['houses'])} known)")
     except Exception as e:
         print("fees not saved:", e)
