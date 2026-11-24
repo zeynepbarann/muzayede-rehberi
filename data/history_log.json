@@ -1,11 +1,11 @@
 {
- "run": "2026-11-23 06:27",
- "since": "2024-01-01",
+ "run": "2026-11-24 06:29",
+ "since": "2000-01-01",
  "houses": {
   "nefsmuzayede.com": {
    "auctions_found": 1,
-   "read": 1,
-   "lots": 195,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.nefsmuzayede.com/gecmis-muzayedeler",
@@ -138,8 +138,8 @@
   },
   "anatoliamuzayede.com": {
    "auctions_found": 61,
-   "read": 1,
-   "lots": 203,
+   "read": 19,
+   "lots": 5633,
    "tried": [
     [
      "https://www.anatoliamuzayede.com/gecmis-muzayedeler",
@@ -338,9 +338,9 @@
    ]
   },
   "uxmuzayede.com": {
-   "auctions_found": 51,
-   "read": 0,
-   "lots": 0,
+   "auctions_found": 52,
+   "read": 28,
+   "lots": 3974,
    "tried": [
     [
      "https://www.uxmuzayede.com/gecmis-muzayedeler",
@@ -372,7 +372,7 @@
     ],
     [
      "https://www.uxmuzayede.com/muzayedeler",
-     6
+     7
     ],
     [
      "https://www.uxmuzayede.com/muzayede",
@@ -401,6 +401,10 @@
     [
      "https://www.uxmuzayede.com/online-muzayedeler",
      "HTTP Error 404: Not Found"
+    ],
+    [
+     "https://www.uxmuzayede.com/urun/13714418/bedri-rahmi-eyuboglu-mektuplar-serisi-23-5x10-5-cm-kagit-uzeri-karisik-teknik",
+     1
     ],
     [
      "https://www.uxmuzayede.com/blog?categoryId=263",
@@ -477,8 +481,8 @@
   },
   "galeriberlin.com": {
    "auctions_found": 31,
-   "read": 2,
-   "lots": 0,
+   "read": 8,
+   "lots": 1175,
    "tried": [
     [
      "https://www.galeriberlin.com/gecmis-muzayedeler",
@@ -544,8 +548,8 @@
   },
   "kalamismuzayede.com": {
    "auctions_found": 10,
-   "read": 0,
-   "lots": 0,
+   "read": 1,
+   "lots": 97,
    "tried": [
     [
      "https://www.kalamismuzayede.com/gecmis-muzayedeler",
@@ -611,8 +615,8 @@
   },
   "aysilmuzayede.com": {
    "auctions_found": 15,
-   "read": 1,
-   "lots": 283,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.aysilmuzayede.com/gecmis-muzayedeler",
@@ -678,8 +682,8 @@
   },
   "nisartgallery.com": {
    "auctions_found": 51,
-   "read": 2,
-   "lots": 0,
+   "read": 35,
+   "lots": 6564,
    "tried": [
     [
      "https://www.nisartgallery.com/gecmis-muzayedeler",
@@ -745,8 +749,8 @@
   },
   "akartgaleri.com": {
    "auctions_found": 16,
-   "read": 0,
-   "lots": 0,
+   "read": 4,
+   "lots": 279,
    "tried": [
     [
      "https://www.akartgaleri.com/gecmis-muzayedeler",
@@ -874,10 +878,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/artimperia-gallery-330"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Artium Modern": {
@@ -950,14 +952,22 @@
    "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
-  "muzayedeapp: Cesi Müzayede": {
+  "muzayedeapp: Boray Art Galeri": {
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
    "current_auctions": 1,
    "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/cesi-muzayede-139"
+    "https://www.muzayedeapp.com/muzayede-evi/boray-art-galeri-413"
    ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Cesi Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Cihangir Art Gallery": {
@@ -996,7 +1006,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 7,
+   "current_auctions": 9,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
    ],
@@ -1078,7 +1088,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 2,
+   "current_auctions": 1,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/fetva-osmanli-281"
    ],
@@ -1096,8 +1106,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/galeri-arts-133"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Galeri Dali": {
@@ -1122,6 +1134,16 @@
    "lots": 0,
    "current_auctions": 0,
    "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
+  "muzayedeapp: Han Antika": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 2,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/han-antika-508"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Havza Sanat": {
@@ -1184,6 +1206,14 @@
    "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
+  "muzayedeapp: Liman Sanat Galerisi": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 0,
+   "house_pages": [],
+   "note": "house page not found (no current auction on the portal?)"
+  },
   "muzayedeapp: Luna Art Gallery": {
    "auctions_found": 0,
    "read": 0,
@@ -1216,10 +1246,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/mali-muzayede-335"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Müzayede Plus": {
@@ -1304,8 +1332,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/sargon-antik-416"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Sava Müzayede": {
@@ -1374,10 +1404,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/tempus-antik-400"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: The Margin Art": {
@@ -1460,7 +1488,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 2,
+   "current_auctions": 1,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/cukurcuma-muzayede-72"
    ],
@@ -1499,368 +1527,7 @@
    "note": "house page not found (no current auction on the portal?)"
   }
  },
- "skip": [
-  [
-   "akartgaleri.com",
-   "15586"
-  ],
-  [
-   "akartgaleri.com",
-   "15934"
-  ],
-  [
-   "akartgaleri.com",
-   "16165"
-  ],
-  [
-   "akartgaleri.com",
-   "18061"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "12824"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "12947"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "13080"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "13370"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "13652"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "13956"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "14279"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "14699"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "15210"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "15604"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "15990"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "16557"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "17135"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "17546"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "18021"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "18526"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "18986"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "20649"
-  ],
-  [
-   "anatoliamuzayede.com",
-   "21279"
-  ],
-  [
-   "galeriberlin.com",
-   "17259"
-  ],
-  [
-   "galeriberlin.com",
-   "18088"
-  ],
-  [
-   "galeriberlin.com",
-   "18674"
-  ],
-  [
-   "galeriberlin.com",
-   "19240"
-  ],
-  [
-   "galeriberlin.com",
-   "21011"
-  ],
-  [
-   "galeriberlin.com",
-   "21625"
-  ],
-  [
-   "nisartgallery.com",
-   "10264"
-  ],
-  [
-   "nisartgallery.com",
-   "10708"
-  ],
-  [
-   "nisartgallery.com",
-   "10966"
-  ],
-  [
-   "nisartgallery.com",
-   "11480"
-  ],
-  [
-   "nisartgallery.com",
-   "11821"
-  ],
-  [
-   "nisartgallery.com",
-   "12111"
-  ],
-  [
-   "nisartgallery.com",
-   "12511"
-  ],
-  [
-   "nisartgallery.com",
-   "12967"
-  ],
-  [
-   "nisartgallery.com",
-   "13640"
-  ],
-  [
-   "nisartgallery.com",
-   "14301"
-  ],
-  [
-   "nisartgallery.com",
-   "14988"
-  ],
-  [
-   "nisartgallery.com",
-   "17118"
-  ],
-  [
-   "nisartgallery.com",
-   "18178"
-  ],
-  [
-   "nisartgallery.com",
-   "18522"
-  ],
-  [
-   "nisartgallery.com",
-   "18791"
-  ],
-  [
-   "nisartgallery.com",
-   "19461"
-  ],
-  [
-   "nisartgallery.com",
-   "21661"
-  ],
-  [
-   "nisartgallery.com",
-   "5422"
-  ],
-  [
-   "nisartgallery.com",
-   "5609"
-  ],
-  [
-   "nisartgallery.com",
-   "5739"
-  ],
-  [
-   "nisartgallery.com",
-   "6023"
-  ],
-  [
-   "nisartgallery.com",
-   "6446"
-  ],
-  [
-   "nisartgallery.com",
-   "6823"
-  ],
-  [
-   "nisartgallery.com",
-   "7023"
-  ],
-  [
-   "nisartgallery.com",
-   "7306"
-  ],
-  [
-   "nisartgallery.com",
-   "7581"
-  ],
-  [
-   "nisartgallery.com",
-   "8018"
-  ],
-  [
-   "nisartgallery.com",
-   "8292"
-  ],
-  [
-   "nisartgallery.com",
-   "8541"
-  ],
-  [
-   "nisartgallery.com",
-   "8899"
-  ],
-  [
-   "nisartgallery.com",
-   "9262"
-  ],
-  [
-   "nisartgallery.com",
-   "9404"
-  ],
-  [
-   "nisartgallery.com",
-   "9799"
-  ],
-  [
-   "uxmuzayede.com",
-   "10216"
-  ],
-  [
-   "uxmuzayede.com",
-   "10669"
-  ],
-  [
-   "uxmuzayede.com",
-   "10900"
-  ],
-  [
-   "uxmuzayede.com",
-   "11017"
-  ],
-  [
-   "uxmuzayede.com",
-   "11402"
-  ],
-  [
-   "uxmuzayede.com",
-   "11762"
-  ],
-  [
-   "uxmuzayede.com",
-   "12138"
-  ],
-  [
-   "uxmuzayede.com",
-   "12474"
-  ],
-  [
-   "uxmuzayede.com",
-   "13730"
-  ],
-  [
-   "uxmuzayede.com",
-   "14069"
-  ],
-  [
-   "uxmuzayede.com",
-   "14539"
-  ],
-  [
-   "uxmuzayede.com",
-   "14720"
-  ],
-  [
-   "uxmuzayede.com",
-   "15024"
-  ],
-  [
-   "uxmuzayede.com",
-   "15462"
-  ],
-  [
-   "uxmuzayede.com",
-   "15789"
-  ],
-  [
-   "uxmuzayede.com",
-   "16447"
-  ],
-  [
-   "uxmuzayede.com",
-   "16820"
-  ],
-  [
-   "uxmuzayede.com",
-   "17561"
-  ],
-  [
-   "uxmuzayede.com",
-   "18961"
-  ],
-  [
-   "uxmuzayede.com",
-   "19406"
-  ],
-  [
-   "uxmuzayede.com",
-   "20742"
-  ],
-  [
-   "uxmuzayede.com",
-   "21017"
-  ],
-  [
-   "uxmuzayede.com",
-   "21477"
-  ],
-  [
-   "uxmuzayede.com",
-   "7962"
-  ],
-  [
-   "uxmuzayede.com",
-   "8512"
-  ],
-  [
-   "uxmuzayede.com",
-   "8596"
-  ],
-  [
-   "uxmuzayede.com",
-   "9000"
-  ],
-  [
-   "uxmuzayede.com",
-   "9760"
-  ]
- ],
- "added": 681,
- "total": 34620
+ "skip": [],
+ "added": 17722,
+ "total": 52342
 }
