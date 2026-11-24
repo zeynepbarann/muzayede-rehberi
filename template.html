@@ -598,6 +598,8 @@ nav.tabs button{font:600 11.5px var(--sans)!important;letter-spacing:.1em;text-t
 .hm-k{font:600 11px var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-top:10px}
 .hm-h{font:400 clamp(36px,8.4vw,80px)/1.02 var(--serif);letter-spacing:-.03em;margin:14px 0 20px;max-width:13ch}
 .hm-s{display:flex;align-items:center;gap:10px;width:100%;max-width:640px;height:52px;padding:0;border:0;border-bottom:1px solid var(--ink);background:none;color:var(--muted);font-size:15px;cursor:pointer;text-align:left}
+.cat-head{margin:6px 0 22px}.cat-head h1{margin:0;font:500 clamp(30px,7.4vw,52px)/1.04 var(--serif);letter-spacing:-.02em;max-width:16ch}.cat-head p{margin:10px 0 0;font-size:16px;line-height:1.45;color:var(--muted);max-width:44ch}
+.cats{display:block;border-top:1px solid var(--ink)}.cat{display:flex;align-items:center;gap:16px;min-height:84px;padding:16px 2px;border-bottom:1px solid var(--line);color:var(--ink);text-decoration:none;cursor:pointer;-webkit-tap-highlight-color:transparent}.cat-t{flex:1;min-width:0}.cat b{display:block;font:500 clamp(25px,6vw,34px)/1.1 var(--serif);letter-spacing:-.015em}.cat small{display:block;margin-top:5px;font:400 15px/1.4 var(--sans);color:var(--muted)}.cat i{flex:none;font:300 24px/1 var(--sans);font-style:normal;color:var(--gold);transition:transform .25s cubic-bezier(.16,1,.3,1)}@media(hover:hover){.cat:hover b{color:var(--accent)}.cat:hover i{transform:translateX(4px)}}.cat:active{background:color-mix(in srgb,var(--gold) 6%,transparent)}@media(min-width:900px){.cats{display:grid;grid-template-columns:1fr 1fr;column-gap:48px}.cat{min-height:104px}}
 .doors{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin:36px 0 8px}
 .door{display:block;cursor:pointer;border-top:1px solid var(--ink);padding-top:12px;text-decoration:none}
 .door small{font:600 11px var(--sans);letter-spacing:.18em;color:var(--muted)}.door b{display:block;font:400 clamp(30px,5vw,52px)/1.04 var(--serif);letter-spacing:-.02em;margin:4px 0 6px}.door>span{font-size:13px;color:var(--muted)}
@@ -896,11 +898,16 @@ a.hs-h,a.hs-more,a.hs-t{display:block;text-decoration:none}a.hs-h{display:flex}a
 </div>
 <main>
 <section class="view" id="v-home">
- <div class="doors">
-  <a class="door" data-go="lots"><small>I</small><b>Müzayedeler</b><span id="hmA">Şu an satıştaki eserler</span><div id="hmAi"></div></a>
-  <a class="door" data-go="past"><small>II</small><b>Geçmiş Müzayedeler</b><span id="hmB">Biten müzayedelerin eserleri</span><div id="hmBi"></div></a>
- </div>
- <div class="hm-sec"><h2>Yakında bitiyor</h2><a data-go="lots">Tümü →</a></div><div id="hmRow"></div>
+ <div class="cat-head"><h1>Türk sanatının müzayede rehberi</h1><p>Satıştaki eserler, biten müzayedeler, arşiv ve kataloglar tek yerde.</p></div>
+ <nav class="cats" aria-label="Bölümler">
+  <a class="cat" href="#kesfet" data-go="lots"><span class="cat-t"><b>Müzayedeler</b><small id="catLots">Şu an satıştaki eserler</small></span><i aria-hidden="true">→</i></a>
+  <a class="cat" href="#favorilerim" data-go="fav"><span class="cat-t"><b>Favorilerim</b><small id="catFav">Takip ettiğiniz sanatçılar ve kaydettiğiniz eserler</small></span><i aria-hidden="true">→</i></a>
+  <a class="cat" href="#gecmis" data-go="past"><span class="cat-t"><b>Geçmiş Müzayedeler</b><small id="catPast">Biten müzayedelerde satılan eserler</small></span><i aria-hidden="true">→</i></a>
+  <a class="cat" href="#arsiv" data-go="lb"><span class="cat-t"><b>Arşiv</b><small>Sanatçılar ve arşiv kayıtları, A’dan Z’ye</small></span><i aria-hidden="true">→</i></a>
+  <a class="cat" href="#kitaplar" data-go="books"><span class="cat-t"><b>Kitaplar</b><small id="catBooks">Sergi katalogları, eserleri ve PDF’leri</small></span><i aria-hidden="true">→</i></a>
+  <a class="cat" href="#evler" data-go="houses"><span class="cat-t"><b>Müzayede Evleri</b><small id="catHouses">Takip edilen bütün müzayede evleri</small></span><i aria-hidden="true">→</i></a>
+  <a class="cat" href="#gorsel" data-go="img"><span class="cat-t"><b>Görselle Ara</b><small>Bir fotoğraf ya da ekran görüntüsüyle eseri bulun</small></span><i aria-hidden="true">→</i></a>
+ </nav>
 </section>
 <section class="view" id="v-fav">
  <div class="vhead"><div><h1>Favorilerim</h1><p class="muted" id="favSub">Takip ettiğiniz sanatçıların şu an satıştaki eserleri ve kaydettiğiniz eserler.</p></div></div>
@@ -2200,12 +2207,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-book]');if
  const g=e.target.closest('[data-bkgo]');if(g&&B.on&&!B.an){B.k=Math.min(B.kmax,(+g.dataset.bkgo+1)>>1);B.t=0;bkDraw();return}
  const z=e.target.closest('[data-bkz]');if(z&&B.on)zoomOpen([z.dataset.bkz],0)});
 /* home */
-function renderHome(){if(!D.lots.length)return;const now=Date.now(),L=D.lots.filter(l=>l.images[0]&&(!l._e||l._e>now)).sort((x,y)=>(x._e||9e15)-(y._e||9e15)),S=L.length?L:D.lots.filter(l=>l.images[0]),a=S[0],b=S.find(l=>a&&l._a!==a._a&&l.images[0]!==a.images[0])||a;
- $('hmA').textContent=`${D.lots.length.toLocaleString('tr-TR')} eser satışta · ${new Set(D.lots.map(l=>l.site)).size} müzayede evi`;
- if(a&&!$('hmAi').firstChild)$('hmAi').innerHTML=`<div class="door-img"><img class="cv" loading="lazy" draggable="false" src="${esc(thumb(a.images[0]))}" alt="" onerror="this.remove()"></div>`;
- if(b&&!$('hmBi').firstChild)$('hmBi').innerHTML=`<div class="door-img"><img class="cv" loading="lazy" draggable="false" src="${esc(thumb(b.images[0]))}" alt="" onerror="this.remove()"></div>`;
- if(!$('hmRow').firstChild){$('hmRow').innerHTML=slider(S.slice(0,14));$('hmRow').querySelectorAll('.srow').forEach(slArrows)}
- }
+function renderHome(){const n=v=>v.toLocaleString('tr-TR');if(D.lots.length){const h=new Set(D.lots.map(l=>l.site)).size;$('catLots').textContent=`${n(D.lots.length)} eser satışta · ${h} müzayede evi`;$('catHouses').textContent=`${h} müzayede evinin güncel ve geçmiş müzayedeleri`}const f=D.lots.filter(l=>favOf(l)).length;$('catFav').textContent=favArt.size?`${favArt.size} sanatçı · ${n(f)} eseri satışta`:'Sanatçı seçin, eserleri burada toplansın';pvLoad().then(H=>{const p=(H||[]).reduce((s,r)=>s+(r.n||0),0);if(p)$('catPast').textContent=`${n(p)} eser · ${(H||[]).length} müzayede evi`}).catch(()=>{});booksAll().then(L=>{if(L.length)$('catBooks').textContent=`${L.length} katalog · eserleri ve PDF’leri`}).catch(()=>{})}
 (()=>{const st=$('bkStage'),dOf=(e,g)=>B.ax=='x'?e.clientY-g.y:e.clientX-g.x;
  st.addEventListener('pointerdown',e=>{if(e.button||B.an)return;B.drag={x:e.clientX,y:e.clientY,m:''};B.moved=false});
  addEventListener('pointermove',e=>{const g=B.drag;if(!B.on||!g)return;const d=dOf(e,g);if(!B.moved){if(Math.abs(d)<8)return;B.moved=true;
