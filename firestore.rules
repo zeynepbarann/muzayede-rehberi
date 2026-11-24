@@ -1,0 +1,13 @@
+rules_version = '2';
+// Each signed-in person may read and write only their own favourites; nothing else in the database is reachable.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      allow read, delete: if request.auth != null && request.auth.uid == uid;
+      allow create, update: if request.auth != null && request.auth.uid == uid
+        && request.resource.data.keys().hasOnly(['fav', 'art', 'at'])
+        && request.resource.data.fav is list && request.resource.data.fav.size() <= 5000
+        && request.resource.data.art is list && request.resource.data.art.size() <= 2000;
+    }
+  }
+}

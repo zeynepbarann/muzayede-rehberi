@@ -366,6 +366,7 @@ details.tip-block{background:var(--surface);border-radius:14px;padding:12px 16px
 .howto .num,.how3 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:var(--gold-grad);color:#0c0b09;font-weight:700;font-size:14px;margin-bottom:6px;flex:none}
 .howto small{color:var(--muted);font-size:13px}
 /* help */
+.acct{max-width:460px}.acct h2{font-size:34px;margin:2px 0 8px}.acct-lead{margin:0 0 18px;font-size:16px;line-height:1.5;color:var(--ink-2)}.acct-g{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;min-height:54px;border:1px solid var(--ink);border-radius:999px;background:var(--bg);color:var(--ink);font:500 17px var(--sans);cursor:pointer}.acct-or{display:flex;align-items:center;gap:12px;margin:22px 0 14px;color:var(--muted);font-size:14px}.acct-or::before,.acct-or::after{content:"";flex:1;height:1px;background:var(--line)}.acct-l{display:block;margin:12px 0 4px;font-size:14px;color:var(--muted)}.acct .fld{width:100%;height:52px;font-size:17px}.acct-pw .btn{width:100%;min-height:52px;margin-top:14px;font-size:16px}.acct-pw{display:grid;gap:0}.acct-ver{display:block;margin:0 0 18px;padding:14px 16px;border-left:2px solid var(--gold);background:color-mix(in srgb,var(--gold) 7%,transparent)}.acct-ver[hidden]{display:none}.acct-ver b{display:block;font:600 16px var(--sans)}.acct-ver span{display:block;margin-top:4px;font-size:15px;line-height:1.45;color:var(--ink-2)}.acct-ver .acct-txt{margin:8px 0 0;padding:6px 0}.acct-txt{display:block;margin:14px auto 0;padding:8px;border:0;background:none;color:var(--ink);font:500 15px var(--sans);text-decoration:underline;text-underline-offset:3px;cursor:pointer}.acct-msg{min-height:22px;margin:14px 0 0;font-size:15px;line-height:1.45;color:var(--ink)}.acct-msg.err{color:var(--danger)}.acct-fine{margin:18px 0 0;font-size:13px;line-height:1.45;color:var(--muted)}.mi-acct{display:flex;flex-direction:column;align-items:flex-start}.mi-acct small{font-size:13px;color:var(--muted);font-weight:400}
 .help{max-width:640px}.help h2{font-size:34px;margin:2px 0 6px}.help h3{font-size:22px;margin:26px 0 8px}
 .how3{list-style:none;padding:0;margin:16px 0;display:flex;flex-direction:column;gap:10px}.how3 li{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border-radius:14px;padding:14px 16px}.how3 .num{margin:0}.how3 p{margin:2px 0 0;color:var(--ink-2);font-size:14px}
 .help .acts{gap:10px;flex-wrap:wrap}
@@ -884,6 +885,7 @@ a.hs-h,a.hs-more,a.hs-t{display:block;text-decoration:none}a.hs-h{display:flex}a
   <button type="button" data-v="search" id="tSearch" style="display:none">Arama</button>
  </nav>
  <div class="nv-sub">
+  <button type="button" class="mi mi-acct" id="mAcct">Giriş yap<small>Favorileriniz her cihazda</small></button>
   <button type="button" class="mi" id="mPick">Favori sanatçılar</button>
   <button type="button" class="mi" id="mAdd">Bağlantı ekle</button>
   <button type="button" class="mi" id="mHelp">Nasıl çalışır?</button>
@@ -1026,6 +1028,22 @@ a.hs-h,a.hs-more,a.hs-t{display:block;text-decoration:none}a.hs-h{display:flex}a
  <div class="plist" id="pickList"></div>
  <div class="acts" style="margin-top:12px;justify-content:flex-end"><button type="button" class="btn pri" id="pickDone">Tamam</button></div>
 </div></div>
+<div class="modal" id="acctM" role="dialog" aria-modal="true" aria-labelledby="acctT"><div class="sheet dlg acct"><button class="x" id="acctX" aria-label="Kapat">×</button>
+ <div id="acctOut"><h2 id="acctT">Giriş yap</h2><p class="acct-lead">Favori sanatçılarınız ve kaydettiğiniz eserler, giriş yaptığınız her telefonda ve bilgisayarda görünür.</p>
+  <button type="button" class="acct-g" id="acctGoogle"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.7 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.1 19 12 24 12c3.1 0 5.8 1.2 7.9 3.1l5.7-5.7C34 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.3-8l-6.5 5C9.5 39.6 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.1-2.4-.4-3.5z"/></svg>Google ile devam et</button>
+  <div class="acct-or"><span>ya da e-posta ve şifreyle</span></div>
+  <label class="acct-l" for="acctEmail">E-posta adresiniz</label><input class="fld" id="acctEmail" type="email" autocomplete="email" inputmode="email" placeholder="ornek@eposta.com">
+  <label class="acct-l" for="acctPw">Şifre</label><input class="fld" id="acctPw" type="password" autocomplete="current-password" placeholder="En az 6 karakter">
+  <div class="acct-pw"><button type="button" class="btn pri" id="acctIn">Giriş yap</button><button type="button" class="btn" id="acctNew">Hesap oluştur</button></div>
+  <button type="button" class="acct-txt" id="acctForgot">Şifremi unuttum</button>
+  <p class="acct-msg" id="acctMsg" role="status" aria-live="polite"></p>
+  <p class="acct-fine">Giriş yaptığınızda e-posta adresiniz yalnızca favorilerinizi saklamak için kullanılır; başka bir amaçla paylaşılmaz.</p></div>
+ <div id="acctIn2" hidden><h2>Hesabım</h2><p class="acct-lead" id="acctWho"></p>
+  <div class="acct-ver" id="acctVer" hidden><b>E-posta adresinizi doğrulayın</b><span>Size bir doğrulama e-postası gönderdik. E-postadaki düğmeye dokunduğunuzda hesabınız tamamlanır.</span><button type="button" class="acct-txt" id="acctResend">Doğrulama e-postasını yeniden gönder</button></div>
+  <p class="acct-lead">Favori sanatçılarınız ve kaydettiğiniz eserler bu hesaba kaydediliyor ve giriş yaptığınız her cihazda görünüyor.</p><button type="button" class="btn" id="acctOutBtn">Çıkış yap</button><p class="acct-msg" id="acctMsg2" role="status" aria-live="polite"></p></div>
+ <div id="acctReset" hidden><h2>Yeni şifre</h2><p class="acct-lead" id="acctResetFor"></p><label class="acct-l" for="acctNewPw">Yeni şifreniz</label><input class="fld" id="acctNewPw" type="password" autocomplete="new-password" placeholder="En az 6 karakter">
+  <div class="acct-pw"><button type="button" class="btn pri" id="acctSetPw">Şifreyi kaydet</button></div><p class="acct-msg" id="acctMsg3" role="status" aria-live="polite"></p></div>
+</div></div>
 <div class="modal" id="helpM" role="dialog" aria-modal="true" aria-labelledby="helpT"><div class="sheet dlg help"><button class="x" id="helpX" aria-label="Kapat">×</button>
  <div class="meta">16/22 Müzayede Rehberi</div>
  <h2 id="helpT">Nasıl çalışır?</h2>
@@ -1124,7 +1142,7 @@ function pushNav(hash){if(navQuiet)return;curRoute=dec(hash);const st=history.st
  saveSpot();history.pushState({},'',urlFor(hash))}
 function restoreSpot(st,pr){Promise.resolve(pr).then(()=>ready).then(()=>{if(view=='artist'&&st.pt){const b=document.querySelector(`#artistPage [data-pt="${st.pt}"]`);if(b&&!b.classList.contains('on'))b.click()}
  let n=0;const step=()=>{if(view=='lots'&&document.documentElement.scrollHeight<st.y+innerHeight&&shown<curList.length&&n++<80){more();requestAnimationFrame(step);return}scrollTo(0,st.y)};requestAnimationFrame(()=>requestAnimationFrame(step))})}
-function ovIsOpen(n){const id={m:'m',pick:'pickM',add:'addM',help:'helpM',filters:'filters',gh:'ghM',zoom:'zoomV',g3d:'g3d',book:'bk',menu:'menu'}[n];if(n=='search')return $('gsWrap').classList.contains('full');return !!id&&$(id).classList.contains('open')}
+function ovIsOpen(n){const id={acct:'acctM',m:'m',pick:'pickM',add:'addM',help:'helpM',filters:'filters',gh:'ghM',zoom:'zoomV',g3d:'g3d',book:'bk',menu:'menu'}[n];if(n=='search')return $('gsWrap').classList.contains('full');return !!id&&$(id).classList.contains('open')}
 function ovOpen(name,hash){if(navQuiet)return;const st=history.state||{};const url=hash!=null?urlFor(hash):location.href;
  if(st.ov===name&&(hash==null||dec(location.hash.slice(1))===dec(hash))){history.replaceState(st,'',url);return}
  const replace=st.ov&&st.ov!==name&&!ovIsOpen(st.ov);if(!replace)saveSpot();
@@ -1135,7 +1153,7 @@ const favMap=()=>favKeys||(favKeys=new Map([...favArt].map(n=>[fk(n),n])));
 const isFav=n=>!!n&&favMap().has(fk(n));
 const favOf=l=>{if(!l.artist)return null;const m=favMap();return m.get(fk(l.artist))||(l.artist_raw&&m.get(fk(l.artist_raw)))||null};
 function toggleFavArt(n){const k=fk(n);if(!k)return;const on=isFav(n);if(on){[...favArt].forEach(x=>{if(fk(x)==k)favArt.delete(x)})}else favArt.add(n);saveFavArt();if(!$('pickM').classList.contains('open'))toast(on?`☆ ${n} favorilerden çıkarıldı`:`★ ${n} favori sanatçılara eklendi`)}
-const saveFavArt=()=>{favKeys=null;LS.set('mr_fav_art',[...favArt]);document.querySelectorAll('[data-star]').forEach(b=>{const on=isFav(b.dataset.star);b.classList.toggle('on',on);if(b.classList.contains('star'))b.textContent=on?'★':'☆'});favChanged()};
+const saveFavArt=()=>{favKeys=null;LS.set('mr_fav_art',[...favArt]);acctDirty();document.querySelectorAll('[data-star]').forEach(b=>{const on=isFav(b.dataset.star);b.classList.toggle('on',on);if(b.classList.contains('star'))b.textContent=on?'★':'☆'});favChanged()};
 const starBtn=n=>n?`<button type="button" class="star${isFav(n)?' on':''}" data-star="${esc(n)}" title="Favori sanatçı" aria-label="Favori sanatçı">${isFav(n)?'★':'☆'}</button>`:'';
 let toastT=null;function toast(msg,btn,fn){const t=$('toast');if(!t)return;t.innerHTML=`<span>${esc(msg)}</span>${btn?`<button type="button">${esc(btn)}</button>`:''}`;if(btn)t.querySelector('button').onclick=()=>{t.classList.remove('on');fn()};t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('on'),btn?12000:3200)}
 /* ===== settings menu ===== */
@@ -1179,7 +1197,7 @@ function initFilters(){$('nLots').textContent=D.lots.length.toLocaleString('tr-T
  [...new Set(D.lots.map(l=>l.site))].sort((a,b)=>houseName(a).localeCompare(houseName(b),'tr')).forEach(s=>$('site').add(new Option(houseName(s),s)));
  $('artistList').innerHTML=[...new Set(D.lots.map(l=>l.artist).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'tr')).map(a=>`<option value="${esc(a)}">`).join('');
  fillTech();buildSources()}
-const saveFav=()=>{LS.set('mr_fav',[...fav]);updateFavBadge()};
+const saveFav=()=>{LS.set('mr_fav',[...fav]);updateFavBadge();acctDirty()};
 function updateFavBadge(){if(!D.lots.length)return;const n=D.lots.filter(l=>favOf(l)).length;$('favTabN').textContent=n?n.toLocaleString('tr-TR'):'';
  $('favArtN').textContent=favArt.size||'';$('favSavedN').textContent=[...fav].filter(k=>byKey[k]).length||''}
 function favChanged(){updateFavBadge();if(view!='fav')favDirty=true;if(view=='fav')renderFav();if(F.fav){if(view=='lots')render();else if(view=='past')pvRender();else if(view=='lb')lbRender()}}
@@ -1970,7 +1988,7 @@ function route(h,boot,keep){h=dec(h);curRoute=h;
   ready.then(()=>{if(h.startsWith('lot='))openLot(h.slice(4));else if(h.startsWith('past='))openPast(h.slice(5));else if(h.startsWith('cmp=')){cmp=h.slice(4).split(',').filter(k=>byKey[k]).slice(0,4);dock();if(cmp.length>1)showCmp()}else if(h=='help')openHelp();else if(h=='galeri')g3Open();else if(h.startsWith('katalog='))openBook(h.slice(8));else openAdd()});return}
  show(startView(),true)}
 addEventListener('popstate',e=>{const st=e.state||{};menuOpen(false);navQuiet=true;
- try{if(st.ov!=='g3d'&&st.ov!=='m'&&st.ov!=='zoom')g3Close();if(st.ov!=='book'&&st.ov!=='m'&&st.ov!=='zoom')bkClose();if(st.ov!=='zoom')zClose();if(st.ov!=='m'&&st.ov!=='zoom')closeM();if(st.ov!=='filters')drawer(false);if(st.ov!=='pick')closePick();if(st.ov!=='add')closeAdd();if(st.ov!=='gh')closeGh();if(st.ov!=='help'&&$('helpM').classList.contains('open'))closeHelp();if(st.ov!=='search')gsShut();
+ try{if(st.ov!=='g3d'&&st.ov!=='m'&&st.ov!=='zoom')g3Close();if(st.ov!=='book'&&st.ov!=='m'&&st.ov!=='zoom')bkClose();if(st.ov!=='zoom')zClose();if(st.ov!=='m'&&st.ov!=='zoom')closeM();if(st.ov!=='filters')drawer(false);if(st.ov!=='pick')closePick();if(st.ov!=='add')closeAdd();if(st.ov!=='gh')closeGh();if(st.ov!=='help'&&$('helpM').classList.contains('open'))closeHelp();if(st.ov!=='acct'&&$('acctM').classList.contains('open'))acctHide();if(st.ov!=='search')gsShut();
   const base=st.ov?(st.base||''):dec(location.hash.slice(1));let pr=null;if(base!==curRoute)pr=route(base,e.state==null,true);if(st.y!=null)restoreSpot(st,pr);
   document.body.style.overflow=st.ov&&st.ov!=='search'&&st.ov!=='filters'?'hidden':''}finally{navQuiet=false}
  if(st.ov=='zoom'&&!ovIsOpen('zoom')){history.back();return}
@@ -2275,6 +2293,44 @@ async function isSearch(file,sweep){const res=$('isRes'),say=(a,b)=>{res.innerHT
  catch(e){say(e&&/404/.test(e.message||'')?'Görsel araması hazırlanıyor':'Arama yapılamadı',e&&/404/.test(e.message||'')?'Arşivdeki görseller işleniyor; birazdan yeniden deneyin.':'Görsel okunamadı ya da bağlantı kesildi. Yeniden deneyin.')}}
 $('isFile').onchange=e=>{const f=e.target.files[0];if(f)isSearch(f);e.target.value=''};
 $('isRes').addEventListener('click',e=>{const b=e.target.closest('[data-isw]');if(!b)return;const L=JSON.parse($('isRes').dataset.rows||'[]'),i=+b.dataset.isw;wpStart(L,i,arItem(L[i]))});
+
+/* ===== account (Firebase): sign in with Google or an email and password, and favourites follow the person to every device =====
+   Browsing never needs an account. The Firebase scripts load only when someone opens the sign-in sheet, has signed in before,
+   or arrives from a verification or password email (?mode=…&oobCode=…, the action address set to 1622art.com in the Firebase console). */
+const FB_CFG={"apiKey":"AIzaSyD2GQHfvoERTudDLG7b5Le7aZPjSsAyXgI","authDomain":"art1622-web.firebaseapp.com","projectId":"art1622-web","appId":"1:431598307265:web:ac436d2edbfa9edfad9140","messagingSenderId":"431598307265"},FBV='10.12.2';let FBP=null,ACCT=null,acctT=0,acctQuiet=false,acctBooted=false,acctOob='';
+const fbLoad=()=>FBP||(FBP=Promise.all(['app','auth','firestore'].map(m=>import(`https://www.gstatic.com/firebasejs/${FBV}/firebase-${m}.js`))).then(([a,u,f])=>{const app=a.initializeApp(FB_CFG),auth=u.getAuth(app);auth.languageCode='tr';return{u,f,auth,db:f.getFirestore(app)}}).catch(e=>{FBP=null;throw e}));
+const acctSay=(m,err,id)=>{const p=$(id||'acctMsg');p.textContent=m||'';p.classList.toggle('err',!!err)};
+const acctErr=e=>{const c=(e&&e.code)||'';return{'auth/invalid-email':'Bu e-posta adresi geçerli görünmüyor.','auth/missing-email':'Lütfen e-posta adresinizi yazın.','auth/missing-password':'Lütfen şifrenizi yazın.','auth/user-not-found':'Bu e-postayla bir hesap yok. “Hesap oluştur”a dokunun.','auth/wrong-password':'E-posta ya da şifre yanlış.','auth/invalid-credential':'E-posta ya da şifre yanlış.','auth/invalid-login-credentials':'E-posta ya da şifre yanlış.','auth/email-already-in-use':'Bu e-postayla zaten bir hesap var. “Giriş yap”a dokunun.','auth/weak-password':'Şifre en az 6 karakter olmalı.','auth/popup-closed-by-user':'Google penceresi kapatıldı.','auth/cancelled-popup-request':'','auth/popup-blocked':'Tarayıcı Google penceresini engelledi; izin verip yeniden deneyin.','auth/network-request-failed':'Bağlantı kurulamadı. İnternetinizi kontrol edip yeniden deneyin.','auth/too-many-requests':'Çok fazla deneme yapıldı. Biraz sonra yeniden deneyin.','auth/operation-not-allowed':'Bu giriş yolu henüz açılmadı.','auth/configuration-not-found':'Giriş henüz açılmadı.','auth/unauthorized-domain':'Bu adresten giriş henüz açılmadı.','auth/invalid-action-code':'Bu bağlantının süresi dolmuş ya da daha önce kullanılmış.','auth/expired-action-code':'Bu bağlantının süresi dolmuş. Yeniden isteyin.'}[c]??'Bir sorun oluştu. Yeniden deneyin.'};
+const acctPass=u=>!!u&&(u.providerData||[]).some(p=>p.providerId==='password');
+function acctPaint(){const u=ACCT;$('acctReset').hidden=!acctOob;$('acctOut').hidden=!!u||!!acctOob;$('acctIn2').hidden=!u||!!acctOob;if(u){$('acctWho').textContent=u.email||u.displayName||'';$('acctVer').hidden=!(acctPass(u)&&!u.emailVerified)}
+ const m=$('mAcct');m.firstChild.textContent=u?'Hesabım':'Giriş yap';m.querySelector('small').textContent=u?(u.email||''):'Favorileriniz her cihazda'}
+const acctOpen=()=>{acctPaint();['acctMsg','acctMsg2','acctMsg3'].forEach(i=>acctSay('',0,i));$('acctM').classList.add('open');document.body.style.overflow='hidden';ovOpen('acct');if(!acctBooted){acctBooted=true;acctBoot().catch(()=>acctSay('Giriş hizmetine ulaşılamadı. Yeniden deneyin.',true))}};
+const acctHide=()=>{$('acctM').classList.remove('open');document.body.style.overflow='';if(acctOob){acctOob='';acctPaint()}};
+const acctClose=()=>{const on=history.state&&history.state.ov==='acct';acctHide();if(on)history.back()};
+/* the account copy of the favourites: on the first sign-in on a device both lists are joined, afterwards the account is the reference */
+async function acctPull(user){const{f,db}=await fbLoad(),ref=f.doc(db,'users',user.uid),snap=await f.getDoc(ref),d=snap.exists()?snap.data():{},first=LS.get('mr_acct_uid','')!==user.uid;
+ const cf=d.fav||[],ca=d.art||[];acctQuiet=true;try{if(first){cf.forEach(k=>fav.add(k));ca.forEach(a=>favArt.add(a))}else{fav.clear();cf.forEach(k=>fav.add(k));favArt.clear();ca.forEach(a=>favArt.add(a))}saveFav();saveFavArt()}finally{acctQuiet=false}
+ LS.set('mr_acct_uid',user.uid);if(first||!snap.exists())acctPush()}
+async function acctPush(){if(!ACCT)return;try{const{f,db}=await fbLoad();await f.setDoc(f.doc(db,'users',ACCT.uid),{fav:[...fav].slice(0,5000),art:[...favArt].slice(0,2000),at:Date.now()})}catch(e){}}
+function acctDirty(){try{if(!ACCT||acctQuiet)return}catch(e){return}clearTimeout(acctT);acctT=setTimeout(acctPush,700)}
+const acctSend=async u=>{const{u:A}=await fbLoad();await A.sendEmailVerification(u,{url:'https://1622art.com/'})};
+/* the buttons in the verification and password emails come back here */
+async function acctAction(){const q=new URLSearchParams(location.search),mode=q.get('mode'),code=q.get('oobCode');if(!mode||!code)return;
+ const clean=location.pathname+location.hash;history.replaceState(history.state,'',clean);const{u,auth}=await fbLoad();
+ if(mode==='verifyEmail'){try{await u.applyActionCode(auth,code);if(auth.currentUser){await auth.currentUser.reload();ACCT=auth.currentUser;acctPaint()}toast('E-posta adresiniz doğrulandı. Hoş geldiniz.')}catch(e){toast(acctErr(e))}}
+ else if(mode==='resetPassword'){try{const em=await u.verifyPasswordResetCode(auth,code);acctOob=code;$('acctResetFor').textContent=`${em} hesabı için yeni bir şifre belirleyin.`;acctOpen()}catch(e){toast(acctErr(e))}}}
+async function acctBoot(){const{u,auth}=await fbLoad();u.onAuthStateChanged(auth,async user=>{ACCT=user||null;LS.set('mr_acct',!!user);acctPaint();if(user){try{await acctPull(user)}catch(e){}}})}
+$('mAcct').onclick=()=>{menuLeave();acctOpen()};$('acctX').onclick=acctClose;$('acctM').onclick=e=>{if(e.target.id=='acctM')acctClose()};
+const acctEmail=()=>$('acctEmail').value.trim();
+$('acctGoogle').onclick=async()=>{acctSay('');try{const{u,auth}=await fbLoad();await u.signInWithPopup(auth,new u.GoogleAuthProvider());acctClose();toast('Giriş yapıldı')}catch(e){const m=acctErr(e);if(m)acctSay(m,true)}};
+$('acctIn').onclick=async()=>{acctSay('');try{const{u,auth}=await fbLoad();await u.signInWithEmailAndPassword(auth,acctEmail(),$('acctPw').value);acctClose();toast('Giriş yapıldı')}catch(e){acctSay(acctErr(e),true)}};
+$('acctNew').onclick=async()=>{acctSay('');try{const{u,auth}=await fbLoad();const c=await u.createUserWithEmailAndPassword(auth,acctEmail(),$('acctPw').value);try{await acctSend(c.user)}catch(e){}ACCT=c.user;acctPaint();acctSay(`Hesabınız oluşturuldu. ${c.user.email} adresine bir doğrulama e-postası gönderdik; gelen kutusunda yoksa “Spam” klasörüne bakın.`,false,'acctMsg2')}catch(e){acctSay(acctErr(e),true)}};
+$('acctResend').onclick=async()=>{try{await acctSend(ACCT);acctSay(`Doğrulama e-postasını ${ACCT.email} adresine yeniden gönderdik.`,false,'acctMsg2')}catch(e){acctSay(acctErr(e),true,'acctMsg2')}};
+$('acctForgot').onclick=async()=>{const em=acctEmail();if(!em){acctSay('Önce e-posta adresinizi yazın.',true);$('acctEmail').focus();return}try{const{u,auth}=await fbLoad();await u.sendPasswordResetEmail(auth,em,{url:'https://1622art.com/'});acctSay(`Bu e-postayla bir hesap varsa, şifre yenileme bağlantısını ${em} adresine gönderdik.`)}catch(e){acctSay(acctErr(e),true)}};
+$('acctSetPw').onclick=async()=>{try{const{u,auth}=await fbLoad();await u.confirmPasswordReset(auth,acctOob,$('acctNewPw').value);acctOob='';acctPaint();acctSay('Şifreniz değişti. Yeni şifrenizle giriş yapabilirsiniz.',false,'acctMsg')}catch(e){acctSay(acctErr(e),true,'acctMsg3')}};
+$('acctOutBtn').onclick=async()=>{try{const{u,auth}=await fbLoad();await u.signOut(auth)}catch(e){}acctClose();toast('Çıkış yapıldı')};
+if(LS.get('mr_acct',false)){acctBooted=true;ready.then(()=>acctBoot()).catch(()=>{})}
+if(/[?&]oobCode=/.test(location.search))ready.then(()=>acctAction()).catch(()=>{});
 /* ===== boot ===== */
 ghUI();
 (()=>{const h=dec(location.hash.slice(1));history.replaceState({},'',location.href);navQuiet=true;try{syncFilterUI();route(h,true)}finally{navQuiet=false}
