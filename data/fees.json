@@ -1,0 +1,219 @@
+{
+"at": "2026-11-24 11:42",
+"auctions": {
+"muzayedeapp: Art Base Gallery|23. ONLINE ÇAĞDAŞ ESERLER MÜZAYEDESİ": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "NOT: Müzayedemizde galeri komisyon oranı %10 KDV oranı ise %20'dir."
+},
+"muzayedeapp: Artsan Galeri|9. Online Resim Müzayedesi": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "Raporu ile bildirilir. Güncel fiyatlara %10 komisyon eklenecektir."
+},
+"muzayedeapp: Beyond Auction|BEYOND No.2": {
+"at": "2026-11-24",
+"c": 15.0,
+"k": "",
+"src": "Müzayede komisyon oranımız %15'tir."
+},
+"muzayedeapp: Enmodern Müzayede|KÜN: İlk Pey, Tek Pey, Son Pey": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "",
+"src": "Alıcı komisyonu yoktur. Ödeyeceğin tutar, eserin açılış fiyatıdır."
+},
+"muzayedeapp: Exodia Mezat|58. ONLINE TABLO MÜZAYEDESİ": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "Komisyon Oranı: % 10 ÜRÜNLERE %20 KATMA DEĞER VERGİSİ EKLENECEKTİR!!!"
+},
+"muzayedeapp: Han Antika|2. Şahane Eserler Müzayedesi": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "all",
+"src": "ESERLER MÜZAYEDESİ HAN ANTİKA'DA ALICI KOMİSYONU %0 Müzayedemizde alıcı komisyonu yoktur ve hiçbir zaman olmayacaktır. KDV oranı %2"
+},
+"muzayedeapp: Han Antika|3. Şahane Tablolar Müzayedesi": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "all",
+"src": "TABLOLAR MÜZAYEDESİ HAN ANTİKA'DA ALICI KOMİSYONU %0 Müzayedemizde alıcı komisyonu yoktur ve hiçbir zaman olmayacaktır. KDV oranı %2"
+},
+"muzayedeapp: Müzayede Plus|ARS RESİM MÜZAYEDESİ": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "all",
+"src": "Müzayedemizde komisyon alınmamaktadır. KDV oranı ise %20'dir."
+},
+"muzayedeapp: Rumeli Müzayede|MEŞK-i KADİM HAT MÜZAYEDESİ": {
+"at": "2026-11-24",
+"c": 15.0,
+"k": "all",
+"src": "Müzayedemizde uygulanan komisyon oranı %15, KDV oranı ise %20'dir."
+},
+"muzayedeapp: Sessiz Müzayede|RC 1005. MÜZAYEDE": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "all",
+"src": "Müzayedemizde komisyon alınmamaktadır. KDV oranı ise %20'dir."
+},
+"muzayedeapp: Smart Art|SMART ART KÜÇÜK FIRSAT MÜZAYEDESİ": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "*Komisyon Oranı: % 10 *Katma Değer Vergisi Oranı : %20"
+},
+"muzayedeapp: TA Sanat|41.Online Özel Koleksiyon Müzayedesi": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "Müzayedemizde uygulanan komisyon oranı %10, KDV oranı %20'dir.Ödeme süresi müzayede bitiminden sonraki 7 iş günüdür,Açık a"
+},
+"muzayedeapp: Tunca Müzayede|22.ONLINE OSMANLI VE KARMA SANAT ESERLERİ MÜZAYEDESİ": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "all",
+"src": "MÜZAYEDEMİZ SATIŞTAN KOMİSYON ALMAMAKTADIR. SATIŞ FİYATINA %20 KDV EKLENECEKTİR."
+},
+"muzayedeapp: Yeniköy Sanat Galerisi|YENİKÖY SANAT GALERİSİ & (YIL SONU MÜZAYEDESİ 2026 )": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "",
+"src": "Komisyon Oranı: %10 \"ÖDEME SÜRESİ MÜZAYEDE BİTİMİNDEN SONRA 5 İŞ GÜNÜDÜR."
+},
+"muzayedeapp: Ziba Art|27.ONLİNE RESİM MÜZAYEDESİ": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "fee",
+"src": "Alıcı komisyon oranımız %10 + KDV 'dir."
+},
+"muzayedeapp: Çetinkaya Müzayede|ÇETİNKAYA SANAT - 31. RESİM MÜZAYEDESİ": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "all",
+"src": "NOT: Müzayedemizde komisyon alınmamaktadır. KDV oranı ise %20'dir."
+}
+},
+"houses": {
+"kalamismuzayede.com": {
+"at": "2026-11-24",
+"c": 15.0,
+"k": "all",
+"src": "Komisyon: 15%"
+},
+"kassanat.com": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "Komisyon: 10%"
+},
+"muzayedeapp: Art Base Gallery": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "NOT: Müzayedemizde galeri komisyon oranı %10 KDV oranı ise %20'dir."
+},
+"muzayedeapp: Artsan Galeri": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "Raporu ile bildirilir. Güncel fiyatlara %10 komisyon eklenecektir."
+},
+"muzayedeapp: Beyond Auction": {
+"at": "2026-11-24",
+"c": 15.0,
+"k": "",
+"src": "Müzayede komisyon oranımız %15'tir."
+},
+"muzayedeapp: Enmodern Müzayede": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "",
+"src": "Alıcı komisyonu yoktur. Ödeyeceğin tutar, eserin açılış fiyatıdır."
+},
+"muzayedeapp: Exodia Mezat": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "Komisyon Oranı: % 10 ÜRÜNLERE %20 KATMA DEĞER VERGİSİ EKLENECEKTİR!!!"
+},
+"muzayedeapp: Han Antika": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "all",
+"src": "ESERLER MÜZAYEDESİ HAN ANTİKA'DA ALICI KOMİSYONU %0 Müzayedemizde alıcı komisyonu yoktur ve hiçbir zaman olmayacaktır. KDV oranı %2"
+},
+"muzayedeapp: Müzayede Plus": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "all",
+"src": "Müzayedemizde komisyon alınmamaktadır. KDV oranı ise %20'dir."
+},
+"muzayedeapp: Rumeli Müzayede": {
+"at": "2026-11-24",
+"c": 15.0,
+"k": "all",
+"src": "Müzayedemizde uygulanan komisyon oranı %15, KDV oranı ise %20'dir."
+},
+"muzayedeapp: Sessiz Müzayede": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "all",
+"src": "Müzayedemizde komisyon alınmamaktadır. KDV oranı ise %20'dir."
+},
+"muzayedeapp: Smart Art": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "*Komisyon Oranı: % 10 *Katma Değer Vergisi Oranı : %20"
+},
+"muzayedeapp: TA Sanat": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "Müzayedemizde uygulanan komisyon oranı %10, KDV oranı %20'dir.Ödeme süresi müzayede bitiminden sonraki 7 iş günüdür,Açık a"
+},
+"muzayedeapp: Tunca Müzayede": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "all",
+"src": "MÜZAYEDEMİZ SATIŞTAN KOMİSYON ALMAMAKTADIR. SATIŞ FİYATINA %20 KDV EKLENECEKTİR."
+},
+"muzayedeapp: Yeniköy Sanat Galerisi": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "",
+"src": "Komisyon Oranı: %10 \"ÖDEME SÜRESİ MÜZAYEDE BİTİMİNDEN SONRA 5 İŞ GÜNÜDÜR."
+},
+"muzayedeapp: Ziba Art": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "fee",
+"src": "Alıcı komisyon oranımız %10 + KDV 'dir."
+},
+"muzayedeapp: Çetinkaya Müzayede": {
+"at": "2026-11-24",
+"c": 0.0,
+"k": "all",
+"src": "NOT: Müzayedemizde komisyon alınmamaktadır. KDV oranı ise %20'dir."
+},
+"nisartgallery.com": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "Komisyon: 10%"
+},
+"turkartproject.com": {
+"at": "2026-11-24",
+"c": 10.0,
+"k": "all",
+"src": "Komisyon: 10%"
+}
+},
+"kdv": 20,
+"v": 1
+}

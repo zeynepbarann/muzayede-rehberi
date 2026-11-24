@@ -9,6 +9,8 @@ MUZAYEDEAPP = ["www.nefsmuzayede.com","www.dedemuzayede.com","www.anatoliamuzaye
                "www.kalamismuzayede.com","www.aysilmuzayede.com","www.nisartgallery.com"]
 
 LAST_URL = [""]
+import fees
+FEE_H, FEE_A = {}, {}   # commission per house and per auction, read from pages fetched anyway (fees.py)
 
 def get(url, data=None, tries=3):
     err = None
@@ -131,6 +133,13 @@ def scrape_muzayedeapp(host):
         slug = url.rstrip("/").split("/")[-1]
         m = re.search(r'auctionName: "([^"]*)"', page); aname = html.unescape(m.group(1)) if m else slug.replace("-", " ").title()
         got = mapp_auction_lots(page, url, site, base, aname, end)
+        f = fees.auction_terms(page)
+        if f: FEE_A[site + "|" + aname] = f; FEE_H.setdefault(site, f)
+        if got and site not in FEE_H:   # the lot page states "Komisyon: 15%" and the KDV: one page per house
+            try:
+                f = fees.lot_terms(get(got[0]["url"], tries=2))
+                if f: FEE_H[site] = f
+            except Exception: pass
         lots += got
         auctions.append((site, aid, aname, len(got)))
     if not ids: auctions.append((site, "", "no auction links found (see data/debug/%s.json)" % site, 0))
@@ -291,6 +300,8 @@ def scrape_mapp_portal(skip_ids):
         endms = int(G(r'class="item remaining[^"]*" data-end="(\d+)"', page) or 0)
         end = dt.datetime.fromtimestamp(endms / 1000).strftime("%Y-%m-%d %H:%M") if endms else None
         lots = portal_auction_lots(page, url, site, aname, end, skip_ids)
+        f = fees.auction_terms(page)
+        if f: FEE_A[site + "|" + aname] = f; FEE_H.setdefault(site, f)
         fill_descriptions(lots)
         res.setdefault(site, ([], []))
         res[site][0].extend(lots); res[site][1].append((site, aid, aname, len(lots)))
@@ -342,5 +353,10 @@ def main():
         print(f"muzayedeapp.com portal FAIL {e} (kept previous portal lots)")
     db.commit()
     db.execute("INSERT INTO lots_fts(lots_fts) VALUES('rebuild')"); db.commit()
+    try:
+        d = fees.save(FEE_H, FEE_A)
+        print(f"fees: {len(FEE_H)} houses and {len(FEE_A)} auctions stated a commission this run ({len(d['houses'])} known)")
+    except Exception as e:
+        print("fees not saved:", e)
 
 if __name__ == "__main__": main()

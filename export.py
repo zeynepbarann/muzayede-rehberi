@@ -6,7 +6,7 @@
   data/artists.json  canonical artists + variants
   data/sources.json  user-added sources and their last-run status
 Lebriz files (data/lebriz_*.json) are written by lebriz_export.py."""
-import sqlite3, json, os, artists
+import sqlite3, json, os, artists, fees
 HERE = os.path.dirname(os.path.abspath(__file__)); OUT = os.path.join(HERE, "data")
 KEEP = ["site","lot_id","lot_no","artist","description","category","start_price","estimate","current_bid","bid_count","auction","auction_type","end_date","images","url"]
 OPTIONAL = ["title","artist_raw","lb_id","history"]
@@ -44,7 +44,7 @@ def build(write_data=True):
         if os.path.exists(lip):
             lb_artists = json.load(open(lip, encoding="utf8")).get("artists") or []
         artist_stats, _ = artists.apply_to_lots(lots, past, lb_artists)
-        dump("lots.json", {"updated": last, "lots": lots})
+        dump("lots.json", {"updated": last, "lots": lots, "fees": fees.load()})
         dump("past.json", past)
         dump("artists.json", artist_stats)
         dump("sources.json", sources)
