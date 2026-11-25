@@ -1,5 +1,5 @@
 {
- "run": "2026-11-24 06:29",
+ "run": "2026-11-25 06:20",
  "since": "2000-01-01",
  "houses": {
   "nefsmuzayede.com": {
@@ -138,8 +138,8 @@
   },
   "anatoliamuzayede.com": {
    "auctions_found": 61,
-   "read": 19,
-   "lots": 5633,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.anatoliamuzayede.com/gecmis-muzayedeler",
@@ -339,8 +339,8 @@
   },
   "uxmuzayede.com": {
    "auctions_found": 52,
-   "read": 28,
-   "lots": 3974,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.uxmuzayede.com/gecmis-muzayedeler",
@@ -481,8 +481,8 @@
   },
   "galeriberlin.com": {
    "auctions_found": 31,
-   "read": 8,
-   "lots": 1175,
+   "read": 2,
+   "lots": 0,
    "tried": [
     [
      "https://www.galeriberlin.com/gecmis-muzayedeler",
@@ -548,8 +548,8 @@
   },
   "kalamismuzayede.com": {
    "auctions_found": 10,
-   "read": 1,
-   "lots": 97,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.kalamismuzayede.com/gecmis-muzayedeler",
@@ -682,8 +682,8 @@
   },
   "nisartgallery.com": {
    "auctions_found": 51,
-   "read": 35,
-   "lots": 6564,
+   "read": 2,
+   "lots": 0,
    "tried": [
     [
      "https://www.nisartgallery.com/gecmis-muzayedeler",
@@ -749,8 +749,8 @@
   },
   "akartgaleri.com": {
    "auctions_found": 16,
-   "read": 4,
-   "lots": 279,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.akartgaleri.com/gecmis-muzayedeler",
@@ -966,8 +966,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/cesi-muzayede-139"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Cihangir Art Gallery": {
@@ -1006,7 +1008,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 9,
+   "current_auctions": 8,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
    ],
@@ -1172,6 +1174,16 @@
    "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
+  "muzayedeapp: Karya Müzayede": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/karya-muzayede-460"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
   "muzayedeapp: Klasik Gallery": {
    "auctions_found": 0,
    "read": 0,
@@ -1210,8 +1222,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/liman-sanat-galerisi-467"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Luna Art Gallery": {
@@ -1264,10 +1278,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/nilart-gallery-456"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Ovoo Art": {
@@ -1478,10 +1490,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/cetinkaya-muzayede-394"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Çukurcuma Müzayede": {
@@ -1528,6 +1538,6 @@
   }
  },
  "skip": [],
- "added": 17722,
+ "added": 0,
  "total": 52342
 }
