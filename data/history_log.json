@@ -1,5 +1,5 @@
 {
- "run": "2026-11-25 06:20",
+ "run": "2026-11-26 06:24",
  "since": "2000-01-01",
  "houses": {
   "nefsmuzayede.com": {
@@ -272,8 +272,8 @@
   },
   "turkartproject.com": {
    "auctions_found": 28,
-   "read": 0,
-   "lots": 0,
+   "read": 1,
+   "lots": 177,
    "tried": [
     [
      "https://www.turkartproject.com/gecmis-muzayedeler",
@@ -297,7 +297,7 @@
     ],
     [
      "https://www.turkartproject.com/muzayede-arsivi",
-     27
+     28
     ],
     [
      "https://www.turkartproject.com/arsiv",
@@ -305,7 +305,7 @@
     ],
     [
      "https://www.turkartproject.com/muzayedeler",
-     7
+     6
     ],
     [
      "https://www.turkartproject.com/muzayede",
@@ -818,8 +818,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/art-room-491"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Afaist": {
@@ -1008,7 +1010,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 8,
+   "current_auctions": 6,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
    ],
@@ -1306,18 +1308,18 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/polart-muzayede-115"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Puhu Mezat": {
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/puhu-mezat-431"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Rumeli Müzayede": {
@@ -1398,10 +1400,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/ta-sanat-83"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: THE_ONLINE": {
@@ -1452,10 +1452,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/ulusoy-art-354"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Yeniköy Sanat Galerisi": {
@@ -1480,10 +1478,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/ziba-art-383"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Çetinkaya Müzayede": {
@@ -1538,6 +1534,6 @@
   }
  },
  "skip": [],
- "added": 0,
- "total": 52342
+ "added": 177,
+ "total": 52519
 }
