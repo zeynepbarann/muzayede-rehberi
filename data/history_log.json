@@ -1,5 +1,5 @@
 {
- "run": "2026-11-26 06:24",
+ "run": "2026-11-27 06:27",
  "since": "2000-01-01",
  "houses": {
   "nefsmuzayede.com": {
@@ -272,8 +272,8 @@
   },
   "turkartproject.com": {
    "auctions_found": 28,
-   "read": 1,
-   "lots": 177,
+   "read": 0,
+   "lots": 0,
    "tried": [
     [
      "https://www.turkartproject.com/gecmis-muzayedeler",
@@ -922,10 +922,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/balaban-muzayede-132"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Best Art Gallery": {
@@ -1010,7 +1008,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 6,
+   "current_auctions": 9,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
    ],
@@ -1150,6 +1148,16 @@
    ],
    "note": "house page not found (no current auction on the portal?)"
   },
+  "muzayedeapp: Hart İstanbul": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/hart-istanbul-331"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
   "muzayedeapp: Havza Sanat": {
    "auctions_found": 0,
    "read": 0,
@@ -1172,8 +1180,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/hepsi-antik-181"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Karya Müzayede": {
@@ -1270,10 +1280,8 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 1,
-   "house_pages": [
-    "https://www.muzayedeapp.com/muzayede-evi/muzayede-plus-437"
-   ],
+   "current_auctions": 0,
+   "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Nilart Gallery": {
@@ -1508,6 +1516,16 @@
    "house_pages": [],
    "note": "house page not found (no current auction on the portal?)"
   },
+  "muzayedeapp: Özgür Sanat Galerisi": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/ozgur-sanat-galerisi-227"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
   "muzayedeapp: İla Art": {
    "auctions_found": 0,
    "read": 0,
@@ -1528,12 +1546,14 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/istanbul-antik-sanat-73"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   }
  },
  "skip": [],
- "added": 177,
+ "added": 0,
  "total": 52519
 }
