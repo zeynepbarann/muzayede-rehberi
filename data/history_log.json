@@ -1,5 +1,5 @@
 {
- "run": "2026-11-27 06:27",
+ "run": "2026-11-28 06:27",
  "since": "2000-01-01",
  "houses": {
   "nefsmuzayede.com": {
@@ -338,7 +338,7 @@
    ]
   },
   "uxmuzayede.com": {
-   "auctions_found": 52,
+   "auctions_found": 53,
    "read": 0,
    "lots": 0,
    "tried": [
@@ -372,7 +372,7 @@
     ],
     [
      "https://www.uxmuzayede.com/muzayedeler",
-     7
+     8
     ],
     [
      "https://www.uxmuzayede.com/muzayede",
@@ -858,6 +858,16 @@
    ],
    "note": "house page not found (no current auction on the portal?)"
   },
+  "muzayedeapp: Art Solo": {
+   "auctions_found": 0,
+   "read": 0,
+   "lots": 0,
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/art-solo-442"
+   ],
+   "note": "house page not found (no current auction on the portal?)"
+  },
   "muzayedeapp: Art-ı Müzayede": {
    "auctions_found": 0,
    "read": 0,
@@ -1008,7 +1018,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 9,
+   "current_auctions": 10,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/dunun-dunyasi-369"
    ],
@@ -1118,8 +1128,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/galeri-dali-84"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Galeri Linje": {
@@ -1142,7 +1154,7 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 2,
+   "current_auctions": 1,
    "house_pages": [
     "https://www.muzayedeapp.com/muzayede-evi/han-antika-508"
    ],
@@ -1460,8 +1472,10 @@
    "auctions_found": 0,
    "read": 0,
    "lots": 0,
-   "current_auctions": 0,
-   "house_pages": [],
+   "current_auctions": 1,
+   "house_pages": [
+    "https://www.muzayedeapp.com/muzayede-evi/ulusoy-art-354"
+   ],
    "note": "house page not found (no current auction on the portal?)"
   },
   "muzayedeapp: Yeniköy Sanat Galerisi": {
